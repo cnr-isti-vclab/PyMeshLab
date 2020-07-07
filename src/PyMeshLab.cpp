@@ -21,7 +21,7 @@ PYBIND11_MODULE(PyMeshLab, m) {
 
 	//size method
 	meshDocumentClass.def("size",
-				[](const MeshDocument& m) {
+				[](const MeshDocument& m) -> int {
 					return m.size();
 				});
 
@@ -29,11 +29,12 @@ PYBIND11_MODULE(PyMeshLab, m) {
 	meshDocumentClass.def("set_current_mesh",
 				[](MeshDocument& m, int new_curr_id) {
 					m.setCurrentMesh(new_curr_id);
-				});
+				},
+				py::arg("new_curr_id"));
 
 	meshDocumentClass.def(
 				"number_vertices_selected_mesh",
-				[](MeshDocument& m) {
+				[](MeshDocument& m) -> int {
 					return m.mm()->cm.vn;
 				});
 
