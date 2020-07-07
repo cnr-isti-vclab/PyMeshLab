@@ -1,3 +1,5 @@
 from PyMeshLab import PyMeshLab
 
-print(PyMeshLab.add(3, 4))
+m = PyMeshLab.MeshDocument()
+
+print(m.size())
