@@ -5,6 +5,8 @@
 namespace py = pybind11;
 
 PYBIND11_MODULE(PyMeshLab, m) {
+	m.doc() = "MeshLab python bindings";
+
 	py::class_<MeshDocument> meshDocumentClass(m, "MeshDocument");
 
 	//empty constructor
@@ -13,14 +15,15 @@ PYBIND11_MODULE(PyMeshLab, m) {
 	//test
 	meshDocumentClass.def(
 				"load_mesh",
-				[](MeshDocument& m) {
-					m.addNewMesh("/home/alessandro/Drive/Research/3DMeshes/bunny.obj", "mesh");
+				[](MeshDocument& m, std::string filename) {
+					m.addNewMesh(filename.c_str(), "mesh");
 					vcg::tri::io::ImporterOBJ<CMeshO>::Info oi;
-					vcg::tri::io::ImporterOBJ<CMeshO>::Open(m.mm()->cm, "/home/alessandro/Drive/Research/3DMeshes/bunny.obj", oi);
-				});
+					vcg::tri::io::ImporterOBJ<CMeshO>::Open(m.mm()->cm, filename.c_str(), oi);
+				},
+				py::arg("filename"));
 
-	//size method
-	meshDocumentClass.def("size",
+	//number_meshes method
+	meshDocumentClass.def("number_meshes",
 				[](const MeshDocument& m) -> int {
 					return m.size();
 				});
