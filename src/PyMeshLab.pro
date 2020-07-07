@@ -1,11 +1,14 @@
+# disables the lib prefix
+CONFIG += no_plugin_name_prefix
+# disable symlinks & versioning
+CONFIG += plugin
+
 TEMPLATE = lib
-TARGET = PyMeshLab
+TARGET_NAME = $$system(python3-config --extension-suffix | cut -f 2 -d '.')
+TARGET = PyMeshLab.$$TARGET_NAME
 DESTDIR = $$PYMESHLAB_DISTRIB_DIRECTORY
 
 CONFIG += c++11
-
-message("DISTRIB_DIRECTORY: "$$PYMESHLAB_DISTRIB_DIRECTORY)
-
 
 PYTHON_VERSION=$$(PYTHON_VERSION)
 isEmpty( PYTHON_VERSION ) {
@@ -17,6 +20,8 @@ isEmpty( PYTHON_VERSION ) {
 INCLUDEPATH += \
 	../pybind11/include/ \
 	/usr/include/python$$PYTHON_VERSION/
+
+QMAKE_CXXFLAGS += -shared -fPIC
 
 SOURCES += \
 	PyMeshLab.cpp
