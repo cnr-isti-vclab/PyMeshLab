@@ -17,9 +17,22 @@ isEmpty( PYTHON_VERSION ) {
 	macx:PYTHON_VERSION=3.8
 }
 macx:PYTHON_PATH=/Library/Frameworks/Python.framework/Versions/$$PYTHON_VERSION
+win32:PYTHON_PATH=$$(ProgramW6432)\Python$$PYTHON_VERSION
 
-win32-msvc:LIBS += \
-    -L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lopengl32 -lGLU32
+win32 {
+CONFIG += dll
+LIBS += \
+    -L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lopengl32 -lGLU32 \
+	-L$$PYTHON_PATH\libs -lpython$$PYTHON_VERSION
+
+INCLUDEPATH += \
+    $$PYTHON_PATH\include
+
+TARGET_NAME=cp-$$PYTHON_VERSION-win_amd64
+#QMAKE_LFLAGS_PLUGIN -= -dynamiclib
+#QMAKE_LFLAGS_PLUGIN += -bundle
+QMAKE_EXTENSION_SHLIB = pyd
+}
 
 macx {
 TARGET_NAME = $$system($$PYTHON_PATH/bin/python3-config --extension-suffix | cut -f 2 -d '.')
