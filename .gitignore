@@ -190,4 +190,7 @@ dmypy.json
 .idea
 
 !PyMeshLab/*.so
+!PyMeshLab/*.pyd
+!PyMeshLab/*.exp
+!PyMeshLab/*.lib
 
