@@ -188,3 +188,6 @@ dmypy.json
 
 #idea
 .idea
+
+!PyMeshLab/*.so
+
