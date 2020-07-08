@@ -4,7 +4,7 @@
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(PyMeshLab, m) {
+PYBIND11_MODULE(pymeshlab, m) {
 	m.doc() = "MeshLab python bindings";
 
 	py::class_<MeshDocument> meshDocumentClass(m, "MeshDocument");

@@ -38,7 +38,7 @@ INCLUDEPATH += \
 
 #QMAKE_LFLAGS += -Wl,-install_name,@rpath/lib/
 QMAKE_POST_LINK += "\
-    install_name_tool -change libmeshlab-common.1.dylib @loader_path/lib/libmeshlab-common.1.dylib $$PYMESHLAB_DISTRIB_DIRECTORY/PyMeshLab.$${TARGET_NAME}.so "
+	install_name_tool -change libmeshlab-common.1.dylib @loader_path/lib/libmeshlab-common.1.dylib $$PYMESHLAB_DISTRIB_DIRECTORY/pymeshlab.$${TARGET_NAME}.so "
 }
 
 linux {
@@ -54,7 +54,7 @@ QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN/lib
 }
 
 
-TARGET = PyMeshLab.$$TARGET_NAME
+TARGET = pymeshlab.$$TARGET_NAME
 
 DEFINES += MESHLAB_SCALAR=float
 
@@ -73,5 +73,5 @@ INCLUDEPATH += \
 	../meshlab/src/common                  #meshlab_common
 
 SOURCES += \
-	PyMeshLab.cpp
+	pymeshlab.cpp
 

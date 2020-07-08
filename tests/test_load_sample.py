@@ -1,14 +1,12 @@
-# before running: LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libGLEW.so.2.1
-
 import sys
 
 sys.path.append("../PyMeshLab")
 
-from PyMeshLab import PyMeshLab
+import pymeshlab
 
 
 def load_meshes():
-    m = PyMeshLab.MeshDocument()
+    m = pymeshlab.MeshDocument()
     m.load_mesh("sample/bone.obj")
 
     print(m.number_meshes())

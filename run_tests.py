@@ -1,6 +1,9 @@
-#before running: LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libGLEW.so.2.1 on linux
+import sys
 
-import tests.test_load_sample
+sys.path.append("./tests")
+sys.path.append("./PyMeshLab")
 
-tests.test_load_sample.load_meshes()
+import test_load_sample
+
+test_load_sample.load_meshes()
 
