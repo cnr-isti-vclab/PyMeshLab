@@ -50,9 +50,9 @@ QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN/lib
 SOURCES += \
 	PyMeshLab.cpp
 
-# if distrib folder is not in $$PWD/../distrib (shadow build case),
-# we need to copy all the files inside $$PWD/../distrib in the actual
-# distrib folder ($$OUT_PWD/distrib or $$MESHLAB_DISTRIB_DIRECTORY)
+# if distrib folder is not in $$PWD/../PyMeshLab (shadow build case),
+# we need to copy all the files inside $$PWD/../PyMeshLab in the actual
+# distrib folder ($$OUT_PWD/PyMeshLab or $$MESHLAB_DISTRIB_DIRECTORY)
 !equals(PWD, $$OUT_PWD) : !equals(PWD, $$OUT_PWD/src) {
 	#copying the "lib" folder inside the $$OUT_PWD/distrib
 	win32:copydir.commands = $(COPY_DIR) \"$$shell_path($$PWD/../PyMeshLab)\" \"$$shell_path($$OUT_PWD/PyMeshLab)\"
