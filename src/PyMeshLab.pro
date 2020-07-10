@@ -16,17 +16,17 @@ isEmpty( PYTHON_VERSION ) {
 	unix:PYTHON_VERSION=3.8
 	macx:PYTHON_VERSION=3.8
 }
-macx:PYTHON_PATH=/Library/Frameworks/Python.framework/Versions/$$PYTHON_VERSION
-win32:PYTHON_PATH=$$(ProgramW6432)\Python$$PYTHON_VERSION
 
 win32 {
+PYTHON_PATH=$$(ProgramW6432)\Python$$PYTHON_VERSION
+
 CONFIG += dll
 LIBS += \
-    -L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lopengl32 -lGLU32 \
+	-L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lopengl32 -lGLU32 \
 	-L$$PYTHON_PATH\libs -lpython$$PYTHON_VERSION
 
 INCLUDEPATH += \
-    $$PYTHON_PATH\include
+	$$PYTHON_PATH\include
 
 TARGET_NAME=cp-$$PYTHON_VERSION-win_amd64
 #QMAKE_LFLAGS_PLUGIN -= -dynamiclib
@@ -35,6 +35,8 @@ QMAKE_EXTENSION_SHLIB = pyd
 }
 
 macx {
+PYTHON_PATH=/Library/Frameworks/Python.framework/Versions/$$PYTHON_VERSION
+
 TARGET_NAME = $$system($$PYTHON_PATH/bin/python3-config --extension-suffix | cut -f 2 -d '.')
 
 #needs to be a .so also on macos!
@@ -43,11 +45,11 @@ QMAKE_LFLAGS_PLUGIN += -bundle
 QMAKE_EXTENSION_SHLIB = so
 
 LIBS += \
-    $$PYMESHLAB_DISTRIB_DIRECTORY/lib/libmeshlab-common.dylib \
+	$$PYMESHLAB_DISTRIB_DIRECTORY/lib/libmeshlab-common.dylib \
 	-L$$PYTHON_PATH/lib/python$$PYTHON_VERSION/config-$$PYTHON_VERSION-darwin/ -lpython$$PYTHON_VERSION
 
 INCLUDEPATH += \
-    $$PYTHON_PATH/include/python$$PYTHON_VERSION
+	$$PYTHON_PATH/include/python$$PYTHON_VERSION
 
 #QMAKE_LFLAGS += -Wl,-install_name,@rpath/lib/
 QMAKE_POST_LINK += "\
@@ -58,10 +60,10 @@ linux {
 TARGET_NAME = $$system(python3-config --extension-suffix | cut -f 2 -d '.')
 
 LIBS += \
-    -L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lGLU
+	-L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lGLU
 
 INCLUDEPATH += \
-    /usr/include/python$$PYTHON_VERSION/ #python lib
+	/usr/include/python$$PYTHON_VERSION/ #python lib
 
 QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN/lib
 }
