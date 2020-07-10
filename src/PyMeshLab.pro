@@ -13,9 +13,11 @@ QT += core opengl xml
 PYTHON_VERSION=$$(PYTHON_VERSION)
 isEmpty( PYTHON_VERSION ) {
 	win32:PYTHON_VERSION=38
-	unix:PYTHON_VERSION=3.8
+	unix:PYTHON_VERSION=3.6
 	macx:PYTHON_VERSION=3.8
 }
+
+message("PYTHON VERSION :" $$PYTHON_VERSION)
 
 win32 {
 PYTHON_PATH=$$(ProgramW6432)\Python$$PYTHON_VERSION
@@ -57,7 +59,7 @@ QMAKE_POST_LINK += "\
 }
 
 linux {
-TARGET_NAME = $$system(python3-config --extension-suffix | cut -f 2 -d '.')
+TARGET_NAME = $$system(python$$PYTHON_VERSION-config --extension-suffix | cut -f 2 -d '.')
 
 LIBS += \
 	-L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lGLU
