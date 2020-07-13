@@ -26,15 +26,12 @@ jobs:
       run: |
        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev libglew-dev libeigen3-dev libgmp-dev
        sudo apt-get install -y libxkbcommon-x11-0 patchelf python3-dev
-    - name: Setup env variables
-      id: envs
-      run: |
-        echo  ::set-output name=PYTHON_VERSION::"$(python3 -c 'import sys; print(str(sys.version_info[0])+"."+str(sys.version_info[1]))')"
     - name: Build MeshLab
       run: |
         sh install/linux/build_meshlab.sh
     - name: Build PyMeshLab
       run: |
+        export PYTHON_VERSION=$(python3 -c 'import sys; print(str(sys.version_info[0])+"."+str(sys.version_info[1]))')
         sh install/linux/build_pymeshlab.sh
     - name: Upload PyMeshLab
       uses: actions/upload-artifact@v1
