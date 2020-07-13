@@ -25,7 +25,7 @@ jobs:
     - name: Install dependencies
       run: |
        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev libglew-dev libeigen3-dev libgmp-dev
-       sudo apt-get install -y libxkbcommon-x11-0 patchelf
+       sudo apt-get install -y libxkbcommon-x11-0 patchelf python3-dev
     - name: Build MeshLab
       run: |
         sh install/linux/build_meshlab.sh
