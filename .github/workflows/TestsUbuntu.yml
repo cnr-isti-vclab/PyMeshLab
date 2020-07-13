@@ -1,22 +1,22 @@
-name: TestsUbuntu
+#name: TestsUbuntu
 
-on:
-  [push, pull_request]
+#on:
+#  [push, pull_request]
 
-jobs:
-  tests_ubuntu:
-    name: Python Tests (Ubuntu)
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: true
-    - name: Install dependencies
-      run: |
-       pip install pyside2
-    - name: Run Python Tests
-      run: |
-        python3 --version
-        python3 run_tests.py
+#jobs:
+#  tests_ubuntu:
+#    name: Python Tests (Ubuntu)
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#    - uses: actions/checkout@v2
+#      with:
+#        submodules: true
+#    - name: Install dependencies
+#      run: |
+#       pip install pyside2
+#    - name: Run Python Tests
+#      run: |
+#        python3 --version
+#        python3 run_tests.py
     
