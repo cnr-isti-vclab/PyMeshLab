@@ -29,6 +29,9 @@ jobs:
     - name: Build MeshLab
       run: |
         sh install/linux/build_meshlab.sh
+    - name: Build PyMeshLab
+      run: |
+        sh install/linux/build_pymeshlab.sh
     - name: Upload PyMeshLab
       uses: actions/upload-artifact@v1
       with:
