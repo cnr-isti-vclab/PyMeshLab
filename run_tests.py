@@ -1,7 +1,6 @@
 import sys
 
 sys.path.append("./tests")
-sys.path.append("./PyMeshLab")
 
 import test_load_sample
 
