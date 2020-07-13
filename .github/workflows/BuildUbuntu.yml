@@ -15,7 +15,7 @@ jobs:
     - name: checkout sub-submodule vcg
       run: |
         cd meshlab
-        git pull --recurse-submodules 
+        git pull --recurse-submodules --rebase
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
