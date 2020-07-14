@@ -37,7 +37,7 @@ QMAKE_EXTENSION_SHLIB = pyd
 }
 
 macx {
-PYTHON_PATH=$$(HOME)/.pyenv/versions/$$PYTHON_VERSION.0
+PYTHON_PATH=$$(HOME)/.pyenv/versions/$${PYTHON_VERSION}.0
 
 TARGET_NAME = $$system($$PYTHON_PATH/bin/python3-config --extension-suffix | cut -f 2 -d '.')
 
@@ -47,8 +47,15 @@ QMAKE_LFLAGS_PLUGIN += -bundle
 QMAKE_EXTENSION_SHLIB = so
 
 LIBS += \
-	$$PYMESHLAB_DISTRIB_DIRECTORY/lib/libmeshlab-common.dylib \
-	-L$$PYTHON_PATH/lib/python$$PYTHON_VERSION/config-$$PYTHON_VERSION-darwin/ -lpython$$PYTHON_VERSION
+    $$PYMESHLAB_DISTRIB_DIRECTORY/lib/libmeshlab-common.dylib
+
+exists($$PYTHON_PATH/lib/python$$PYTHON_VERSION/config-$$PYTHON_VERSION-darwin){
+    LIBS += -L$$PYTHON_PATH/lib/python$$PYTHON_VERSION/config-$$PYTHON_VERSION-darwin/ -lpython$$PYTHON_VERSION
+}
+!exists($$PYTHON_PATH/lib/python$$PYTHON_VERSION/config-$$PYTHON_VERSION-darwin){
+    LIBS += -L$$PYTHON_PATH/lib/python$$PYTHON_VERSION/config-$${PYTHON_VERSION}m-darwin/ -lpython$${PYTHON_VERSION}m
+}
+
 
 INCLUDEPATH += \
 	$$PYTHON_PATH/include/python$$PYTHON_VERSION
