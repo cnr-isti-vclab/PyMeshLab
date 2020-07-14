@@ -1,10 +1,10 @@
-name: BuildUbuntu
+name: BuildAndTestUbuntu
 
 on:
   [push, pull_request]
 
 jobs:
-  ubuntu_build_meshlab:
+  ubuntu_build_pymeshlab:
     name: Build PyMeshLab (Ubuntu)
     runs-on: ubuntu-16.04 #in order to deploy, need to use oldest supported version
 
@@ -50,3 +50,19 @@ jobs:
       with:
         name: PyMeshLab
         path: PyMeshLab/
+  
+  
+  ubuntu_tests:
+    name: Test PyMeshLab (Ubuntu)
+    needs: ubuntu_build_pymeshlab
+    runs-on: ubuntu-16.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Download PyMeshLab Linux
+      uses: actions/download-artifact@v1
+      with:
+        name: PyMeshLab
+    - name: Run Tests
+      run: |
+        python3 run_tests.py
+    
