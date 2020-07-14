@@ -7,7 +7,9 @@ jobs:
   ubuntu_build_pymeshlab:
     name: Build PyMeshLab (Ubuntu)
     runs-on: ubuntu-16.04 #in order to deploy, need to use oldest supported version
-
+    strategy:
+      matrix:
+        pyversion: [3.5, 3.6, 3.8]
     steps:
     - uses: actions/checkout@v2
       with:
@@ -27,7 +29,7 @@ jobs:
        sudo add-apt-repository ppa:deadsnakes/ppa -y
        sudo apt-get update
        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev libgmp-dev
-       sudo apt-get install -y libxkbcommon-x11-0 patchelf python3.5-dev python3.6-dev python3.8-dev
+       sudo apt-get install -y libxkbcommon-x11-0 patchelf python${{ matrix.pyversion }}-dev
     - name: Environment variables
       id: envs
       run: |
@@ -43,22 +45,14 @@ jobs:
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
         sh install/linux/build_meshlab.sh
-    - name: Build PyMeshLab 3.5
+    - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
-        export PYTHON_VERSION=$(python3.5 -c 'import sys; print(str(sys.version_info[0])+"."+str(sys.version_info[1]))')
-        sh install/linux/build_pymeshlab.sh
-    - name: Build PyMeshLab 3.6
-      run: |
-        export PYTHON_VERSION=$(python3.6 -c 'import sys; print(str(sys.version_info[0])+"."+str(sys.version_info[1]))')
-        sh install/linux/build_pymeshlab.sh
-    - name: Build PyMeshLab 3.8
-      run: |
-        export PYTHON_VERSION=$(python3.8 -c 'import sys; print(str(sys.version_info[0])+"."+str(sys.version_info[1]))')
+        export PYTHON_VERSION=${{ matrix.pyversion }}
         sh install/linux/build_pymeshlab.sh
     - name: Upload PyMeshLab
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       with:
-        name: PyMeshLab
+        name: PyMeshLab${{ matrix.pyversion }}
         path: PyMeshLab/
   
   
@@ -66,26 +60,22 @@ jobs:
     name: Test PyMeshLab (Ubuntu)
     needs: ubuntu_build_pymeshlab
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        pyversion: [3.5, 3.6, 3.8]
     steps:
     - uses: actions/checkout@v2
     - name: Download PyMeshLab Linux
-      uses: actions/download-artifact@v1
+      uses: actions/download-artifact@v2
       with:
-        name: PyMeshLab
+        name: PyMeshLab${{ matrix.pyversion }}
+        path: PyMeshLab/
     - name: Install dependencies
       run: |
         sudo add-apt-repository ppa:deadsnakes/ppa -y
         sudo apt-get update
-        sudo apt-get install -y python3.5 
-        sudo apt-get install -y python3.6 
-        sudo apt-get install -y python3.8
-    - name: Run Tests 3.5
+        sudo apt-get install -y python${{ matrix.pyversion }}
+    - name: Run Tests ${{ matrix.pyversion }}
       run: |
-        python3.5 run_tests.py
-    - name: Run Tests 3.6
-      run: |
-        python3.6 run_tests.py
-    - name: Run Tests 3.8
-      run: |
-        python3.8 run_tests.py
+        python${{ matrix.pyversion }} run_tests.py
     
