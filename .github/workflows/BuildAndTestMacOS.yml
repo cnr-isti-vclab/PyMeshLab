@@ -24,9 +24,15 @@ jobs:
       uses: jurplel/install-qt-action@v2
       with:
         modules: xmlpatterns
+    - name: Cache Dependencies
+      id: cache-dependencies
+      uses: actions/cache@v2
+      with:
+        path: ${{HOME}}/.pyenv/versions/${{matrix.pyversion}}.0
+        key: ${{ runner.os }}-dependencies-${{matrix.pyversion}}
     - name: Install dependencies
+      if: steps.cache-dependencies.outputs.cache-hit != 'true' 
       run: |
-       brew install libomp
        brew install pyenv
        pyenv install ${{ matrix.pyversion }}.0
     - name: Environment variables
@@ -43,6 +49,7 @@ jobs:
     - name: Build MeshLab
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
+        brew install libomp
         sh install/macos/build_meshlab.sh
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
@@ -69,7 +76,12 @@ jobs:
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
         path: PyMeshLab/
+    - name: Install dependencies
+      if: steps.cache-dependencies.outputs.cache-hit != 'true' 
+      run: |
+       brew install pyenv
+       pyenv install ${{ matrix.pyversion }}.0
     - name: Run Tests ${{ matrix.pyversion }}
       run: |
-        python${{ matrix.pyversion }} run_tests.py
+        ${{HOME}}/.pyenv/versions/${{matrix.pyversion}}.0/bin/python${{ matrix.pyversion }} run_tests.py
     
