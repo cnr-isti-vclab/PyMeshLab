@@ -76,6 +76,12 @@ jobs:
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
         path: PyMeshLab/
+    - name: Cache Dependencies
+      id: cache-dependencies
+      uses: actions/cache@v2
+      with:
+        path: $HOME/.pyenv/versions/${{matrix.pyversion}}.0
+        key: ${{ runner.os }}-dependencies-${{matrix.pyversion}}
     - name: Install dependencies
       if: steps.cache-dependencies.outputs.cache-hit != 'true' 
       run: |
