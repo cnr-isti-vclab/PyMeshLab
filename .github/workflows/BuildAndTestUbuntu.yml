@@ -49,7 +49,7 @@ jobs:
       run: |
         export PYTHON_VERSION=${{ matrix.pyversion }}
         sh install/linux/build_pymeshlab.sh
-    - name: Upload PyMeshLab
+    - name: Upload PyMeshLab${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
       with:
         name: PyMeshLab${{ matrix.pyversion }}
@@ -65,7 +65,7 @@ jobs:
         pyversion: [3.5, 3.6, 3.8]
     steps:
     - uses: actions/checkout@v2
-    - name: Download PyMeshLab Linux
+    - name: Download PyMeshLab${{ matrix.pyversion }} Linux
       uses: actions/download-artifact@v2
       with:
         name: PyMeshLab${{ matrix.pyversion }}
