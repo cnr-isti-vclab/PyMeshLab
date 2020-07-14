@@ -24,14 +24,14 @@ jobs:
       uses: jurplel/install-qt-action@v2
       with:
         modules: xmlpatterns
-#    - name: Cache Dependencies
-#      id: cache-dependencies
-#      uses: actions/cache@v2
-#      with:
-#        path: $HOME/.pyenv/versions/${{matrix.pyversion}}.0
-#        key: ${{ runner.os }}-dependencies-${{matrix.pyversion}}
+    - name: Cache Dependencies
+      id: cache-dependencies
+      uses: actions/cache@v2
+      with:
+        path: ${{ github.workspace }}/.pyenv/versions/${{matrix.pyversion}}.0
+        key: ${{ runner.os }}-tmp_try1-${{matrix.pyversion}}
     - name: Install dependencies
-#      if: steps.cache-dependencies.outputs.cache-hit != 'true' 
+      if: steps.cache-dependencies.outputs.cache-hit != 'true' 
       run: |
        brew install pyenv
        pyenv install ${{ matrix.pyversion }}.0
@@ -76,18 +76,18 @@ jobs:
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
         path: PyMeshLab/
-#    - name: Cache Dependencies
-#      id: cache-dependencies
-#      uses: actions/cache@v2
-#      with:
-#        path: $HOME/.pyenv/versions/${{matrix.pyversion}}.0
-#        key: ${{ runner.os }}-dependencies-${{matrix.pyversion}}
+    - name: Cache Dependencies
+      id: cache-dependencies
+      uses: actions/cache@v2
+      with:
+        path: ${{ github.workspace }}/.pyenv/versions/${{matrix.pyversion}}.0
+        key: ${{ runner.os }}-tmp_try1-${{matrix.pyversion}}
     - name: Install dependencies
-#      if: steps.cache-dependencies.outputs.cache-hit != 'true' 
+      if: steps.cache-dependencies.outputs.cache-hit != 'true' 
       run: |
        brew install pyenv
        pyenv install ${{ matrix.pyversion }}.0
     - name: Run Tests ${{ matrix.pyversion }}
       run: |
-        $HOME/.pyenv/versions/${{matrix.pyversion}}.0/bin/python${{ matrix.pyversion }} run_tests.py
+        ${{ github.workspace }}/.pyenv/versions/${{matrix.pyversion}}.0/bin/python${{ matrix.pyversion }} run_tests.py
     
