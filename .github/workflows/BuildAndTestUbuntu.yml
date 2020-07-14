@@ -74,7 +74,9 @@ jobs:
         name: PyMeshLab
     - name: Install dependencies
       run: |
-        sudo apt-get install -y python3.5 python3.6 python3.8
+        sudo apt-get install -y python3.5 
+        sudo apt-get install -y python3.6 
+        sudo apt-get install -y python3.8
     - name: Run Tests 3.5
       run: |
         python3.5 run_tests.py
