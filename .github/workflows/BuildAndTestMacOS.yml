@@ -28,8 +28,8 @@ jobs:
       id: cache-dependencies
       uses: actions/cache@v2
       with:
-        path: ${{ github.workspace }}/.pyenv/versions/${{matrix.pyversion}}.0
-        key: ${{ runner.os }}-tmp_try1-${{matrix.pyversion}}
+        path: /Users/runner/.pyenv/versions/${{matrix.pyversion}}.0
+        key: ${{ runner.os }}-tmp_try2-${{matrix.pyversion}}
     - name: Install dependencies
       if: steps.cache-dependencies.outputs.cache-hit != 'true' 
       run: |
@@ -80,8 +80,8 @@ jobs:
       id: cache-dependencies
       uses: actions/cache@v2
       with:
-        path: ${{ github.workspace }}/.pyenv/versions/${{matrix.pyversion}}.0
-        key: ${{ runner.os }}-tmp_try1-${{matrix.pyversion}}
+        path: /Users/runner/.pyenv/versions/${{matrix.pyversion}}.0
+        key: ${{ runner.os }}-tmp_try2-${{matrix.pyversion}}
     - name: Install dependencies
       if: steps.cache-dependencies.outputs.cache-hit != 'true' 
       run: |
@@ -89,5 +89,5 @@ jobs:
        pyenv install ${{ matrix.pyversion }}.0
     - name: Run Tests ${{ matrix.pyversion }}
       run: |
-        ${{ github.workspace }}/.pyenv/versions/${{matrix.pyversion}}.0/bin/python${{ matrix.pyversion }} run_tests.py
+        /Users/runner/.pyenv/versions/${{matrix.pyversion}}.0/bin/python${{ matrix.pyversion }} run_tests.py
     
