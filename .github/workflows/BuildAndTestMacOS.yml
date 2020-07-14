@@ -55,21 +55,21 @@ jobs:
         path: PyMeshLab/
   
   
-#  ubuntu_tests:
-#    name: Test PyMeshLab (Ubuntu)
-#    needs: ubuntu_build_pymeshlab
-#    runs-on: macos-latest
-#    strategy:
-#      matrix:
-#        pyversion: [3.8]
-#    steps:
-#    - uses: actions/checkout@v2
-#    - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-#      uses: actions/download-artifact@v1
-#      with:
-#        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-#        path: PyMeshLab/
-#    - name: Run Tests ${{ matrix.pyversion }}
-#      run: |
-#        python${{ matrix.pyversion }} run_tests.py
+  macos_tests:
+    name: Test PyMeshLab (MacOS)
+    needs: macos_build_pymeshlab
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        pyversion: [3.6, 3.8]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+      uses: actions/download-artifact@v1
+      with:
+        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+        path: PyMeshLab/
+    - name: Run Tests ${{ matrix.pyversion }}
+      run: |
+        python${{ matrix.pyversion }} run_tests.py
     
