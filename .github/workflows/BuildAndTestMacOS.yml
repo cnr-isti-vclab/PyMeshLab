@@ -1,15 +1,15 @@
-name: BuildAndTestUbuntu
+name: BuildAndTestMacOS
 
 on:
   [push, pull_request]
 
 jobs:
-  ubuntu_build_pymeshlab:
-    name: Build PyMeshLab (Ubuntu)
-    runs-on: ubuntu-16.04 #in order to deploy, need to use oldest supported version
+  macos_build_pymeshlab:
+    name: Build PyMeshLab (MacOS)
+    runs-on: macos-latest
     strategy:
       matrix:
-        pyversion: [3.5, 3.6, 3.8]
+        pyversion: [3.8]
     steps:
     - uses: actions/checkout@v2
       with:
@@ -26,10 +26,7 @@ jobs:
         modules: xmlpatterns
     - name: Install dependencies
       run: |
-       sudo add-apt-repository ppa:deadsnakes/ppa -y
-       sudo apt-get update
-       sudo apt-get install -y mesa-common-dev libglu1-mesa-dev libgmp-dev
-       sudo apt-get install -y libxkbcommon-x11-0 patchelf python${{ matrix.pyversion }}-dev
+       brew install libomp
     - name: Environment variables
       id: envs
       run: |
@@ -44,11 +41,11 @@ jobs:
     - name: Build MeshLab
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
-        sh install/linux/build_meshlab.sh
+        sh install/macos/build_meshlab.sh
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
         export PYTHON_VERSION=${{ matrix.pyversion }}
-        sh install/linux/build_pymeshlab.sh
+        sh install/macos/build_pymeshlab.sh
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
       with:
@@ -56,26 +53,21 @@ jobs:
         path: PyMeshLab/
   
   
-  ubuntu_tests:
-    name: Test PyMeshLab (Ubuntu)
-    needs: ubuntu_build_pymeshlab
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        pyversion: [3.5, 3.6, 3.8]
-    steps:
-    - uses: actions/checkout@v2
-    - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-      uses: actions/download-artifact@v2
-      with:
-        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-        path: PyMeshLab/
-    - name: Install dependencies
-      run: |
-        sudo add-apt-repository ppa:deadsnakes/ppa -y
-        sudo apt-get update
-        sudo apt-get install -y python${{ matrix.pyversion }}
-    - name: Run Tests ${{ matrix.pyversion }}
-      run: |
-        python${{ matrix.pyversion }} run_tests.py
+#  ubuntu_tests:
+#    name: Test PyMeshLab (Ubuntu)
+#    needs: ubuntu_build_pymeshlab
+#    runs-on: macos-latest
+#    strategy:
+#      matrix:
+#        pyversion: [3.8]
+#    steps:
+#    - uses: actions/checkout@v2
+#    - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+#      uses: actions/download-artifact@v2
+#      with:
+#        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+#        path: PyMeshLab/
+#    - name: Run Tests ${{ matrix.pyversion }}
+#      run: |
+#        python${{ matrix.pyversion }} run_tests.py
     

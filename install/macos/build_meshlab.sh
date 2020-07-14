@@ -15,10 +15,20 @@ BUILD_PATH=$(realpath ../../build)
 mkdir $BUILD_PATH
 
 bash ../../meshlab/install/macos/macos_build.sh $BUILD_PATH
+bash ../../meshlab/install/macos/macos_deploy.sh $BUILD_PATH/distrib
 
-#rm -r $DISTRIB_PATH/*
+cd $BUILD_PATH/distrib
+rm -r lib
+rm -r plugins
+rm -r shaders
+rm LICENSE.txt
+rm meshlab.png
+rm privacy.txt
+rm readme.txt
+rm README.md
+mkdir -p lib/meshlab
+cp -R meshlab.app/Contents/Frameworks/* lib/
+cp -R meshlab.app/Contents/PlugIns lib/meshlab/plugins
+cp -R lib $DISTRIB_PATH/
 
-cp -a $BUILD_PATH/distrib/lib $DISTRIB_PATH/
-cp -a $BUILD_PATH/distrib/plugins $DISTRIB_PATH/
-
-#rm -r $BUILD_PATH
+rm -r $BUILD_PATH
