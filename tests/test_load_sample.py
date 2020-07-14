@@ -2,10 +2,10 @@ import sys
 
 sys.path.append("../PyMeshLab")
 
-from PyMeshLab import PyMeshLab
+from PyMeshLab import pymeshlab
 
 def load_meshes():
-    m = PyMeshLab.get_PyMeshLab()
+    m = pymeshlab.MeshDocument()
     m.load_mesh("sample/bone.obj")
 
     print(m.number_meshes())
