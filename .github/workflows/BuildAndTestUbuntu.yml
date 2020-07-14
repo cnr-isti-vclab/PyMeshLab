@@ -24,6 +24,8 @@ jobs:
         modules: xmlpatterns
     - name: Install dependencies
       run: |
+       sudo add-apt-repository ppa:deadsnakes/ppa -y
+       sudo apt-get update
        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev libgmp-dev
        sudo apt-get install -y libxkbcommon-x11-0 patchelf python3.5-dev python3.6-dev python3.8-dev
     - name: Environment variables
