@@ -62,7 +62,7 @@ linux {
 TARGET_NAME = $$system(python$$PYTHON_VERSION-config --extension-suffix | cut -f 2 -d '.')
 
 LIBS += \
-	-L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common
+	-L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lGLU
 
 INCLUDEPATH += \
 	/usr/include/python$$PYTHON_VERSION/ #python lib
