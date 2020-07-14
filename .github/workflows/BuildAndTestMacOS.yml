@@ -45,15 +45,15 @@ jobs:
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
         sh install/macos/build_meshlab.sh
-    - name: Build PyMeshLab ${{ matrix.pyversion }}
-      run: |
-        export PYTHON_VERSION=${{ matrix.pyversion }}
-        sh install/macos/build_pymeshlab.sh
-    - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-        path: PyMeshLab/
+#    - name: Build PyMeshLab ${{ matrix.pyversion }}
+#      run: |
+#        export PYTHON_VERSION=${{ matrix.pyversion }}
+#        sh install/macos/build_pymeshlab.sh
+#    - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+#      uses: actions/upload-artifact@v2
+#      with:
+#        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+#        path: PyMeshLab/
   
   
 #  ubuntu_tests:

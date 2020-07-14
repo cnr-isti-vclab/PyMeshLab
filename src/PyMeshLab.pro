@@ -37,7 +37,7 @@ QMAKE_EXTENSION_SHLIB = pyd
 }
 
 macx {
-PYTHON_PATH=/Library/Frameworks/Python.framework/Versions/$$PYTHON_VERSION
+PYTHON_PATH=$$(HOME)/.pyenv/versions/$$PYTHON_VERSION.0
 
 TARGET_NAME = $$system($$PYTHON_PATH/bin/python3-config --extension-suffix | cut -f 2 -d '.')
 
