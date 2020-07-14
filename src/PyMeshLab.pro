@@ -46,21 +46,18 @@ QMAKE_LFLAGS_PLUGIN -= -dynamiclib
 QMAKE_LFLAGS_PLUGIN += -bundle
 QMAKE_EXTENSION_SHLIB = so
 
+#needed in order to do not link pythonlib
+QMAKE_LFLAGS += -Wl,-undefined,dynamic_lookup
+
 LIBS += \
     $$PYMESHLAB_DISTRIB_DIRECTORY/lib/libmeshlab-common.dylib
 
 exists($$PYTHON_PATH/lib/python$$PYTHON_VERSION/config-$$PYTHON_VERSION-darwin){
-    LIBS += -L$$PYTHON_PATH/lib/python$$PYTHON_VERSION/config-$$PYTHON_VERSION-darwin/ -lpython$$PYTHON_VERSION
-	INCLUDEPATH += $$PYTHON_PATH/include/python$$PYTHON_VERSION
+    INCLUDEPATH += $$PYTHON_PATH/include/python$$PYTHON_VERSION
 }
 !exists($$PYTHON_PATH/lib/python$$PYTHON_VERSION/config-$$PYTHON_VERSION-darwin){
-    LIBS += -L$$PYTHON_PATH/lib/python$$PYTHON_VERSION/config-$${PYTHON_VERSION}m-darwin/ -lpython$${PYTHON_VERSION}m
-	INCLUDEPATH += $$PYTHON_PATH/include/python$${PYTHON_VERSION}m
+    INCLUDEPATH += $$PYTHON_PATH/include/python$${PYTHON_VERSION}m
 }
-
-
-INCLUDEPATH += \
-	$$PYTHON_PATH/include/python$$PYTHON_VERSION
 
 #QMAKE_LFLAGS += -Wl,-install_name,@rpath/lib/
 QMAKE_POST_LINK += "\
