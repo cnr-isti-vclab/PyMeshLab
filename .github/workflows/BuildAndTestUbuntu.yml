@@ -25,7 +25,7 @@ jobs:
     - name: Install dependencies
       run: |
        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev libgmp-dev
-       sudo apt-get install -y libxkbcommon-x11-0 patchelf python3-dev
+       sudo apt-get install -y libxkbcommon-x11-0 patchelf python3.5-dev python3.6-dev python3.8-dev
     - name: Environment variables
       id: envs
       run: |
@@ -41,9 +41,17 @@ jobs:
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
         sh install/linux/build_meshlab.sh
-    - name: Build PyMeshLab
+    - name: Build PyMeshLab 3.5
       run: |
-        export PYTHON_VERSION=$(python3 -c 'import sys; print(str(sys.version_info[0])+"."+str(sys.version_info[1]))')
+        export PYTHON_VERSION=$(python3.5 -c 'import sys; print(str(sys.version_info[0])+"."+str(sys.version_info[1]))')
+        sh install/linux/build_pymeshlab.sh
+    - name: Build PyMeshLab 3.6
+      run: |
+        export PYTHON_VERSION=$(python3.6 -c 'import sys; print(str(sys.version_info[0])+"."+str(sys.version_info[1]))')
+        sh install/linux/build_pymeshlab.sh
+    - name: Build PyMeshLab 3.8
+      run: |
+        export PYTHON_VERSION=$(python3.8 -c 'import sys; print(str(sys.version_info[0])+"."+str(sys.version_info[1]))')
         sh install/linux/build_pymeshlab.sh
     - name: Upload PyMeshLab
       uses: actions/upload-artifact@v1
@@ -55,14 +63,23 @@ jobs:
   ubuntu_tests:
     name: Test PyMeshLab (Ubuntu)
     needs: ubuntu_build_pymeshlab
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Download PyMeshLab Linux
       uses: actions/download-artifact@v1
       with:
         name: PyMeshLab
-    - name: Run Tests
+    - name: Install dependencies
       run: |
-        python3 run_tests.py
+        sudo apt-get install -y python3.5 python3.6 python3.8
+    - name: Run Tests 3.5
+      run: |
+        python3.5 run_tests.py
+    - name: Run Tests 3.6
+      run: |
+        python3.8 run_tests.py
+    - name: Run Tests 3.8
+      run: |
+        python3.8 run_tests.py
     
