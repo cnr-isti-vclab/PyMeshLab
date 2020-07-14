@@ -29,7 +29,6 @@ jobs:
        brew install libomp
        brew install pyenv
        pyenv install ${{ matrix.pyversion }}.0
-       pyenv install ${{ matrix.pyversion }}-dev
     - name: Environment variables
       id: envs
       run: |

@@ -51,9 +51,11 @@ LIBS += \
 
 exists($$PYTHON_PATH/lib/python$$PYTHON_VERSION/config-$$PYTHON_VERSION-darwin){
     LIBS += -L$$PYTHON_PATH/lib/python$$PYTHON_VERSION/config-$$PYTHON_VERSION-darwin/ -lpython$$PYTHON_VERSION
+	INCLUDEPATH += $$PYTHON_PATH/include/python$$PYTHON_VERSION
 }
 !exists($$PYTHON_PATH/lib/python$$PYTHON_VERSION/config-$$PYTHON_VERSION-darwin){
     LIBS += -L$$PYTHON_PATH/lib/python$$PYTHON_VERSION/config-$${PYTHON_VERSION}m-darwin/ -lpython$${PYTHON_VERSION}m
+	INCLUDEPATH += $$PYTHON_PATH/include/python$${PYTHON_VERSION}m
 }
 
 
