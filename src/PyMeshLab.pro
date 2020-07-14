@@ -61,7 +61,13 @@ exists($$PYTHON_PATH/lib/python$$PYTHON_VERSION/config-$$PYTHON_VERSION-darwin){
 
 #QMAKE_LFLAGS += -Wl,-install_name,@rpath/lib/
 QMAKE_POST_LINK += "\
-	install_name_tool -change libmeshlab-common.1.dylib @loader_path/lib/libmeshlab-common.1.dylib $$PYMESHLAB_DISTRIB_DIRECTORY/pymeshlab.$${TARGET_NAME}.so "
+    install_name_tool -change libmeshlab-common.1.dylib @loader_path/lib/libmeshlab-common.1.dylib $$PYMESHLAB_DISTRIB_DIRECTORY/pymeshlab.$${TARGET_NAME}.so; \
+	install_name_tool -change @rpath/QtOpenGL.framework/Versions/5/QtOpenGL @loader_path/lib/QtOpenGL.framework/Versions/5/QtOpenGL $$PYMESHLAB_DISTRIB_DIRECTORY/pymeshlab.$${TARGET_NAME}.so; \
+	install_name_tool -change @rpath/QtWidgets.framework/Versions/5/QtWidgets @loader_path/lib/QtWidgets.framework/Versions/5/QtWidgets $$PYMESHLAB_DISTRIB_DIRECTORY/pymeshlab.$${TARGET_NAME}.so; \
+	install_name_tool -change @rpath/QtGui.framework/Versions/5/QtGui @loader_path/lib/QtGui.framework/Versions/5/QtGui $$PYMESHLAB_DISTRIB_DIRECTORY/pymeshlab.$${TARGET_NAME}.so; \
+	install_name_tool -change @rpath/QtXml.framework/Versions/5/QtXml @loader_path/lib/QtXml.framework/Versions/5/QtXml $$PYMESHLAB_DISTRIB_DIRECTORY/pymeshlab.$${TARGET_NAME}.so; \
+	install_name_tool -change @rpath/QtCore.framework/Versions/5/QtCore @loader_path/lib/QtCore.framework/Versions/5/QtCore $$PYMESHLAB_DISTRIB_DIRECTORY/pymeshlab.$${TARGET_NAME}.so; \
+	"
 }
 
 linux {
