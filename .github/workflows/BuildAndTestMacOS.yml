@@ -91,6 +91,6 @@ jobs:
         pyenv install ${{ matrix.pyversion }}.0
     - name: Run Tests ${{ matrix.pyversion }}
       run: |
-        pyenv global ${{ matrix.pyversion }}.0
-        python${{ matrix.pyversion }} run_tests.py
+        /Users/runner/.pyenv/versions/${{matrix.pyversion}}.0/bin/python${{ matrix.pyversion }} run_tests.py
+
     
