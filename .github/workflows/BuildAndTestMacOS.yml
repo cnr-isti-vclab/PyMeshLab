@@ -20,21 +20,14 @@ jobs:
         auth_header="$(git config --local --get http.https://github.com/.extraheader)"
         git submodule sync --recursive
         git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+    - name: Install Python ${{ matrix.pyversion }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.pyversion }}
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
         modules: xmlpatterns
-    - name: Cache Dependencies
-      id: cache-dependencies
-      uses: actions/cache@v2
-      with:
-        path: /Users/runner/.pyenv/versions/${{matrix.pyversion}}.0
-        key: ${{ runner.os }}-cache_pyenv-${{matrix.pyversion}}
-    - name: Install dependencies
-      if: steps.cache-dependencies.outputs.cache-hit != 'true' 
-      run: |
-        brew install pyenv
-        pyenv install ${{ matrix.pyversion }}.0
     - name: Environment variables
       id: envs
       run: |
@@ -76,21 +69,12 @@ jobs:
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
         path: PyMeshLab/
-    - name: Install Pyenv
-      run: |
-        brew install pyenv
-    - name: Cache Dependencies
-      id: cache-dependencies
-      uses: actions/cache@v2
+    - name: Install Python ${{ matrix.pyversion }}
+      uses: actions/setup-python@v2
       with:
-        path: /Users/runner/.pyenv/versions/${{matrix.pyversion}}.0
-        key: ${{ runner.os }}-cache_pyenv-${{matrix.pyversion}}
-    - name: Install Python
-      if: steps.cache-dependencies.outputs.cache-hit != 'true' 
-      run: |
-        pyenv install ${{ matrix.pyversion }}.0
+        python-version: ${{ matrix.pyversion }}
     - name: Run Tests ${{ matrix.pyversion }}
       run: |
-        /Users/runner/.pyenv/versions/${{matrix.pyversion}}.0/bin/python${{ matrix.pyversion }} run_tests.py
+        python${{ matrix.pyversion }} run_tests.py
 
     
