@@ -32,6 +32,10 @@ jobs:
         echo '::set-env name=VCINSTALLDIR::C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
     - name: Setup MSVC
       uses: ilammy/msvc-dev-cmd@v1
+    - name: Install Python ${{ matrix.pyversion }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.pyversion }}
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
@@ -47,10 +51,10 @@ jobs:
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
         .\install\windows\build_meshlab.ps1
-#    - name: Build PyMeshLab ${{ matrix.pyversion }}
-#      run: |
-#        export PYTHON_VERSION=${{ matrix.pyversion }}
-#        sh install/linux/build_pymeshlab.sh
+    - name: Build PyMeshLab ${{ matrix.pyversion }}
+      run: |
+        export PYTHON_VERSION=${{ matrix.pyversion }}
+        .\install\windows\build_pymeshlab.sh
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
       with:
