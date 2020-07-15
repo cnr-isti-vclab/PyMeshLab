@@ -51,9 +51,9 @@ jobs:
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
         .\install\windows\build_meshlab.ps1
-    - name: Build PyMeshLab ${{ matrix.pyversion }}
+    - name: Build PyMeshLab
       run: |
-        python3 -m pip install python-config
+        python.exe -m pip install python-config
         .\install\windows\build_pymeshlab.ps1
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
