@@ -20,16 +20,17 @@ jobs:
         auth_header="$(git config --local --get http.https://github.com/.extraheader)"
         git submodule sync --recursive
         git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+    - name: Install Python ${{ matrix.pyversion }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.pyversion }}
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
         modules: xmlpatterns
     - name: Install dependencies
       run: |
-       sudo add-apt-repository ppa:deadsnakes/ppa -y
-       sudo apt-get update
-       sudo apt-get install -y mesa-common-dev libglu1-mesa-dev libgmp-dev
-       sudo apt-get install -y libxkbcommon-x11-0 patchelf python${{ matrix.pyversion }}-dev
+       sudo apt-get install -y mesa-common-dev libglu1-mesa-dev 
     - name: Environment variables
       id: envs
       run: |
@@ -44,6 +45,7 @@ jobs:
     - name: Build MeshLab
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
+        sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf python${{ matrix.pyversion }}-dev
         sh install/linux/build_meshlab.sh
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
@@ -70,11 +72,10 @@ jobs:
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
         path: PyMeshLab/
-    - name: Install dependencies
-      run: |
-        sudo add-apt-repository ppa:deadsnakes/ppa -y
-        sudo apt-get update
-        sudo apt-get install -y python${{ matrix.pyversion }}
+    - name: Install Python ${{ matrix.pyversion }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.pyversion }}
     - name: Run Tests ${{ matrix.pyversion }}
       run: |
         python${{ matrix.pyversion }} run_tests.py

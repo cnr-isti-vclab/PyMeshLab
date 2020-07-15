@@ -59,7 +59,6 @@ macx {
 		INCLUDEPATH += $$PYTHON_PATH/include/python$${PYTHON_VERSION}m
 	}
 
-	#QMAKE_LFLAGS += -Wl,-install_name,@rpath/lib/
 	QMAKE_POST_LINK += "\
 		install_name_tool -change libmeshlab-common.1.dylib @loader_path/lib/libmeshlab-common.1.dylib $$PYMESHLAB_DISTRIB_DIRECTORY/pymeshlab.$${TARGET_NAME}.so; \
 		install_name_tool -change @rpath/QtOpenGL.framework/Versions/5/QtOpenGL @loader_path/lib/QtOpenGL.framework/Versions/5/QtOpenGL $$PYMESHLAB_DISTRIB_DIRECTORY/pymeshlab.$${TARGET_NAME}.so; \
@@ -72,12 +71,13 @@ macx {
 
 linux {
 	TARGET_NAME = $$system(python$$PYTHON_VERSION-config --extension-suffix | cut -f 2 -d '.')
+	PYTHON_INCLUDES = $$system(python$$PYTHON_VERSION-config --includes)
 
 	LIBS += \
 		-L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lGLU
 
 	INCLUDEPATH += \
-		/usr/include/python$$PYTHON_VERSION/ #python lib
+		$$PYTHON_INCLUDES #python lib
 
 	QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN/lib
 } #linux
