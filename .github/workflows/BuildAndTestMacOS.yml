@@ -33,7 +33,6 @@ jobs:
     - name: Install dependencies
       if: steps.cache-dependencies.outputs.cache-hit != 'true' 
       run: |
-        brew uninstall openssl
         brew install pyenv
         pyenv install ${{ matrix.pyversion }}.0
     - name: Environment variables
@@ -77,19 +76,21 @@ jobs:
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
         path: PyMeshLab/
+    - name: Install Pyenv
+      run: |
+        brew install pyenv
     - name: Cache Dependencies
       id: cache-dependencies
       uses: actions/cache@v2
       with:
         path: /Users/runner/.pyenv/versions/${{matrix.pyversion}}.0
         key: ${{ runner.os }}-cache_pyenv-${{matrix.pyversion}}
-    - name: Install dependencies
+    - name: Install Python
       if: steps.cache-dependencies.outputs.cache-hit != 'true' 
       run: |
-        brew uninstall openssl
-        brew install pyenv
         pyenv install ${{ matrix.pyversion }}.0
     - name: Run Tests ${{ matrix.pyversion }}
       run: |
-        /Users/runner/.pyenv/versions/${{matrix.pyversion}}.0/bin/python${{ matrix.pyversion }} run_tests.py
+        pyenv global ${{ matrix.pyversion }}.0
+        python${{ matrix.pyversion }} run_tests.py
     
