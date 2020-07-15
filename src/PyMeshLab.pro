@@ -20,15 +20,13 @@ isEmpty( PYTHON_VERSION ) {
 message("PYTHON VERSION :" $$PYTHON_VERSION)
 
 win32 {
-	PYTHON_PATH=$$(ProgramW6432)\Python$$PYTHON_VERSION
+	PYTHON_INCLUDES = $$system(python3-config --includes)
 
 	CONFIG += dll
 	LIBS += \
-		-L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lopengl32 -lGLU32 \
-		-L$$PYTHON_PATH\libs -lpython$$PYTHON_VERSION
+		-L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lopengl32 -lGLU32
 
-	INCLUDEPATH += \
-		$$PYTHON_PATH\include
+	INCLUDEPATH += $$PYTHON_INCLUDES
 
 	TARGET_NAME=cp-$$PYTHON_VERSION-win_amd64
 	#QMAKE_LFLAGS_PLUGIN -= -dynamiclib
@@ -37,10 +35,8 @@ win32 {
 } #win32
 
 macx {
-	PYTHON_PATH=$$(HOME)/.pyenv/versions/$${PYTHON_VERSION}.0
-
-	TARGET_NAME = $$system($$PYTHON_PATH/bin/python3-config --extension-suffix | cut -f 2 -d '.')
-	PYTHON_INCLUDES = $$system($$PYTHON_PATH/bin/python3-config --includes)
+	TARGET_NAME = $$system(python3-config --extension-suffix | cut -f 2 -d '.')
+	PYTHON_INCLUDES = $$system(python3-config --includes)
 
 	#needs to be a .so also on macos!
 	QMAKE_LFLAGS_PLUGIN -= -dynamiclib
