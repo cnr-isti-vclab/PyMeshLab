@@ -21,7 +21,7 @@ win32 {
 	LIBS += \
 		-L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lopengl32 -lGLU32
 
-	INCLUDEPATH += $$PYTHON_INCLUDES
+	QMAKE_CXXFLAGS += $$PYTHON_INCLUDES #includepath python lib
 
 	TARGET_NAME=cp-$$PYTHON_VERSION-win_amd64
 	#QMAKE_LFLAGS_PLUGIN -= -dynamiclib
@@ -44,7 +44,7 @@ macx {
 	LIBS += \
 		$$PYMESHLAB_DISTRIB_DIRECTORY/lib/libmeshlab-common.dylib
 
-	INCLUDEPATH += $$PYTHON_INCLUDES #python lib
+	QMAKE_CXXFLAGS += $$PYTHON_INCLUDES #includepath python lib
 
 
 	QMAKE_POST_LINK += "\
@@ -64,7 +64,7 @@ linux {
 	LIBS += \
 		-L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lGLU
 
-	INCLUDEPATH += $$PYTHON_INCLUDES #python lib
+	QMAKE_CXXFLAGS += $$PYTHON_INCLUDES #includepath python lib
 
 	QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN/lib
 } #linux
