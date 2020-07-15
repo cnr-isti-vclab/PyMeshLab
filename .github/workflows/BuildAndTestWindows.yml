@@ -1,0 +1,59 @@
+name: BuildAndTestWindows
+
+on: [push, pull_request]
+
+jobs:
+  windows_build_pymeshlab:
+    name: Build PyMeshLab (Windows)
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        pyversion: [3.2, 3.4, 3.6, 3.8]
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+    - name: checkout sub-submodule vcg
+      run: |
+        cd meshlab
+        auth_header="$(git config --local --get http.https://github.com/.extraheader)"
+        git submodule sync --recursive
+        git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+    - name: Downlaod Jom
+      run: |
+        Invoke-WebRequest -Uri "http://download.qt.io/official_releases/jom/jom_1_1_3.zip" -OutFile "jom_1_1_3.zip"
+        New-Item -Name "jom" -ItemType "directory"
+        Expand-Archive -Path jom_1_1_3.zip -DestinationPath .\jom
+        echo "::add-path::$(Get-Location)\jom"
+    - name: Setup env variables
+      id: envs
+      run: |
+        echo '::set-env name=VCINSTALLDIR::C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
+    - name: Setup MSVC
+      uses: ilammy/msvc-dev-cmd@v1
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+      with:
+        modules: xmlpatterns
+        version: '5.14.2'
+    - name: Cache MeshLab Build
+      id: cache-meshlab-build
+      uses: actions/cache@v2
+      with:
+        path: PyMeshLab
+        key: ${{ runner.os }}-meshlab_tmp1-${{steps.envs.outputs.meshlab_commit}}
+    - name: Build MeshLab
+      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
+      run: |
+        .\install\windows\build_meshlab.ps1
+#    - name: Build PyMeshLab ${{ matrix.pyversion }}
+#      run: |
+#        export PYTHON_VERSION=${{ matrix.pyversion }}
+#        sh install/linux/build_pymeshlab.sh
+    - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+        path: PyMeshLab/
+    
