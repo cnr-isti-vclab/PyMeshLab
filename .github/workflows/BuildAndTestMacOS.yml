@@ -29,7 +29,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: /Users/runner/.pyenv/versions/${{matrix.pyversion}}.0
-        key: ${{ runner.os }}-tmp_try2-${{matrix.pyversion}}
+        key: ${{ runner.os }}-cache_pyenv-${{matrix.pyversion}}
     - name: Install dependencies
       if: steps.cache-dependencies.outputs.cache-hit != 'true' 
       run: |
@@ -81,7 +81,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: /Users/runner/.pyenv/versions/${{matrix.pyversion}}.0
-        key: ${{ runner.os }}-tmp_try2-${{matrix.pyversion}}
+        key: ${{ runner.os }}-cache_pyenv-${{matrix.pyversion}}
     - name: Install dependencies
       if: steps.cache-dependencies.outputs.cache-hit != 'true' 
       run: |
