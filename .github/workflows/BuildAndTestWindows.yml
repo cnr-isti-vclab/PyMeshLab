@@ -32,15 +32,15 @@ jobs:
         echo '::set-env name=VCINSTALLDIR::C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
     - name: Setup MSVC
       uses: ilammy/msvc-dev-cmd@v1
-    - name: Install Python ${{ matrix.pyversion }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.pyversion }}
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
         modules: xmlpatterns
         version: '5.14.2'
+    - name: Install Python ${{ matrix.pyversion }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.pyversion }}
     - name: Cache MeshLab Build
       id: cache-meshlab-build
       uses: actions/cache@v2
