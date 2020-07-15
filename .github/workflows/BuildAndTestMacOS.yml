@@ -33,8 +33,9 @@ jobs:
     - name: Install dependencies
       if: steps.cache-dependencies.outputs.cache-hit != 'true' 
       run: |
-       brew install pyenv
-       pyenv install ${{ matrix.pyversion }}.0
+        brew uninstall openssl
+        brew install pyenv
+        pyenv install ${{ matrix.pyversion }}.0
     - name: Environment variables
       id: envs
       run: |
@@ -85,8 +86,9 @@ jobs:
     - name: Install dependencies
       if: steps.cache-dependencies.outputs.cache-hit != 'true' 
       run: |
-       brew install pyenv
-       pyenv install ${{ matrix.pyversion }}.0
+        brew uninstall openssl
+        brew install pyenv
+        pyenv install ${{ matrix.pyversion }}.0
     - name: Run Tests ${{ matrix.pyversion }}
       run: |
         /Users/runner/.pyenv/versions/${{matrix.pyversion}}.0/bin/python${{ matrix.pyversion }} run_tests.py
