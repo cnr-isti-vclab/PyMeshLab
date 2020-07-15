@@ -9,7 +9,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        pyversion: [2.7, 3.5, 3.6, 3.7, 3.8]
+        pyversion: [3.5, 3.6, 3.7, 3.8]
     steps:
     - uses: actions/checkout@v2
       with:
@@ -61,7 +61,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        pyversion: [2.7, 3.5, 3.6, 3.7, 3.8]
+        pyversion: [3.5, 3.6, 3.7, 3.8]
     steps:
     - uses: actions/checkout@v2
     - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}

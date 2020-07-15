@@ -53,7 +53,6 @@ jobs:
         .\install\windows\build_meshlab.ps1
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
-        export PYTHON_VERSION=${{ matrix.pyversion }}
         .\install\windows\build_pymeshlab.sh
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
