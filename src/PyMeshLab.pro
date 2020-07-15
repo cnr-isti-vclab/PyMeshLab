@@ -10,16 +10,11 @@ CONFIG += c++11
 CONFIG += qt
 QT += core opengl xml
 
-PYTHON_VERSION=$$(PYTHON_VERSION)
-isEmpty( PYTHON_VERSION ) {
-	win32:PYTHON_VERSION=38
-	unix:PYTHON_VERSION=3.8
-	macx:PYTHON_VERSION=3.8
-}
-
-message("PYTHON VERSION :" $$PYTHON_VERSION)
-
 win32 {
+	PYTHON_VERSION=$$(PYTHON_VERSION)
+	isEmpty( PYTHON_VERSION ) {
+		PYTHON_VERSION=38
+	}
 	PYTHON_INCLUDES = $$system(python3-config --includes)
 
 	CONFIG += dll
