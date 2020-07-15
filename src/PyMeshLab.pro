@@ -40,6 +40,7 @@ macx {
 	PYTHON_PATH=$$(HOME)/.pyenv/versions/$${PYTHON_VERSION}.0
 
 	TARGET_NAME = $$system($$PYTHON_PATH/bin/python3-config --extension-suffix | cut -f 2 -d '.')
+	PYTHON_INCLUDES = $$system($$PYTHON_PATH/bin/python3-config --includes)
 
 	#needs to be a .so also on macos!
 	QMAKE_LFLAGS_PLUGIN -= -dynamiclib
@@ -52,12 +53,8 @@ macx {
 	LIBS += \
 		$$PYMESHLAB_DISTRIB_DIRECTORY/lib/libmeshlab-common.dylib
 
-	exists($$PYTHON_PATH/lib/python$$PYTHON_VERSION/config-$$PYTHON_VERSION-darwin){
-		INCLUDEPATH += $$PYTHON_PATH/include/python$$PYTHON_VERSION
-	}
-	!exists($$PYTHON_PATH/lib/python$$PYTHON_VERSION/config-$$PYTHON_VERSION-darwin){
-		INCLUDEPATH += $$PYTHON_PATH/include/python$${PYTHON_VERSION}m
-	}
+	INCLUDEPATH += $$PYTHON_INCLUDES #python lib
+
 
 	QMAKE_POST_LINK += "\
 		install_name_tool -change libmeshlab-common.1.dylib @loader_path/lib/libmeshlab-common.1.dylib $$PYMESHLAB_DISTRIB_DIRECTORY/pymeshlab.$${TARGET_NAME}.so; \
@@ -70,14 +67,13 @@ macx {
 } # macx
 
 linux {
-	TARGET_NAME = $$system(python$$PYTHON_VERSION-config --extension-suffix | cut -f 2 -d '.')
-	PYTHON_INCLUDES = $$system(python$$PYTHON_VERSION-config --includes)
+	TARGET_NAME = $$system(python3-config --extension-suffix | cut -f 2 -d '.')
+	PYTHON_INCLUDES = $$system(python3-config --includes)
 
 	LIBS += \
 		-L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lGLU
 
-	INCLUDEPATH += \
-		$$PYTHON_INCLUDES #python lib
+	INCLUDEPATH += $$PYTHON_INCLUDES #python lib
 
 	QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN/lib
 } #linux
