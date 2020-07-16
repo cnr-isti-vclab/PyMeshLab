@@ -11,19 +11,18 @@ CONFIG += qt
 QT += core opengl xml
 
 win32 {
-	PYTHON_VERSION=$$(PYTHON_VERSION)
-	isEmpty( PYTHON_VERSION ) {
-		PYTHON_VERSION=38
-	}
-	PYTHON_INCLUDES = $$system(python3-config --includes)
+    TARGET_NAME = $$system(python.exe $$PWD/../install/windows/python_config.py --extension-suffix)
+	PYTHON_INCLUDES = $$system(python.exe $$PWD/../install/windows/python_config.py --includes)
+
+    message("Target name: " $$TARGET_NAME)
+	message("Includes: " $$PYTHON_INCLUDES)
 
 	CONFIG += dll
 	LIBS += \
 		-L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lopengl32 -lGLU32
 
-	QMAKE_CXXFLAGS += $$PYTHON_INCLUDES #includepath python lib
+    INCLUDEPATH += $$PYTHON_INCLUDES #includepath python lib
 
-	TARGET_NAME=cp-$$PYTHON_VERSION-win_amd64
 	#QMAKE_LFLAGS_PLUGIN -= -dynamiclib
 	#QMAKE_LFLAGS_PLUGIN += -bundle
 	QMAKE_EXTENSION_SHLIB = pyd
