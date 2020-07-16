@@ -13,6 +13,6 @@ for arg in sys.argv:
 	elif arg=='--libs':
 		version = str(platform.python_version())
 		version = version.replace('.', '')[:-1]
-		libs = '-L"' + sys.exec_prefix + '\\libs\\"' + ' -lpython' + version
+		libs = '-L"' + sys.exec_prefix + '\\libs"' + ' -lpython' + version
 		libs = libs.replace('\\', '/')
 		print(libs)
