@@ -62,7 +62,7 @@ jobs:
 
   windows_tests:
     name: Test PyMeshLab (Windows)
-    needs: ubuntu_build_pymeshlab
+    needs: windows_build_pymeshlab
     runs-on: windows-latest
     strategy:
       matrix:
