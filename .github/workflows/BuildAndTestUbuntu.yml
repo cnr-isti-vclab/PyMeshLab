@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-16.04 #in order to deploy, need to use oldest supported version
     strategy:
       matrix:
-        pyversion: [3.2, 3.4, 3.6, 3.8]
+        pyversion: [3.5, 3.6, 3.7, 3.8]
     steps:
     - uses: actions/checkout@v2
       with:
@@ -20,14 +20,14 @@ jobs:
         auth_header="$(git config --local --get http.https://github.com/.extraheader)"
         git submodule sync --recursive
         git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
-    - name: Install Python ${{ matrix.pyversion }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.pyversion }}
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
         modules: xmlpatterns
+    - name: Install Python ${{ matrix.pyversion }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.pyversion }}
     - name: Install dependencies
       run: |
        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev 
@@ -64,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        pyversion: [3.2, 3.4, 3.6, 3.8]
+        pyversion: [3.5, 3.6, 3.7, 3.8]
     steps:
     - uses: actions/checkout@v2
     - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}

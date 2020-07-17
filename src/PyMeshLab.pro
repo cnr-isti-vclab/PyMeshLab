@@ -10,36 +10,31 @@ CONFIG += c++11
 CONFIG += qt
 QT += core opengl xml
 
-PYTHON_VERSION=$$(PYTHON_VERSION)
-isEmpty( PYTHON_VERSION ) {
-	win32:PYTHON_VERSION=38
-	unix:PYTHON_VERSION=3.8
-	macx:PYTHON_VERSION=3.8
-}
-
-message("PYTHON VERSION :" $$PYTHON_VERSION)
-
 win32 {
-	PYTHON_PATH=$$(ProgramW6432)\Python$$PYTHON_VERSION
+	TARGET_NAME = $$system(python.exe $$PWD/../install/windows/python_config.py --extension-suffix)
+	PYTHON_INCLUDES = $$system(python.exe $$PWD/../install/windows/python_config.py --includes)
+	PYTHON_LIBS = $$system(python.exe $$PWD/../install/windows/python_config.py --libs)
+
+	message("Target name: " $$TARGET_NAME)
+	message("Includes: " $$PYTHON_INCLUDES)
+	message("Libs: " $$PYTHON_LIBS)
 
 	CONFIG += dll
 	LIBS += \
+		$$PYTHON_LIBS \
 		-L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lopengl32 -lGLU32 \
-		-L$$PYTHON_PATH\libs -lpython$$PYTHON_VERSION
 
-	INCLUDEPATH += \
-		$$PYTHON_PATH\include
 
-	TARGET_NAME=cp-$$PYTHON_VERSION-win_amd64
+	QMAKE_CXXFLAGS += $$PYTHON_INCLUDES #includepath python lib
+
 	#QMAKE_LFLAGS_PLUGIN -= -dynamiclib
 	#QMAKE_LFLAGS_PLUGIN += -bundle
-	QMAKE_EXTENSION_SHLIB = pyd
+	QMAKE_EXTENSION_SHLIB = dll
 } #win32
 
 macx {
-	PYTHON_PATH=$$(HOME)/.pyenv/versions/$${PYTHON_VERSION}.0
-
-	TARGET_NAME = $$system($$PYTHON_PATH/bin/python3-config --extension-suffix | cut -f 2 -d '.')
+	TARGET_NAME = $$system(python3-config --extension-suffix | cut -f 2 -d '.')
+	PYTHON_INCLUDES = $$system(python3-config --includes)
 
 	#needs to be a .so also on macos!
 	QMAKE_LFLAGS_PLUGIN -= -dynamiclib
@@ -52,12 +47,8 @@ macx {
 	LIBS += \
 		$$PYMESHLAB_DISTRIB_DIRECTORY/lib/libmeshlab-common.dylib
 
-	exists($$PYTHON_PATH/lib/python$$PYTHON_VERSION/config-$$PYTHON_VERSION-darwin){
-		INCLUDEPATH += $$PYTHON_PATH/include/python$$PYTHON_VERSION
-	}
-	!exists($$PYTHON_PATH/lib/python$$PYTHON_VERSION/config-$$PYTHON_VERSION-darwin){
-		INCLUDEPATH += $$PYTHON_PATH/include/python$${PYTHON_VERSION}m
-	}
+	QMAKE_CXXFLAGS += $$PYTHON_INCLUDES #includepath python lib
+
 
 	QMAKE_POST_LINK += "\
 		install_name_tool -change libmeshlab-common.1.dylib @loader_path/lib/libmeshlab-common.1.dylib $$PYMESHLAB_DISTRIB_DIRECTORY/pymeshlab.$${TARGET_NAME}.so; \
@@ -70,14 +61,13 @@ macx {
 } # macx
 
 linux {
-	TARGET_NAME = $$system(python$$PYTHON_VERSION-config --extension-suffix | cut -f 2 -d '.')
-	PYTHON_INCLUDES = $$system(python$$PYTHON_VERSION-config --includes)
+	TARGET_NAME = $$system(python3-config --extension-suffix | cut -f 2 -d '.')
+	PYTHON_INCLUDES = $$system(python3-config --includes)
 
 	LIBS += \
 		-L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lGLU
 
-	INCLUDEPATH += \
-		$$PYTHON_INCLUDES #python lib
+	QMAKE_CXXFLAGS += $$PYTHON_INCLUDES #includepath python lib
 
 	QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN/lib
 } #linux

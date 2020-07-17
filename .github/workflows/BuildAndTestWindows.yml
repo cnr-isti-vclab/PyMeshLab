@@ -37,6 +37,10 @@ jobs:
       with:
         modules: xmlpatterns
         version: '5.14.2'
+    - name: Install Python ${{ matrix.pyversion }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.pyversion }}
     - name: Cache MeshLab Build
       id: cache-meshlab-build
       uses: actions/cache@v2
@@ -47,13 +51,34 @@ jobs:
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
         .\install\windows\build_meshlab.ps1
-#    - name: Build PyMeshLab ${{ matrix.pyversion }}
-#      run: |
-#        export PYTHON_VERSION=${{ matrix.pyversion }}
-#        sh install/linux/build_pymeshlab.sh
+    - name: Build PyMeshLab
+      run: |
+        .\install\windows\build_pymeshlab.ps1
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
         path: PyMeshLab/
+
+#  windows_tests:
+#    name: Test PyMeshLab (Windows)
+#    needs: windows_build_pymeshlab
+#    runs-on: windows-latest
+#    strategy:
+#      matrix:
+#        pyversion: [3.8]
+#    steps:
+#    - uses: actions/checkout@v2
+#    - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+#      uses: actions/download-artifact@v2
+#      with:
+#        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+#        path: PyMeshLab/
+#    - name: Install Python ${{ matrix.pyversion }}
+#      uses: actions/setup-python@v2
+#      with:
+#        python-version: ${{ matrix.pyversion }}
+#    - name: Run Tests ${{ matrix.pyversion }}
+#      run: |
+#        python.exe run_tests.py
     
