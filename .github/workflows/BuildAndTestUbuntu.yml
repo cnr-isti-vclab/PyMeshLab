@@ -45,7 +45,7 @@ jobs:
     - name: Build MeshLab
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
-        sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf python${{ matrix.pyversion }}-dev
+        sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
         sh install/linux/build_meshlab.sh
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
