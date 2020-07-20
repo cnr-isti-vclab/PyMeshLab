@@ -9,7 +9,7 @@ for arg in sys.argv:
 	elif arg=='--extension-suffix':
 		version = str(platform.python_version())
 		version = version.replace('.', '')[:-1]
-		print('cp-'+version+'-win_amd64')
+		print('cp'+version+'-win_amd64')
 	elif arg=='--libs':
 		version = str(platform.python_version())
 		version = version.replace('.', '')[:-1]
