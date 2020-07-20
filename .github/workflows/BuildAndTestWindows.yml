@@ -60,25 +60,25 @@ jobs:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
         path: PyMeshLab/
 
-#  windows_tests:
-#    name: Test PyMeshLab (Windows)
-#    needs: windows_build_pymeshlab
-#    runs-on: windows-latest
-#    strategy:
-#      matrix:
-#        pyversion: [3.8]
-#    steps:
-#    - uses: actions/checkout@v2
-#    - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-#      uses: actions/download-artifact@v2
-#      with:
-#        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-#        path: PyMeshLab/
-#    - name: Install Python ${{ matrix.pyversion }}
-#      uses: actions/setup-python@v2
-#      with:
-#        python-version: ${{ matrix.pyversion }}
-#    - name: Run Tests ${{ matrix.pyversion }}
-#      run: |
-#        python.exe run_tests.py
+  windows_tests:
+    name: Test PyMeshLab (Windows)
+    needs: windows_build_pymeshlab
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        pyversion: [3.8]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+      uses: actions/download-artifact@v2
+      with:
+        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+        path: PyMeshLab/
+    - name: Install Python ${{ matrix.pyversion }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.pyversion }}
+    - name: Run Tests ${{ matrix.pyversion }}
+      run: |
+        python.exe run_tests.py
     

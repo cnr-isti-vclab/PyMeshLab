@@ -19,17 +19,17 @@ win32 {
 	message("Includes: " $$PYTHON_INCLUDES)
 	message("Libs: " $$PYTHON_LIBS)
 
-	CONFIG += dll
+#	CONFIG += dll
 	LIBS += \
-		$$PYTHON_LIBS \
-		-L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lopengl32 -lGLU32 \
+		-L"C:/Program Files/Python38/libs" -lpython38 \
+		-L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lopengl32 -lGLU32
 
 
 	QMAKE_CXXFLAGS += $$PYTHON_INCLUDES #includepath python lib
 
-	#QMAKE_LFLAGS_PLUGIN -= -dynamiclib
-	#QMAKE_LFLAGS_PLUGIN += -bundle
-	QMAKE_EXTENSION_SHLIB = dll
+#	QMAKE_LFLAGS_PLUGIN -= -dynamiclib
+#	QMAKE_LFLAGS_PLUGIN += -bundle
+	QMAKE_EXTENSION_SHLIB = pyd
 } #win32
 
 macx {
