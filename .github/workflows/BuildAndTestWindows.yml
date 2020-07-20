@@ -31,7 +31,7 @@ jobs:
       run: |
         echo '::set-env name=VCINSTALLDIR::C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
         cd meshlab
-        echo  ::set-output name=meshlab_commit::$(git rev-parse --short HEAD)
+        echo  ::set-env name=meshlab_commit::$(git rev-parse --short HEAD)
     - name: Setup MSVC
       uses: ilammy/msvc-dev-cmd@v1
     - name: Install Qt
@@ -48,7 +48,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: PyMeshLab
-        key: ${{ runner.os }}-meshlab_tmp2-${{steps.envs.outputs.meshlab_commit}}
+        key: ${{ runner.os }}-meshlab_tmp2-${{steps.envs.meshlab_commit}}
     - name: Build MeshLab
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
