@@ -21,14 +21,6 @@ pybind11_add_module(
 	pymeshlab
 	src/pymeshlab.cpp)
 
-if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/PyMeshLab/lib)
-	message("lib exists")
-else()
-	message("lib does not exists")
-endif()
-
-link_directories(${CMAKE_CURRENT_SOURCE_DIR}/PyMeshLab/lib)
-
 target_link_libraries(
 	pymeshlab PUBLIC
 	OpenGL::GLU

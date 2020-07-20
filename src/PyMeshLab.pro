@@ -15,13 +15,9 @@ win32 {
 	PYTHON_INCLUDES = $$system(python.exe $$PWD/../install/windows/python_config.py --includes)
 	PYTHON_LIBS = $$system(python.exe $$PWD/../install/windows/python_config.py --libs)
 
-	message("Target name: " $$TARGET_NAME)
-	message("Includes: " $$PYTHON_INCLUDES)
-	message("Libs: " $$PYTHON_LIBS)
-
 #	CONFIG += dll
 	LIBS += \
-		-L"C:/Program Files/Python38/libs" -lpython38 \
+		$$PYTHON_LIBS \
 		-L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lopengl32 -lGLU32
 
 
