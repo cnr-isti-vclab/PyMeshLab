@@ -30,8 +30,8 @@ jobs:
       id: envs
       run: |
         echo '::set-env name=VCINSTALLDIR::C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
-        $var=(git rev-parse --short HEAD --version) | Out-String
         cd meshlab
+        $var=(git rev-parse --short HEAD --version) | Out-String
         echo "::set-output name=meshlab_commit::$($var)"
     - name: Setup MSVC
       uses: ilammy/msvc-dev-cmd@v1
