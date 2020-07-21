@@ -1,12 +1,11 @@
-#include <pybind11/pybind11.h>
+#include "pymeshdocument.h"
 #include <meshmodel.h>
 #include <vcg/../wrap/io_trimesh/import_obj.h>
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(pymeshlab, m) {
-	m.doc() = "MeshLab python bindings";
-
+void pymeshlab::initMeshDocument(pybind11::module& m)
+{
 	py::class_<MeshDocument> meshDocumentClass(m, "MeshDocument");
 
 	//empty constructor
@@ -40,10 +39,4 @@ PYBIND11_MODULE(pymeshlab, m) {
 				[](MeshDocument& m) -> int {
 					return m.mm()->cm.vn;
 				});
-
-#ifdef PYMESHLAB_VERSION
-	m.attr("__version__") = PYMESHLAB_VERSION;
-#else
-	m.attr("__version__") = "dev";
-#endif
 }

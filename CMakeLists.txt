@@ -27,4 +27,4 @@ target_link_libraries(
 	Qt5::Core
 	Qt5::OpenGL
 	Qt5::Xml
-	${CMAKE_CURRENT_SOURCE_DIR}/PyMeshLab/lib/meshlab-common.lib)
+	${CMAKE_CURRENT_SOURCE_DIR}/pymeshlab/lib/meshlab-common.lib)

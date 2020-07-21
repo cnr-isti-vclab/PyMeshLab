@@ -8,12 +8,12 @@ PyMeshLab is a Python library that interfaces to [MeshLab](https://github.com/cn
 
 ## Run PyMeshLab
 
-To use PyMeshLab, you can download the [last release](https://github.com/cnr-isti-vclab/PyMeshLab/releases) or the [last artifact](https://github.com/cnr-isti-vclab/PyMeshLab/actions) according to your platform and your python version. Extract the archive in a folder called `PyMeshLab`, then from outside the folder:
+To use PyMeshLab, you can download the [last release](https://github.com/cnr-isti-vclab/PyMeshLab/releases) or the [last artifact](https://github.com/cnr-isti-vclab/PyMeshLab/actions) according to your platform and your python version. Extract the archive in a folder called `pymeshlab`, then from outside the folder:
 ```
 python
->>> from PyMeshLab import pymeshlab
+>>> from pymeshlab import *
 ```
-To run the tests, after cloning this repo, you can extract the downloaded archive inside the `PyMeshLab` folder, and then from the outside folder:
+To run the tests, after cloning this repo, you can extract the downloaded archive inside the `pymeshlab` folder, and then from the outside folder:
 ```
 python run_tests.py
 ```
@@ -44,7 +44,7 @@ or Windows:
 ```
 .\install\windows\build_pymeshlab.ps1
 ```
-these script will place the library inside the `PyMeshLab` folder of this repository.
+these script will place the library inside the `pymeshlab` folder of this repository.
 
 For more details, please take a look at the [Github Actions Workflows](https://github.com/cnr-isti-vclab/PyMeshLab/tree/master/.github/workflows) that build and run tests automatically in all the platforms.
 ...

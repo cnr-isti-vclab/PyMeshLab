@@ -1,29 +1,29 @@
 import sys
 
-sys.path.append("../PyMeshLab")
+sys.path.append("../pymeshlab")
 
-from PyMeshLab import pymeshlab
+from pymeshlab import *
 
 def load_meshes():
-    m = pymeshlab.MeshDocument()
-    m.load_mesh("sample/bone.obj")
+    md = MeshDocument()
+    md.load_mesh("sample/bone.obj")
 
-    print(m.number_meshes())
+    print(md.number_meshes())
 
-    m.load_mesh("sample/airplane.obj")
+    md.load_mesh("sample/airplane.obj")
 
-    print(m.number_meshes())
+    print(md.number_meshes())
 
-    assert m.number_meshes() == 2
+    assert md.number_meshes() == 2
 
-    m.set_current_mesh(0)
+    md.set_current_mesh(0)
 
-    print(m.number_vertices_selected_mesh())
+    print(md.number_vertices_selected_mesh())
 
-    assert m.number_vertices_selected_mesh() == 1872
+    assert md.number_vertices_selected_mesh() == 1872
 
-    m.set_current_mesh(1)
+    md.set_current_mesh(1)
 
-    print(m.number_vertices_selected_mesh())
+    print(md.number_vertices_selected_mesh())
 
-    assert m.number_vertices_selected_mesh() == 7017
+    assert md.number_vertices_selected_mesh() == 7017

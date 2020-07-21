@@ -95,5 +95,11 @@ exists(../PYML_VERSION){
 }
 
 SOURCES += \
-	pymeshlab.cpp
+	main.cpp \
+	pymesh.cpp \
+	pymeshdocument.cpp
+
+HEADERS += \
+	pymesh.h \
+	pymeshdocument.h
 

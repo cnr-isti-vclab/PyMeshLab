@@ -40,7 +40,7 @@ jobs:
       id: cache-meshlab-build
       uses: actions/cache@v2
       with:
-        path: PyMeshLab
+        path: pymeshlab
         key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
     - name: Build MeshLab
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
@@ -55,7 +55,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-        path: PyMeshLab/
+        path: pymeshlab/
   
   
   ubuntu_tests:
@@ -71,7 +71,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-        path: PyMeshLab/
+        path: pymeshlab/
     - name: Install Python ${{ matrix.pyversion }}
       uses: actions/setup-python@v2
       with:

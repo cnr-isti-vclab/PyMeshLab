@@ -2,7 +2,7 @@
 
 cd "$(dirname "$(realpath "$0")")"; #move to script directory
 
-DISTRIB_PATH=$(realpath ../../PyMeshLab)
+DISTRIB_PATH=$(realpath ../../pymeshlab)
 
 BUILD_PATH=$(realpath ../../build)
 
