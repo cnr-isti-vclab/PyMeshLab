@@ -18,12 +18,18 @@ def load_meshes():
 
     md.set_current_mesh(0)
 
-    print(md.number_vertices_selected_mesh())
+    print(md.current_mesh().vertex_number())
 
-    assert md.number_vertices_selected_mesh() == 1872
+    assert md.current_mesh().vertex_number() == 1872
 
     md.set_current_mesh(1)
 
-    print(md.number_vertices_selected_mesh())
+    print(md.current_mesh().vertex_number())
 
-    assert md.number_vertices_selected_mesh() == 7017
+    assert md.current_mesh().vertex_number() == 7017
+
+    box = md.current_mesh().bounding_box()
+
+    print(box.dim_x())
+
+    assert abs(box.dim_x() - 1.9649) <= 0.0001

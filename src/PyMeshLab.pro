@@ -96,10 +96,12 @@ exists(../PYML_VERSION){
 
 SOURCES += \
 	main.cpp \
+	pyboundingbox.cpp \
 	pymesh.cpp \
 	pymeshdocument.cpp
 
 HEADERS += \
+	pyboundingbox.h \
 	pymesh.h \
 	pymeshdocument.h
 

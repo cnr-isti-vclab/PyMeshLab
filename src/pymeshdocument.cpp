@@ -4,6 +4,10 @@
 
 namespace py = pybind11;
 
+CMeshO& currentMesh(MeshDocument& m) {
+	return m.mm()->cm;
+}
+
 void pymeshlab::initMeshDocument(pybind11::module& m)
 {
 	py::class_<MeshDocument> meshDocumentClass(m, "MeshDocument");
@@ -18,25 +22,11 @@ void pymeshlab::initMeshDocument(pybind11::module& m)
 					m.addNewMesh(filename.c_str(), "mesh");
 					vcg::tri::io::ImporterOBJ<CMeshO>::Info oi;
 					vcg::tri::io::ImporterOBJ<CMeshO>::Open(m.mm()->cm, filename.c_str(), oi);
+					vcg::tri::UpdateBounding<CMeshO>::Box(m.mm()->cm);
 				},
 				py::arg("filename"));
 
-	//number_meshes method
-	meshDocumentClass.def("number_meshes",
-				[](const MeshDocument& m) -> int {
-					return m.size();
-				});
-
-	//set_current_mesh method
-	meshDocumentClass.def("set_current_mesh",
-				[](MeshDocument& m, int new_curr_id) {
-					m.setCurrentMesh(new_curr_id);
-				},
-				py::arg("new_curr_id"));
-
-	meshDocumentClass.def(
-				"number_vertices_selected_mesh",
-				[](MeshDocument& m) -> int {
-					return m.mm()->cm.vn;
-				});
+	meshDocumentClass.def("number_meshes", &MeshDocument::size);
+	meshDocumentClass.def("set_current_mesh", &MeshDocument::setCurrentMesh, py::arg("new_curr_id"));
+	meshDocumentClass.def("current_mesh", &currentMesh, py::return_value_policy::reference);
 }
