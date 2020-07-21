@@ -1,7 +1,7 @@
 #saving location where script has been runned
 $DIR = Get-Location
 
-$DISTRIB_PATH = Join-Path $PSScriptRoot ..\..\PyMeshLab
+$DISTRIB_PATH = Join-Path $PSScriptRoot ..\..\pymeshlab
 
 $BUILD_PATH = Join-Path $PSScriptRoot ..\..\build
 
