@@ -87,6 +87,13 @@ INCLUDEPATH += \
 	../meshlab/vcglib \                    #vcg
 	../meshlab/src/common                  #meshlab_common
 
+# defining pymeshlab version
+exists(../PYML_VERSION){
+	PYMESHLAB_VERSION = $$cat(../PYML_VERSION)
+	message(PyMeshLab Version: $$PYMESHLAB_VERSION)
+	DEFINES += "PYMESHLAB_VERSION=$$PYMESHLAB_VERSION"
+}
+
 SOURCES += \
 	pymeshlab.cpp
 

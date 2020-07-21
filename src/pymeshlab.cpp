@@ -41,4 +41,9 @@ PYBIND11_MODULE(pymeshlab, m) {
 					return m.mm()->cm.vn;
 				});
 
+#ifdef PYMESHLAB_VERSION
+	m.attr("__version__") = PYMESHLAB_VERSION;
+#else
+	m.attr("__version__") = "dev";
+#endif
 }
