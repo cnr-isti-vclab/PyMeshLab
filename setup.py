@@ -7,6 +7,6 @@ setup(name='pymeshlab',
       author='Alessandro Muntoni, Paolo Cignoni',
       author_email='alessandro.muntoni@isti.cnr.it',
       license='GPL3',
-      packages=['pymeshlab'],
+      packages=['pymeshlab', 'pymeshlab.tests'],
       include_package_data=True,
       zip_safe=False)
