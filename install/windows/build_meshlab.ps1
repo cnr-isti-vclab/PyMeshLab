@@ -20,15 +20,8 @@ Copy-Item -Path $BUILD_PATH\distrib\*.lib -Destination $DISTRIB_PATH\lib\
 Copy-Item -Path $BUILD_PATH\distrib\lib\win32-msvc\*.lib -Destination $DISTRIB_PATH\lib\meshlab\
 Copy-Item -Path $BUILD_PATH\distrib\lib\meshlab-common.lib -Destination $DISTRIB_PATH\lib\
 Copy-Item -Path $BUILD_PATH\distrib\plugins\* -Destination $DISTRIB_PATH\lib\meshlab\plugins\
-
-if (($args.Count -eq 0 ) -or ($args[0] -ne "--no-finalize")){ 
-	Write-Host "Finalizing..."
-	Copy-Item -Path $DISTRIB_PATH\lib\Qt*.dll -Destination $DISTRIB_PATH\
-	Remove-Item $DISTRIB_PATH\lib\Qt*.dll
-}
-else {
-	Write-Host "Not Finalizing."
-}
+Copy-Item -Path $DISTRIB_PATH\lib\Qt*.dll -Destination $DISTRIB_PATH\
+Remove-Item $DISTRIB_PATH\lib\Qt*.dll
 
 rm -r $BUILD_PATH
 
