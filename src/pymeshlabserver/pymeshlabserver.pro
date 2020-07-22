@@ -10,13 +10,13 @@ CONFIG += c++11
 CONFIG += qt
 QT += core opengl xml
 
-win32:TARGET_NAME = $$system(python.exe $$PWD/../install/windows/python_config.py --extension-suffix)
+win32:TARGET_NAME = $$system(python.exe $$PYMESHLAB_BASE_DIRECTORY/install/windows/python_config.py --extension-suffix)
 !win32:TARGET_NAME = $$system(python3-config --extension-suffix | cut -f 2 -d '.')
 TARGET = pymeshlabserver.$$TARGET_NAME
 
 win32 {
-	PYTHON_INCLUDES = $$system(python.exe $$PWD/../install/windows/python_config.py --includes)
-	PYTHON_LIBS = $$system(python.exe $$PWD/../install/windows/python_config.py --libs)
+	PYTHON_INCLUDES = $$system(python.exe $$PYMESHLAB_BASE_DIRECTORY/install/windows/python_config.py --includes)
+	PYTHON_LIBS = $$system(python.exe $$PYMESHLAB_BASE_DIRECTORY/install/windows/python_config.py --libs)
 
 #	CONFIG += dll
 	LIBS += \
@@ -71,23 +71,23 @@ linux {
 
 DEFINES += MESHLAB_SCALAR=float
 
-include(../meshlab/src/find_system_libs.pri)
+include($$PYMESHLAB_BASE_DIRECTORY/meshlab/src/find_system_libs.pri)
 
 #Eigen and glew dirs
 CONFIG(system_eigen3): EIGENDIR = /usr/include/eigen3
-!CONFIG(system_eigen3):EIGENDIR = ../meshlab/vcglib/eigenlib
-GLEWDIR = ../meshlab/src/external/glew-2.1.0
+!CONFIG(system_eigen3):EIGENDIR = $$PYMESHLAB_BASE_DIRECTORY/meshlab/vcglib/eigenlib
+GLEWDIR = $$PYMESHLAB_BASE_DIRECTORY/meshlab/src/external/glew-2.1.0
 
 INCLUDEPATH += \
-	../pybind11/include/ \                 #pybind11
-	$$EIGENDIR \                           #eigen
-	$$GLEWDIR/include/ \                   #glew
-	../meshlab/vcglib \                    #vcg
-	../meshlab/src/common                  #meshlab_common
+	$$PYMESHLAB_BASE_DIRECTORY/pybind11/include/ \ #pybind11
+	$$EIGENDIR \                                   #eigen
+	$$GLEWDIR/include/ \                           #glew
+	$$PYMESHLAB_BASE_DIRECTORY/meshlab/vcglib \    #vcg
+	$$PYMESHLAB_BASE_DIRECTORY/meshlab/src/common  #meshlab_common
 
 # defining pymeshlab version
-exists(../PYML_VERSION){
-	PYMESHLAB_VERSION = $$cat(../PYML_VERSION)
+exists($$PYMESHLAB_BASE_DIRECTORY/PYML_VERSION){
+	PYMESHLAB_VERSION = $$cat($$PYMESHLAB_BASE_DIRECTORY/PYML_VERSION)
 	message(PyMeshLab Version: $$PYMESHLAB_VERSION)
 	DEFINES += "PYMESHLAB_VERSION=$$PYMESHLAB_VERSION"
 }
