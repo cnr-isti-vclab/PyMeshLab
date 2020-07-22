@@ -93,12 +93,14 @@ exists($$PYMESHLAB_BASE_DIRECTORY/PYML_VERSION){
 }
 
 SOURCES += \
+	extendedmeshdocument.cpp \
 	main.cpp \
 	pyboundingbox.cpp \
 	pymesh.cpp \
 	pymeshdocument.cpp
 
 HEADERS += \
+	extendedmeshdocument.h \
 	pyboundingbox.h \
 	pymesh.h \
 	pymeshdocument.h

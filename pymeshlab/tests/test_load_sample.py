@@ -1,13 +1,9 @@
 import pytest
 from pymeshlab import pymeshlabserver as pymls
-
-def samples_absolute_path():
-    import os
-    return os.path.dirname(os.path.abspath(__file__)) + "/sample/"
-    
+from . import samples_common
 
 def test_load_meshes():
-    base_path = samples_absolute_path()
+    base_path = samples_common.samples_absolute_path()
     md = pymls.MeshDocument()
 
     md.load_mesh(base_path + "bone.obj")
