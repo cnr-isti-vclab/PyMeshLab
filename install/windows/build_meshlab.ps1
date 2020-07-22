@@ -13,7 +13,6 @@ New-Item -ItemType Directory -Force -Path $BUILD_PATH
 ..\..\meshlab\install\windows\windows_deploy.ps1 $BUILD_PATH\distrib
 
 New-Item -ItemType Directory -Force -Path $DISTRIB_PATH\lib\meshlab\plugins
-Copy-Item -Path $BUILD_PATH\distrib\Qt*.dll -Destination $DISTRIB_PATH\
 Copy-Item -Path $BUILD_PATH\distrib\*.dll -Destination $DISTRIB_PATH\lib\
 Copy-Item -Path $BUILD_PATH\distrib\*.exp -Destination $DISTRIB_PATH\lib\
 Copy-Item -Path $BUILD_PATH\distrib\*.lib -Destination $DISTRIB_PATH\lib\
@@ -21,7 +20,11 @@ Copy-Item -Path $BUILD_PATH\distrib\*.lib -Destination $DISTRIB_PATH\lib\
 Copy-Item -Path $BUILD_PATH\distrib\lib\win32-msvc\*.lib -Destination $DISTRIB_PATH\lib\meshlab\
 Copy-Item -Path $BUILD_PATH\distrib\lib\meshlab-common.lib -Destination $DISTRIB_PATH\lib\
 Copy-Item -Path $BUILD_PATH\distrib\plugins\* -Destination $DISTRIB_PATH\lib\meshlab\plugins\
-Remove-Item $DISTRIB_PATH\lib\Qt*.dll
+
+if (($args.Count -eq 0 ) -or ($args[0] -ne "--no-finalize")){ 
+	Copy-Item -Path $DISTRIB_PATH\lib\Qt*.dll -Destination $DISTRIB_PATH\
+	Remove-Item $DISTRIB_PATH\lib\Qt*.dll
+}
 
 rm -r $BUILD_PATH
 

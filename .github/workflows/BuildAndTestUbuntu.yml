@@ -40,7 +40,7 @@ jobs:
       id: cache-meshlab-build
       uses: actions/cache@v2
       with:
-        path: pymeshlab
+        path: pymeshlab/lib
         key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
     - name: Build MeshLab
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
