@@ -1,3 +1,4 @@
+import pytest
 from pymeshlab import pymeshlabserver as pymls
 
 def samples_absolute_path():
@@ -5,7 +6,7 @@ def samples_absolute_path():
     return os.path.dirname(os.path.abspath(__file__)) + "/sample/"
     
 
-def load_meshes():
+def test_load_meshes():
     base_path = samples_absolute_path()
     md = pymls.MeshDocument()
 
