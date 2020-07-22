@@ -3,8 +3,8 @@
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 cd $DIR #move to script directory
 
-cd ../../src
-qmake PyMeshLab.pro
+cd ../../src/pymeshlabserver
+qmake pymeshlabserver.pro
 make -j4
 
 

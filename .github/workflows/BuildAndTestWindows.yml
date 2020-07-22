@@ -48,7 +48,9 @@ jobs:
       id: cache-meshlab-build
       uses: actions/cache@v2
       with:
-        path: pymeshlab
+        path: |
+          pymeshlab/lib
+          pymeshlab/Qt*.dll
         key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
     - name: Build MeshLab
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
@@ -83,5 +85,6 @@ jobs:
         python-version: ${{ matrix.pyversion }}
     - name: Run Tests ${{ matrix.pyversion }}
       run: |
-        python.exe run_tests.py
+        pip install pytest
+        py.test pymeshlab
     

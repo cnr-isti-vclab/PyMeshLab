@@ -1,0 +1,3 @@
+include pymeshlab/*
+include pymeshlab/lib/*
+include pymeshlab/tests/sample/*

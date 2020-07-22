@@ -11,11 +11,13 @@ PyMeshLab is a Python library that interfaces to [MeshLab](https://github.com/cn
 To use PyMeshLab, you can download the [last release](https://github.com/cnr-isti-vclab/PyMeshLab/releases) or the [last artifact](https://github.com/cnr-isti-vclab/PyMeshLab/actions) according to your platform and your python version. Extract the archive in a folder called `pymeshlab`, then from outside the folder:
 ```
 python
->>> from pymeshlab import *
+>>> from pymeshlab import pymeshlabserver as pymls
+>>> md = pymls.MeshDocument()
 ```
-To run the tests, after cloning this repo, you can extract the downloaded archive inside the `pymeshlab` folder, and then from the outside folder:
+To run the tests:
 ```
-python run_tests.py
+pip install pytest
+py.test pymeshlab/
 ```
 
 ## Build PyMeshLab
@@ -25,9 +27,7 @@ Clone this repository with the `--recursive` flag, needed to clone also MeshLab 
 ```
 git clone --recursive https://github.com/cnr-isti-vclab/PyMeshLab.git
 ```
-The only dependencies that PyMeshLab requires in order to be built are Qt >= 5.9 and Python >= 3.5.
-
-PyMeshLab requires a properly MeshLab build. We suggest to use the `install/[platform]/build_meshlab.[sh/ps1]` script that takes care to build, deploy and then copy all MeshLab files inside the `PyMeshLab/lib` directory. For example, on Linux:
+PyMeshLab requires Qt >= 5.9, Python >= 3.5, and a properly MeshLab build. We suggest to use the `install/[platform]/build_meshlab.[sh/ps1]` script that takes care to build, deploy and then copy all MeshLab files inside the `pymeshlab/lib` directory. For example, on Linux:
 
 ```
 sh install/linux/build_meshlab.sh
@@ -44,7 +44,7 @@ or Windows:
 ```
 .\install\windows\build_pymeshlab.ps1
 ```
-these script will place the library inside the `pymeshlab` folder of this repository.
+these script will place the pymeshlabserver module inside the `pymeshlab` folder of this repository.
 
 For more details, please take a look at the [Github Actions Workflows](https://github.com/cnr-isti-vclab/PyMeshLab/tree/master/.github/workflows) that build and run tests automatically in all the platforms.
 ...

@@ -4,7 +4,7 @@
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(pymeshlab, m) {
+PYBIND11_MODULE(pymeshlabserver, m) {
 	m.doc() = "MeshLab python bindings";
 
 	pymeshlab::initBoundingBox(m); //BoundingBox Class
