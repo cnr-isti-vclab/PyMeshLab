@@ -48,24 +48,20 @@ jobs:
       id: cache-meshlab-build
       uses: actions/cache@v2
       with:
-        path: pymeshlab/lib
-        key: ${{ runner.os }}-meshlab_tmp1-${{steps.envs.outputs.meshlab_commit}}
+        path: |
+          pymeshlab/lib
+          pymeshlab/Qt*.dll
+        key: ${{ runner.os }}-meshlab_tmp2-${{steps.envs.outputs.meshlab_commit}}
     - name: Build MeshLab
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
-        .\install\windows\build_meshlab.ps1 --no-finalize
-    - name: Finalize build meshlab
-      #this step is necessary in order to do not cache files outside lib
-      #however, on windows Qt*.dll needs to be outside lib....
-      run: |
-        echo "#############################"
-        ls pymeshlab\lib\
-        echo "#############################"
-        Copy-Item -Path pymeshlab\lib\Qt*.dll -Destination pymeshlab\
-        Remove-Item pymeshlab\lib\Qt*.dll
-        echo "#############################"
-        ls pymeshlab\
-        echo "#############################"
+        .\install\windows\build_meshlab.ps1
+#    - name: Finalize build meshlab
+#      #this step is necessary in order to do not cache files outside lib
+#      #however, on windows Qt*.dll needs to be outside lib....
+#      run: |
+#        Copy-Item -Path pymeshlab\lib\Qt*.dll -Destination pymeshlab\
+#        Remove-Item pymeshlab\lib\Qt*.dll
     - name: Build PyMeshLab
       run: |
         .\install\windows\build_pymeshlab.ps1
