@@ -69,7 +69,7 @@ linux {
 } #linux
 
 
-TARGET = pymeshlab.$$TARGET_NAME
+TARGET = pymeshlabserver.$$TARGET_NAME
 
 DEFINES += MESHLAB_SCALAR=float
 

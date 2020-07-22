@@ -1,11 +1,7 @@
-import sys
-
-sys.path.append("../pymeshlab")
-
-from pymeshlab import *
+from pymeshlab import pymeshlabserver as pymls
 
 def load_meshes():
-    md = MeshDocument()
+    md = pymls.MeshDocument()
     md.load_mesh("sample/bone.obj")
 
     print(md.number_meshes())

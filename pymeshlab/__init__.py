@@ -6,4 +6,4 @@ second_path = os.path.join(first_path, 'meshlab')
 os.environ['PATH'] = first_path + '\\;' + os.environ['PATH']
 os.environ['PATH'] = second_path + '\\;' + os.environ['PATH']
 
-from .pymeshlab import *
+#from . import pymeshlabserver
