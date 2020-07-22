@@ -58,8 +58,14 @@ jobs:
       #this step is necessary in order to do not cache files outside lib
       #however, on windows Qt*.dll needs to be outside lib....
       run: |
+        echo "#############################"
+        ls pymeshlab\lib\
+        echo "#############################"
         Copy-Item -Path pymeshlab\lib\Qt*.dll -Destination pymeshlab\
         Remove-Item pymeshlab\lib\Qt*.dll
+        echo "#############################"
+        ls pymeshlab\
+        echo "#############################"
     - name: Build PyMeshLab
       run: |
         .\install\windows\build_pymeshlab.ps1
