@@ -12,6 +12,7 @@ public:
 
 	static std::string path;
 private:
+	std::string basePath;
 	RichParameterSet s;
 	PluginManager pm;
 };
