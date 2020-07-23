@@ -15,7 +15,7 @@ ExtendedMeshDocument::ExtendedMeshDocument() :
 	dir.cdUp();
 	dir.cd("lib/meshlab/plugins");
 	std::cerr << "Path: " << dir.absolutePath().toStdString() << "\n";
-	pm.loadPlugins(s, dir);
+	//pm.loadPlugins(s, dir);
 
 	//std::cerr << pm.pluginsDir.absolutePath().toStdString() << "\n";
 }
