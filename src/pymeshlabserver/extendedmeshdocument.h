@@ -9,8 +9,7 @@ class ExtendedMeshDocument : public MeshDocument
 public:
 	ExtendedMeshDocument();
 
-
-	static std::string path;
+	void loadPlugin(const QString& absPath);
 private:
 	std::string basePath;
 	RichParameterSet s;

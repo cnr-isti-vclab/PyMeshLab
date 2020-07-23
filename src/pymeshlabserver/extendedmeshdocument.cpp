@@ -15,7 +15,27 @@ ExtendedMeshDocument::ExtendedMeshDocument() :
 	dir.cdUp();
 	dir.cd("lib/meshlab/plugins");
 	std::cerr << "Path: " << dir.absolutePath().toStdString() << "\n";
-	//pm.loadPlugins(s, dir);
+
+	//for(QString fileName : dir.entryList(QDir::Files)) {
+	//	loadPlugin(dir.absolutePath() + "/" + fileName);
+	//}
+
+	pm.loadPlugins(s, dir);
 
 	//std::cerr << pm.pluginsDir.absolutePath().toStdString() << "\n";
+}
+
+void ExtendedMeshDocument::loadPlugin(const QString& absPath)
+{
+	QString filename = QFileInfo(absPath).fileName();
+
+	std::cerr << "loading: " << filename.toStdString() << "\n";
+	QPluginLoader loader(absPath);
+	QObject* plugin = loader.instance();
+	if (plugin){
+		std::cerr << "\tIt is a plugin\n";
+	}
+	else {
+		std::cerr << "\tSomething is not working\n";
+	}
 }

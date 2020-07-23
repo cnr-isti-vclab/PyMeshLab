@@ -1,0 +1,9 @@
+#this file contains the name of the filters that must be deleted before using pymeshlab
+#all edit plugins:
+edit
+#all decorate plugins:
+decorate
+#all render plugins:
+render*
+#filter_select plugin:
+filter_select
