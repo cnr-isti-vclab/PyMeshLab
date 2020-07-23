@@ -5,8 +5,21 @@
 
 namespace py = pybind11;
 
+std::string getDoc() {
+	return
+			R"pbdoc(
+				PyMeshLab
+				---------
+				  .. currentmodule:: pymeshlabserver
+
+				  .. autosummary::
+					 :toctree: _generate
+
+			)pbdoc";
+}
+
 PYBIND11_MODULE(pymeshlabserver, m) {
-	m.doc() = "MeshLab python bindings";
+	m.doc() = getDoc();
 
 	pymeshlab::initPoint(m); //Point Class
 	pymeshlab::initBoundingBox(m); //BoundingBox Class
