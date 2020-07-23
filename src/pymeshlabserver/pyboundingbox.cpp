@@ -15,5 +15,6 @@ void pymeshlab::initBoundingBox(pybind11::module& m)
 	boundingBoxClass.def("dim_x", &Box3m::DimX);
 	boundingBoxClass.def("dim_y", &Box3m::DimY);
 	boundingBoxClass.def("dim_z", &Box3m::DimZ);
-
+	boundingBoxClass.def_readwrite("min", &Box3m::min);
+	boundingBoxClass.def_readwrite("max", &Box3m::max);
 }

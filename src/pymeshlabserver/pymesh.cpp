@@ -12,8 +12,12 @@ void loadMesh(CMeshO& m, std::string filename){
 	vcg::tri::UpdateBounding<CMeshO>::Box(m);
 }
 
-Box3m& getBBox(CMeshO& m){
+const Box3m& getBBox(CMeshO& m){
 	return m.bbox;
+}
+
+void updateBBox(CMeshO& m) {
+	vcg::tri::UpdateBounding<CMeshO>::Box(m);
 }
 
 void pymeshlab::initMesh(py::module& m)
@@ -27,5 +31,6 @@ void pymeshlab::initMesh(py::module& m)
 	meshClass.def("vertex_number", &CMeshO::VN);
 	meshClass.def("face_number", &CMeshO::FN);
 	meshClass.def("edge_number", &CMeshO::EN);
-	meshClass.def("bounding_box", &getBBox, py::return_value_policy::reference);
+	meshClass.def("bounding_box", &getBBox);
+	meshClass.def("update_bounding_box", &updateBBox);
 }

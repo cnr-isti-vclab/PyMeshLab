@@ -33,3 +33,7 @@ def test_load_meshes():
     print(box.dim_x())
 
     assert abs(box.dim_x() - 1.9649) <= 0.0001
+
+    print(box.min)
+
+    print(box.max)

@@ -97,11 +97,13 @@ SOURCES += \
 	main.cpp \
 	pyboundingbox.cpp \
 	pymesh.cpp \
-	pymeshdocument.cpp
+	pymeshdocument.cpp \
+	pypoint.cpp
 
 HEADERS += \
 	extendedmeshdocument.h \
 	pyboundingbox.h \
 	pymesh.h \
-	pymeshdocument.h
+	pymeshdocument.h \
+	pypoint.h
 
