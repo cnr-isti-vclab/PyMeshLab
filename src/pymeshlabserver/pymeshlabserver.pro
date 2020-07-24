@@ -8,7 +8,7 @@ DESTDIR = $$PYMESHLAB_DISTRIB_DIRECTORY
 
 CONFIG += c++11
 CONFIG += qt
-QT += core opengl xml
+QT += core opengl xml qml
 
 win32:TARGET_NAME = $$system(python.exe $$PYMESHLAB_BASE_DIRECTORY/install/windows/python_config.py --extension-suffix)
 !win32:TARGET_NAME = $$system(python3-config --extension-suffix | cut -f 2 -d '.')

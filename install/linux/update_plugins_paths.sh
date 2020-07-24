@@ -8,4 +8,4 @@ PLUGINS_DIR='../../pymeshlab/lib/meshlab/plugins'
 
 patchelf --set-rpath '$ORIGIN/../..' $PLUGINS_DIR/*.so
 
-patchelf --replace-needed libQt5Qml.so.5 ../../libQt5Qml.so.5 $PLUGINS_DIR/libfilter_sketchfab.so
+#patchelf --replace-needed libQt5Qml.so.5 ../../libQt5Qml.so.5 $PLUGINS_DIR/libfilter_sketchfab.so
