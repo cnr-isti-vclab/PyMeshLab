@@ -4,6 +4,6 @@ edit
 #all decorate plugins:
 decorate
 #all render plugins:
-render*
+render
 #filter_select plugin:
 filter_select
