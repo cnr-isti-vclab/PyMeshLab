@@ -98,6 +98,7 @@ SOURCES += \
 	pyboundingbox.cpp \
 	pymesh.cpp \
 	pymeshdocument.cpp \
+	pymeshlabcommon.cpp \
 	pypoint.cpp
 
 HEADERS += \
@@ -105,5 +106,6 @@ HEADERS += \
 	pyboundingbox.h \
 	pymesh.h \
 	pymeshdocument.h \
+	pymeshlabcommon.h \
 	pypoint.h
 

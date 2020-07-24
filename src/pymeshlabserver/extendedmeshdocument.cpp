@@ -1,41 +1,35 @@
-#include <pybind11/pybind11.h>
-
 #include "extendedmeshdocument.h"
 
-
-namespace py = pybind11;
+#include "pymeshlabcommon.h"
 
 ExtendedMeshDocument::ExtendedMeshDocument() :
 	MeshDocument(), s(), pm()
 {
-	py::gil_scoped_acquire acquire;
-	py::object pyml = py::module::import("pymeshlab");
-	basePath = pyml.attr("__file__").cast<std::string>();
-	QDir dir(QString::fromStdString(basePath));
-	dir.cdUp();
+	QDir dir(QString::fromStdString(pymeshlab::getRootAbsolutePath()));
 	dir.cd("lib/meshlab/plugins");
-	std::cerr << "Path: " << dir.absolutePath().toStdString() << "\n";
 
-	//for(QString fileName : dir.entryList(QDir::Files)) {
-	//	loadPlugin(dir.absolutePath() + "/" + fileName);
-	//}
-
+	pymeshlab::QDebugRedirect qdbr; //redirect qdebug to null
 	pm.loadPlugins(s, dir);
-
-	//std::cerr << pm.pluginsDir.absolutePath().toStdString() << "\n";
 }
 
-void ExtendedMeshDocument::loadPlugin(const QString& absPath)
+//still not working
+void ExtendedMeshDocument::loadMesh(const std::string& filename)
 {
-	QString filename = QFileInfo(absPath).fileName();
+	QFileInfo finfo(QString::fromStdString(filename));
+	if (!finfo.exists()){
+		std::cerr << "File does not exists!";
+	}
+	QString extension = finfo.suffix().toLower();
 
-	std::cerr << "loading: " << filename.toStdString() << "\n";
-	QPluginLoader loader(absPath);
-	QObject* plugin = loader.instance();
-	if (plugin){
-		std::cerr << "\tIt is a plugin\n";
+	if (pm.allKnowInputFormats.contains(extension)){
+		MeshIOInterface* plugin = pm.allKnowInputFormats[extension];
+		int mask = 0;
+		RichParameterSet rps;
+		plugin->open(extension, QString::fromStdString(filename), *this->mm(), mask, rps);
 	}
 	else {
-		std::cerr << "\tSomething is not working\n";
+		std::cerr << "Unknown format: " << extension.toStdString() << "\n";
 	}
 }
+
+

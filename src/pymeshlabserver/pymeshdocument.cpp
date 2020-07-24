@@ -25,6 +25,8 @@ void pymeshlab::initMeshDocument(pybind11::module& m)
 
 	//test
 	meshDocumentClass.def("load_mesh", &loadMesh, py::arg("filename"));
+	//not working yet
+	//meshDocumentClass.def("load_mesh", &ExtendedMeshDocument::loadMesh, py::arg("filename"));
 
 	meshDocumentClass.def("number_meshes", &ExtendedMeshDocument::size);
 	meshDocumentClass.def("set_current_mesh", &ExtendedMeshDocument::setCurrentMesh, py::arg("new_curr_id"));
