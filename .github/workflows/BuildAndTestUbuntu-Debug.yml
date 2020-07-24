@@ -1,11 +1,11 @@
-name: BuildAndTestUbuntu
+name: BuildAndTestUbuntu-Debug
 
 on:
   [push, pull_request]
 
 jobs:
-  ubuntu_build_pymeshlab:
-    name: Build PyMeshLab (Ubuntu)
+  ubuntu_build_pymeshlab_debug:
+    name: Build PyMeshLab (Ubuntu-Debug)
     runs-on: ubuntu-16.04 #in order to deploy, need to use oldest supported version
     strategy:
       matrix:
@@ -41,7 +41,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: pymeshlab/lib
-        key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
+        key: ${{ runner.os }}-meshlab_debug-${{steps.envs.outputs.meshlab_commit}}
     - name: Build MeshLab
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
@@ -58,9 +58,9 @@ jobs:
         path: pymeshlab/
   
   
-  ubuntu_tests:
-    name: Test PyMeshLab (Ubuntu)
-    needs: ubuntu_build_pymeshlab
+  ubuntu_tests_debug:
+    name: Test PyMeshLab (Ubuntu-Debug)
+    needs: ubuntu_build_pymeshlab_debug
     runs-on: ubuntu-latest
     strategy:
       matrix:
