@@ -8,7 +8,7 @@ ExtendedMeshDocument::ExtendedMeshDocument() :
 	QDir dir(QString::fromStdString(pymeshlab::getRootAbsolutePath()));
 	dir.cd("lib/meshlab/plugins");
 
-	pymeshlab::QDebugRedirect qdbr; //redirect qdebug to null
+	//pymeshlab::QDebugRedirect qdbr; //redirect qdebug to null
 	pm.loadPlugins(s, dir);
 }
 
