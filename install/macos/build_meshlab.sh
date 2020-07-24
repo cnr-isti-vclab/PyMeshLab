@@ -28,7 +28,6 @@ rm readme.txt
 rm README.md
 mkdir -p lib/plugins
 cp -R meshlab.app/Contents/Frameworks lib/
-mv lib/Frameworks/libmeshlab-common* lib/
 cp -R meshlab.app/Contents/PlugIns/* lib/plugins/
 cp -R lib $DISTRIB_PATH/
 
