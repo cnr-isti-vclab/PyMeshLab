@@ -18,17 +18,25 @@ void ExtendedMeshDocument::loadMesh(const std::string& filename)
 	QFileInfo finfo(QString::fromStdString(filename));
 	if (!finfo.exists()){
 		std::cerr << "File does not exists!";
-	}
-	QString extension = finfo.suffix().toLower();
-
-	if (pm.allKnowInputFormats.contains(extension)){
-		MeshIOInterface* plugin = pm.allKnowInputFormats[extension];
-		int mask = 0;
-		RichParameterSet rps;
-		plugin->open(extension, QString::fromStdString(filename), *this->mm(), mask, rps);
+		//todo: manage python exception
 	}
 	else {
-		std::cerr << "Unknown format: " << extension.toStdString() << "\n";
+		QString extension = finfo.suffix().toLower();
+
+		if (pm.allKnowInputFormats.contains(extension)){
+			MeshIOInterface* plugin = pm.allKnowInputFormats[extension];
+			int mask = 0; //todo: use this mask
+			RichParameterSet rps; //todo: use rps (example: needs this)
+			this->addNewMesh(finfo.filePath(), finfo.fileName());
+			bool ok = plugin->open(extension, QString::fromStdString(filename), *(this->mm()), mask, rps);
+			if (!ok)
+				this->delMesh(this->mm());
+			//todo: manage python exception
+		}
+		else {
+			std::cerr << "Unknown format: " << extension.toStdString() << "\n";
+			//todo: manage python exception
+		}
 	}
 }
 

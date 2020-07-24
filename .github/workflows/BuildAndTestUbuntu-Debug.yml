@@ -50,8 +50,8 @@ jobs:
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
         export PYTHON_VERSION=${{ matrix.pyversion }}
-        sh install/linux/build_pymeshlab.sh
-    - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+        sh install/linux/build_pymeshlab_debug.sh
+    - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}_debug
       uses: actions/upload-artifact@v2
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}_debug
@@ -70,7 +70,7 @@ jobs:
     - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}_debug
       uses: actions/download-artifact@v2
       with:
-        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}_debug
         path: pymeshlab/
     - name: Install Python ${{ matrix.pyversion }}
       uses: actions/setup-python@v2
