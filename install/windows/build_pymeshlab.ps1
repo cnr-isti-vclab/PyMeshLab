@@ -3,7 +3,7 @@ $DIR = Get-Location
 
 cd $PSScriptRoot #move to script directory
 
-.\remove_unsuitable_plugins.ps1
+.\remove_unsuitable_plugins.ps1 #todo: remove from here
 
 cd ..\..\src\pymeshlabserver
 

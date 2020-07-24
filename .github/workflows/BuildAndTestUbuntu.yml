@@ -78,7 +78,7 @@ jobs:
         python-version: ${{ matrix.pyversion }}
     - name: Run Tests ${{ matrix.pyversion }}
       run: |
-        ldd pymeshlab/lib/meshlab/plugins/libfilter_sketchfab.so
+        #ldd pymeshlab/lib/meshlab/plugins/libfilter_sketchfab.so
         pip install pytest
         pytest -s pymeshlab
     

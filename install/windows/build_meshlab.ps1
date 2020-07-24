@@ -25,5 +25,7 @@ Remove-Item $DISTRIB_PATH\lib\Qt*.dll
 
 rm -r $BUILD_PATH
 
+.\remove_unsuitable_plugins.ps1
+
 #going back to original location
 cd $DIR
