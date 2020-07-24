@@ -16,4 +16,5 @@ cp -ar $BUILD_PATH/distrib/usr/lib $DISTRIB_PATH/
 
 rm -r $BUILD_PATH
 
+bash remove_unsuitable_plugins.sh
 bash update_plugins_paths.sh

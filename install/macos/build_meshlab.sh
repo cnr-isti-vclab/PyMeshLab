@@ -32,3 +32,6 @@ cp -R meshlab.app/Contents/PlugIns lib/meshlab/plugins
 cp -R lib $DISTRIB_PATH/
 
 rm -r $BUILD_PATH
+
+sh remove_unsuitable_plugins.sh 
+sh update_plugins_paths.sh
