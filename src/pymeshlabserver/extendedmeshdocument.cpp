@@ -6,7 +6,11 @@ ExtendedMeshDocument::ExtendedMeshDocument() :
 	MeshDocument(), s(), pm()
 {
 	QDir dir(QString::fromStdString(pymeshlab::getRootAbsolutePath()));
+#ifndef __APPLE__
 	dir.cd("lib/meshlab/plugins");
+#else
+	dir.cd("lib/plugins");
+#endif
 
 	//pymeshlab::QDebugRedirect qdbr; //redirect qdebug to null
 	pm.loadPlugins(s, dir);

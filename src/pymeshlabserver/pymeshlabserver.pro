@@ -43,19 +43,19 @@ macx {
 	QMAKE_LFLAGS += -Wl,-undefined,dynamic_lookup
 
 	LIBS += \
-		$$PYMESHLAB_DISTRIB_DIRECTORY/lib/libmeshlab-common.dylib
+	    $$PYMESHLAB_DISTRIB_DIRECTORY/lib/Frameworks/libmeshlab-common.dylib
 
 	QMAKE_CXXFLAGS += $$PYTHON_INCLUDES #includepath python lib
 
 
 	QMAKE_POST_LINK += "\
-		install_name_tool -change libmeshlab-common.1.dylib @loader_path/lib/libmeshlab-common.1.dylib $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
-		install_name_tool -change @rpath/QtOpenGL.framework/Versions/5/QtOpenGL @loader_path/lib/meshlab/Frameworks/QtOpenGL.framework/Versions/5/QtOpenGL $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
-		install_name_tool -change @rpath/QtWidgets.framework/Versions/5/QtWidgets @loader_path/lib/meshlab/Frameworks/QtWidgets.framework/Versions/5/QtWidgets $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
-		install_name_tool -change @rpath/QtGui.framework/Versions/5/QtGui @loader_path/lib/meshlab/Frameworks/QtGui.framework/Versions/5/QtGui $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
-		install_name_tool -change @rpath/QtXml.framework/Versions/5/QtXml @loader_path/lib/meshlab/Frameworks/QtXml.framework/Versions/5/QtXml $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
-		install_name_tool -change @rpath/QtQml.framework/Versions/5/QtQml @loader_path/lib/meshlab/Frameworks/QtQml.framework/Versions/5/QtQml $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
-		install_name_tool -change @rpath/QtCore.framework/Versions/5/QtCore @loader_path/lib/meshlab/Frameworks/QtCore.framework/Versions/5/QtCore $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
+	    install_name_tool -change libmeshlab-common.1.dylib @loader_path/lib/Frameworks/libmeshlab-common.1.dylib $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
+		install_name_tool -change @rpath/QtOpenGL.framework/Versions/5/QtOpenGL @loader_path/lib/Frameworks/QtOpenGL.framework/Versions/5/QtOpenGL $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
+		install_name_tool -change @rpath/QtWidgets.framework/Versions/5/QtWidgets @loader_path/lib/Frameworks/QtWidgets.framework/Versions/5/QtWidgets $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
+		install_name_tool -change @rpath/QtGui.framework/Versions/5/QtGui @loader_path/lib/Frameworks/QtGui.framework/Versions/5/QtGui $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
+		install_name_tool -change @rpath/QtXml.framework/Versions/5/QtXml @loader_path/lib/Frameworks/QtXml.framework/Versions/5/QtXml $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
+		install_name_tool -change @rpath/QtQml.framework/Versions/5/QtQml @loader_path/lib/Frameworks/QtQml.framework/Versions/5/QtQml $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
+		install_name_tool -change @rpath/QtCore.framework/Versions/5/QtCore @loader_path/lib/Frameworks/QtCore.framework/Versions/5/QtCore $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
 		"
 } # macx
 
