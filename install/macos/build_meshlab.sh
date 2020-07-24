@@ -26,7 +26,7 @@ rm meshlab.png
 rm privacy.txt
 rm readme.txt
 rm README.md
-mkdir -p lib/meshlab
+mkdir -p lib/meshlab/plugins
 cp -R meshlab.app/Contents/Frameworks lib/meshlab/
 mv lib/meshlab/Frameworks/libmeshlab-common* lib/
 cp -R meshlab.app/Contents/PlugIns/* lib/meshlab/plugins/
