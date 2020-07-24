@@ -6,4 +6,4 @@ sudo apt-get install -y patchelf #todo remove
 
 PLUGINS_DIR='../../pymeshlab/lib/meshlab/plugins'
 
-patchelf --set-rpath '$ORIGIN/../..' $PLUGINS_DIR/libio_base.so
+patchelf --set-rpath '$ORIGIN/../..' $PLUGINS_DIR/*.so

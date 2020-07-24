@@ -15,3 +15,5 @@ bash ../../meshlab/install/linux/linux_deploy.sh $BUILD_PATH/distrib
 cp -ar $BUILD_PATH/distrib/usr/lib $DISTRIB_PATH/
 
 rm -r $BUILD_PATH
+
+bash update_plugins_paths.sh
