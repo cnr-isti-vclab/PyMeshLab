@@ -55,6 +55,7 @@ macx {
 		install_name_tool -change @rpath/QtGui.framework/Versions/5/QtGui @loader_path/lib/Frameworks/QtGui.framework/Versions/5/QtGui $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
 		install_name_tool -change @rpath/QtXml.framework/Versions/5/QtXml @loader_path/lib/Frameworks/QtXml.framework/Versions/5/QtXml $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
 		install_name_tool -change @rpath/QtQml.framework/Versions/5/QtQml @loader_path/lib/Frameworks/QtQml.framework/Versions/5/QtQml $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
+		install_name_tool -change @rpath/QtNetwork.framework/Versions/5/QtNetwork @loader_path/lib/Frameworks/QtNetwork.framework/Versions/5/QtNetwork $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
 		install_name_tool -change @rpath/QtCore.framework/Versions/5/QtCore @loader_path/lib/Frameworks/QtCore.framework/Versions/5/QtCore $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
 		"
 } # macx
