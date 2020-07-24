@@ -34,5 +34,7 @@ cp -R lib $DISTRIB_PATH/
 
 rm -r $BUILD_PATH
 
+cd $DIR
+
 sh remove_unsuitable_plugins.sh 
 sh update_plugins_paths.sh

@@ -58,6 +58,9 @@ compile_commands.json
 # Debug exec:
 pymeshlabserver.cpython-38-x86_64-linux-gnu
 
+# MacOS meshlab appbundle
+meshlab.app
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
