@@ -2,10 +2,6 @@
 
 cd "$(dirname "$(realpath "$0")")"; #move to script directory
 
-bash remove_unsuitable_plugins.sh #todo: remove from here
-
-bash update_plugins_paths.sh #todo: remove from here
-
 cd ../../src/pymeshlabserver
 qmake pymeshlabserver.pro
 make -j4
