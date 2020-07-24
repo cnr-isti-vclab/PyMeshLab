@@ -92,6 +92,19 @@ exists($$PYMESHLAB_BASE_DIRECTORY/PYML_VERSION){
 	DEFINES += "PYMESHLAB_VERSION=$$PYMESHLAB_VERSION"
 }
 
+#uncomment this only when you need to debug c++ code on the module
+#be sure to have a lib compiled with debug symbols:
+#use script build_meshlab_debug.sh
+#CONFIG += debug_mode
+
+debug_mode {
+	DEFINES+=PYMESHLAB_DEBUG
+	TEMPLATE = app
+	SOURCES += debug_main.cpp
+	!win32:PYTHON_LIBS = $$system(python3-config --ldflags) -lpython3.8
+	!win32:LIBS += $$PYTHON_LIBS #includepath python lib
+}
+
 SOURCES += \
 	extendedmeshdocument.cpp \
 	main.cpp \
