@@ -14,7 +14,7 @@ BUILD_PATH=$(realpath ../../build)
 
 mkdir $BUILD_PATH
 
-bash ../../meshlab/install/macos/macos_build.sh $BUILD_PATH
+bash ../../meshlab/install/macos/macos_build_debug.sh $BUILD_PATH
 bash ../../meshlab/install/macos/macos_deploy.sh $BUILD_PATH/distrib
 
 cd $BUILD_PATH/distrib
@@ -26,14 +26,12 @@ rm meshlab.png
 rm privacy.txt
 rm readme.txt
 rm README.md
-mkdir -p lib/plugins
-cp -R meshlab.app/Contents/Frameworks lib/
-cp -R meshlab.app/Contents/PlugIns/* lib/plugins/
+mkdir -p lib/meshlab
+cp -R meshlab.app/Contents/Frameworks/* lib/
+cp -R meshlab.app/Contents/PlugIns lib/meshlab/plugins
 cp -R lib $DISTRIB_PATH/
 
 rm -r $BUILD_PATH
-
-cd $DIR
 
 sh remove_unsuitable_plugins.sh 
 sh update_plugins_paths.sh

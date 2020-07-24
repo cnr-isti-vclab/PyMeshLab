@@ -1,5 +1,5 @@
-#ifndef PYMESHDOCUMENT_H
-#define PYMESHDOCUMENT_H
+#ifndef PYMESHLAB_PYMESHDOCUMENT_H
+#define PYMESHLAB_PYMESHDOCUMENT_H
 
 #include <pybind11/pybind11.h>
 
@@ -9,4 +9,4 @@ void initMeshDocument(pybind11::module& m);
 
 }
 
-#endif // PYMESHDOCUMENT_H
+#endif // PYMESHLAB_PYMESHDOCUMENT_H

@@ -1,5 +1,5 @@
-#ifndef PYBOUNDINGBOX_H
-#define PYBOUNDINGBOX_H
+#ifndef PYMESHLAB_PYBOUNDINGBOX_H
+#define PYMESHLAB_PYBOUNDINGBOX_H
 
 #include <pybind11/pybind11.h>
 
@@ -9,4 +9,4 @@ void initBoundingBox(pybind11::module& m);
 
 }
 
-#endif // PYBOUNDINGBOX_H
+#endif // PYMESHLAB_PYBOUNDINGBOX_H

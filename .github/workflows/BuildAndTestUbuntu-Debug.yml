@@ -1,15 +1,15 @@
-name: BuildAndTestUbuntu
+name: BuildAndTestUbuntu-Debug
 
 on:
   [push, pull_request]
 
 jobs:
-  ubuntu_build_pymeshlab:
-    name: Build PyMeshLab (Ubuntu)
+  ubuntu_build_pymeshlab_debug:
+    name: Build PyMeshLab (Ubuntu-Debug)
     runs-on: ubuntu-16.04 #in order to deploy, need to use oldest supported version
     strategy:
       matrix:
-        pyversion: [3.5, 3.6, 3.7, 3.8]
+        pyversion: [3.8]
     steps:
     - uses: actions/checkout@v2
       with:
@@ -41,36 +41,36 @@ jobs:
       uses: actions/cache@v2
       with:
         path: pymeshlab/lib
-        key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
+        key: ${{ runner.os }}-meshlab_debug-${{steps.envs.outputs.meshlab_commit}}
     - name: Build MeshLab
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
         sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
-        sh install/linux/build_meshlab.sh
+        sh install/linux/build_meshlab_debug.sh
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
         export PYTHON_VERSION=${{ matrix.pyversion }}
-        sh install/linux/build_pymeshlab.sh
-    - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+        sh install/linux/build_pymeshlab_debug.sh
+    - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}_debug
       uses: actions/upload-artifact@v2
       with:
-        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}_debug
         path: pymeshlab/
   
   
-  ubuntu_tests:
-    name: Test PyMeshLab (Ubuntu)
-    needs: ubuntu_build_pymeshlab
+  ubuntu_tests_debug:
+    name: Test PyMeshLab (Ubuntu-Debug)
+    needs: ubuntu_build_pymeshlab_debug
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        pyversion: [3.5, 3.6, 3.7, 3.8]
+        pyversion: [3.8]
     steps:
     - uses: actions/checkout@v2
-    - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+    - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}_debug
       uses: actions/download-artifact@v2
       with:
-        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}_debug
         path: pymeshlab/
     - name: Install Python ${{ matrix.pyversion }}
       uses: actions/setup-python@v2
