@@ -1,1 +1,1 @@
-recursive-include pymeshlab/
+graft pymeshlab/
