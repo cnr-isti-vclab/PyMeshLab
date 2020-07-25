@@ -1,9 +1,9 @@
 name: TestRelease
 
 on:
-  [push, pull_request]
-  #release:
-  #  types: [published, edited]
+  #[push, pull_request]
+  release:
+    types: [published, edited]
 
 jobs:
   test_release_pymeshlab:
