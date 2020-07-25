@@ -3,7 +3,7 @@ name: TestRelease
 on:
   #[push, pull_request]
   release:
-    types: [published, edited]
+    types: [published, edited, released, prereleased]
 
 jobs:
   test_release_pymeshlab:
