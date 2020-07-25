@@ -12,7 +12,7 @@ ExtendedMeshDocument::ExtendedMeshDocument() :
 	dir.cd("lib/plugins");
 #endif
 
-	//pymeshlab::QDebugRedirect qdbr; //redirect qdebug to null
+	pymeshlab::QDebugRedirect qdbr; //redirect qdebug to null, just for this scope
 	pm.loadPlugins(s, dir);
 }
 
@@ -39,10 +39,6 @@ void ExtendedMeshDocument::loadMesh(const std::string& filename)
 		}
 		else {
 			std::cerr << "Unknown format: " << extension.toStdString() << "\n";
-
-			for (auto s: pm.inpFilters)
-				std::cerr << s.toStdString() << "; ";
-			std::cerr << "\n\n";
 			//todo: manage python exception
 		}
 
