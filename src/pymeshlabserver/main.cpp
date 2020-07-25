@@ -6,16 +6,21 @@
 namespace py = pybind11;
 
 std::string getDoc() {
-	return
-			R"pbdoc(
-				PyMeshLab
-				---------
-				  .. currentmodule:: pymeshlabserver
+    return R"pbdoc(
+             PyMeshLabServer Module
+             ----------------------
 
-				  .. autosummary::
-					 :toctree: _generate
+              .. currentmodule:: pymeshlabserver
 
-			)pbdoc";
+              This module contains a set of classes to
+              compute batch MeshLab operations.
+
+              .. autosummary::
+                 :toctree: _generate
+
+                 Point
+                 BoundingBox
+           )pbdoc";
 }
 
 PYBIND11_MODULE(pymeshlabserver, m) {
