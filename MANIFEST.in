@@ -1,7 +1,1 @@
-include pymeshlab/*
-include pymeshlab/lib/*
-include pymeshlab/lib/meshlab/*
-include pymeshlab/lib/meshlab/plugins/*
-include pymeshlab/lib/plugins/*
-include pymeshlab/lib/Frameworks/*
-include pymeshlab/tests/sample/*
+recursive-include pymeshlab/
