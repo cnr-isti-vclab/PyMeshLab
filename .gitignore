@@ -61,8 +61,8 @@ pymeshlabserver.cpython-38-x86_64-linux-gnu
 # MacOS meshlab appbundle
 meshlab.app
 
-# Test saved mesh
-bone_saved.obj
+# Test saved meshes
+pymeshlab/tests/sample/test_output/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
