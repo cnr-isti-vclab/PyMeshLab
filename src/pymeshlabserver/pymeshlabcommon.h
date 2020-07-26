@@ -57,6 +57,7 @@ private:
 };
 
 std::string getRootAbsolutePath();
+std::string getPluginsPath();
 
 }
 
