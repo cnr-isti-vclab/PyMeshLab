@@ -3,6 +3,7 @@ from pymeshlab import pymeshlabserver as pymls
 from . import samples_common
 
 def test_load_meshes():
+    print('\n')
     base_path = samples_common.samples_absolute_path()
     md = pymls.MeshDocument()
 
