@@ -47,12 +47,33 @@ void pymeshlab::ExtendedMeshDocument::loadMesh(const std::string& filename, py::
 
 void pymeshlab::ExtendedMeshDocument::saveMesh(const std::string& filename, pybind11::kwargs kwargs)
 {
+	QFileInfo finfo(QString::fromStdString(filename));
+	QString extension = finfo.suffix().toLower();
 
+	if (pm.allKnowOutputFormats.contains(extension)){
+		MeshIOInterface* plugin = pm.allKnowOutputFormats[extension];
+		int mask = 0; //todo: use this mask
+		RichParameterSet rps; //todo: use rps (example: needs this)
+		plugin->initSaveParameter(extension, *(this->mm()), rps);
+
+		updateRichParameterSet(kwargs, rps);
+
+		bool ok = plugin->save(extension, QString::fromStdString(filename), *(this->mm()), mask, rps);
+		if (!ok){
+			//todo: manage python exception
+		}
+	}
+	else {
+		std::cerr << "Unknown format: " << extension.toStdString() << "\n";
+		//todo: manage python exception
+	}
 }
 
 void pymeshlab::ExtendedMeshDocument::updateRichParameterSet(const pybind11::kwargs& kwargs, RichParameterSet& rps)
 {
+	if (kwargs){
 
+	}
 }
 
 

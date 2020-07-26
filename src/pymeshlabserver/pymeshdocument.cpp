@@ -55,6 +55,8 @@ void pymeshlab::initMeshDocument(pybind11::module& m)
 
 	meshDocumentClass.def("load_mesh", &ExtendedMeshDocument::loadMesh, py::arg("filename"));
 
+	meshDocumentClass.def("save_mesh", &ExtendedMeshDocument::saveMesh, py::arg("filename"));
+
 //	QDir dir(QString::fromStdString(pymeshlab::getPluginsPath()));
 
 //	pymeshlab::QDebugRedirect qdbr; //redirect qdebug to null, just for this scope
