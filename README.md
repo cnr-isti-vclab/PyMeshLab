@@ -17,7 +17,7 @@ If you get the error ```urllib.error.URLError: SSL: CERTIFICATE_VERIFY_FAILED```
 
 ## Run PyMeshLab
 
-To use PyMeshLab, you can download the [last release](https://github.com/cnr-isti-vclab/PyMeshLab/releases) or the [last artifact](https://github.com/cnr-isti-vclab/PyMeshLab/actions) according to your platform and your python version. Extract the archive in a folder called `pymeshlab`, then from outside the folder:
+After installing PyMeshLab through pip:
 ```
 python
 >>> from pymeshlab import pymeshlabserver as pymls
