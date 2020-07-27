@@ -26,8 +26,6 @@ win32 {
 
 	QMAKE_CXXFLAGS += $$PYTHON_INCLUDES #includepath python lib
 
-#	QMAKE_LFLAGS_PLUGIN -= -dynamiclib
-#	QMAKE_LFLAGS_PLUGIN += -bundle
 	QMAKE_EXTENSION_SHLIB = pyd
 } #win32
 
