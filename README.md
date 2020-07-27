@@ -20,8 +20,8 @@ If you get the error ```urllib.error.URLError: SSL: CERTIFICATE_VERIFY_FAILED```
 After installing PyMeshLab through pip:
 ```
 python
->>> from pymeshlab import pymeshlabserver as pymls
->>> md = pymls.MeshDocument()
+>>> import pymeshlab
+>>> md = ml.MeshSet()
 ```
 To run the tests:
 ```
@@ -53,7 +53,7 @@ or Windows:
 ```
 .\install\windows\build_pymeshlab.ps1
 ```
-these script will place the pymeshlabserver module inside the `pymeshlab` folder of this repository.
+these script will place the meshlab module inside the `pymeshlab` folder of this repository.
 
 For more details, please take a look at the [Github Actions Workflows](https://github.com/cnr-isti-vclab/PyMeshLab/tree/master/.github/workflows) that build and run tests automatically in all the platforms.
 ...

@@ -12,7 +12,7 @@ QT += core opengl xml qml
 
 win32:TARGET_NAME = $$system(python.exe $$PYMESHLAB_BASE_DIRECTORY/install/windows/python_config.py --extension-suffix)
 !win32:TARGET_NAME = $$system(python3-config --extension-suffix | cut -f 2 -d '.')
-TARGET = pymeshlabserver.$$TARGET_NAME
+TARGET = meshlab.$$TARGET_NAME
 
 win32 {
 	PYTHON_INCLUDES = $$system(python.exe $$PYMESHLAB_BASE_DIRECTORY/install/windows/python_config.py --includes)
@@ -108,19 +108,17 @@ debug_mode {
 }
 
 SOURCES += \
-	extendedmeshdocument.cpp \
 	main.cpp \
-	pyboundingbox.cpp \
+	meshset.cpp \
+	namebinder.cpp \
 	pymesh.cpp \
-	pymeshdocument.cpp \
 	pymeshlabcommon.cpp \
-	pypoint.cpp
+	pymeshset.cpp
 
 HEADERS += \
-	extendedmeshdocument.h \
-	pyboundingbox.h \
+	meshset.h \
+	namebinder.h \
 	pymesh.h \
-	pymeshdocument.h \
 	pymeshlabcommon.h \
-	pypoint.h
+	pymeshset.h
 

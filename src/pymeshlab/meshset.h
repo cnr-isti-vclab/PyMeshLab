@@ -8,13 +8,15 @@
 
 namespace pymeshlab {
 
-class ExtendedMeshDocument : public MeshDocument
+class MeshSet : public MeshDocument
 {
 public:
-	ExtendedMeshDocument();
+	MeshSet();
 
 	void loadMesh(const std::string& filename, pybind11::kwargs kwargs);
 	void saveMesh(const std::string& filename, pybind11::kwargs kwargs);
+
+	void applyFilter(const std::string& filtername, pybind11::kwargs kwargs);
 
 private:
 

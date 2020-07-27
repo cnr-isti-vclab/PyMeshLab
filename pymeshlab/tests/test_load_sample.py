@@ -1,11 +1,11 @@
 import pytest
-from pymeshlab import pymeshlabserver as pymls
+import pymeshlab as ml
 from . import samples_common
 
 def test_load_meshes():
     print('\n')
     base_path = samples_common.samples_absolute_path()
-    md = pymls.MeshDocument()
+    md = ml.MeshSet()
 
     md.load_mesh(base_path + "bone.ply")
 
