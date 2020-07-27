@@ -25,7 +25,7 @@ void pymeshlab::MeshSet::loadMesh(const std::string& filename, py::kwargs kwargs
 		if (pm.allKnowInputFormats.contains(extension)){
 			MeshIOInterface* plugin = pm.allKnowInputFormats[extension];
 			int mask = 0; //todo: use this mask
-			RichParameterSet rps; //todo: use rps (example: needs this)
+			RichParameterSet rps;
 			plugin->initPreOpenParameter(extension, QString::fromStdString(filename), rps);
 			plugin->initOpenParameter(extension, *(this->mm()), rps);
 
@@ -53,7 +53,7 @@ void pymeshlab::MeshSet::saveMesh(const std::string& filename, pybind11::kwargs 
 	if (pm.allKnowOutputFormats.contains(extension)){
 		MeshIOInterface* plugin = pm.allKnowOutputFormats[extension];
 		int mask = 0; //todo: use this mask
-		RichParameterSet rps; //todo: use rps (example: needs this)
+		RichParameterSet rps;
 		plugin->initSaveParameter(extension, *(this->mm()), rps);
 
 		updateRichParameterSet(kwargs, rps);

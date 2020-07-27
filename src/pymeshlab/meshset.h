@@ -1,5 +1,5 @@
-#ifndef PYMESHLAB_EXTENDEDMESHDOCUMENT_H
-#define PYMESHLAB_EXTENDEDMESHDOCUMENT_H
+#ifndef PYMESHLAB_MESHSET_H
+#define PYMESHLAB_MESHSET_H
 
 #include <pybind11/pybind11.h>
 #include <meshmodel.h>
@@ -29,4 +29,4 @@ private:
 
 }
 
-#endif // PYMESHLAB_EXTENDEDMESHDOCUMENT_H
+#endif // PYMESHLAB_MESHSET_H

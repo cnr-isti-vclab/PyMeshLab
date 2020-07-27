@@ -1,11 +1,17 @@
-#ifndef NAMEBINDER_H
-#define NAMEBINDER_H
+#ifndef PYMESHLAB_NAMEBINDER_H
+#define PYMESHLAB_NAMEBINDER_H
 
+namespace pymeshlab {
 
 class NameBinder
 {
 public:
 	NameBinder();
+
+private:
+
 };
 
-#endif // NAMEBINDER_H
+}
+
+#endif // PYMESHLAB_NAMEBINDER_H

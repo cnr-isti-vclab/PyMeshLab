@@ -1,6 +1,11 @@
 #include "namebinder.h"
 
-NameBinder::NameBinder()
+pymeshlab::NameBinder::NameBinder()
+{
+
+}
+
+void pymeshlab::NameBinder::associate(PluginManager& pm)
 {
 
 }
