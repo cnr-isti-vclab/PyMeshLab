@@ -5,8 +5,10 @@
 
 namespace py = pybind11;
 
-const Box3m& getBBox(CMeshO& m){
-	return m.bbox;
+void loadMesh(CMeshO& m, std::string filename){
+	vcg::tri::io::ImporterOBJ<CMeshO>::Info oi;
+	vcg::tri::io::ImporterOBJ<CMeshO>::Open(m, filename.c_str(), oi);
+	vcg::tri::UpdateBounding<CMeshO>::Box(m);
 }
 
 void updateBBox(CMeshO& m) {
