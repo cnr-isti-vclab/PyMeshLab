@@ -4,8 +4,3 @@ pymeshlab::NameBinder::NameBinder()
 {
 
 }
-
-void pymeshlab::NameBinder::associate(PluginManager& pm)
-{
-
-}
