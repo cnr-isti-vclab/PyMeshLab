@@ -1,5 +1,5 @@
-#ifndef PYMESHLAB_EXTENDEDMESHDOCUMENT_H
-#define PYMESHLAB_EXTENDEDMESHDOCUMENT_H
+#ifndef PYMESHLAB_MESHSET_H
+#define PYMESHLAB_MESHSET_H
 
 #include <pybind11/pybind11.h>
 #include <meshmodel.h>
@@ -8,13 +8,15 @@
 
 namespace pymeshlab {
 
-class ExtendedMeshDocument : public MeshDocument
+class MeshSet : public MeshDocument
 {
 public:
-	ExtendedMeshDocument();
+	MeshSet();
 
 	void loadMesh(const std::string& filename, pybind11::kwargs kwargs);
 	void saveMesh(const std::string& filename, pybind11::kwargs kwargs);
+
+	void applyFilter(const std::string& filtername, pybind11::kwargs kwargs);
 
 private:
 
@@ -27,4 +29,4 @@ private:
 
 }
 
-#endif // PYMESHLAB_EXTENDEDMESHDOCUMENT_H
+#endif // PYMESHLAB_MESHSET_H

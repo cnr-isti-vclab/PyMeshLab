@@ -5,7 +5,7 @@
 
 namespace pymeshlab {
 
-void initMeshDocument(pybind11::module& m);
+void initMeshSet(pybind11::module& m);
 
 }
 

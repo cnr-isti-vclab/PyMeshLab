@@ -3,9 +3,9 @@ $DIR = Get-Location
 
 cd $PSScriptRoot #move to script directory
 
-cd ..\..\src\pymeshlabserver
+cd ..\..\src\pymeshlab
 
-qmake pymeshlabserver.pro
+qmake pymeshlab.pro
 jom -j4
 
 #going back to original location
