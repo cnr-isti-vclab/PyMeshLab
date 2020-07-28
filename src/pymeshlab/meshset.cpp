@@ -162,7 +162,7 @@ void pymeshlab::MeshSet::updateRichParameterSet(const pybind11::kwargs& kwargs, 
 	}
 }
 
-MeshFilterInterface* pymeshlab::MeshSet::getPluginFromFilterName(const QString& filterName, QAction* action) const
+MeshFilterInterface* pymeshlab::MeshSet::getPluginFromFilterName(const QString& filterName, QAction*& action) const
 {
 	for (MeshFilterInterface* fp : pm.meshFilterPlug){
 		QList<QAction*> acts = fp->actions();
