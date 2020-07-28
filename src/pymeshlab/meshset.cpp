@@ -31,6 +31,7 @@ void pymeshlab::MeshSet::loadMesh(const std::string& filename, py::kwargs kwargs
 			MeshIOInterface* plugin = pm.allKnowInputFormats[extension];
 			int mask = 0; //todo: use this mask
 			RichParameterSet rps;
+			plugin->initGlobalParameterSet(nullptr, rps);
 			plugin->initPreOpenParameter(extension, QString::fromStdString(filename), rps);
 			plugin->initOpenParameter(extension, *(this->mm()), rps);
 
@@ -59,6 +60,7 @@ void pymeshlab::MeshSet::saveMesh(const std::string& filename, pybind11::kwargs 
 		MeshIOInterface* plugin = pm.allKnowOutputFormats[extension];
 		int mask = 0; //todo: use this mask
 		RichParameterSet rps;
+		plugin->initGlobalParameterSet(nullptr, rps);
 		plugin->initSaveParameter(extension, *(this->mm()), rps);
 
 		updateRichParameterSet(kwargs, rps);
@@ -100,7 +102,7 @@ void pymeshlab::MeshSet::printPythonFilterParameterList(const std::string functi
 				std::cout << "\t" << ffp.pythonName().toStdString() << " : "
 						  << ffp.pythonTypeString().toStdString() << " = ";
 				ffp.printDefaultValue(std::cout);
-				std::cout << "\n"; //todo modify default value
+				std::cout << "\n";
 			}
 		}
 	}
@@ -108,7 +110,40 @@ void pymeshlab::MeshSet::printPythonFilterParameterList(const std::string functi
 
 void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kwargs kwargs)
 {
-
+	if (QString::fromStdString(filtername).startsWith("load_")){
+		std::string fn = py::str(kwargs["file_name"]);
+		pybind11::kwargs nk;
+		for (auto k :kwargs){
+			if (! py::str(k.first).is(py::str("file_name")))
+				nk[k.first] = k.second;
+		}
+		loadMesh(fn, nk);
+	}
+	else if (QString::fromStdString(filtername).startsWith("save_")){
+		std::string fn = py::str(kwargs["file_name"]);
+		pybind11::kwargs nk;
+		for (auto k :kwargs){
+			if (! py::str(k.first).is(py::str("file_name")))
+				nk[k.first] = k.second;
+		}
+		saveMesh(fn, nk);
+	}
+	else {
+		FilterFunctionSet::iterator it = filterFunctionSet.find(QString::fromStdString(filtername));
+		if (it != filterFunctionSet.end()){
+			QString meshlabFilterName = it->meshlabFunctionName();
+			QAction* action = nullptr;
+			MeshFilterInterface* fp = getPluginFromFilterName(meshlabFilterName, action);
+			RichParameterSet rps;
+			fp->initParameterSet(action, *this, rps);
+			updateRichParameterSet(kwargs, rps);
+			fp->applyFilter(action, *this, rps, nullptr);
+		}
+		else {
+			//todo: manage python exception
+			std::cerr << "Filter " << filtername << " not found\n";
+		}
+	}
 }
 
 void pymeshlab::MeshSet::updateRichParameterSet(const pybind11::kwargs& kwargs, RichParameterSet& rps)
@@ -126,6 +161,22 @@ void pymeshlab::MeshSet::updateRichParameterSet(const pybind11::kwargs& kwargs, 
 			}
 		}
 	}
+}
+
+MeshFilterInterface* pymeshlab::MeshSet::getPluginFromFilterName(const QString& filterName, QAction* action) const
+{
+	for (MeshFilterInterface* fp : pm.meshFilterPlug){
+		QList<QAction*> acts = fp->actions();
+		for (QAction* act : acts) {
+			if (filterName == fp->filterName(act)){
+				action = act;
+				return fp;
+			}
+		}
+	}
+	assert(0);
+	//todo: manage python exception
+	return nullptr;
 }
 
 

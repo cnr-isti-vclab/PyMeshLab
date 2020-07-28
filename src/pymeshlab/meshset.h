@@ -26,6 +26,7 @@ public:
 private:
 
 	void updateRichParameterSet(const pybind11::kwargs& kwargs, RichParameterSet& rps);
+	MeshFilterInterface* getPluginFromFilterName(const QString& filterName, QAction* action) const;
 
 	std::string basePath;
 	RichParameterSet globalRPS;
