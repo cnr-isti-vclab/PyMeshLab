@@ -6,7 +6,7 @@ pymeshlab::NameBinder::NameBinder()
 {
 }
 
-void pymeshlab::NameBinder::popolate(const PluginManager pm)
+void pymeshlab::NameBinder::popolate(const PluginManager& pm)
 {
 	std::string samplesPath = getSamplesPath();
 

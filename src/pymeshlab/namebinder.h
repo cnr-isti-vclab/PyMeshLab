@@ -9,7 +9,7 @@ class NameBinder
 {
 public:
 	NameBinder();
-	void popolate(const PluginManager pm);
+	void popolate(const PluginManager& pm);
 
 	QString toPythonName(const QString& name) const;
 
