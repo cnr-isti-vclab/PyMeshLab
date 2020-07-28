@@ -15,17 +15,17 @@ public:
 	MeshSet();
 	virtual ~MeshSet();
 
-	void loadMesh(const std::string& filename, pybind11::kwargs kwargs);
-	void saveMesh(const std::string& filename, pybind11::kwargs kwargs);
-
 	void printPythonFilterNamesList() const;
 	void printPythonFilterParameterList(const std::string functionName) const;
+
+	void loadMesh(const std::string& filename, pybind11::kwargs kwargs);
+	void saveMesh(const std::string& filename, pybind11::kwargs kwargs);
 
 	void applyFilter(const std::string& filtername, pybind11::kwargs kwargs);
 
 private:
 
-	void updateRichParameterSet(const pybind11::kwargs& kwargs, RichParameterSet& rps);
+	void updateRichParameterSet(const pybind11::kwargs& kwargs, RichParameterSet& rps, bool ignoreFileName = false);
 	MeshFilterInterface* getPluginFromFilterName(const QString& filterName, QAction* action) const;
 
 	std::string basePath;
