@@ -107,16 +107,18 @@ debug_mode {
 }
 
 SOURCES += \
+	filterfunction.cpp \
+	filterfunctionset.cpp \
 	main.cpp \
 	meshset.cpp \
-	namebinder.cpp \
 	pymesh.cpp \
 	pymeshlabcommon.cpp \
 	pymeshset.cpp
 
 HEADERS += \
+	filterfunction.h \
+	filterfunctionset.h \
 	meshset.h \
-	namebinder.h \
 	pymesh.h \
 	pymeshlabcommon.h \
 	pymeshset.h
