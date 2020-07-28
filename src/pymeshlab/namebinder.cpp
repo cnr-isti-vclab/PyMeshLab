@@ -4,7 +4,6 @@
 
 pymeshlab::NameBinder::NameBinder()
 {
-
 }
 
 void pymeshlab::NameBinder::popolate(const PluginManager pm)
@@ -13,6 +12,10 @@ void pymeshlab::NameBinder::popolate(const PluginManager pm)
 
 	MeshDocument dummyMeshDocument;
 	dummyMeshDocument.addNewMesh(QString::fromStdString(getSamplesPath() + "cube.obj"), "cube");
+	int mask = 0;
+	mask |= vcg::tri::io::Mask::IOM_VERTQUALITY;
+	mask |= vcg::tri::io::Mask::IOM_FACEQUALITY;
+	dummyMeshDocument.mm()->Enable(mask);
 
 	for (auto fp : pm.meshFilterPlug){
 		auto acts = fp->actions();
@@ -22,7 +25,8 @@ void pymeshlab::NameBinder::popolate(const PluginManager pm)
 			std::cerr << pythonFilterName.toStdString() << "\n";
 
 			RichParameterSet rps;
-			fp->initParameterSet(act, *dummyMeshDocument.mm(), rps);
+			fp->initParameterSet(act, dummyMeshDocument, rps);
+
 			for (auto rp : rps.paramList){
 				QString originalParameterName = rp->name;
 				QString pythonParameterName = toPythonName(originalParameterName);

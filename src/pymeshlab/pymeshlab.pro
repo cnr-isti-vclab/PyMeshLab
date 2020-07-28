@@ -98,6 +98,7 @@ exists($$PYMESHLAB_BASE_DIRECTORY/PYML_VERSION){
 #CONFIG += debug_mode
 
 debug_mode {
+	message("DEBUG MODE!")
 	DEFINES+=PYMESHLAB_DEBUG
 	TEMPLATE = app
 	SOURCES += debug_main.cpp

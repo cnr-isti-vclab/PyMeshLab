@@ -13,6 +13,10 @@ pymeshlab::MeshSet::MeshSet() :
 	nameBinder.popolate(pm);
 }
 
+pymeshlab::MeshSet::~MeshSet()
+{
+}
+
 void pymeshlab::MeshSet::loadMesh(const std::string& filename, py::kwargs kwargs)
 {
 	QFileInfo finfo(QString::fromStdString(filename));
