@@ -4,6 +4,7 @@
 #include <pybind11/pybind11.h>
 #include <meshmodel.h>
 #include <pluginmanager.h>
+#include "namebinder.h"
 
 
 namespace pymeshlab {
@@ -25,6 +26,7 @@ private:
 	std::string basePath;
 	RichParameterSet globalRPS;
 	PluginManager pm;
+	NameBinder nameBinder;
 };
 
 }

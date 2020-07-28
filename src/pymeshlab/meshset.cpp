@@ -10,6 +10,7 @@ pymeshlab::MeshSet::MeshSet() :
 	QDir dir(QString::fromStdString(pymeshlab::getPluginsPath()));
 	pymeshlab::QDebugRedirect qdbr; //redirect qdebug to null, just for this scope
 	pm.loadPlugins(globalRPS, dir);
+	nameBinder.popolate(pm);
 }
 
 void pymeshlab::MeshSet::loadMesh(const std::string& filename, py::kwargs kwargs)
