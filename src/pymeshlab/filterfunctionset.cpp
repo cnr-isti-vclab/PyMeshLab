@@ -31,7 +31,7 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 			for (RichParameter* rp : rps.paramList){
 				QString originalParameterName = rp->name;
 				QString pythonParameterName = toPythonName(originalParameterName);
-				FilterFunctionParameter par(pythonParameterName, originalParameterName, typeOfParameter(rp));
+				FilterFunctionParameter par(pythonParameterName, originalParameterName, rp->val);
 				f.addParameter(par);
 			}
 			functionSet.insert(f);
@@ -66,34 +66,6 @@ QString pymeshlab::FilterFunctionSet::toPythonName(const QString& name)
 	pythonName.replace('-', '_');
 	pythonName.remove(QRegularExpression("[().,'\":+]+"));
 	return pythonName;
-}
-
-pymeshlab::FilterFunctionParameter::Type pymeshlab::FilterFunctionSet::typeOfParameter(
-		const RichParameter* rp)
-{
-	if (rp->val->isBool())
-		return FilterFunctionParameter::BOOL;
-	if (rp->val->isInt())
-		return FilterFunctionParameter::INT;
-	if (rp->val->isFloat())
-		return FilterFunctionParameter::FLOAT;
-	if (rp->val->isString())
-		return FilterFunctionParameter::STRING;
-	if (rp->val->isMatrix44f())
-		return FilterFunctionParameter::MATRIX;
-	if (rp->val->isPoint3f())
-		return FilterFunctionParameter::POINT;
-	if (rp->val->isShotf())
-		return FilterFunctionParameter::SHOT;
-	if (rp->val->isColor())
-		return FilterFunctionParameter::COLOR;
-	if (rp->val->isAbsPerc())
-		return FilterFunctionParameter::ABS_PERC;
-	if (rp->val->isEnum())
-		return FilterFunctionParameter::ENUM;
-	//to support: floatlist, dynamicfloat, openfile, savefile, mesh
-
-	return FilterFunctionParameter::UNDEFINED;
 }
 
 void pymeshlab::FilterFunctionSet::addFunction(const pymeshlab::FilterFunction& f)

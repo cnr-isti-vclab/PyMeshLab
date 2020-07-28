@@ -108,6 +108,7 @@ debug_mode {
 
 SOURCES += \
 	filterfunction.cpp \
+	filterfunctionparameter.cpp \
 	filterfunctionset.cpp \
 	main.cpp \
 	meshset.cpp \
@@ -117,6 +118,7 @@ SOURCES += \
 
 HEADERS += \
 	filterfunction.h \
+	filterfunctionparameter.h \
 	filterfunctionset.h \
 	meshset.h \
 	pymesh.h \

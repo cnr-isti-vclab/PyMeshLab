@@ -26,7 +26,6 @@ public:
 private:
 
 	void updateRichParameterSet(const pybind11::kwargs& kwargs, RichParameterSet& rps);
-	void printParameterDefaultValue(const FilterFunctionParameter& ffp) const;
 
 	std::string basePath;
 	RichParameterSet globalRPS;

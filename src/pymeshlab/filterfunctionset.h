@@ -6,7 +6,6 @@
 
 namespace pymeshlab {
 
-
 class FilterFunctionSet
 {
 public:
@@ -24,7 +23,6 @@ public:
 	bool contains(const QString& pythonFunctionName) const;
 
 	static QString toPythonName(const QString& name);
-	static FilterFunctionParameter::Type typeOfParameter(const RichParameter* rp);
 
 private:
 	void addFunction(const FilterFunction& f);

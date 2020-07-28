@@ -1,44 +1,13 @@
 #ifndef PYMESHLAB_FILTERFUNCTIONLIST_H
 #define PYMESHLAB_FILTERFUNCTIONLIST_H
 
+#include "filterfunctionparameter.h"
+
 #include <QString>
 #include <list>
 #include <set>
 
 namespace pymeshlab {
-
-class FilterFunctionParameter
-{
-public:
-	enum Type {
-		UNDEFINED,
-		BOOL,
-		INT,
-		FLOAT,
-		STRING,
-		MATRIX,
-		POINT,
-		SHOT,
-		COLOR,
-		ABS_PERC,
-		ENUM,
-		FLOAT_LIST,
-		DYNAMIC_FLOAT,
-		OPEN_FILE,
-		SAVE_FILE,
-		MESH
-	};
-	FilterFunctionParameter(const QString& pName, const QString& mName, const Type& type);
-	QString pythonName() const;
-	QString meshlabName() const;
-	QString pythonTypeString() const;
-
-	bool operator< (const FilterFunctionParameter& oth) const;
-private:
-	QString pName;
-	QString mName;
-	Type type;
-};
 
 class FilterFunction
 {

@@ -98,8 +98,9 @@ void pymeshlab::MeshSet::printPythonFilterParameterList(const std::string functi
 		else {
 			for (const FilterFunctionParameter& ffp : ff){
 				std::cout << "\t" << ffp.pythonName().toStdString() << " : "
-						  << ffp.pythonTypeString().toStdString() << " = "
-						  << "defaultValue" << "\n"; //todo modify default value
+						  << ffp.pythonTypeString().toStdString() << " = ";
+				ffp.printDefaultValue(std::cout);
+				std::cout << "\n"; //todo modify default value
 			}
 		}
 	}
@@ -126,5 +127,7 @@ void pymeshlab::MeshSet::updateRichParameterSet(const pybind11::kwargs& kwargs, 
 		}
 	}
 }
+
+
 
 
