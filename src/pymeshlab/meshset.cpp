@@ -146,15 +146,14 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 void pymeshlab::MeshSet::updateRichParameterSet(const FilterFunction& f, const pybind11::kwargs& kwargs, RichParameterSet& rps, bool ignoreFileName)
 {
 	if (kwargs){
-		for (auto p : kwargs){
+		for (std::pair<py::handle, py::handle> p : kwargs){
 			std::string key = p.first.cast<std::string>();
-			std::cerr << "Key: " << key << "\n";
 			if (!ignoreFileName || key!="file_name"){
 				if (f.contains(QString::fromStdString(key))){
-					const FilterFunctionParameter& p = f.getFilterFunctionParameter(QString::fromStdString(key));
-					RichParameter* par = rps.findParameter(p.meshlabName());
+					const FilterFunctionParameter& ffp = f.getFilterFunctionParameter(QString::fromStdString(key));
+					RichParameter* par = rps.findParameter(ffp.meshlabName());
 					if (par){
-						std::cerr << "Parameter " << key <<" found.\n";
+						updateRichParameterFromKwarg(par, ffp, p);
 					}
 					else {
 						//should be impossible
@@ -167,6 +166,38 @@ void pymeshlab::MeshSet::updateRichParameterSet(const FilterFunction& f, const p
 				}
 			}
 		}
+	}
+}
+
+void pymeshlab::MeshSet::updateRichParameterFromKwarg(
+		RichParameter* par,
+		const FilterFunctionParameter& ffp,
+		const std::pair<py::handle, py::handle>& k)
+{
+	QString pythonType = ffp.pythonTypeString();
+	if (pythonType == "bool"){
+		delete par->val;
+		par->val = new BoolValue(py::cast<bool>(k.second));
+	}
+	else if (pythonType == "int") {
+		delete par->val;
+		par->val = new IntValue(py::cast<int>(k.second));
+	}
+	else if (pythonType == "float") {
+		delete par->val;
+		par->val = new FloatValue(py::cast<float>(k.second));
+	}
+	else if (pythonType == "str") {
+		delete par->val;
+		par->val = new StringValue(
+					QString::fromStdString(py::cast<std::string>(k.second)));
+	}
+	else if (pythonType == "still_unsupported"){
+		std::cerr << "Warning: parameter type still not supported";
+	}
+	else {
+		std::cerr << "Parameter type not found. Critical Error. Exiting...";
+		assert(0);
 	}
 }
 
