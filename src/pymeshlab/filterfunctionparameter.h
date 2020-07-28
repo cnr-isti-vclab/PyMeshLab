@@ -24,6 +24,7 @@ public:
 
 	FilterFunctionParameter& operator=(FilterFunctionParameter oth);
 	bool operator< (const FilterFunctionParameter& oth) const;
+	bool operator==(const FilterFunctionParameter& oth) const;
 	void swap(FilterFunctionParameter& oth);
 private:
 	static Value* createNewValue(const Value* ov);

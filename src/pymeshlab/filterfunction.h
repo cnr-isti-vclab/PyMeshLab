@@ -18,6 +18,9 @@ public:
 	QString meshlabFunctionName() const;
 	unsigned int parametersNumber() const;
 	QStringList pythonFunctionParameters() const;
+	bool contains(const QString& pythonParameter) const;
+	const FilterFunctionParameter& getFilterFunctionParameter(const QString& pythonParameter) const;
+
 	bool operator< (const FilterFunction& oth) const;
 
 	using iterator = std::list<FilterFunctionParameter>::const_iterator;

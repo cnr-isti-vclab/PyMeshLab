@@ -25,7 +25,7 @@ public:
 
 private:
 
-	void updateRichParameterSet(const pybind11::kwargs& kwargs, RichParameterSet& rps, bool ignoreFileName = false);
+	void updateRichParameterSet(const FilterFunction& f, const pybind11::kwargs& kwargs, RichParameterSet& rps, bool ignoreFileName = false);
 	MeshFilterInterface* getPluginFromFilterName(const QString& filterName, QAction*& action) const;
 
 	std::string basePath;

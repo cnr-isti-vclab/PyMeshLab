@@ -45,6 +45,8 @@ QString pymeshlab::FilterFunctionParameter::meshlabName() const
 
 QString pymeshlab::FilterFunctionParameter::pythonTypeString() const
 {
+	if (!defValue)
+		return "no_value";
 	if (defValue->isEnum()) {
 		return "still_unsupported";
 	}
@@ -72,6 +74,8 @@ const Value* pymeshlab::FilterFunctionParameter::defaultValue() const
 
 void pymeshlab::FilterFunctionParameter::printDefaultValue(std::ostream& o) const
 {
+	if (!defValue)
+		o << "no_value";
 	if (defValue->isEnum()) {
 		o << "None";
 		return;
@@ -143,6 +147,11 @@ bool pymeshlab::FilterFunctionParameter::operator<(const pymeshlab::FilterFuncti
 	return pName < oth.pName;
 }
 
+bool pymeshlab::FilterFunctionParameter::operator==(const pymeshlab::FilterFunctionParameter& oth) const
+{
+	return pName == oth.pName;
+}
+
 void pymeshlab::FilterFunctionParameter::swap(pymeshlab::FilterFunctionParameter& oth)
 {
 	std::swap(pName, oth.pName);
@@ -152,6 +161,8 @@ void pymeshlab::FilterFunctionParameter::swap(pymeshlab::FilterFunctionParameter
 
 Value* pymeshlab::FilterFunctionParameter::createNewValue(const Value* ov)
 {
+	if (!ov)
+		return nullptr;
 	if (ov->isEnum())
 		return new EnumValue(ov->getEnum());
 	if (ov->isAbsPerc())

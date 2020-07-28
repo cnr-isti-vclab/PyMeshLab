@@ -34,6 +34,18 @@ QStringList pymeshlab::FilterFunction::pythonFunctionParameters() const
 	return list;
 }
 
+bool pymeshlab::FilterFunction::contains(const QString& pythonParameter) const
+{
+	iterator it = std::find(parameters.begin(), parameters.end(), FilterFunctionParameter(pythonParameter, "", nullptr));
+	return it != parameters.end();
+}
+
+const pymeshlab::FilterFunctionParameter& pymeshlab::FilterFunction::getFilterFunctionParameter(const QString& pythonParameter) const
+{
+	iterator it = std::find(parameters.begin(), parameters.end(), FilterFunctionParameter(pythonParameter, "", nullptr));
+	return *it;
+}
+
 bool pymeshlab::FilterFunction::operator<(const pymeshlab::FilterFunction& oth) const
 {
 	return pythonFunName < oth.pythonFunName;

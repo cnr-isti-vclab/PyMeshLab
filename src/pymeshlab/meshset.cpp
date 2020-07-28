@@ -101,7 +101,7 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 				plugin->initPreOpenParameter(extension, QString::fromStdString(filename), rps);
 				plugin->initOpenParameter(extension, *(this->mm()), rps);
 
-				updateRichParameterSet(kwargs, rps, true);
+				updateRichParameterSet(*it, kwargs, rps, true);
 
 				this->addNewMesh(finfo.filePath(), finfo.fileName());
 				bool ok = plugin->open(extension, QString::fromStdString(filename), *(this->mm()), mask, rps);
@@ -119,7 +119,7 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 			plugin->initGlobalParameterSet(nullptr, rps);
 			plugin->initSaveParameter(extension, *(this->mm()), rps);
 
-			updateRichParameterSet(kwargs, rps, true);
+			updateRichParameterSet(*it, kwargs, rps, true);
 
 			bool ok = plugin->save(extension, QString::fromStdString(filename), *(this->mm()), mask, rps);
 			if (!ok){
@@ -131,7 +131,7 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 			MeshFilterInterface* fp = getPluginFromFilterName(meshlabFilterName, action);
 			RichParameterSet rps;
 			fp->initParameterSet(action, *this, rps);
-			updateRichParameterSet(kwargs, rps);
+			updateRichParameterSet(*it, kwargs, rps);
 			fp->applyFilter(action, *this, rps, nullptr);
 		}
 
@@ -143,15 +143,23 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 
 }
 
-void pymeshlab::MeshSet::updateRichParameterSet(const pybind11::kwargs& kwargs, RichParameterSet& rps, bool ignoreFileName)
+void pymeshlab::MeshSet::updateRichParameterSet(const FilterFunction& f, const pybind11::kwargs& kwargs, RichParameterSet& rps, bool ignoreFileName)
 {
 	if (kwargs){
 		for (auto p : kwargs){
 			std::string key = p.first.cast<std::string>();
+			std::cerr << "Key: " << key << "\n";
 			if (!ignoreFileName || key!="file_name"){
-				RichParameter* par = rps.findParameter(QString::fromStdString(key));
-				if (par){
-
+				if (f.contains(QString::fromStdString(key))){
+					const FilterFunctionParameter& p = f.getFilterFunctionParameter(QString::fromStdString(key));
+					RichParameter* par = rps.findParameter(p.meshlabName());
+					if (par){
+						std::cerr << "Parameter " << key <<" found.\n";
+					}
+					else {
+						//should be impossible
+						assert(0);
+					}
 				}
 				else {
 					std::cerr << "Warning: parameter " << key << " not found\n";
