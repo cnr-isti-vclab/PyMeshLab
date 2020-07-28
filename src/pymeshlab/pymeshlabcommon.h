@@ -56,8 +56,9 @@ private:
 	QtMessageHandler old;
 };
 
-std::string getRootAbsolutePath();
+std::string getRootPath();
 std::string getPluginsPath();
+std::string getSamplesPath();
 
 }
 

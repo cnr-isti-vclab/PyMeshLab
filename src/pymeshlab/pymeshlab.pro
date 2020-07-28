@@ -98,6 +98,7 @@ exists($$PYMESHLAB_BASE_DIRECTORY/PYML_VERSION){
 #CONFIG += debug_mode
 
 debug_mode {
+	message("DEBUG MODE!")
 	DEFINES+=PYMESHLAB_DEBUG
 	TEMPLATE = app
 	SOURCES += debug_main.cpp
@@ -106,16 +107,20 @@ debug_mode {
 }
 
 SOURCES += \
+	filterfunction.cpp \
+	filterfunctionparameter.cpp \
+	filterfunctionset.cpp \
 	main.cpp \
 	meshset.cpp \
-	namebinder.cpp \
 	pymesh.cpp \
 	pymeshlabcommon.cpp \
 	pymeshset.cpp
 
 HEADERS += \
+	filterfunction.h \
+	filterfunctionparameter.h \
+	filterfunctionset.h \
 	meshset.h \
-	namebinder.h \
 	pymesh.h \
 	pymeshlabcommon.h \
 	pymeshset.h

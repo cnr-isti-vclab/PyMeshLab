@@ -10,6 +10,11 @@ pymeshlab::MeshSet::MeshSet() :
 	QDir dir(QString::fromStdString(pymeshlab::getPluginsPath()));
 	pymeshlab::QDebugRedirect qdbr; //redirect qdebug to null, just for this scope
 	pm.loadPlugins(globalRPS, dir);
+	filterFunctionSet.popolate(pm);
+}
+
+pymeshlab::MeshSet::~MeshSet()
+{
 }
 
 void pymeshlab::MeshSet::loadMesh(const std::string& filename, py::kwargs kwargs)
@@ -69,6 +74,38 @@ void pymeshlab::MeshSet::saveMesh(const std::string& filename, pybind11::kwargs 
 	}
 }
 
+void pymeshlab::MeshSet::printPythonFilterNamesList() const
+{
+	QStringList list = filterFunctionSet.pythonFunctionNames();
+	std::cout << "MeshSet class - list of filter names:\n";
+	for (const QString& fname : list){
+		std::cout << "\t" << fname.toStdString() << "\n";
+	}
+}
+
+void pymeshlab::MeshSet::printPythonFilterParameterList(const std::string functionName) const
+{
+	FilterFunctionSet::iterator it = filterFunctionSet.find(QString::fromStdString(functionName));
+	if (it == filterFunctionSet.end()){
+		std::cout << "Filter " << functionName << " not found.\n";
+	}
+	else {
+		std::cout << functionName <<" filter - list of parameter names:\n";
+		const FilterFunction& ff = *it;
+		if (ff.parametersNumber() == 0){
+			std::cout << "\tNone.\n";
+		}
+		else {
+			for (const FilterFunctionParameter& ffp : ff){
+				std::cout << "\t" << ffp.pythonName().toStdString() << " : "
+						  << ffp.pythonTypeString().toStdString() << " = ";
+				ffp.printDefaultValue(std::cout);
+				std::cout << "\n"; //todo modify default value
+			}
+		}
+	}
+}
+
 void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kwargs kwargs)
 {
 
@@ -90,5 +127,7 @@ void pymeshlab::MeshSet::updateRichParameterSet(const pybind11::kwargs& kwargs, 
 		}
 	}
 }
+
+
 
 

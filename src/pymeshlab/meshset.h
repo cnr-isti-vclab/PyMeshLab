@@ -4,6 +4,7 @@
 #include <pybind11/pybind11.h>
 #include <meshmodel.h>
 #include <pluginmanager.h>
+#include "filterfunctionset.h"
 
 
 namespace pymeshlab {
@@ -12,9 +13,13 @@ class MeshSet : public MeshDocument
 {
 public:
 	MeshSet();
+	virtual ~MeshSet();
 
 	void loadMesh(const std::string& filename, pybind11::kwargs kwargs);
 	void saveMesh(const std::string& filename, pybind11::kwargs kwargs);
+
+	void printPythonFilterNamesList() const;
+	void printPythonFilterParameterList(const std::string functionName) const;
 
 	void applyFilter(const std::string& filtername, pybind11::kwargs kwargs);
 
@@ -25,6 +30,7 @@ private:
 	std::string basePath;
 	RichParameterSet globalRPS;
 	PluginManager pm;
+	FilterFunctionSet filterFunctionSet;
 };
 
 }

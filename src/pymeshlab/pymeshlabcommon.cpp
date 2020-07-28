@@ -8,7 +8,7 @@ namespace py = pybind11;
 std::stringstream pymeshlab::CoutRedirect::buffer;
 std::stringstream pymeshlab::CerrRedirect::buffer;
 
-std::string pymeshlab::getRootAbsolutePath()
+std::string pymeshlab::getRootPath()
 {
 #ifndef PYMESHLAB_DEBUG
 	py::gil_scoped_acquire acquire;
@@ -24,7 +24,7 @@ std::string pymeshlab::getRootAbsolutePath()
 
 std::string pymeshlab::getPluginsPath()
 {
-	QDir dir(QString::fromStdString(pymeshlab::getRootAbsolutePath()));
+	QDir dir(QString::fromStdString(pymeshlab::getRootPath()));
 #ifndef __APPLE__
 	dir.cd("lib/meshlab/plugins");
 #else
@@ -35,3 +35,9 @@ std::string pymeshlab::getPluginsPath()
 
 
 
+
+std::string pymeshlab::getSamplesPath()
+{
+	std::string rootPath = getRootPath();
+	return rootPath + "/tests/sample/";
+}
