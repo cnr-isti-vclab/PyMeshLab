@@ -2,7 +2,7 @@ import pytest
 import pymeshlab as ml
 from . import samples_common
 
-def test_load_meshes():
+def test_convex_hull():
     print('\n')
     base_path = samples_common.samples_absolute_path()
     output_path = samples_common.test_output_path()
