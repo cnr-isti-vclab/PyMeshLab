@@ -32,13 +32,14 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 		QString originalParameterName = "file_name";
 		QString pythonParameterName = toPythonName(originalParameterName);
 		StringValue sv = "file." + inputFormat;
-		FilterFunctionParameter par(pythonParameterName, originalParameterName, &sv);
+		StringDecoration sd(new StringValue(sv));
+		FilterFunctionParameter par(pythonParameterName, originalParameterName, &sv, &sd);
 		f.addParameter(par);
 
 		for (RichParameter* rp : rps.paramList){
 			QString originalParameterName = rp->name;
 			QString pythonParameterName = toPythonName(originalParameterName);
-			FilterFunctionParameter par(pythonParameterName, originalParameterName, rp->val);
+			FilterFunctionParameter par(pythonParameterName, originalParameterName, rp->val, rp->pd);
 			f.addParameter(par);
 		}
 		functionSet.insert(f);
@@ -58,13 +59,14 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 		QString originalParameterName = "file_name";
 		QString pythonParameterName = toPythonName(originalParameterName);
 		StringValue sv = "file." + outputFormat;
-		FilterFunctionParameter par(pythonParameterName, originalParameterName, &sv);
+		StringDecoration sd(new StringValue(sv));
+		FilterFunctionParameter par(pythonParameterName, originalParameterName, &sv, &sd);
 		f.addParameter(par);
 
 		for (RichParameter* rp : rps.paramList){
 			QString originalParameterName = rp->name;
 			QString pythonParameterName = toPythonName(originalParameterName);
-			FilterFunctionParameter par(pythonParameterName, originalParameterName, rp->val);
+			FilterFunctionParameter par(pythonParameterName, originalParameterName, rp->val, rp->pd);
 			f.addParameter(par);
 		}
 		functionSet.insert(f);
@@ -84,7 +86,7 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 			for (RichParameter* rp : rps.paramList){
 				QString originalParameterName = rp->name;
 				QString pythonParameterName = toPythonName(originalParameterName);
-				FilterFunctionParameter par(pythonParameterName, originalParameterName, rp->val);
+				FilterFunctionParameter par(pythonParameterName, originalParameterName, rp->val, rp->pd);
 				f.addParameter(par);
 			}
 			functionSet.insert(f);

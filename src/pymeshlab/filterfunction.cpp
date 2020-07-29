@@ -36,13 +36,13 @@ QStringList pymeshlab::FilterFunction::pythonFunctionParameters() const
 
 bool pymeshlab::FilterFunction::contains(const QString& pythonParameter) const
 {
-	iterator it = std::find(parameters.begin(), parameters.end(), FilterFunctionParameter(pythonParameter, "", nullptr));
+	iterator it = std::find(parameters.begin(), parameters.end(), FilterFunctionParameter(pythonParameter, "", nullptr, nullptr));
 	return it != parameters.end();
 }
 
 const pymeshlab::FilterFunctionParameter& pymeshlab::FilterFunction::getFilterFunctionParameter(const QString& pythonParameter) const
 {
-	iterator it = std::find(parameters.begin(), parameters.end(), FilterFunctionParameter(pythonParameter, "", nullptr));
+	iterator it = std::find(parameters.begin(), parameters.end(), FilterFunctionParameter(pythonParameter, "", nullptr, nullptr));
 	return *it;
 }
 

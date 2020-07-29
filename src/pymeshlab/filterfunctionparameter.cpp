@@ -5,10 +5,12 @@
 pymeshlab::FilterFunctionParameter::FilterFunctionParameter(
 		const QString& pythonName,
 		const QString& meshlabName,
-		const Value* defaultValue) :
+		const Value* defaultValue,
+		const ParameterDecoration* pd) :
 	pName(pythonName),
 	mName(meshlabName),
-	defValue(createNewValue(defaultValue))
+	defValue(createNewValue(defaultValue)),
+	pd(createNewParameterDecoration(pd, defValue))
 {
 }
 
@@ -16,7 +18,8 @@ pymeshlab::FilterFunctionParameter::FilterFunctionParameter(
 		const pymeshlab::FilterFunctionParameter& oth):
 	pName(oth.pName),
 	mName(oth.mName),
-	defValue(createNewValue(oth.defValue))
+	defValue(createNewValue(oth.defValue)),
+	pd(createNewParameterDecoration(oth.pd, defValue))
 {
 }
 
@@ -25,12 +28,15 @@ pymeshlab::FilterFunctionParameter::FilterFunctionParameter(pymeshlab::FilterFun
 	mName(oth.mName)
 {
 	defValue = oth.defValue;
+	pd = oth.pd;
 	oth.defValue = nullptr;
+	oth.pd = nullptr;
 }
 
 pymeshlab::FilterFunctionParameter::~FilterFunctionParameter()
 {
 	delete defValue;
+	delete pd;
 }
 
 QString pymeshlab::FilterFunctionParameter::pythonName() const
@@ -47,15 +53,12 @@ QString pymeshlab::FilterFunctionParameter::pythonTypeString() const
 {
 	if (!defValue)
 		return "no_value";
-	if (defValue->isEnum()) {
+	if (defValue->isEnum())
 		return "still_unsupported";
-	}
-	if (defValue->isAbsPerc()) {
+	if (defValue->isAbsPerc())
 		return "still_unsupported";
-	}
-	if (defValue->isDynamicFloat()) {
+	if (defValue->isDynamicFloat())
 		return "still_unsupported";
-	}
 	if (defValue->isBool())
 		return "bool";
 	if (defValue->isInt())
@@ -64,6 +67,20 @@ QString pymeshlab::FilterFunctionParameter::pythonTypeString() const
 		return "float";
 	if (defValue->isString())
 		return "str";
+	if (defValue->isMatrix44f())
+		return "still_unsupported";
+	if (defValue->isPoint3f())
+		return "still_unsupported";
+	if (defValue->isShotf())
+		return "still_unsupported";
+	if (defValue->isColor())
+		return "still_unsupported";
+	if (defValue->isMesh())
+		return "still_unsupported";
+	if (defValue->isFileName())
+		return "still_unsupported";
+	if (defValue->isFloatList())
+		return "still_unsupported";
 	return "still_unsupported";
 }
 
@@ -157,6 +174,7 @@ void pymeshlab::FilterFunctionParameter::swap(pymeshlab::FilterFunctionParameter
 	std::swap(pName, oth.pName);
 	std::swap(mName, oth.mName);
 	std::swap(defValue, oth.defValue);
+	std::swap(pd, oth.pd);
 }
 
 Value* pymeshlab::FilterFunctionParameter::createNewValue(const Value* ov)
@@ -192,6 +210,150 @@ Value* pymeshlab::FilterFunctionParameter::createNewValue(const Value* ov)
 	if (ov->isFloatList())
 		return new FloatListValue(ov->getFloatList());
 
+	assert(0);
+	return nullptr;
+}
+
+ParameterDecoration* pymeshlab::FilterFunctionParameter::createNewParameterDecoration(
+		const ParameterDecoration* pd,
+		const Value* v)
+{
+	if (!v || !pd) {
+		return nullptr;
+	}
+	if (v->isEnum()){
+		EnumValue* ev = (EnumValue*)v;
+		const EnumDecoration *ed = (const EnumDecoration*)pd;
+		return new EnumDecoration(
+					new EnumValue(*ev),
+					ed->enumvalues,
+					ed->fieldDesc,
+					ed->tooltip);
+	}
+	if (v->isAbsPerc()){
+		AbsPercValue* apv = (AbsPercValue*)v;
+		const AbsPercDecoration *apd = (const AbsPercDecoration*)pd;
+		return new AbsPercDecoration(
+					new AbsPercValue(*apv),
+					apd->min,
+					apd->max,
+					apd->fieldDesc,
+					apd->tooltip);
+	}
+	if (v->isDynamicFloat()){
+		DynamicFloatValue* dfv = (DynamicFloatValue*)v;
+		const DynamicFloatDecoration *dfd = (const DynamicFloatDecoration*)pd;
+		return new DynamicFloatDecoration(
+					new DynamicFloatValue(*dfv),
+					dfd->min,
+					dfd->max,
+					dfd->fieldDesc,
+					dfd->tooltip);
+	}
+	if (v->isBool()){
+		BoolValue * bv = (BoolValue*)v;
+		const BoolDecoration * bd = (const BoolDecoration*)pd;
+		return new BoolDecoration(
+					new BoolValue(*bv),
+					bd->fieldDesc,
+					bd->tooltip);
+	}
+	if (v->isInt()){
+		IntValue * iv = (IntValue*)v;
+		const IntDecoration * id = (const IntDecoration*)pd;
+		return new IntDecoration(
+					new IntValue(*iv),
+					id->fieldDesc,
+					id->tooltip);
+	}
+	if (v->isFloat()){
+		FloatValue * fv = (FloatValue*)v;
+		const FloatDecoration * fd = (const FloatDecoration*)pd;
+		return new FloatDecoration(
+					new FloatValue(*fv),
+					fd->fieldDesc,
+					fd->tooltip);
+	}
+	if (v->isString()){
+		StringValue * sv = (StringValue*)v;
+		const StringDecoration * sd = (const StringDecoration*)pd;
+		return new StringDecoration(
+					new StringValue(*sv),
+					sd->fieldDesc,
+					sd->tooltip);
+	}
+	if (v->isMatrix44f()){
+		Matrix44fValue * mv = (Matrix44fValue*)v;
+		const Matrix44fDecoration * md = (const Matrix44fDecoration*)pd;
+		return new Matrix44fDecoration(
+					new Matrix44fValue(*mv),
+					md->fieldDesc,
+					md->tooltip);
+	}
+	if (v->isPoint3f()){
+		Point3fValue * pv = (Point3fValue*)v;
+		const Point3fDecoration * pfd = (const Point3fDecoration*)pd;
+		return new Point3fDecoration(
+					new Point3fValue(*pv),
+					pfd->fieldDesc,
+					pfd->tooltip);
+	}
+	if (v->isShotf()) {
+		ShotfValue * sv = (ShotfValue*)v;
+		const ShotfDecoration * sd = (const ShotfDecoration*)pd;
+		return new ShotfDecoration(
+					new ShotfValue(*sv),
+					sd->fieldDesc,
+					sd->tooltip);
+	}
+	if (v->isColor()) {
+		ColorValue * cv = (ColorValue*)v;
+		const ColorDecoration * cd = (const ColorDecoration*)pd;
+		return new ColorDecoration(
+					new ColorValue(*cv),
+					cd->fieldDesc,
+					cd->tooltip);
+	}
+	if (v->isMesh()) {
+		MeshValue * mv = (MeshValue*)v;
+		const MeshDecoration * md = (const MeshDecoration*)pd;
+		return new MeshDecoration(
+					new MeshValue(*mv),
+					nullptr,
+					md->fieldDesc,
+					md->tooltip);
+	}
+	if (v->isFileName()) {
+		FileValue * fv = (FileValue*)v;
+		const OpenFileDecoration* ofd = dynamic_cast<const OpenFileDecoration*>(pd);
+		const SaveFileDecoration* sfd = dynamic_cast<const SaveFileDecoration*>(pd);
+		if (ofd){
+			return new OpenFileDecoration(
+						new FileValue(*fv),
+						ofd->exts,
+						ofd->fieldDesc,
+						ofd->tooltip);
+		}
+		else if (sfd){
+			return new SaveFileDecoration(
+						new FileValue(*fv),
+						sfd->ext,
+						sfd->fieldDesc,
+						sfd->tooltip);
+		}
+		else {
+			assert(0);
+			return nullptr;
+		}
+	}
+	if (v->isFloatList()) {
+		FloatListValue * fv = (FloatListValue*)v;
+		const FloatListDecoration * fd = (const FloatListDecoration*)pd;
+		return new FloatListDecoration(
+					new FloatListValue(*fv),
+					fd->fieldDesc,
+					fd->tooltip);
+	}
 	assert(0);
 	return nullptr;
 }

@@ -3,6 +3,7 @@
 
 #include <QString>
 class Value;
+class ParameterDecoration;
 
 namespace pymeshlab {
 
@@ -12,7 +13,8 @@ public:
 	FilterFunctionParameter(
 			const QString& pName,
 			const QString& mName,
-			const Value* defValue);
+			const Value* defValue,
+			const ParameterDecoration* pd);
 	FilterFunctionParameter(const FilterFunctionParameter& oth);
 	FilterFunctionParameter(FilterFunctionParameter&& oth);
 	virtual ~FilterFunctionParameter();
@@ -28,9 +30,11 @@ public:
 	void swap(FilterFunctionParameter& oth);
 private:
 	static Value* createNewValue(const Value* ov);
+	static ParameterDecoration* createNewParameterDecoration(const ParameterDecoration* pd, const Value* v);
 	QString pName;
 	QString mName;
 	Value* defValue;
+	ParameterDecoration* pd;
 };
 
 }
