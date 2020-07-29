@@ -28,7 +28,7 @@ PYBIND11_MODULE(meshlab, m) {
 	pymeshlab::initMeshSet(m); //MeshDocument Class
 
 #ifdef PYMESHLAB_VERSION
-	m.attr("__version__") = PYMESHLAB_VERSION;
+	m.attr("__version__") = PYBIND11_STRINGIFY(PYMESHLAB_VERSION);
 #else
 	m.attr("__version__") = "dev";
 #endif

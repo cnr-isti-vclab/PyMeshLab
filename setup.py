@@ -40,7 +40,7 @@ os.remove(this_directory + '/' + filename)
 
 setup(
     name='pymeshlab',
-    version='0.1',
+    version=pymeshlabversion,
     description='A Python interface to MeshLab',
     long_description=long_description,
     long_description_content_type='text/markdown',
