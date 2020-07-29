@@ -4,6 +4,7 @@
 #include "meshset.h"
 #include <vcg/../wrap/io_trimesh/import_obj.h>
 #include <pybind11/eval.h>
+#include <mlexception.h>
 
 namespace py = pybind11;
 
@@ -15,6 +16,8 @@ CMeshO& currentMesh(pymeshlab::MeshSet& m)
 void pymeshlab::initMeshSet(pybind11::module& m)
 {
 	py::class_<MeshSet> meshSetClass(m, "MeshSet");
+
+	py::register_exception<MLException>(m, "PyMeshLabException");
 
 	//empty constructor
 	meshSetClass.def(py::init());

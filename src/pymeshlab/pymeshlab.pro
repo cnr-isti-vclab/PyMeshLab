@@ -64,7 +64,9 @@ linux {
 	LIBS += \
 		-L$$PYMESHLAB_DISTRIB_DIRECTORY/lib -lmeshlab-common -lGLU
 
-	QMAKE_CXXFLAGS += $$PYTHON_INCLUDES #includepath python lib
+	QMAKE_CXXFLAGS += \
+		$$PYTHON_INCLUDES \#includepath python lib
+		-fopenmp # Flags for OpenMP
 
 	QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN/lib
 } #linux
@@ -112,6 +114,7 @@ SOURCES += \
 	filterfunctionset.cpp \
 	main.cpp \
 	meshset.cpp \
+	pyboundingbox.cpp \
 	pymesh.cpp \
 	pymeshlabcommon.cpp \
 	pymeshset.cpp
@@ -121,6 +124,7 @@ HEADERS += \
 	filterfunctionparameter.h \
 	filterfunctionset.h \
 	meshset.h \
+	pyboundingbox.h \
 	pymesh.h \
 	pymeshlabcommon.h \
 	pymeshset.h

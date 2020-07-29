@@ -1,3 +1,4 @@
+#include "pyboundingbox.h"
 #include "pymesh.h"
 #include "pymeshset.h"
 
@@ -22,6 +23,7 @@ std::string getDoc() {
 PYBIND11_MODULE(meshlab, m) {
 	m.doc() = getDoc();
 
+	pymeshlab::initBoundingBox(m); //BoundingBox Class
 	pymeshlab::initMesh(m); //Mesh Class
 	pymeshlab::initMeshSet(m); //MeshDocument Class
 
