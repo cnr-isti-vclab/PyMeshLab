@@ -21,8 +21,24 @@ After installing PyMeshLab through pip:
 ```
 python
 >>> import pymeshlab
->>> md = ml.MeshSet()
+>>> ms = ml.MeshSet()
 ```
+You can load, save meshes and apply MeshLab filters:
+```
+ms.load_mesh('airplane.obj')
+ms.apply_filter('convex_hull')
+ms.save_mesh('convex_hull.ply')
+```
+You can list all the available filters and theirs parameters:
+```
+ms.print_filter_list()
+ms.print_filter_parameter_list('surface_reconstruction_screened_poisson')
+```
+And apply filters with your parameters:
+```
+ms.apply_filter('noisy_isosurface', resolution=128)
+```
+
 To run the tests:
 ```
 pip3 install pytest
