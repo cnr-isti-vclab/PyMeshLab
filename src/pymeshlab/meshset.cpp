@@ -34,6 +34,12 @@ void pymeshlab::MeshSet::printPythonFilterParameterList(const std::string functi
 		std::cout << "Filter " << functionName << " not found.\n";
 	}
 	else {
+		std::cout <<
+					 "Please note: some parameters depend on the mesh(es) used as input of the \n"
+					 "filter. Default values listed here are computed on a 1x1x1 cube \n"
+					 "(pymeshlab/tests/sample/cube.obj), and they will be computed on the input mesh\n"
+					 "if they are left as default.\n";
+
 		std::cout << functionName <<" filter - list of parameter names:\n";
 		const FilterFunction& ff = *it;
 		if (ff.parametersNumber() == 0){

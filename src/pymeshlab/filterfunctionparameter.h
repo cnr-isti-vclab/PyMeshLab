@@ -21,6 +21,8 @@ public:
 	QString pythonName() const;
 	QString meshlabName() const;
 	QString pythonTypeString() const;
+	QString description() const;
+	QString longDescription() const;
 	const Value* defaultValue() const;
 	void printDefaultValue(std::ostream& o) const;
 

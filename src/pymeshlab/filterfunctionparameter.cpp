@@ -54,11 +54,11 @@ QString pymeshlab::FilterFunctionParameter::pythonTypeString() const
 	if (!defValue)
 		return "no_value";
 	if (defValue->isEnum())
-		return "still_unsupported";
+		return "int [Enum]";
 	if (defValue->isAbsPerc())
-		return "still_unsupported";
+		return "float [AbsPerc]";
 	if (defValue->isDynamicFloat())
-		return "still_unsupported";
+		return "float [Dynamic]";
 	if (defValue->isBool())
 		return "bool";
 	if (defValue->isInt())
@@ -68,20 +68,36 @@ QString pymeshlab::FilterFunctionParameter::pythonTypeString() const
 	if (defValue->isString())
 		return "str";
 	if (defValue->isMatrix44f())
-		return "still_unsupported";
+		return "Matrix44f [still unsupported]";
 	if (defValue->isPoint3f())
-		return "still_unsupported";
+		return "Point3f [still unsupported]";
 	if (defValue->isShotf())
-		return "still_unsupported";
+		return "Shotf [still unsupported]";
 	if (defValue->isColor())
-		return "still_unsupported";
+		return "Color [still unsupported]";
 	if (defValue->isMesh())
-		return "still_unsupported";
+		return "Mesh [still unsupported]";
 	if (defValue->isFileName())
-		return "still_unsupported";
+		return "FileName [still unsupported]";
 	if (defValue->isFloatList())
-		return "still_unsupported";
+		return "FloatList [still unsupported]";
 	return "still_unsupported";
+}
+
+QString pymeshlab::FilterFunctionParameter::description() const
+{
+	if (pd){
+		return pd->fieldDesc;
+	}
+	return QString();
+}
+
+QString pymeshlab::FilterFunctionParameter::longDescription() const
+{
+	if (pd){
+		return pd->tooltip;
+	}
+	return QString();
 }
 
 const Value* pymeshlab::FilterFunctionParameter::defaultValue() const
@@ -94,15 +110,15 @@ void pymeshlab::FilterFunctionParameter::printDefaultValue(std::ostream& o) cons
 	if (!defValue)
 		o << "no_value";
 	if (defValue->isEnum()) {
-		o << "None";
+		o << defValue->getEnum();
 		return;
 	}
 	if (defValue->isAbsPerc()) {
-		o << "None";
+		o << defValue->getAbsPerc();
 		return;
 	}
 	if (defValue->isDynamicFloat()) {
-		o << "None";
+		o << defValue->getDynamicFloat();
 		return;
 	}
 	if (defValue->isBool()) {
