@@ -20,7 +20,7 @@ If you get the error ```urllib.error.URLError: SSL: CERTIFICATE_VERIFY_FAILED```
 After installing PyMeshLab through pip:
 ```
 python
->>> import pymeshlab
+>>> import pymeshlab as ml
 >>> ms = ml.MeshSet()
 ```
 You can load, save meshes and apply MeshLab filters:
