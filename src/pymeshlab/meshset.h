@@ -31,7 +31,7 @@ private:
 			bool ignoreFileName = false);
 
 	static void updateRichParameterFromKwarg(
-			RichParameter* par,
+			RichParameter& par,
 			const FilterFunctionParameter& ffp,
 			const std::pair<pybind11::handle, pybind11::handle>& k);
 
