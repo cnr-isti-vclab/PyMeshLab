@@ -23,23 +23,22 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 		QString pythonFilterName = "load_" + inputFormat.toLower();
 		FilterFunction f(pythonFilterName, originalFilterName);
 		MeshIOInterface* plugin = pm.allKnowInputFormats[inputFormat];
-		RichParameterSet rps;
+		RichParameterList rps;
 		plugin->initGlobalParameterSet(nullptr, rps);
 		plugin->initPreOpenParameter(inputFormat, dummyMesh, rps);
 		plugin->initOpenParameter(inputFormat, *dummyMeshDocument.mm(), rps);
 
 		//filename parameter
-		QString originalParameterName = "file_name";
-		QString pythonParameterName = toPythonName(originalParameterName);
-		StringValue sv = "file." + inputFormat;
-		StringDecoration sd(new StringValue(sv));
-		FilterFunctionParameter par(pythonParameterName, originalParameterName, &sv, &sd);
+		QString pythonParameterName = "file_name";
+		QString sv = "file_name." + inputFormat;
+		QStringList sl(inputFormat);
+		RichOpenFile of("fileName", ".", sl, "The name of the file to load", "File Name");
+		FilterFunctionParameter par(pythonParameterName, of);
 		f.addParameter(par);
 
-		for (RichParameter* rp : rps.paramList){
-			QString originalParameterName = rp->name;
-			QString pythonParameterName = toPythonName(originalParameterName);
-			FilterFunctionParameter par(pythonParameterName, originalParameterName, rp->val, rp->pd);
+		for (const RichParameter& rp : rps){
+			QString pythonParameterName = toPythonName(rp.name());
+			FilterFunctionParameter par(pythonParameterName, rp);
 			f.addParameter(par);
 		}
 		functionSet.insert(f);
@@ -50,23 +49,21 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 		QString pythonFilterName = "save_" + outputFormat.toLower();
 		FilterFunction f(pythonFilterName, originalFilterName);
 		MeshIOInterface* plugin = pm.allKnowOutputFormats[outputFormat];
-		RichParameterSet rps;
+		RichParameterList rps;
 		plugin->initGlobalParameterSet(nullptr, rps);
 		plugin->initPreOpenParameter(outputFormat, dummyMesh, rps);
 		plugin->initOpenParameter(outputFormat, *dummyMeshDocument.mm(), rps);
 
 		//filename parameter
-		QString originalParameterName = "file_name";
-		QString pythonParameterName = toPythonName(originalParameterName);
-		StringValue sv = "file." + outputFormat;
-		StringDecoration sd(new StringValue(sv));
-		FilterFunctionParameter par(pythonParameterName, originalParameterName, &sv, &sd);
+		QString pythonParameterName = "file_name";
+		QString sv = "file_name." + outputFormat;
+		RichSaveFile of("fileName", ".", outputFormat, "The name of the file to save", "File Name");
+		FilterFunctionParameter par(pythonParameterName, of);
 		f.addParameter(par);
 
-		for (RichParameter* rp : rps.paramList){
-			QString originalParameterName = rp->name;
-			QString pythonParameterName = toPythonName(originalParameterName);
-			FilterFunctionParameter par(pythonParameterName, originalParameterName, rp->val, rp->pd);
+		for (const RichParameter& rp : rps){
+			QString pythonParameterName = toPythonName(rp.name());
+			FilterFunctionParameter par(pythonParameterName, rp);
 			f.addParameter(par);
 		}
 		functionSet.insert(f);
@@ -79,14 +76,13 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 			QString pythonFilterName = toPythonName(originalFilterName);
 			FilterFunction f(pythonFilterName, originalFilterName);
 
-			RichParameterSet rps;
+			RichParameterList rps;
 			fp->initGlobalParameterSet(act, rps);
 			fp->initParameterSet(act, dummyMeshDocument, rps);
 
-			for (RichParameter* rp : rps.paramList){
-				QString originalParameterName = rp->name;
-				QString pythonParameterName = toPythonName(originalParameterName);
-				FilterFunctionParameter par(pythonParameterName, originalParameterName, rp->val, rp->pd);
+			for (const RichParameter& rp : rps){
+				QString pythonParameterName = toPythonName(rp.name());
+				FilterFunctionParameter par(pythonParameterName, rp);
 				f.addParameter(par);
 			}
 			functionSet.insert(f);

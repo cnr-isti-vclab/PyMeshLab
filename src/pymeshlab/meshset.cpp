@@ -104,7 +104,7 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 			else {
 				MeshIOInterface* plugin = pm.allKnowInputFormats[extension];
 				int mask = 0; //todo: use this mask
-				RichParameterSet rps;
+				RichParameterList rps;
 				plugin->initGlobalParameterSet(nullptr, rps);
 				plugin->initPreOpenParameter(extension, QString::fromStdString(filename), rps);
 				plugin->initOpenParameter(extension, *(this->mm()), rps);
@@ -126,7 +126,7 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 			QString extension = meshlabFilterName;
 			MeshIOInterface* plugin = pm.allKnowOutputFormats[extension];
 			int mask = 0; //todo: use this mask
-			RichParameterSet rps;
+			RichParameterList rps;
 			plugin->initGlobalParameterSet(nullptr, rps);
 			plugin->initSaveParameter(extension, *(this->mm()), rps);
 
@@ -141,7 +141,7 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 		else {
 			QAction* action = nullptr;
 			MeshFilterInterface* fp = getPluginFromFilterName(meshlabFilterName, action);
-			RichParameterSet rps;
+			RichParameterList rps;
 			fp->initParameterSet(action, *this, rps);
 			updateRichParameterSet(*it, kwargs, rps);
 			try {
@@ -161,7 +161,7 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 
 }
 
-void pymeshlab::MeshSet::updateRichParameterSet(const FilterFunction& f, const pybind11::kwargs& kwargs, RichParameterSet& rps, bool ignoreFileName)
+void pymeshlab::MeshSet::updateRichParameterSet(const FilterFunction& f, const pybind11::kwargs& kwargs, RichParameterList& rps, bool ignoreFileName)
 {
 	if (kwargs){
 		for (std::pair<py::handle, py::handle> p : kwargs){
@@ -169,9 +169,9 @@ void pymeshlab::MeshSet::updateRichParameterSet(const FilterFunction& f, const p
 			if (!ignoreFileName || key!="file_name"){
 				if (f.contains(QString::fromStdString(key))){
 					const FilterFunctionParameter& ffp = f.getFilterFunctionParameter(QString::fromStdString(key));
-					RichParameter* par = rps.findParameter(ffp.meshlabName());
-					if (par){
-						updateRichParameterFromKwarg(par, ffp, p);
+					RichParameterList::iterator it = rps.findParameter(ffp.meshlabName());
+					if (it != rps.end()){
+						updateRichParameterFromKwarg(*it, ffp, p);
 					}
 					else {
 						//should be impossible
@@ -188,28 +188,23 @@ void pymeshlab::MeshSet::updateRichParameterSet(const FilterFunction& f, const p
 }
 
 void pymeshlab::MeshSet::updateRichParameterFromKwarg(
-		RichParameter* par,
+		RichParameter& par,
 		const FilterFunctionParameter& ffp,
 		const std::pair<py::handle, py::handle>& k)
 {
-	assert(par);
 	QString pythonType = ffp.pythonTypeString();
 	if (pythonType == "bool"){
-		delete par->val;
-		par->val = new BoolValue(py::cast<bool>(k.second));
+		par.setValue(BoolValue(py::cast<bool>(k.second)));
 	}
 	else if (pythonType == "int") {
-		delete par->val;
-		par->val = new IntValue(py::cast<int>(k.second));
+		par.setValue(IntValue(py::cast<int>(k.second)));
 	}
 	else if (pythonType == "float") {
-		delete par->val;
-		par->val = new FloatValue(py::cast<float>(k.second));
+		par.setValue(FloatValue(py::cast<float>(k.second)));
 	}
 	else if (pythonType == "str") {
-		delete par->val;
-		par->val = new StringValue(
-					QString::fromStdString(py::cast<std::string>(k.second)));
+		par.setValue(StringValue(
+					QString::fromStdString(py::cast<std::string>(k.second))));
 	}
 	else if (pythonType == "still_unsupported"){
 		std::cerr << "Warning: parameter type still not supported";

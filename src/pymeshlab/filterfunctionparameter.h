@@ -3,7 +3,7 @@
 
 #include <QString>
 class Value;
-class ParameterDecoration;
+class RichParameter;
 
 namespace pymeshlab {
 
@@ -12,9 +12,7 @@ class FilterFunctionParameter
 public:
 	FilterFunctionParameter(
 			const QString& pName,
-			const QString& mName,
-			const Value* defValue,
-			const ParameterDecoration* pd);
+			const RichParameter& parameter);
 	FilterFunctionParameter(const FilterFunctionParameter& oth);
 	FilterFunctionParameter(FilterFunctionParameter&& oth);
 	virtual ~FilterFunctionParameter();
@@ -23,7 +21,7 @@ public:
 	QString pythonTypeString() const;
 	QString description() const;
 	QString longDescription() const;
-	const Value* defaultValue() const;
+	const Value& defaultValue() const;
 	void printDefaultValue(std::ostream& o) const;
 
 	FilterFunctionParameter& operator=(FilterFunctionParameter oth);
@@ -31,12 +29,10 @@ public:
 	bool operator==(const FilterFunctionParameter& oth) const;
 	void swap(FilterFunctionParameter& oth);
 private:
-	static Value* createNewValue(const Value* ov);
-	static ParameterDecoration* createNewParameterDecoration(const ParameterDecoration* pd, const Value* v);
+	QString computePythonTypeString(const RichParameter& par);
 	QString pName;
-	QString mName;
-	Value* defValue;
-	ParameterDecoration* pd;
+	QString pType;
+	RichParameter* parameter;
 };
 
 }
