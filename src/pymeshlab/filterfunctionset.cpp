@@ -32,7 +32,7 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 		QString pythonParameterName = "file_name";
 		QString sv = "file_name." + inputFormat;
 		QStringList sl(inputFormat);
-		RichOpenFile of("fileName", ".", sl, "The name of the file to load", "File Name");
+		RichOpenFile of("fileName", sv, sl, "The name of the file to load", "File Name");
 		FilterFunctionParameter par(pythonParameterName, of);
 		f.addParameter(par);
 
@@ -57,7 +57,7 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 		//filename parameter
 		QString pythonParameterName = "file_name";
 		QString sv = "file_name." + outputFormat;
-		RichSaveFile of("fileName", ".", outputFormat, "The name of the file to save", "File Name");
+		RichSaveFile of("fileName", sv, outputFormat, "The name of the file to save", "File Name");
 		FilterFunctionParameter par(pythonParameterName, of);
 		f.addParameter(par);
 

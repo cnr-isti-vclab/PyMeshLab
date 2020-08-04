@@ -15,6 +15,9 @@ public:
 	MeshSet();
 	virtual ~MeshSet();
 
+	CMeshO& currentMesh();
+	int currentMeshId() const;
+
 	void printPythonFilterNamesList() const;
 	void printPythonFilterParameterList(const std::string functionName) const;
 

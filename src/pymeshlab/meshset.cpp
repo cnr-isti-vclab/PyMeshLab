@@ -18,6 +18,16 @@ pymeshlab::MeshSet::~MeshSet()
 {
 }
 
+CMeshO& pymeshlab::MeshSet::currentMesh()
+{
+	return mm()->cm;
+}
+
+int pymeshlab::MeshSet::currentMeshId() const
+{
+	return mm()->id();
+}
+
 void pymeshlab::MeshSet::printPythonFilterNamesList() const
 {
 	QStringList list = filterFunctionSet.pythonFunctionNames();
