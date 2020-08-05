@@ -387,12 +387,11 @@ void pymeshlab::MeshSet::saveMLP(const QString& fileName)
 
 	for(MeshModel* m : meshList) {
 		if (m != NULL) {
-			QString outfilename;
-			QFileInfo fi(m->fullName());
-			if (!fi.exists())
-				outfilename = outdir + "/" + m->label().remove(" ") + ".ply";
-			else
-				outfilename =  fi.absolutePath() + "/" + fi.completeBaseName() + "." + fi.completeSuffix();
+			QString label = m->label().remove(" ");
+			int p = label.lastIndexOf('.');
+			if (p > 0)
+				label = label.left(p);
+			QString outfilename = outdir + "/" + label.remove(" ") + ".ply";
 			m->setFileName(outfilename);
 			QFileInfo of(outfilename);
 			m->setLabel(of.fileName());
