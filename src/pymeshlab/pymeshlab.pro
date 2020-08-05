@@ -109,23 +109,25 @@ debug_mode {
 }
 
 SOURCES += \
-	filterfunction.cpp \
-	filterfunctionparameter.cpp \
-	filterfunctionset.cpp \
 	main.cpp \
-	meshset.cpp \
-	pyboundingbox.cpp \
-	pymesh.cpp \
-	pymeshlabcommon.cpp \
-	pymeshset.cpp
+	pymeshlab/common.cpp \
+	pymeshlab/mesh.cpp \
+	pymeshlab/meshset.cpp \
+	pymeshlab/plugin_management/filterfunction.cpp \
+	pymeshlab/plugin_management/filterfunctionparameter.cpp \
+	pymeshlab/plugin_management/filterfunctionset.cpp \
+	bindings/pyboundingbox.cpp \
+	bindings/pymesh.cpp \
+	bindings/pymeshset.cpp
 
 HEADERS += \
-	filterfunction.h \
-	filterfunctionparameter.h \
-	filterfunctionset.h \
-	meshset.h \
-	pyboundingbox.h \
-	pymesh.h \
-	pymeshlabcommon.h \
-	pymeshset.h
+	pymeshlab/common.h \
+	pymeshlab/mesh.h \
+	pymeshlab/meshset.h \
+	pymeshlab/plugin_management/filterfunction.h \
+	pymeshlab/plugin_management/filterfunctionparameter.h \
+	pymeshlab/plugin_management/filterfunctionset.h \
+	bindings/pyboundingbox.h \
+	bindings/pymesh.h \
+	bindings/pymeshset.h
 

@@ -1,7 +1,7 @@
 #include "pymeshset.h"
 
-#include "pymeshlabcommon.h"
-#include "meshset.h"
+#include "pymeshlab/common.h"
+#include "pymeshlab/meshset.h"
 #include <vcg/../wrap/io_trimesh/import_obj.h>
 #include <pybind11/eval.h>
 #include <mlexception.h>

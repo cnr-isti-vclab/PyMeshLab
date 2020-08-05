@@ -1,6 +1,6 @@
-#include "pyboundingbox.h"
-#include "pymesh.h"
-#include "pymeshset.h"
+#include "bindings/pyboundingbox.h"
+#include "bindings/pymesh.h"
+#include "bindings/pymeshset.h"
 
 namespace py = pybind11;
 

@@ -4,7 +4,7 @@
 #include <meshlabdocumentxml.h>
 #include <meshlabdocumentbundler.h>
 #include <wrap/io_trimesh/alnParser.h>
-#include "pymeshlabcommon.h"
+#include "common.h"
 
 namespace py = pybind11;
 

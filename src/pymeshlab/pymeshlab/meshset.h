@@ -4,7 +4,7 @@
 #include <pybind11/pybind11.h>
 #include <meshmodel.h>
 #include <pluginmanager.h>
-#include "filterfunctionset.h"
+#include "plugin_management/filterfunctionset.h"
 
 namespace pymeshlab {
 

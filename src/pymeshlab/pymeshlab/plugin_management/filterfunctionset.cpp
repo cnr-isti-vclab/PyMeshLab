@@ -1,6 +1,6 @@
 #include "filterfunctionset.h"
 
-#include "pymeshlabcommon.h"
+#include "../common.h"
 
 pymeshlab::FilterFunctionSet::FilterFunctionSet()
 {

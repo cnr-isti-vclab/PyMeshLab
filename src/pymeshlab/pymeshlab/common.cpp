@@ -1,4 +1,4 @@
-#include "pymeshlabcommon.h"
+#include "common.h"
 
 #include <pybind11/pybind11.h>
 #include <QDir>
