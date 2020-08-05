@@ -31,6 +31,16 @@ int pymeshlab::MeshSet::currentMeshId() const
 	return mm()->id();
 }
 
+bool pymeshlab::MeshSet::meshIdExists(int id) const
+{
+	return getMesh(id) != nullptr;
+}
+
+CMeshO& pymeshlab::MeshSet::mesh(int id)
+{
+	return getMesh(id)->cm;
+}
+
 void pymeshlab::MeshSet::printPythonFilterNamesList() const
 {
 	QStringList list = filterFunctionSet.pythonFunctionNames();
@@ -167,6 +177,16 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 		throw MLException(
 					"Failed to apply filter: " + it->pythonFunctionName() + "\n" +
 					"Filter does not exists. Take a look at MeshSet.print_filter_list function.");
+	}
+}
+
+void pymeshlab::MeshSet::printStatus() const
+{
+	std::cout << "Number meshes: " << size() << "\n";
+	for (const MeshModel* m : meshList){
+		std::cout << "\tMesh id: " << m->id() << "\n";
+		std::cout << "\tMesh label: " << m->label().toStdString() << "\n";
+		std::cout << "\tFull name: " << m->fullName().toStdString() << "\n\n";
 	}
 }
 

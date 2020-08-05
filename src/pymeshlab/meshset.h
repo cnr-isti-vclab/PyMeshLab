@@ -17,6 +17,9 @@ public:
 	CMeshO& currentMesh();
 	int currentMeshId() const;
 
+	bool meshIdExists(int id) const;
+	CMeshO& mesh(int id);
+
 	void printPythonFilterNamesList() const;
 	void printPythonFilterParameterList(const std::string functionName) const;
 
@@ -27,6 +30,8 @@ public:
 	void saveProject(const std::string& filename);
 
 	void applyFilter(const std::string& filtername, pybind11::kwargs kwargs);
+
+	void printStatus() const;
 private:
 	void updateRichParameterSet(
 			const FilterFunction& f,
