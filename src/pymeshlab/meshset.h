@@ -15,6 +15,9 @@ public:
 	MeshSet();
 	virtual ~MeshSet();
 
+	CMeshO& currentMesh();
+	int currentMeshId() const;
+
 	void printPythonFilterNamesList() const;
 	void printPythonFilterParameterList(const std::string functionName) const;
 
@@ -27,11 +30,11 @@ private:
 	void updateRichParameterSet(
 			const FilterFunction& f,
 			const pybind11::kwargs& kwargs,
-			RichParameterSet& rps,
+			RichParameterList& rps,
 			bool ignoreFileName = false);
 
 	static void updateRichParameterFromKwarg(
-			RichParameter* par,
+			RichParameter& par,
 			const FilterFunctionParameter& ffp,
 			const std::pair<pybind11::handle, pybind11::handle>& k);
 
@@ -40,7 +43,7 @@ private:
 			QAction*& action) const;
 
 	std::string basePath;
-	RichParameterSet globalRPS;
+	RichParameterList globalRPS;
 	PluginManager pm;
 	FilterFunctionSet filterFunctionSet;
 };

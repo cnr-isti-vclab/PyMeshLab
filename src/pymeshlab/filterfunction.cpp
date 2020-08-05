@@ -1,5 +1,6 @@
 #include "filterfunction.h"
 #include <QStringList>
+#include <filter_parameter/rich_parameter.h>
 
 pymeshlab::FilterFunction::FilterFunction(const QString pythonFunctionName, const QString meshlabFilterName) :
 	pythonFunName(pythonFunctionName), meshlabFunName(meshlabFilterName)
@@ -36,13 +37,15 @@ QStringList pymeshlab::FilterFunction::pythonFunctionParameters() const
 
 bool pymeshlab::FilterFunction::contains(const QString& pythonParameter) const
 {
-	iterator it = std::find(parameters.begin(), parameters.end(), FilterFunctionParameter(pythonParameter, "", nullptr, nullptr));
+	RichInt tmp("", 0);
+	iterator it = std::find(parameters.begin(), parameters.end(), FilterFunctionParameter(pythonParameter, tmp));
 	return it != parameters.end();
 }
 
 const pymeshlab::FilterFunctionParameter& pymeshlab::FilterFunction::getFilterFunctionParameter(const QString& pythonParameter) const
 {
-	iterator it = std::find(parameters.begin(), parameters.end(), FilterFunctionParameter(pythonParameter, "", nullptr, nullptr));
+	RichInt tmp("", 0);
+	iterator it = std::find(parameters.begin(), parameters.end(), FilterFunctionParameter(pythonParameter, tmp));
 	return *it;
 }
 
