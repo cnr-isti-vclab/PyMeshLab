@@ -42,7 +42,13 @@ private:
 
 	void loadMeshUsingPlugin(
 			const std::string& filename,
-			MeshModel* mm,
+			MeshModel* mm = nullptr,
+			FilterFunction ff = FilterFunction(),
+			pybind11::kwargs kwargs = pybind11::kwargs());
+
+	void saveMeshUsingPlugin(
+			const std::string& filename,
+			MeshModel* mm = nullptr,
 			FilterFunction ff = FilterFunction(),
 			pybind11::kwargs kwargs = pybind11::kwargs());
 
@@ -58,8 +64,6 @@ private:
 			RichParameter& par,
 			const FilterFunctionParameter& ffp,
 			const std::pair<pybind11::handle, pybind11::handle>& k);
-
-
 
 	std::string basePath;
 	RichParameterList globalRPS;

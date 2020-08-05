@@ -54,11 +54,11 @@ void pymeshlab::MeshSet::printPythonFilterParameterList(const std::string functi
 
 		std::cout << functionName <<" filter - list of parameter names:\n";
 		const FilterFunction& ff = *it;
-		if (ff.parametersNumber() == 0){
+		if (ff.parametersNumber() == 0) {
 			std::cout << "\tNone.\n";
 		}
 		else {
-			for (const FilterFunctionParameter& ffp : ff){
+			for (const FilterFunctionParameter& ffp : ff) {
 				std::cout << "\t" << ffp.pythonName().toStdString() << " : "
 						  << ffp.pythonTypeString().toStdString() << " = ";
 				ffp.printDefaultValue(std::cout);
@@ -75,17 +75,7 @@ void pymeshlab::MeshSet::loadMesh(const std::string& filename, py::kwargs kwargs
 
 void pymeshlab::MeshSet::saveMesh(const std::string& filename, pybind11::kwargs kwargs)
 {
-	QFileInfo finfo(QString::fromStdString(filename));
-	QString extension = finfo.suffix().toLower();
-
-	if (pm.allKnowOutputFormats.contains(extension)){
-		kwargs["file_name"] = py::str(filename);
-		applyFilter("save_" + extension.toStdString(), kwargs);
-	}
-	else {
-		//std::cerr << "Unknown format: " << extension.toStdString() << "\n";
-		throw MLException("Unknown format: " + extension);
-	}
+	saveMeshUsingPlugin(filename, nullptr, FilterFunction(), kwargs);
 }
 
 void pymeshlab::MeshSet::loadProject(const std::string& filename)
@@ -144,20 +134,7 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 		//case of save mesh:
 		else if (QString::fromStdString(filtername).startsWith("save_")){
 			std::string filename = py::str(kwargs["file_name"]);
-			QFileInfo finfo(QString::fromStdString(filename));
-			QString extension = meshlabFilterName;
-			MeshIOInterface* plugin = pm.allKnowOutputFormats[extension];
-			int mask = 0; //todo: use this mask
-			RichParameterList rps;
-			plugin->initGlobalParameterSet(nullptr, rps);
-			plugin->initSaveParameter(extension, *(this->mm()), rps);
-
-			updateRichParameterSet(*it, kwargs, rps, true);
-
-			bool ok = plugin->save(extension, QString::fromStdString(filename), *(this->mm()), mask, rps);
-			if (!ok){
-				throw MLException("Unable to save file: " + QString::fromStdString(filename));
-			}
+			saveMeshUsingPlugin(filename, nullptr, *it, kwargs);
 		}
 		//all the other plugins:
 		else {
@@ -170,15 +147,16 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 				fp->applyFilter(action, *this, rps, nullptr);
 			}
 			catch(const std::exception& e) {
-				throw MLException("Failed to apply filter: " + it->pythonFunctionName() + "\n" +
-								  "Details: " + e.what());
+				throw MLException(
+							"Failed to apply filter: " + it->pythonFunctionName() + "\n" +
+							"Details: " + e.what());
 			}
 		}
-
 	}
 	else {
-		throw MLException("Failed to apply filter: " + it->pythonFunctionName() + "\n" +
-						  "Filter does not exists. Take a look at MeshSet.print_filter_list function.");
+		throw MLException(
+					"Failed to apply filter: " + it->pythonFunctionName() + "\n" +
+					"Filter does not exists. Take a look at MeshSet.print_filter_list function.");
 	}
 
 }
@@ -260,8 +238,40 @@ void pymeshlab::MeshSet::loadMeshUsingPlugin(
 			}
 		}
 		else {
-			throw MLException("Unknown format: " + extension);
+			throw MLException("Unknown format for load: " + extension);
 		}
+	}
+}
+
+void pymeshlab::MeshSet::saveMeshUsingPlugin(
+		const std::string& filename,
+		MeshModel* mm,
+		pymeshlab::FilterFunction ff,
+		pybind11::kwargs kwargs)
+{
+	QFileInfo finfo(QString::fromStdString(filename));
+	QString extension = finfo.suffix().toLower();
+	if (pm.allKnowOutputFormats.contains(extension)){
+		if (ff.pythonFunctionName().isEmpty()){
+			ff = *filterFunctionSet.find("save_" + extension);
+		}
+		MeshIOInterface* plugin = pm.allKnowOutputFormats[extension];
+		int mask = 0; //todo: use this mask
+		RichParameterList rps;
+		plugin->initGlobalParameterSet(nullptr, rps);
+		plugin->initSaveParameter(extension, *(this->mm()), rps);
+
+		updateRichParameterSet(ff, kwargs, rps, true);
+
+		if (mm == nullptr)
+			mm = this->mm();
+		bool ok = plugin->save(extension, QString::fromStdString(filename), *mm, mask, rps);
+		if (!ok){
+			throw MLException("Unable to save file: " + QString::fromStdString(filename));
+		}
+	}
+	else {
+		throw MLException("Unknown format for save: " + extension);
 	}
 }
 
