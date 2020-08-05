@@ -24,6 +24,7 @@ void pymeshlab::initMeshSet(pybind11::module& m)
 	meshSetClass.def("load_mesh", &MeshSet::loadMesh, py::arg("file_name"));
 	meshSetClass.def("save_mesh", &MeshSet::saveMesh, py::arg("file_name"));
 	meshSetClass.def("load_project", &MeshSet::loadProject, py::arg("file_name"));
+	meshSetClass.def("save_project", &MeshSet::saveProject, py::arg("file_name"));
 	meshSetClass.def("apply_filter", &MeshSet::applyFilter, py::arg("filter_name"));
 	meshSetClass.def("print_filter_list", &MeshSet::printPythonFilterNamesList);
 	meshSetClass.def("print_filter_parameter_list", &MeshSet::printPythonFilterParameterList, py::arg("filter_name"));

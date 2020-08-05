@@ -2,6 +2,7 @@
 
 #include <mlexception.h>
 #include <meshlabdocumentxml.h>
+#include <meshlabdocumentbundler.h>
 #include <wrap/io_trimesh/alnParser.h>
 #include "pymeshlabcommon.h"
 
@@ -75,7 +76,7 @@ void pymeshlab::MeshSet::loadMesh(const std::string& filename, py::kwargs kwargs
 
 void pymeshlab::MeshSet::saveMesh(const std::string& filename, pybind11::kwargs kwargs)
 {
-	saveMeshUsingPlugin(filename, nullptr, FilterFunction(), kwargs);
+	saveMeshUsingPlugin(filename, nullptr, mm()->dataMask(), FilterFunction(), kwargs);
 }
 
 void pymeshlab::MeshSet::loadProject(const std::string& filename)
@@ -96,7 +97,6 @@ void pymeshlab::MeshSet::loadProject(const std::string& filename)
 	setFileName(fileName);
 	setDocLabel(fileName);
 
-
 	if (QString(fi.suffix()).toLower() == "aln") {
 		loadALN(fileName);
 	}
@@ -105,21 +105,31 @@ void pymeshlab::MeshSet::loadProject(const std::string& filename)
 		loadMLP(fileName);
 	}
 
-//	////// BUNDLER
-//	if (QString(fi.suffix()).toLower() == "out"){
-//		loadBundler(fileName);
-//	}
+	if (QString(fi.suffix()).toLower() == "out"){
+		loadBundler(fileName);
+	}
 
-//	//////NVM
-//	if (QString(fi.suffix()).toLower() == "nvm"){
-//		loadNVM(fileName);
-//	}
+	if (QString(fi.suffix()).toLower() == "nvm"){
+		loadNVM(fileName);
+	}
 }
 
-//void pymeshlab::MeshSet::saveProject(const std::string& filename)
-//{
+void pymeshlab::MeshSet::saveProject(const std::string& filename)
+{
+	QString fileName = QString::fromStdString(filename);
+	if (filename.empty())
+		throw MLException("file_name empty.");
 
-//}
+	QFileInfo fi(fileName);
+	if((fi.suffix().toLower()!="mlp")  &&
+			(fi.suffix().toLower() != "mlb")) {
+		throw MLException("Unknown project file extension: " + fi.suffix().toLower());
+	}
+
+	if (QString(fi.suffix()).toLower() == "mlp" || QString(fi.suffix()).toLower() == "mlb") {
+		saveMLP(fileName);
+	}
+}
 
 void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kwargs kwargs)
 {
@@ -134,7 +144,7 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 		//case of save mesh:
 		else if (QString::fromStdString(filtername).startsWith("save_")){
 			std::string filename = py::str(kwargs["file_name"]);
-			saveMeshUsingPlugin(filename, nullptr, *it, kwargs);
+			saveMeshUsingPlugin(filename, nullptr, mm()->dataMask(),*it, kwargs);
 		}
 		//all the other plugins:
 		else {
@@ -158,7 +168,6 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 					"Failed to apply filter: " + it->pythonFunctionName() + "\n" +
 					"Filter does not exists. Take a look at MeshSet.print_filter_list function.");
 	}
-
 }
 
 void pymeshlab::MeshSet::updateRichParameterSet(const FilterFunction& f, const pybind11::kwargs& kwargs, RichParameterList& rps, bool ignoreFileName)
@@ -246,6 +255,7 @@ void pymeshlab::MeshSet::loadMeshUsingPlugin(
 void pymeshlab::MeshSet::saveMeshUsingPlugin(
 		const std::string& filename,
 		MeshModel* mm,
+		int mask,
 		pymeshlab::FilterFunction ff,
 		pybind11::kwargs kwargs)
 {
@@ -256,8 +266,11 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 			ff = *filterFunctionSet.find("save_" + extension);
 		}
 		MeshIOInterface* plugin = pm.allKnowOutputFormats[extension];
-		int mask = 0; //todo: use this mask
+		//int mask = 0; //todo: use this mask
 		RichParameterList rps;
+		int formatmask = 0;
+		int defbits = 0;
+		plugin->GetExportMaskCapability(extension,formatmask,defbits);
 		plugin->initGlobalParameterSet(nullptr, rps);
 		plugin->initSaveParameter(extension, *(this->mm()), rps);
 
@@ -265,7 +278,7 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 
 		if (mm == nullptr)
 			mm = this->mm();
-		bool ok = plugin->save(extension, QString::fromStdString(filename), *mm, mask, rps);
+		bool ok = plugin->save(extension, QString::fromStdString(filename), *mm, mask & formatmask, rps);
 		if (!ok){
 			throw MLException("Unable to save file: " + QString::fromStdString(filename));
 		}
@@ -325,32 +338,75 @@ void pymeshlab::MeshSet::loadMLP(const QString& fileName)
 	QDir::setCurrent(currentDir.absolutePath());
 }
 
-//void pymeshlab::MeshSet::loadBundler(const QString& fileName)
-//{
-//	QString cameras_filename = fileName;
-//	QString image_list_filename;
-//	QString model_filename;
+void pymeshlab::MeshSet::loadBundler(const QString& fileName)
+{
+	QFileInfo fi(fileName);
+	QString cameras_filename = fi.absolutePath() + "/" + fi.fileName();
+	QString image_list_filename = fi.absolutePath() + "/list.txt";
+	QString model_filename;
 
-//	image_list_filename = "list.txt";
-//	if(image_list_filename.isEmpty())
-//		return false;
+	QDir currentDir = QDir::current();
+	// this change of dir is needed for subsequent textures/materials loading
+	QDir::setCurrent(fi.absolutePath());
 
-//	if(!MeshDocumentFromBundler(md,cameras_filename,image_list_filename,model_filename)){
-//		//QMessageBox::critical(this, tr("Meshlab Opening Error"), "Unable to open OUTs file");
-//		fprintf(fp,"Meshlab Opening Error: Unable to open OUTs file\n");
-//		return false;
-//	}
-//}
+	if(!MeshDocumentFromBundler(*this, cameras_filename, image_list_filename, model_filename)){
+		throw MLException("Error:  Unable to open OUTs file: " + cameras_filename);
+	}
 
-//void pymeshlab::MeshSet::loadNVM(const QString& fileName)
-//{
-//	QString cameras_filename = fileName;
-//	QString model_filename;
+	//restore current dir
+	QDir::setCurrent(currentDir.absolutePath());
+}
 
-//	if(!MeshDocumentFromNvm(this,cameras_filename,model_filename)){
-//		fprintf(fp,"Meshlab Opening Error: Unable to open NVMs file\n");
-//	}
-//}
+void pymeshlab::MeshSet::loadNVM(const QString& fileName)
+{
+	QFileInfo fi(fileName);
+	QString cameras_filename = fi.absolutePath() + "/" + fi.fileName();
+	QString image_list_filename = fi.absolutePath() + "/list.txt";
+	QString model_filename;
+
+	QDir currentDir = QDir::current();
+	// this change of dir is needed for subsequent textures/materials loading
+	QDir::setCurrent(fi.absolutePath());
+
+	if(!MeshDocumentFromNvm(*this, cameras_filename, model_filename)){
+		throw MLException("Error:  Unable to open NVMs file: " + cameras_filename);
+	}
+
+	//restore current dir
+	QDir::setCurrent(currentDir.absolutePath());
+}
+
+void pymeshlab::MeshSet::saveMLP(const QString& fileName)
+{
+	QFileInfo fi(fileName);
+	QString outdir = fi.absolutePath();
+	QString absfilename = outdir + "/" + fi.fileName();
+	QDir currentDir = QDir::current();
+	// this change of dir is needed for subsequent textures/materials loading
+	QDir::setCurrent(fi.absolutePath());
+
+	for(MeshModel* m : meshList) {
+		if (m != NULL) {
+			QString outfilename;
+			QFileInfo fi(m->fullName());
+			if (!fi.exists())
+				outfilename = outdir + "/" + m->label().remove(" ") + ".ply";
+			else
+				outfilename =  fi.absolutePath() + "/" + fi.completeBaseName() + "." + fi.completeSuffix();
+			m->setFileName(outfilename);
+			QFileInfo of(outfilename);
+			m->setLabel(of.fileName());
+			saveMeshUsingPlugin(outfilename.toStdString(), m, m->dataMask());
+		}
+	}
+
+	bool ok = MeshDocumentToXMLFile(*this, fileName, false, false, fi.suffix().toLower() == "mlb");
+	if (!ok){
+		throw MLException("Error:  Unable to save MeshLab Project file: " + absfilename);
+	}
+	//restore current dir
+	QDir::setCurrent(currentDir.absolutePath());
+}
 
 
 void pymeshlab::MeshSet::updateRichParameterFromKwarg(

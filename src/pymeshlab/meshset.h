@@ -25,7 +25,7 @@ public:
 	void saveMesh(const std::string& filename, pybind11::kwargs kwargs);
 
 	void loadProject(const std::string& filename);
-//	void saveProject(const std::string& filename);
+	void saveProject(const std::string& filename);
 
 	void applyFilter(const std::string& filtername, pybind11::kwargs kwargs);
 
@@ -49,16 +49,16 @@ private:
 	void saveMeshUsingPlugin(
 			const std::string& filename,
 			MeshModel* mm = nullptr,
+			int mask = 0,
 			FilterFunction ff = FilterFunction(),
 			pybind11::kwargs kwargs = pybind11::kwargs());
 
 	void loadALN(const QString& fileName);
-
 	void loadMLP(const QString& fileName);
+	void loadBundler(const QString& fileName);
+	void loadNVM(const QString& fileName);
 
-//	void loadBundler(const QString& fileName);
-
-//	void loadNVM(const QString& fileName);
+	void saveMLP(const QString& fileName);
 
 	static void updateRichParameterFromKwarg(
 			RichParameter& par,
