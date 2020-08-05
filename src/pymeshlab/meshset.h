@@ -6,7 +6,6 @@
 #include <pluginmanager.h>
 #include "filterfunctionset.h"
 
-
 namespace pymeshlab {
 
 class MeshSet : public MeshDocument
@@ -28,7 +27,6 @@ public:
 	void saveProject(const std::string& filename);
 
 	void applyFilter(const std::string& filtername, pybind11::kwargs kwargs);
-
 private:
 	void updateRichParameterSet(
 			const FilterFunction& f,
