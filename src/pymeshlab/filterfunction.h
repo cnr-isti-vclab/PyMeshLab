@@ -12,6 +12,7 @@ namespace pymeshlab {
 class FilterFunction
 {
 public:
+	FilterFunction();
 	FilterFunction(const QString pythonFunName, const QString meshlabFunName);
 	void addParameter(const FilterFunctionParameter& p);
 	QString pythonFunctionName() const;

@@ -24,6 +24,9 @@ public:
 	void loadMesh(const std::string& filename, pybind11::kwargs kwargs);
 	void saveMesh(const std::string& filename, pybind11::kwargs kwargs);
 
+	void loadProject(const std::string& filename);
+//	void saveProject(const std::string& filename);
+
 	void applyFilter(const std::string& filtername, pybind11::kwargs kwargs);
 
 private:
@@ -33,14 +36,30 @@ private:
 			RichParameterList& rps,
 			bool ignoreFileName = false);
 
+	MeshFilterInterface* getPluginFromFilterName(
+			const QString& filterName,
+			QAction*& action) const;
+
+	void loadMeshUsingPlugin(
+			const std::string& filename,
+			MeshModel* mm,
+			FilterFunction ff = FilterFunction(),
+			pybind11::kwargs kwargs = pybind11::kwargs());
+
+	void loadALN(const QString& fileName);
+
+	void loadMLP(const QString& fileName);
+
+//	void loadBundler(const QString& fileName);
+
+//	void loadNVM(const QString& fileName);
+
 	static void updateRichParameterFromKwarg(
 			RichParameter& par,
 			const FilterFunctionParameter& ffp,
 			const std::pair<pybind11::handle, pybind11::handle>& k);
 
-	MeshFilterInterface* getPluginFromFilterName(
-			const QString& filterName,
-			QAction*& action) const;
+
 
 	std::string basePath;
 	RichParameterList globalRPS;

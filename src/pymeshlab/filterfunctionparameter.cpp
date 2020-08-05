@@ -182,7 +182,7 @@ QString pymeshlab::FilterFunctionParameter::computePythonTypeString(const RichPa
 	if (v.isMesh())
 		return "Mesh [still unsupported]";
 	if (v.isFileName())
-		return "str [" + par.value().typeName() + "]";
+		return "str";
 	if (v.isFloatList())
 		return "FloatList [still unsupported]";
 	return "still_unsupported";

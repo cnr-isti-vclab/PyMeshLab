@@ -2,6 +2,10 @@
 #include <QStringList>
 #include <filter_parameter/rich_parameter.h>
 
+pymeshlab::FilterFunction::FilterFunction()
+{
+}
+
 pymeshlab::FilterFunction::FilterFunction(const QString pythonFunctionName, const QString meshlabFilterName) :
 	pythonFunName(pythonFunctionName), meshlabFunName(meshlabFilterName)
 {
