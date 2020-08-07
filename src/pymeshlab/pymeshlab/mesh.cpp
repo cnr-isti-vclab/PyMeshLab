@@ -28,6 +28,16 @@ void pymeshlab::Mesh::compact(CMeshO& mesh)
 	vcg::tri::Allocator<CMeshO>::CompactEveryVector(mesh);
 }
 
+int pymeshlab::Mesh::selectedFaceNumber(const CMeshO& mesh)
+{
+	int counter = 0;
+	for (int i = 0; i < mesh.FN(); i++){
+		if (!mesh.face[i].IsD() && mesh.face[i].IsS())
+			counter++;
+	}
+	return counter;
+}
+
 bool pymeshlab::Mesh::isCompact(const CMeshO& mesh)
 {
 	return

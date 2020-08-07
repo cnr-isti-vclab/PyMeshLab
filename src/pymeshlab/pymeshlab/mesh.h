@@ -16,6 +16,8 @@ public:
 	static void updateTopology(CMeshO& mesh);
 	static void compact(CMeshO& mesh);
 
+	static int selectedFaceNumber(const CMeshO& mesh);
+
 	static Eigen::MatrixXd vertexMatrix(const CMeshO& mesh);
 	static Eigen::MatrixXi faceMatrix(const CMeshO& mesh);
 	static Eigen::MatrixXd vertexNormalMatrix(const CMeshO& mesh);

@@ -9,7 +9,7 @@
 namespace py = pybind11;
 
 pymeshlab::MeshSet::MeshSet(bool verbose) :
-	MeshDocument(), globalRPS(), pm(), verbose(verbose)
+	MeshDocument(), globalRPS(), pm()
 {
 	QDir dir(QString::fromStdString(pymeshlab::getPluginsPath()));
 	pymeshlab::QDebugRedirect* qdbr = nullptr;
@@ -17,6 +17,7 @@ pymeshlab::MeshSet::MeshSet(bool verbose) :
 		qdbr = new pymeshlab::QDebugRedirect(); //redirect qdebug to null, just for this scope
 	pm.loadPlugins(globalRPS, dir);
 	filterFunctionSet.popolate(pm);
+	setVerbosity(verbose);
 	delete qdbr;
 }
 
@@ -27,6 +28,14 @@ pymeshlab::MeshSet::~MeshSet()
 void pymeshlab::MeshSet::setVerbosity(bool verbose)
 {
 	this->verbose = verbose;
+	if (verbose){
+		for (auto p : pm.ownerPlug)
+			p->setLog(&Log);
+	}
+	else {
+		for (auto p : pm.ownerPlug)
+			p->setLog(nullptr);
+	}
 }
 
 CMeshO& pymeshlab::MeshSet::currentMesh()
@@ -442,7 +451,6 @@ void pymeshlab::MeshSet::saveMLP(const QString& fileName)
 	//restore current dir
 	QDir::setCurrent(currentDir.absolutePath());
 }
-
 
 void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 		RichParameter& par,

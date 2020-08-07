@@ -17,6 +17,7 @@ void pymeshlab::initMesh(py::module& m)
 	meshClass.def("face_number", &CMeshO::FN);
 	meshClass.def("edge_number", &CMeshO::EN);
 	meshClass.def("is_compact", &Mesh::isCompact);
+	meshClass.def("selected_face_number", &Mesh::selectedFaceNumber);
 
 	meshClass.def("update_bounding_box", &Mesh::updateBBox);
 	meshClass.def("update_topology", &Mesh::updateTopology);
