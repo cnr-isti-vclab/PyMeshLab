@@ -14,6 +14,8 @@ public:
 	MeshSet(bool verbose = false);
 	virtual ~MeshSet();
 
+	void setVerbosity(bool verbose);
+
 	CMeshO& currentMesh();
 	int currentMeshId() const;
 

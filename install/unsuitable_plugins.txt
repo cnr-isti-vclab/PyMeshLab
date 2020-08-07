@@ -5,5 +5,3 @@ edit
 decorate
 #all render plugins:
 render
-#filter_select plugin:
-filter_select

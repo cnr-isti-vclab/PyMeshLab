@@ -24,6 +24,11 @@ pymeshlab::MeshSet::~MeshSet()
 {
 }
 
+void pymeshlab::MeshSet::setVerbosity(bool verbose)
+{
+	this->verbose = verbose;
+}
+
 CMeshO& pymeshlab::MeshSet::currentMesh()
 {
 	return mm()->cm;
