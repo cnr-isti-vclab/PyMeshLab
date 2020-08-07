@@ -192,6 +192,10 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 			updateRichParameterSet(*it, kwargs, rps);
 			try {
 				fp->applyFilter(action, *this, rps, nullptr);
+				if (mm() != nullptr) {
+					mm()->cm.svn = int(vcg::tri::UpdateSelection<CMeshO>::VertexCount(mm()->cm));
+					mm()->cm.sfn = int(vcg::tri::UpdateSelection<CMeshO>::FaceCount(mm()->cm));
+				}
 			}
 			catch(const std::exception& e) {
 				throw MLException(
