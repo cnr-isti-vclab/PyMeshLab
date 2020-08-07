@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "meshset.h"
+#include "pymeshlab/meshset.h"
 
 int main(int , char *[])
 {

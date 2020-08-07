@@ -26,13 +26,13 @@ public:
 	void printPythonFilterNamesList() const;
 	void printPythonFilterParameterList(const std::string functionName) const;
 
-	void loadMesh(const std::string& filename, pybind11::kwargs kwargs);
-	void saveMesh(const std::string& filename, pybind11::kwargs kwargs);
+	void loadMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());
+	void saveMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());
 
 	void loadProject(const std::string& filename);
 	void saveProject(const std::string& filename);
 
-	void applyFilter(const std::string& filtername, pybind11::kwargs kwargs);
+	void applyFilter(const std::string& filtername, pybind11::kwargs kwargs = pybind11::kwargs());
 
 	void printStatus() const;
 private:

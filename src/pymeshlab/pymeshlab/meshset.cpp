@@ -111,7 +111,8 @@ void pymeshlab::MeshSet::loadMesh(const std::string& filename, py::kwargs kwargs
 
 void pymeshlab::MeshSet::saveMesh(const std::string& filename, pybind11::kwargs kwargs)
 {
-	saveMeshUsingPlugin(filename, nullptr, mm()->dataMask(), FilterFunction(), kwargs);
+	//todo: translate mm()->dataMask() to vcg::tri::io::Mask
+	saveMeshUsingPlugin(filename, nullptr, 0, FilterFunction(), kwargs);
 }
 
 void pymeshlab::MeshSet::loadProject(const std::string& filename)
@@ -179,7 +180,8 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 		//case of save mesh:
 		else if (QString::fromStdString(filtername).startsWith("save_")){
 			std::string filename = py::str(kwargs["file_name"]);
-			saveMeshUsingPlugin(filename, nullptr, mm()->dataMask(),*it, kwargs);
+			//todo: translate mm()->dataMask() to vcg::tri::io::Mask
+			saveMeshUsingPlugin(filename, nullptr, 0,*it, kwargs);
 		}
 		//all the other plugins:
 		else {
