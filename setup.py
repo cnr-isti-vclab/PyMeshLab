@@ -14,6 +14,8 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 f = open("PYML_VERSION", "r")
 pymeshlabversion = f.read()
 
+install_requires = ['numpy']
+
 osused = platform.system()
 if osused == 'Darwin':
     osused = 'macOS'
@@ -48,6 +50,7 @@ setup(
     author='Alessandro Muntoni, Paolo Cignoni',
     author_email='alessandro.muntoni@isti.cnr.it',
     license='GPL3',
+    install_requires=install_requires,
     packages=['pymeshlab', 'pymeshlab.tests'],
     include_package_data=True,
     zip_safe=False

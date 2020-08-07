@@ -8,13 +8,16 @@
 
 namespace py = pybind11;
 
-pymeshlab::MeshSet::MeshSet() :
-	MeshDocument(), globalRPS(), pm()
+pymeshlab::MeshSet::MeshSet(bool verbose) :
+	MeshDocument(), globalRPS(), pm(), verbose(verbose)
 {
 	QDir dir(QString::fromStdString(pymeshlab::getPluginsPath()));
-	pymeshlab::QDebugRedirect qdbr; //redirect qdebug to null, just for this scope
+	pymeshlab::QDebugRedirect* qdbr = nullptr;
+	if (!verbose)
+		qdbr = new pymeshlab::QDebugRedirect(); //redirect qdebug to null, just for this scope
 	pm.loadPlugins(globalRPS, dir);
 	filterFunctionSet.popolate(pm);
+	delete qdbr;
 }
 
 pymeshlab::MeshSet::~MeshSet()
@@ -39,6 +42,14 @@ bool pymeshlab::MeshSet::meshIdExists(int id) const
 CMeshO& pymeshlab::MeshSet::mesh(int id)
 {
 	return getMesh(id)->cm;
+}
+
+void pymeshlab::MeshSet::printPluginList() const
+{
+	std::cout << "MeshSet class - list of loaded plugins:\n";
+	for (const MeshCommonInterface* p : pm.ownerPlug){
+		std::cout << "\t" << p->pluginName().toStdString() << "\n";
+	}
 }
 
 void pymeshlab::MeshSet::printPythonFilterNamesList() const

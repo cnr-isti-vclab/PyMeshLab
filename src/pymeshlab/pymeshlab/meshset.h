@@ -11,7 +11,7 @@ namespace pymeshlab {
 class MeshSet : public MeshDocument
 {
 public:
-	MeshSet();
+	MeshSet(bool verbose = false);
 	virtual ~MeshSet();
 
 	CMeshO& currentMesh();
@@ -20,6 +20,7 @@ public:
 	bool meshIdExists(int id) const;
 	CMeshO& mesh(int id);
 
+	void printPluginList() const;
 	void printPythonFilterNamesList() const;
 	void printPythonFilterParameterList(const std::string functionName) const;
 
@@ -72,6 +73,8 @@ private:
 	RichParameterList globalRPS;
 	PluginManager pm;
 	FilterFunctionSet filterFunctionSet;
+
+	bool verbose;
 };
 
 }
