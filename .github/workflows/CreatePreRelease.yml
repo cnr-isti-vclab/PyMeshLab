@@ -178,9 +178,10 @@ jobs:
       matrix:
         pyversion: [3.8]
     steps:
+    - uses: actions/checkout@v2
     - name: Get short SHA
       id: slug
-      run: echo "::set-output name=sha7::$(echo ${GITHUB_SHA} | cut -c1-7)"
+      run: echo  ::set-output name=short_sha::$(git rev-parse --short HEAD)
     #Linux Release
     - name: Download PyMeshLab_Linux_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v1
@@ -190,8 +191,6 @@ jobs:
     - name: Create PyMeshLab Linux Archive
       run: |
         zip -r pymeshlab-linux-python${{ matrix.pyversion }}.zip pymeshlab_linux/
-    
-
     #MacOS Release
     - name: Download PyMeshLab_macOS_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v1
@@ -200,10 +199,8 @@ jobs:
         path: pymeshlab_macos/
     - name: Create PyMeshLab MacOS Archive
       run: |
-        zip -r pymeshlab-macos-python${{ matrix.pyversion }}.zip pymeshlab_macos/
-        
-
-    #MacOS Release
+        zip -r pymeshlab-macos-python${{ matrix.pyversion }}.zip pymeshlab_macos/  
+    #Windows Release
     - name: Download PyMeshLab_Windows_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v1
       with:
@@ -212,8 +209,6 @@ jobs:
     - name: Create PyMeshLab Windows Archive
       run: |
         zip -r pymeshlab-windows-python${{ matrix.pyversion }}.zip pymeshlab_windows/
-    
-    
     #Create release and upload
     - name: Publish Release
       id: create_release
@@ -221,8 +216,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: PyMeshlab-${{ steps.slug.outputs.sha8 }}
-        release_name: PyMeshlab-${{ steps.slug.outputs.sha8 }}
+        tag_name: PyMeshLab-${{ steps.slug.outputs.short_sha }}
+        release_name: PyMeshLab-${{ steps.slug.outputs.short_sha }}
         draft: false
         prerelease: true
     #Linux
