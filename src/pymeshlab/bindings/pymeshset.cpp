@@ -20,8 +20,8 @@ void pymeshlab::initMeshSet(pybind11::module& m)
 	meshSetClass.def(py::init<bool>(), py::arg("verbose"));
 
 	meshSetClass.def("set_versbosity", &MeshSet::setVerbosity, doc::PYMS_SET_VERBOSITY_DOC, py::arg("verbosity"));
-	meshSetClass.def("number_meshes", &MeshSet::size);
-	meshSetClass.def("set_current_mesh", &MeshSet::setCurrentMesh, py::arg("new_curr_id"));
+	meshSetClass.def("number_meshes", &MeshSet::size, doc::PYMS_SIZE_DOC);
+	meshSetClass.def("set_current_mesh", &MeshSet::setCurrentMesh, doc::PYMS_SET_CURRENT_MESH, py::arg("new_curr_id"));
 	meshSetClass.def("current_mesh", &MeshSet::currentMesh, py::return_value_policy::reference);
 	meshSetClass.def("current_mesh_id", &MeshSet::currentMeshId);
 	meshSetClass.def("mesh_id_exists", &MeshSet::meshIdExists, py::arg("id"));

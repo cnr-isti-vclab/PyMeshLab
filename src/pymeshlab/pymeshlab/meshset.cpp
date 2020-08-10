@@ -40,11 +40,15 @@ void pymeshlab::MeshSet::setVerbosity(bool verbose)
 
 CMeshO& pymeshlab::MeshSet::currentMesh()
 {
+	if (mm() == nullptr)
+		throw MLException("MeshSet has no selected Mesh.");
 	return mm()->cm;
 }
 
 int pymeshlab::MeshSet::currentMeshId() const
 {
+	if (mm() == nullptr)
+		throw MLException("MeshSet has no selected Mesh.");
 	return mm()->id();
 }
 
@@ -55,7 +59,10 @@ bool pymeshlab::MeshSet::meshIdExists(int id) const
 
 CMeshO& pymeshlab::MeshSet::mesh(int id)
 {
-	return getMesh(id)->cm;
+	MeshModel* tmp = getMesh(id);
+	if (tmp == nullptr)
+		throw MLException("Mesh ID " + QString::number(id) + " not found in MeshSet.");
+	return tmp->cm;
 }
 
 void pymeshlab::MeshSet::printPluginList() const

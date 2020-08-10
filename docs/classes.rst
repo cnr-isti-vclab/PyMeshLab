@@ -10,3 +10,11 @@ PyMeshLab Classes
    classes/boundingbox
    classes/mesh
    classes/meshset
+
+Exceptions
+----------
+
+.. toctree::
+   :maxdepth: 1
+   
+   classes/exceptions
