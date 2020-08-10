@@ -1,4 +1,4 @@
-name: CreaePreRelease
+name: CreatePreRelease
 
 on: 
   [workflow_dispatch]
@@ -221,8 +221,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: PyMeshlab-{{ steps.slug.outputs.sha8 }}
-        release_name: PyMeshlab-{{ steps.slug.outputs.sha8 }}
+        tag_name: PyMeshlab-${{ steps.slug.outputs.sha8 }}
+        release_name: PyMeshlab-${{ steps.slug.outputs.sha8 }}
         draft: false
         prerelease: true
     #Linux
