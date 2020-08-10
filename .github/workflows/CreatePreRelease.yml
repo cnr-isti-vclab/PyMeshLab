@@ -178,6 +178,9 @@ jobs:
       matrix:
         pyversion: [3.8]
     steps:
+    - name: Get short SHA
+      id: slug
+      run: echo "::set-output name=sha7::$(echo ${GITHUB_SHA} | cut -c1-7)"
     #Linux Release
     - name: Download PyMeshLab_Linux_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v1
@@ -218,8 +221,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: PyMeshlab-${{ github.sha::7 }}
-        release_name: MeshLab-${{ github.sha::7 }}
+        tag_name: PyMeshlab-{{ steps.slug.outputs.sha8 }}
+        release_name: PyMeshlab-{{ steps.slug.outputs.sha8 }}
         draft: false
         prerelease: true
     #Linux
