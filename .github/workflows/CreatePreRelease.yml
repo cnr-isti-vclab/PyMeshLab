@@ -190,7 +190,8 @@ jobs:
         path: pymeshlab_linux/
     - name: Create PyMeshLab Linux Archive
       run: |
-        zip -r -j PyMeshLab_Linux_python${{ matrix.pyversion }}.zip pymeshlab_linux/*
+        cd pymeshlab_linux
+        zip -r ../PyMeshLab_Linux_python${{ matrix.pyversion }}.zip *
     #MacOS Release
     - name: Download PyMeshLab_macOS_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v1
@@ -199,7 +200,8 @@ jobs:
         path: pymeshlab_macos/
     - name: Create PyMeshLab MacOS Archive
       run: |
-        zip -r -j PyMeshLab_macOS_python${{ matrix.pyversion }}.zip pymeshlab_macos/*
+        cd pymeshlab_macos
+        zip -r ../PyMeshLab_macOS_python${{ matrix.pyversion }}.zip *
     #Windows Release
     - name: Download PyMeshLab_Windows_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v1
@@ -208,7 +210,8 @@ jobs:
         path: pymeshlab_windows/
     - name: Create PyMeshLab Windows Archive
       run: |
-        zip -r -j PyMeshLab_Windows_python${{ matrix.pyversion }}.zip pymeshlab_windows/*
+        cd pymeshlab_windows
+        zip -r ../PyMeshLab_Windows_python${{ matrix.pyversion }}.zip *
     #Create release and upload
     - name: Publish Release
       id: create_release
