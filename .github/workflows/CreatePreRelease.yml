@@ -190,7 +190,7 @@ jobs:
         path: pymeshlab_linux/
     - name: Create PyMeshLab Linux Archive
       run: |
-        zip -r pymeshlab-linux-python${{ matrix.pyversion }}.zip pymeshlab_linux/
+        zip -r pymeshlab-linux-python${{ matrix.pyversion }}.zip pymeshlab_linux/*
     #MacOS Release
     - name: Download PyMeshLab_macOS_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v1
@@ -199,7 +199,7 @@ jobs:
         path: pymeshlab_macos/
     - name: Create PyMeshLab MacOS Archive
       run: |
-        zip -r pymeshlab-macos-python${{ matrix.pyversion }}.zip pymeshlab_macos/  
+        zip -r pymeshlab-macos-python${{ matrix.pyversion }}.zip pymeshlab_macos/*
     #Windows Release
     - name: Download PyMeshLab_Windows_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v1
@@ -208,7 +208,7 @@ jobs:
         path: pymeshlab_windows/
     - name: Create PyMeshLab Windows Archive
       run: |
-        zip -r pymeshlab-windows-python${{ matrix.pyversion }}.zip pymeshlab_windows/
+        zip -r pymeshlab-windows-python${{ matrix.pyversion }}.zip pymeshlab_windows/*
     #Create release and upload
     - name: Publish Release
       id: create_release
@@ -227,8 +227,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: pymeshlab-linux-python${{ matrix.pyversion }}.zip
-        asset_name: pymeshlab-linux-python${{ matrix.pyversion }}.zip
+        asset_path: PyMeshLab_Linux_python${{ matrix.pyversion }}.zip
+        asset_name: PyMeshLab_Linux_python${{ matrix.pyversion }}.zip
         asset_content_type: PyMeshLab Linux
     #MacOS
     - name: Upload PyMeshLab MacOS
@@ -237,8 +237,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: pymeshlab-macos-python${{ matrix.pyversion }}.zip
-        asset_name: pymeshlab-macos-python${{ matrix.pyversion }}.zip
+        asset_path: PyMeshLab_macOS_python${{ matrix.pyversion }}.zip
+        asset_name: PyMeshLab_macOS_python${{ matrix.pyversion }}.zip
         asset_content_type: PyMeshLab MacOS 
     #Windows
     - name: Upload PyMeshLab Windows
@@ -247,6 +247,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: pymeshlab-windows-python${{ matrix.pyversion }}.zip
-        asset_name: pymeshlab-windows-python${{ matrix.pyversion }}.zip
+        asset_path: PyMeshLab_Windows_python${{ matrix.pyversion }}.zip
+        asset_name: PyMeshLab_Windows_python${{ matrix.pyversion }}.zip
         asset_content_type: PyMeshLab Windows
