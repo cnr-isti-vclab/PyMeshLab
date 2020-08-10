@@ -1,5 +1,0 @@
-.. _basics:
-
-First steps
-###########
-
