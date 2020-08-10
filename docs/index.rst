@@ -13,8 +13,8 @@ PyMeshLab is a Python library that interfaces to `MeshLab`_, the popular open so
    about
 
 
-List of Contents
-================
+Contents
+========
 
 
 .. toctree::
