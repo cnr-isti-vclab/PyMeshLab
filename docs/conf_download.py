@@ -29,6 +29,8 @@ print('Downloading ' + filename)
 urllib.request.urlretrieve(url, this_directory + '/' + filename)
 
 with zipfile.ZipFile(filename, 'r') as zip_ref:
-    zip_ref.extractall('pymeshlab/')
+    zip_ref.extractall('../pymeshlab/')
 
 os.remove(this_directory + '/' + filename)
+
+os.system("conf.py")
