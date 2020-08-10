@@ -1,4 +1,4 @@
-
+.. _intro:
 
 About this project
 ==================

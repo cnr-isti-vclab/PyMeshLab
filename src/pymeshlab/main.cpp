@@ -4,25 +4,7 @@
 
 namespace py = pybind11;
 
-std::string getDoc() {
-    return R"pbdoc(
-             PyMeshLab Module
-             ----------------------
-
-             .. currentmodule:: meshlab
-
-              This module contains a set of classes to
-              compute batch MeshLab operations.
-
-              .. autosummary::
-                 :toctree: _generate
-
-           )pbdoc";
-}
-
 PYBIND11_MODULE(meshlab, m) {
-	m.doc() = getDoc();
-
 	pymeshlab::initBoundingBox(m); //BoundingBox Class
 	pymeshlab::initMesh(m); //Mesh Class
 	pymeshlab::initMeshSet(m); //MeshDocument Class

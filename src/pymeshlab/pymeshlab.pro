@@ -121,6 +121,7 @@ SOURCES += \
 	bindings/pymeshset.cpp
 
 HEADERS += \
+	docs/pymeshset_doc.h \
 	pymeshlab/common.h \
 	pymeshlab/mesh.h \
 	pymeshlab/meshset.h \
