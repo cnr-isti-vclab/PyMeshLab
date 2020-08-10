@@ -218,8 +218,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: PyMeshlab-${GITHUB_SHA::8}
-        release_name: MeshLab-${GITHUB_SHA::8}
+        tag_name: PyMeshlab-${{ github.sha::7 }}
+        release_name: MeshLab-${{ github.sha::7 }}
         draft: false
         prerelease: true
     #Linux
