@@ -199,7 +199,7 @@ jobs:
         path: pymeshlab_macos/
     - name: Create PyMeshLab MacOS Archive
       run: |
-        zip -r PyMeshLab_macOS_Python${{ matrix.pyversion }}.zip pymeshlab_macos/*
+        zip -r PyMeshLab_macOS_python${{ matrix.pyversion }}.zip pymeshlab_macos/*
     #Windows Release
     - name: Download PyMeshLab_Windows_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v1
