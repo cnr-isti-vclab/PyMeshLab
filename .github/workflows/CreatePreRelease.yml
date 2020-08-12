@@ -129,14 +129,13 @@ jobs:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
         path: pymeshlab/
 
-#after building MeshLab for the three platforms, we create a release in github
+  #after building PyMeshLab for the three platforms, we create a prerelease in github
   create_prerelease:
     name: Create PreRelease
     needs: [build_pymeshlab, windows_build_pymeshlab]
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        pyversion: [3.8]
+    outputs:
+      upload_url: ${{ steps.create_prerelease.outputs.upload_url }}
     steps:
     - uses: actions/checkout@v2
     - name: Get short_sha and version
@@ -144,39 +143,9 @@ jobs:
       run: |
         echo  ::set-output name=short_sha::$(git rev-parse --short HEAD)
         echo  ::set-output name=version::"$(cat PYML_VERSION)"
-    #Linux Release
-    - name: Download PyMeshLab_Linux_python${{ matrix.pyversion }}
-      uses: actions/download-artifact@v1
-      with:
-        name: PyMeshLab_Linux_python${{ matrix.pyversion }}
-        path: pymeshlab_linux/
-    - name: Create PyMeshLab Linux Archive
-      run: |
-        cd pymeshlab_linux
-        zip -r ../PyMeshLab_Linux_python${{ matrix.pyversion }}.zip *
-    #MacOS Release
-    - name: Download PyMeshLab_macOS_python${{ matrix.pyversion }}
-      uses: actions/download-artifact@v1
-      with:
-        name: PyMeshLab_macOS_python${{ matrix.pyversion }}
-        path: pymeshlab_macos/
-    - name: Create PyMeshLab MacOS Archive
-      run: |
-        cd pymeshlab_macos
-        zip -r ../PyMeshLab_macOS_python${{ matrix.pyversion }}.zip *
-    #Windows Release
-    - name: Download PyMeshLab_Windows_python${{ matrix.pyversion }}
-      uses: actions/download-artifact@v1
-      with:
-        name: PyMeshLab_Windows_python${{ matrix.pyversion }}
-        path: pymeshlab_windows/
-    - name: Create PyMeshLab Windows Archive
-      run: |
-        cd pymeshlab_windows
-        zip -r ../PyMeshLab_Windows_python${{ matrix.pyversion }}.zip *
     #Create prerelease and upload
     - name: Publish PreRelease
-      id: create_release
+      id: create_prerelease
       uses: actions/create-release@v1.0.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -185,33 +154,34 @@ jobs:
         release_name: PyMeshLab_v${{ steps.slug.outputs.version }}-${{ steps.slug.outputs.short_sha }}
         draft: false
         prerelease: true
-    #Linux
-    - name: Upload PyMeshLab Linux
+    
+  #then, we will upload all the artifacts to the release
+  upload_release:
+    name: Upload Release
+    needs: [create_prerelease]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [Linux, macOS, Windows]
+        pyversion: [3.8]
+    steps:
+    #download
+    - name: Download PyMeshLab_${{ matrix.os }}_python${{ matrix.pyversion }}
+      uses: actions/download-artifact@v1
+      with:
+        name: PyMeshLab_${{ matrix.os }}_python${{ matrix.pyversion }}
+        path: pymeshlab/
+    - name: Create PyMeshLab Archive
+      run: |
+        cd pymeshlab
+        zip -r ../PyMeshLab_${{ matrix.os }}_python${{ matrix.pyversion }}.zip *
+    #upload
+    - name: Upload PyMeshLab_${{ matrix.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-release-asset@v1.0.1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: PyMeshLab_Linux_python${{ matrix.pyversion }}.zip
-        asset_name: PyMeshLab_Linux_python${{ matrix.pyversion }}.zip
-        asset_content_type: PyMeshLab Linux
-    #MacOS
-    - name: Upload PyMeshLab MacOS
-      uses: actions/upload-release-asset@v1.0.1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: PyMeshLab_macOS_python${{ matrix.pyversion }}.zip
-        asset_name: PyMeshLab_macOS_python${{ matrix.pyversion }}.zip
-        asset_content_type: PyMeshLab MacOS 
-    #Windows
-    - name: Upload PyMeshLab Windows
-      uses: actions/upload-release-asset@v1.0.1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: PyMeshLab_Windows_python${{ matrix.pyversion }}.zip
-        asset_name: PyMeshLab_Windows_python${{ matrix.pyversion }}.zip
-        asset_content_type: PyMeshLab Windows
+        upload_url: ${{needs.create_prerelease.outputs.upload_url}}
+        asset_path: PyMeshLab_${{ matrix.os }}_python${{ matrix.pyversion }}.zip
+        asset_name: PyMeshLab_${{ matrix.os }}_python${{ matrix.pyversion }}.zip
+        asset_content_type: PyMeshLab ${{ matrix.pyversion }}

@@ -175,7 +175,7 @@ jobs:
         cd pymeshlab
         zip -r ../PyMeshLab_${{ matrix.os }}_python${{ matrix.pyversion }}.zip *
     #upload
-    - name: Upload PyMeshLab Linux
+    - name: Upload PyMeshLab_${{ matrix.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-release-asset@v1.0.1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
