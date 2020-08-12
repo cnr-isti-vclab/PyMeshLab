@@ -46,11 +46,11 @@ jobs:
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
         sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
-        sh install/linux/build_meshlab.sh
+        sh install/${{ runner.os }}/build_meshlab.sh
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
         export PYTHON_VERSION=${{ matrix.pyversion }}
-        sh install/linux/build_pymeshlab.sh
+        sh install/${{ runner.os }}/build_pymeshlab.sh
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
       with:
@@ -96,11 +96,11 @@ jobs:
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
         brew install libomp
-        sh install/macos/build_meshlab.sh
+        sh install/${{ runner.os }}/build_meshlab.sh
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
         export PYTHON_VERSION=${{ matrix.pyversion }}
-        sh install/macos/build_pymeshlab.sh
+        sh install/${{ runner.os }}/build_pymeshlab.sh
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v1
       with:
@@ -159,10 +159,10 @@ jobs:
     - name: Build MeshLab
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
-        .\install\windows\build_meshlab.ps1
+        .\install\${{ runner.os }}\build_meshlab.ps1
     - name: Build PyMeshLab
       run: |
-        .\install\windows\build_pymeshlab.ps1
+        .\install\${{ runner.os }}\build_pymeshlab.ps1
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
       with:

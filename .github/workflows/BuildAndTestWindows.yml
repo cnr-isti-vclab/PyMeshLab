@@ -55,10 +55,10 @@ jobs:
     - name: Build MeshLab
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
-        .\install\windows\build_meshlab.ps1
+        .\install\${{ runner.os }}\build_meshlab.ps1
     - name: Build PyMeshLab
       run: |
-        .\install\windows\build_pymeshlab.ps1
+        .\install\${{ runner.os }}\build_pymeshlab.ps1
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
       with:
