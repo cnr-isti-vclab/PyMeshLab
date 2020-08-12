@@ -4,6 +4,7 @@ import sys
 import os
 import urllib.request
 import zipfile
+import shutil
 
 # read the contents of README file
 from os import path
@@ -34,6 +35,9 @@ url = baseurl + filename
 
 print('Downloading ' + filename)
 urllib.request.urlretrieve(url, this_directory + '/' + filename)
+
+shutil.rmtree('pymeshlab')
+os.mkdir('pymeshlab')
 
 with zipfile.ZipFile(filename, 'r') as zip_ref:
     zip_ref.extractall('pymeshlab/')

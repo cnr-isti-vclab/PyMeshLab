@@ -201,7 +201,7 @@ jobs:
         python-version: ${{ matrix.pyversion }}
     - name: Install PyMeshLab
       run: |
-        pip install git+https://github.com/cnr-isti-vclab/PyMeshLab
+        pip install git+https://github.com/${{ github.repository }}
     - name: Run Tests ${{ matrix.pyversion }}
       run: |
         pip install pytest
