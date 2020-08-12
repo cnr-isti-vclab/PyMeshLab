@@ -6,6 +6,7 @@ on:
 jobs:
   build_pymeshlab:
     name: Build PyMeshLab
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-16.04, macos-latest]
@@ -68,6 +69,7 @@ jobs:
   
   tests:
     name: Test PyMeshLab
+    runs-on: ${{ matrix.os }}
     needs: build_pymeshlab
     strategy:
       matrix:
