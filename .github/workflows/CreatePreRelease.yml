@@ -4,11 +4,12 @@ on:
   [workflow_dispatch]
   
 jobs:
-  ubuntu_build_pymeshlab:
-    name: Build PyMeshLab (Ubuntu)
-    runs-on: ubuntu-16.04 #in order to deploy, need to use oldest supported version
+  build_pymeshlab:
+    name: Build PyMeshLab
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [ubuntu-16.04, macos-latest]
         pyversion: [3.8]
     steps:
     - uses: actions/checkout@v2
@@ -28,9 +29,11 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.pyversion }}
-    - name: Install dependencies
+    - name: Install Ubuntu dependencies
       run: |
-       sudo apt-get install -y mesa-common-dev libglu1-mesa-dev 
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          sudo apt-get install -y mesa-common-dev libglu1-mesa-dev 
+        fi
     - name: Environment variables
       id: envs
       run: |
@@ -42,10 +45,17 @@ jobs:
       with:
         path: pymeshlab/lib
         key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
+    - name: Install MeshLab dependencies
+      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
+      run: |
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
+        elif ["$RUNNER_OS" == "macOS" ]; then
+          brew install libomp
+        fi
     - name: Build MeshLab
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
-        sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
         sh install/${{ runner.os }}/build_meshlab.sh
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
@@ -53,56 +63,6 @@ jobs:
         sh install/${{ runner.os }}/build_pymeshlab.sh
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
-      with:
-        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-        path: pymeshlab/
-
-  macos_build_pymeshlab:
-    name: Build PyMeshLab (MacOS)
-    runs-on: macos-latest
-    strategy:
-      matrix:
-        pyversion: [3.8]
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: true
-    - name: checkout sub-submodule vcg
-      run: |
-        cd meshlab
-        auth_header="$(git config --local --get http.https://github.com/.extraheader)"
-        git submodule sync --recursive
-        git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v2
-      with:
-        modules: xmlpatterns
-    - name: Install Python ${{ matrix.pyversion }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.pyversion }}
-    - name: Environment variables
-      id: envs
-      run: |
-        cd meshlab
-        echo  ::set-output name=meshlab_commit::$(git rev-parse --short HEAD)
-    - name: Cache MeshLab Build
-      id: cache-meshlab-build
-      uses: actions/cache@v2
-      with:
-        path: pymeshlab/lib
-        key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
-    - name: Build MeshLab
-      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
-      run: |
-        brew install libomp
-        sh install/${{ runner.os }}/build_meshlab.sh
-    - name: Build PyMeshLab ${{ matrix.pyversion }}
-      run: |
-        export PYTHON_VERSION=${{ matrix.pyversion }}
-        sh install/${{ runner.os }}/build_pymeshlab.sh
-    - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-      uses: actions/upload-artifact@v1
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
         path: pymeshlab/
@@ -172,16 +132,18 @@ jobs:
 #after building MeshLab for the three platforms, we create a release in github
   create_prerelease:
     name: Create Release
-    needs: [ubuntu_build_pymeshlab, macos_build_pymeshlab, windows_build_pymeshlab]
+    needs: [build_pymeshlab, windows_build_pymeshlab]
     runs-on: ubuntu-latest
     strategy:
       matrix:
         pyversion: [3.8]
     steps:
     - uses: actions/checkout@v2
-    - name: Get short SHA
+    - name: Get short_sha and version
       id: slug
-      run: echo  ::set-output name=short_sha::$(git rev-parse --short HEAD)
+      run: |
+        echo  ::set-output name=short_sha::$(git rev-parse --short HEAD)
+        echo  ::set-output name=version::"$(cat PYML_VERSION)"
     #Linux Release
     - name: Download PyMeshLab_Linux_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v1
@@ -219,8 +181,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: PyMeshLab-${{ steps.slug.outputs.short_sha }}
-        release_name: PyMeshLab-${{ steps.slug.outputs.short_sha }}
+        tag_name: v{${{ steps.slug.outputs.version }}}-${{ steps.slug.outputs.short_sha }}
+        release_name: PyMeshLab_v{${{ steps.slug.outputs.version }}}-${{ steps.slug.outputs.short_sha }}
         draft: false
         prerelease: true
     #Linux
