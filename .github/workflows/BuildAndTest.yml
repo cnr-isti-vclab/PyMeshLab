@@ -30,9 +30,10 @@ jobs:
       with:
         python-version: ${{ matrix.pyversion }}
     - name: Install Ubuntu dependencies
-      if: ${{ runner.os }} == 'Linux'
       run: |
-       sudo apt-get install -y mesa-common-dev libglu1-mesa-dev 
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          sudo apt-get install -y mesa-common-dev libglu1-mesa-dev 
+        fi
     - name: Environment variables
       id: envs
       run: |
@@ -44,14 +45,14 @@ jobs:
       with:
         path: pymeshlab/lib
         key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
-    - name: Install Ubuntu MeshLab dependencies
-      if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && ${{ runner.os }} == 'Linux'
+    - name: Install MeshLab dependencies
+      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
-       sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
-    - name: Install MacOS MeshLab dependencies
-      if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && ${{ runner.os }} == 'macOS'
-      run: |
-        brew install libomp
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
+        elif ["$RUNNER_OS" == "macOS" ]; then
+          brew install libomp
+        fi
     - name: Build MeshLab
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
