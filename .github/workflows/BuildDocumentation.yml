@@ -87,7 +87,7 @@ jobs:
         python-version: ${{ matrix.pyversion }}
     - name: Install Sphinx
       run: |
-        pip3 install sphinx readthedocs-sphinx-ext
+        pip3 install sphinx readthedocs-sphinx-ext sphinx_rtd_theme
     - name: Build Docs
       run: |
         cd docs
