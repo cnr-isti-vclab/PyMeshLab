@@ -29,7 +29,7 @@ if sys.version_info[0] < 3 or (sys.version_info[0] == 3 and sys.version_info[1] 
 
 pythonversion = str(sys.version_info[0]) + '.' + str(sys.version_info[1])
 
-baseurl = 'https://github.com/cnr-isti-vclab/PyMeshLab/releases/download/v' + pymeshlabversion + '/'
+baseurl = 'https://github.com/alemuntoni/PyMeshLab/releases/download/v' + pymeshlabversion + '/'
 filename = 'PyMeshLab_' + osused + '_python' + pythonversion + '.zip'
 url = baseurl + filename
 

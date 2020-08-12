@@ -1,26 +1,43 @@
 name: CreateAndTestRelease
 
 on: 
-  [workflow_dispatch]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'New PyMeshLab Version'
+        required: true
+        default: '0.1.2'
   
 jobs:
+  update_version:
+    name: Update Version
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+    - name: Update PYML_VERSION
+      run: |
+        echo ${{ github.event.inputs.version }} | tr -d '\n'> ML_VERSION
+    - name: Commit change
+      uses: stefanzweifel/git-auto-commit-action@v4.1.1
+      with:
+        commit_message: Update PYML_VERSION to ${{ github.event.inputs.version }}
+
+
   unix_build_pymeshlab:
     name: Build PyMeshLab
     runs-on: ${{ matrix.os }}
+    needs: update_version
     strategy:
       matrix:
         os: [ubuntu-16.04, macos-latest]
         pyversion: [3.5, 3.6, 3.7, 3.8]
     steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: true
-    - name: checkout sub-submodule vcg
+    - name: checkout 
       run: |
-        cd meshlab
-        auth_header="$(git config --local --get http.https://github.com/.extraheader)"
-        git submodule sync --recursive
-        git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+        cd ..
+        git clone --recursive https://github.com/${{ github.repository }}
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
@@ -70,20 +87,16 @@ jobs:
   windows_build_pymeshlab:
     name: Build PyMeshLab (Windows)
     runs-on: windows-latest
+    needs: update_version
     strategy:
       matrix:
         pyversion: [3.5, 3.6, 3.7, 3.8]
 
     steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: true
-    - name: checkout sub-submodule vcg
+    - name: checkout 
       run: |
-        cd meshlab
-        $auth_header="$(git config --local --get http.https://github.com/.extraheader)"
-        git submodule sync --recursive
-        git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+        cd ..
+        git clone --recursive https://github.com/${{ github.repository }}
     - name: Downlaod Jom
       run: |
         Invoke-WebRequest -Uri "http://download.qt.io/official_releases/jom/jom_1_1_3.zip" -OutFile "jom_1_1_3.zip"
@@ -137,11 +150,6 @@ jobs:
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
-    - uses: actions/checkout@v2
-    - name: Get version
-      id: slug
-      run: |
-        echo  ::set-output name=version::"$(cat PYML_VERSION)"
     #Create release
     - name: Publish Release
       id: create_release
@@ -150,7 +158,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: v${{ steps.slug.outputs.version }}
-        release_name: 'PyMeshLab v${{ steps.slug.outputs.version }}'
+        release_name: 'PyMeshLab v${{ github.event.inputs.version }}'
         draft: false
         prerelease: false
     
