@@ -1,10 +1,10 @@
-name: BuildAndTest
+name: BuildAndTestUnix
 
 on:
   [push, pull_request]
 
 jobs:
-  build_pymeshlab:
+  unix_build_pymeshlab:
     name: Build PyMeshLab
     runs-on: ${{ matrix.os }}
     strategy:
@@ -71,7 +71,7 @@ jobs:
   tests:
     name: Test PyMeshLab
     runs-on: ${{ matrix.os }}
-    needs: build_pymeshlab
+    needs: unix_build_pymeshlab
     strategy:
       matrix:
         os: [ubuntu-16.04, macos-latest]

@@ -4,7 +4,7 @@ on:
   [workflow_dispatch]
   
 jobs:
-  build_pymeshlab:
+  unix_build_pymeshlab:
     name: Build PyMeshLab
     runs-on: ${{ matrix.os }}
     strategy:
@@ -132,7 +132,7 @@ jobs:
   #after building PyMeshLab for the three platforms, we create a prerelease in github
   create_prerelease:
     name: Create PreRelease
-    needs: [build_pymeshlab, windows_build_pymeshlab]
+    needs: [unix_build_pymeshlab, windows_build_pymeshlab]
     runs-on: ubuntu-latest
     outputs:
       upload_url: ${{ steps.create_prerelease.outputs.upload_url }}
