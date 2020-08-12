@@ -119,6 +119,8 @@ void pymeshlab::MeshSet::loadMesh(const std::string& filename, py::kwargs kwargs
 void pymeshlab::MeshSet::saveMesh(const std::string& filename, pybind11::kwargs kwargs)
 {
 	//todo: translate mm()->dataMask() to vcg::tri::io::Mask
+	if (mm() == nullptr)
+		throw MLException("MeshSet has no selected Mesh.");
 	saveMeshUsingPlugin(filename, nullptr, 0, FilterFunction(), kwargs);
 }
 
