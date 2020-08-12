@@ -87,11 +87,10 @@ jobs:
         python-version: ${{ matrix.pyversion }}
     - name: Install Sphinx
       run: |
-        pip3 install sphinx
+        pip3 install sphinx readthedocs-sphinx-ext
     - name: Build Docs
       run: |
         cd docs
-        python3 conf.py
         make html
     - name: Upload Docs
       uses: actions/upload-artifact@v2
