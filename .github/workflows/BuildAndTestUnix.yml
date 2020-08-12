@@ -30,10 +30,9 @@ jobs:
       with:
         python-version: ${{ matrix.pyversion }}
     - name: Install Ubuntu dependencies
+      if: runner.os == 'Linux'
       run: |
-        if [ "$RUNNER_OS" == "Linux" ]; then
-          sudo apt-get install -y mesa-common-dev libglu1-mesa-dev 
-        fi
+        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev 
     - name: Environment variables
       id: envs
       run: |
