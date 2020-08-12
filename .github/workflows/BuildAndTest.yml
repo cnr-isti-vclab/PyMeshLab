@@ -1,14 +1,14 @@
-name: BuildAndTestUbuntu
+name: BuildAndTest
 
 on:
   [push, pull_request]
 
 jobs:
-  ubuntu_build_pymeshlab:
-    name: Build PyMeshLab (Ubuntu)
-    runs-on: ubuntu-16.04 #in order to deploy, need to use oldest supported version
+  build_pymeshlab:
+    name: Build PyMeshLab
     strategy:
       matrix:
+        os: [ubuntu-16.04, macos-latest]
         pyversion: [3.5, 3.6, 3.7, 3.8]
     steps:
     - uses: actions/checkout@v2
@@ -28,7 +28,8 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.pyversion }}
-    - name: Install dependencies
+    - name: Install Ubuntu dependencies
+      if: ${{ runner.os }} == Linux
       run: |
        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev 
     - name: Environment variables
@@ -42,10 +43,17 @@ jobs:
       with:
         path: pymeshlab/lib
         key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
+    - name: Install Ubuntu MeshLab dependencies
+      if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && ${{ runner.os }} == Linux
+      run: |
+       sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
+    - name: Install MacOS MeshLab dependencies
+      if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && ${{ runner.os }} == macOS
+      run: |
+        brew install libomp
     - name: Build MeshLab
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
-        sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
         sh install/${{ runner.os }}/build_meshlab.sh
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
@@ -58,12 +66,12 @@ jobs:
         path: pymeshlab/
   
   
-  ubuntu_tests:
-    name: Test PyMeshLab (Ubuntu)
-    needs: ubuntu_build_pymeshlab
-    runs-on: ubuntu-latest
+  tests:
+    name: Test PyMeshLab
+    needs: build_pymeshlab
     strategy:
       matrix:
+        os: [ubuntu-16.04, macos-latest]
         pyversion: [3.5, 3.6, 3.7, 3.8]
     steps:
     - uses: actions/checkout@v2
@@ -80,4 +88,3 @@ jobs:
       run: |
         pip install pytest
         pytest -s pymeshlab
-    
