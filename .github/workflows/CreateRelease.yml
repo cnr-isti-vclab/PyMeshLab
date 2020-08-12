@@ -130,19 +130,39 @@ jobs:
         path: pymeshlab/
 
 #after building MeshLab for the three platforms, we create a release in github
-  create_prerelease:
+  create_release:
     name: Create Release
     needs: [build_pymeshlab, windows_build_pymeshlab]
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        pyversion: [3.5, 3.6, 3.7, 3.8]
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
     - uses: actions/checkout@v2
     - name: Get version
       id: slug
       run: |
         echo  ::set-output name=version::"$(cat PYML_VERSION)"
+    #Create release and upload
+    - name: Publish Release
+      id: create_release
+      uses: actions/create-release@v1.0.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ steps.slug.outputs.version }}
+        release_name: 'PyMeshLab v${{ steps.slug.outputs.version }}'
+        draft: false
+        prerelease: false
+    
+#then, we will upload all the artifacts to the release
+  upload_release:
+    name: Upload Release
+    needs: [create_release]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        pyversion: [3.5, 3.6, 3.7, 3.8]
+    steps:
     #Linux Release
     - name: Download PyMeshLab_Linux_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v1
@@ -173,24 +193,14 @@ jobs:
       run: |
         cd pymeshlab_windows
         zip -r ../PyMeshLab_Windows_python${{ matrix.pyversion }}.zip *
-    #Create release and upload
-    - name: Publish Release
-      id: create_release
-      uses: actions/create-release@v1.0.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: v${{ steps.slug.outputs.version }}
-        release_name: 'PyMeshLab v${{ steps.slug.outputs.version }}'
-        draft: false
-        prerelease: false
+
     #Linux
     - name: Upload PyMeshLab Linux
       uses: actions/upload-release-asset@v1.0.1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        upload_url: ${{needs.create_release.outputs.upload_url}}
         asset_path: PyMeshLab_Linux_python${{ matrix.pyversion }}.zip
         asset_name: PyMeshLab_Linux_python${{ matrix.pyversion }}.zip
         asset_content_type: PyMeshLab Linux
@@ -200,7 +210,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        upload_url: ${{needs.create_release.outputs.upload_url}}
         asset_path: PyMeshLab_macOS_python${{ matrix.pyversion }}.zip
         asset_name: PyMeshLab_macOS_python${{ matrix.pyversion }}.zip
         asset_content_type: PyMeshLab MacOS 
@@ -210,7 +220,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        upload_url: ${{needs.create_release.outputs.upload_url}}
         asset_path: PyMeshLab_Windows_python${{ matrix.pyversion }}.zip
         asset_name: PyMeshLab_Windows_python${{ matrix.pyversion }}.zip
         asset_content_type: PyMeshLab Windows
