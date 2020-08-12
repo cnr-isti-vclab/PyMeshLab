@@ -67,7 +67,7 @@ jobs:
         path: pymeshlab/
         
   build_docs:
-    name: Test PyMeshLab
+    name: Build Documentation
     runs-on: ${{ matrix.os }}
     needs: unix_build_pymeshlab
     strategy:
@@ -85,9 +85,13 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.pyversion }}
+    - name: Install Sphinx
+      run: |
+        pip3 install sphinx
     - name: Build Docs
       run: |
         cd docs
+        python3 conf.py
         make html
     - name: Upload Docs
       uses: actions/upload-artifact@v2
