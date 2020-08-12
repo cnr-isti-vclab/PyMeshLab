@@ -55,18 +55,18 @@ jobs:
       id: envs
       run: |
         cd meshlab
-        echo  ::set-output name=meshlab_commit::$(git rev-parse --short HEAD)
+        echo  ::set-output name=meshlab_commit::$(git rev-parse --short=7 HEAD)
     - name: Cache MeshLab Build
       id: cache-meshlab-build
       uses: actions/cache@v2
       with:
         path: pymeshlab/lib
         key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
-    - name: Install MeshLab dependencies
+    - name: Install MeshLab-Ubuntu dependencies
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && runner.os == 'Linux'
       run: |
         sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
-    - name: Install MeshLab dependencies
+    - name: Install MeshLab-MacOS dependencies
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && runner.os == 'macOS'
       run: |
         brew install libomp
