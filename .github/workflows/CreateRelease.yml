@@ -1,4 +1,4 @@
-name: CreatePreRelease
+name: CreateRelease
 
 on: 
   [workflow_dispatch]
@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-16.04, macos-latest]
-        pyversion: [3.8]
+        pyversion: [3.5, 3.6, 3.7, 3.8]
     steps:
     - uses: actions/checkout@v2
       with:
@@ -72,7 +72,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        pyversion: [3.8]
+        pyversion: [3.5, 3.6, 3.7, 3.8]
 
     steps:
     - uses: actions/checkout@v2
@@ -131,18 +131,17 @@ jobs:
 
 #after building MeshLab for the three platforms, we create a release in github
   create_prerelease:
-    name: Create PreRelease
+    name: Create Release
     needs: [build_pymeshlab, windows_build_pymeshlab]
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        pyversion: [3.8]
+        pyversion: [3.5, 3.6, 3.7, 3.8]
     steps:
     - uses: actions/checkout@v2
-    - name: Get short_sha and version
+    - name: Get version
       id: slug
       run: |
-        echo  ::set-output name=short_sha::$(git rev-parse --short HEAD)
         echo  ::set-output name=version::"$(cat PYML_VERSION)"
     #Linux Release
     - name: Download PyMeshLab_Linux_python${{ matrix.pyversion }}
@@ -174,17 +173,17 @@ jobs:
       run: |
         cd pymeshlab_windows
         zip -r ../PyMeshLab_Windows_python${{ matrix.pyversion }}.zip *
-    #Create prerelease and upload
-    - name: Publish PreRelease
+    #Create release and upload
+    - name: Publish Release
       id: create_release
       uses: actions/create-release@v1.0.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v${{ steps.slug.outputs.version }}-${{ steps.slug.outputs.short_sha }}
-        release_name: PyMeshLab_v${{ steps.slug.outputs.version }}-${{ steps.slug.outputs.short_sha }}
+        tag_name: v${{ steps.slug.outputs.version }}
+        release_name: 'PyMeshLab v${{ steps.slug.outputs.version }}'
         draft: false
-        prerelease: true
+        prerelease: false
     #Linux
     - name: Upload PyMeshLab Linux
       uses: actions/upload-release-asset@v1.0.1
