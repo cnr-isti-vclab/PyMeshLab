@@ -63,13 +63,13 @@ jobs:
         path: pymeshlab/lib
         key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
     - name: Install MeshLab dependencies
-      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
+      if: steps.cache-meshlab-build.outputs.cache-hit != 'true' and runner.os == 'Linux'
       run: |
-        if [ "$RUNNER_OS" == "Linux" ]; then
-          sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
-        elif ["$RUNNER_OS" == "macOS" ]; then
-          brew install libomp
-        fi
+        sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
+    - name: Install MeshLab dependencies
+      if: steps.cache-meshlab-build.outputs.cache-hit != 'true' and runner.os == 'macOS'
+      run: |
+        brew install libomp
     - name: Build MeshLab
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
@@ -108,7 +108,7 @@ jobs:
       run: |
         echo '::set-env name=VCINSTALLDIR::C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
         cd meshlab
-        $var=(git rev-parse --short HEAD --version) | Out-String
+        $var=(git rev-parse --short=7 HEAD --version) | Out-String
         echo "::set-output name=meshlab_commit::$($var)"
     - name: Setup MSVC
       uses: ilammy/msvc-dev-cmd@v1
@@ -194,6 +194,9 @@ jobs:
         asset_content_type: PyMeshLab ${{ matrix.pyversion }}
         
   #and then, we test the last release
+  #WARNING: setup.py needs to download the release from THIS repository
+  #default is cnr-isti-vclab/PyMeshLab, but if you are testing a release in a forked
+  #repo, you need to update also master/setup.py file
   test_release_pymeshlab:
     name: Test PyMeshLab
     needs: [upload_release]
