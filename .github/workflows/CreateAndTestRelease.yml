@@ -18,7 +18,7 @@ jobs:
         submodules: true
     - name: Update PYML_VERSION
       run: |
-        echo ${{ github.event.inputs.version }} | tr -d '\n'> ML_VERSION
+        echo ${{ github.event.inputs.version }} | tr -d '\n'> PYML_VERSION
     - name: Commit change
       uses: stefanzweifel/git-auto-commit-action@v4.1.1
       with:
