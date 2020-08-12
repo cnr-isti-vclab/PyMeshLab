@@ -1,14 +1,15 @@
-name: BuildAndTestUbuntu
+name: BuildAndTestUnix
 
 on:
   [push, pull_request]
 
 jobs:
-  ubuntu_build_pymeshlab:
-    name: Build PyMeshLab (Ubuntu)
-    runs-on: ubuntu-16.04 #in order to deploy, need to use oldest supported version
+  unix_build_pymeshlab:
+    name: Build PyMeshLab
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [ubuntu-16.04, macos-latest]
         pyversion: [3.5, 3.6, 3.7, 3.8]
     steps:
     - uses: actions/checkout@v2
@@ -28,9 +29,10 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.pyversion }}
-    - name: Install dependencies
+    - name: Install Ubuntu dependencies
+      if: runner.os == 'Linux'
       run: |
-       sudo apt-get install -y mesa-common-dev libglu1-mesa-dev 
+        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev 
     - name: Environment variables
       id: envs
       run: |
@@ -42,15 +44,22 @@ jobs:
       with:
         path: pymeshlab/lib
         key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
+    - name: Install MeshLab-Ubuntu dependencies
+      if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && runner.os == 'Linux'
+      run: |
+        sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
+    - name: Install MeshLab-MacOS dependencies
+      if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && runner.os == 'macOS'
+      run: |
+        brew install libomp
     - name: Build MeshLab
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
-        sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
-        sh install/linux/build_meshlab.sh
+        sh install/${{ runner.os }}/build_meshlab.sh
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
         export PYTHON_VERSION=${{ matrix.pyversion }}
-        sh install/linux/build_pymeshlab.sh
+        sh install/${{ runner.os }}/build_pymeshlab.sh
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
       with:
@@ -58,12 +67,13 @@ jobs:
         path: pymeshlab/
   
   
-  ubuntu_tests:
-    name: Test PyMeshLab (Ubuntu)
-    needs: ubuntu_build_pymeshlab
-    runs-on: ubuntu-latest
+  tests:
+    name: Test PyMeshLab
+    runs-on: ${{ matrix.os }}
+    needs: unix_build_pymeshlab
     strategy:
       matrix:
+        os: [ubuntu-16.04, macos-latest]
         pyversion: [3.5, 3.6, 3.7, 3.8]
     steps:
     - uses: actions/checkout@v2
@@ -80,4 +90,3 @@ jobs:
       run: |
         pip install pytest
         pytest -s pymeshlab
-    

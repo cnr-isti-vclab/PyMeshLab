@@ -1,0 +1,218 @@
+name: CreateAndTestRelease
+
+on: 
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'New PyMeshLab Version'
+        required: true
+        default: '0.1.2'
+  
+jobs:
+  update_version:
+    name: Update Version
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+    - name: Update PYML_VERSION
+      run: |
+        echo ${{ github.event.inputs.version }} | tr -d '\n'> PYML_VERSION
+    - name: Commit change
+      uses: stefanzweifel/git-auto-commit-action@v4.1.1
+      with:
+        commit_message: Update PYML_VERSION to ${{ github.event.inputs.version }}
+
+
+  unix_build_pymeshlab:
+    name: Build PyMeshLab
+    runs-on: ${{ matrix.os }}
+    needs: update_version
+    strategy:
+      matrix:
+        os: [ubuntu-16.04, macos-latest]
+        pyversion: [3.5, 3.6, 3.7, 3.8]
+    steps:
+    - name: checkout 
+      run: |
+        cd ..
+        git clone --recursive https://github.com/${{ github.repository }}
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+      with:
+        modules: xmlpatterns
+    - name: Install Python ${{ matrix.pyversion }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.pyversion }}
+    - name: Install Ubuntu dependencies
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev 
+    - name: Environment variables
+      id: envs
+      run: |
+        cd meshlab
+        echo  ::set-output name=meshlab_commit::$(git rev-parse --short=7 HEAD)
+    - name: Cache MeshLab Build
+      id: cache-meshlab-build
+      uses: actions/cache@v2
+      with:
+        path: pymeshlab/lib
+        key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
+    - name: Install MeshLab-Ubuntu dependencies
+      if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && runner.os == 'Linux'
+      run: |
+        sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
+    - name: Install MeshLab-MacOS dependencies
+      if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && runner.os == 'macOS'
+      run: |
+        brew install libomp
+    - name: Build MeshLab
+      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
+      run: |
+        sh install/${{ runner.os }}/build_meshlab.sh
+    - name: Build PyMeshLab ${{ matrix.pyversion }}
+      run: |
+        export PYTHON_VERSION=${{ matrix.pyversion }}
+        sh install/${{ runner.os }}/build_pymeshlab.sh
+    - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+        path: pymeshlab/
+
+  windows_build_pymeshlab:
+    name: Build PyMeshLab (Windows)
+    runs-on: windows-latest
+    needs: update_version
+    strategy:
+      matrix:
+        pyversion: [3.5, 3.6, 3.7, 3.8]
+
+    steps:
+    - name: checkout 
+      run: |
+        cd ..
+        git clone --recursive https://github.com/${{ github.repository }}
+    - name: Downlaod Jom
+      run: |
+        Invoke-WebRequest -Uri "http://download.qt.io/official_releases/jom/jom_1_1_3.zip" -OutFile "jom_1_1_3.zip"
+        New-Item -Name "jom" -ItemType "directory"
+        Expand-Archive -Path jom_1_1_3.zip -DestinationPath .\jom
+        echo "::add-path::$(Get-Location)\jom"
+    - name: Setup env variables
+      id: envs
+      run: |
+        echo '::set-env name=VCINSTALLDIR::C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
+        cd meshlab
+        $var=(git rev-parse --short=7 HEAD --version) | Out-String
+        echo "::set-output name=meshlab_commit::$($var)"
+    - name: Setup MSVC
+      uses: ilammy/msvc-dev-cmd@v1
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+      with:
+        modules: xmlpatterns
+        version: '5.14.2'
+    - name: Install Python ${{ matrix.pyversion }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.pyversion }}
+    - name: Cache MeshLab Build
+      id: cache-meshlab-build
+      uses: actions/cache@v2
+      with:
+        path: |
+          pymeshlab/lib
+          pymeshlab/Qt*.dll
+        key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
+    - name: Build MeshLab
+      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
+      run: |
+        .\install\${{ runner.os }}\build_meshlab.ps1
+    - name: Build PyMeshLab
+      run: |
+        .\install\${{ runner.os }}\build_pymeshlab.ps1
+    - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+        path: pymeshlab/
+
+  #after building PyMeshLab for the three platforms, we create a release in github
+  create_release:
+    name: Create Release
+    needs: [unix_build_pymeshlab, windows_build_pymeshlab]
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+    #Create release
+    - name: Publish Release
+      id: create_release
+      uses: actions/create-release@v1.0.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ github.event.inputs.version }}
+        release_name: 'PyMeshLab v${{ github.event.inputs.version }}'
+        draft: false
+        prerelease: false
+    
+  #then, we will upload all the artifacts to the release
+  upload_release:
+    name: Upload Release
+    needs: [create_release]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [Linux, macOS, Windows]
+        pyversion: [3.5, 3.6, 3.7, 3.8]
+    steps:
+    #download
+    - name: Download PyMeshLab_${{ matrix.os }}_python${{ matrix.pyversion }}
+      uses: actions/download-artifact@v1
+      with:
+        name: PyMeshLab_${{ matrix.os }}_python${{ matrix.pyversion }}
+        path: pymeshlab/
+    - name: Create PyMeshLab Archive
+      run: |
+        cd pymeshlab
+        zip -r ../PyMeshLab_${{ matrix.os }}_python${{ matrix.pyversion }}.zip *
+    #upload
+    - name: Upload PyMeshLab_${{ matrix.os }}_python${{ matrix.pyversion }}
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{needs.create_release.outputs.upload_url}}
+        asset_path: PyMeshLab_${{ matrix.os }}_python${{ matrix.pyversion }}.zip
+        asset_name: PyMeshLab_${{ matrix.os }}_python${{ matrix.pyversion }}.zip
+        asset_content_type: PyMeshLab ${{ matrix.pyversion }}
+        
+  #and then, we test the last release
+  #WARNING: setup.py needs to download the release from THIS repository
+  #default is cnr-isti-vclab/PyMeshLab, but if you are testing a release in a forked
+  #repo, you need to update also master/setup.py file
+  test_release_pymeshlab:
+    name: Test PyMeshLab
+    needs: [upload_release]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        pyversion: [3.5, 3.6, 3.7, 3.8]
+    steps:
+    - name: Install Python ${{ matrix.pyversion }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.pyversion }}
+    - name: Install PyMeshLab
+      run: |
+        pip install git+https://github.com/${{ github.repository }}
+    - name: Run Tests ${{ matrix.pyversion }}
+      run: |
+        pip install pytest
+        pytest -s --pyargs pymeshlab

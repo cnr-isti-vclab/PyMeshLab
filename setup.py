@@ -4,6 +4,7 @@ import sys
 import os
 import urllib.request
 import zipfile
+import shutil
 
 # read the contents of README file
 from os import path
@@ -28,12 +29,19 @@ if sys.version_info[0] < 3 or (sys.version_info[0] == 3 and sys.version_info[1] 
 
 pythonversion = str(sys.version_info[0]) + '.' + str(sys.version_info[1])
 
-baseurl = 'https://github.com/cnr-isti-vclab/PyMeshLab/releases/download/v' + pymeshlabversion + '/'
+base_repo = 'https://github.com/cnr-isti-vclab/PyMeshLab'
+baseurl = base_repo + '/releases/download/v' + pymeshlabversion + '/'
 filename = 'PyMeshLab_' + osused + '_python' + pythonversion + '.zip'
 url = baseurl + filename
 
-print('Downloading ' + filename)
-urllib.request.urlretrieve(url, this_directory + '/' + filename)
+print('Downloading ' + url)
+try:
+    urllib.request.urlretrieve(url, this_directory + '/' + filename)
+except:
+    raise Exception("Cannot download " + url)
+
+shutil.rmtree('pymeshlab')
+os.mkdir('pymeshlab')
 
 with zipfile.ZipFile(filename, 'r') as zip_ref:
     zip_ref.extractall('pymeshlab/')

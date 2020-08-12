@@ -46,11 +46,11 @@ jobs:
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
         sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
-        sh install/linux/build_meshlab_debug.sh
+        sh install/${{ runner.os }}/build_meshlab_debug.sh
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
         export PYTHON_VERSION=${{ matrix.pyversion }}
-        sh install/linux/build_pymeshlab_debug.sh
+        sh install/${{ runner.os }}/build_pymeshlab_debug.sh
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}_debug
       uses: actions/upload-artifact@v2
       with:
