@@ -113,6 +113,7 @@ SOURCES += \
 	pymeshlab/common.cpp \
 	pymeshlab/mesh.cpp \
 	pymeshlab/meshset.cpp \
+	pymeshlab/percentage.cpp \
 	pymeshlab/plugin_management/filterfunction.cpp \
 	pymeshlab/plugin_management/filterfunctionparameter.cpp \
 	pymeshlab/plugin_management/filterfunctionset.cpp \
@@ -125,6 +126,7 @@ HEADERS += \
 	pymeshlab/common.h \
 	pymeshlab/mesh.h \
 	pymeshlab/meshset.h \
+	pymeshlab/percentage.h \
 	pymeshlab/plugin_management/filterfunction.h \
 	pymeshlab/plugin_management/filterfunctionparameter.h \
 	pymeshlab/plugin_management/filterfunctionset.h \

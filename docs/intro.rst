@@ -3,6 +3,8 @@
 Getting Started
 ===============
 
+The main class of PyMeshLab is the :ref:`meshset` class. It represents the current state of MeshLab (containing a set of meshes, rasters...). See the documentation of the :ref:`meshset` class for more details.
+
 After installing PyMeshLab through pip:
 
 .. code-block:: python
@@ -37,7 +39,5 @@ To run the tests:
 
    pip3 install pytest
    pytest --pyargs pymeshlab
-
-
 
 
