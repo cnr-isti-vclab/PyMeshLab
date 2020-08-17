@@ -18,7 +18,7 @@ For general questions use `StackOverflow`_.
 .. _GitHub issues: https://github.com/cnr-isti-vclab/PyMeshLab/issues
 .. _StackOverflow: https://stackoverflow.com/questions/tagged/pymeshlab
 
-Coopyright
+Copyright
 ----------
 
 .. code-block:: none

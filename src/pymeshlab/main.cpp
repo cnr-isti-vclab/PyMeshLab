@@ -1,10 +1,12 @@
 #include "bindings/pyboundingbox.h"
 #include "bindings/pymesh.h"
 #include "bindings/pymeshset.h"
+#include "bindings/pypercentage.h"
 
 namespace py = pybind11;
 
 PYBIND11_MODULE(meshlab, m) {
+	pymeshlab::initPercentage(m); //Percentage Class
 	pymeshlab::initBoundingBox(m); //BoundingBox Class
 	pymeshlab::initMesh(m); //Mesh Class
 	pymeshlab::initMeshSet(m); //MeshDocument Class

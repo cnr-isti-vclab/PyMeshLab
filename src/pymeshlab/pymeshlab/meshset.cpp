@@ -1,4 +1,5 @@
 #include "meshset.h"
+#include "percentage.h"
 
 #include <mlexception.h>
 #include <meshlabdocumentxml.h>
@@ -200,6 +201,9 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 			fp->initParameterSet(action, *this, rps);
 			updateRichParameterSet(*it, kwargs, rps);
 			try {
+				int req=fp->getRequirements(action);
+				if (mm() != nullptr)
+					mm()->updateDataMask(req);
 				fp->applyFilter(action, *this, rps, nullptr);
 				if (mm() != nullptr) {
 					mm()->cm.svn = int(vcg::tri::UpdateSelection<CMeshO>::VertexCount(mm()->cm));
@@ -486,7 +490,22 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 		par.setValue(StringValue(
 					QString::fromStdString(py::cast<std::string>(k.second))));
 	}
-	else if (pythonType == "still_unsupported"){
+	else if (pythonType.contains("Percentage")) {
+		RichAbsPerc& abs = dynamic_cast<RichAbsPerc&>(par);
+		float absvalue;
+		try {
+			Percentage p = py::cast<Percentage>(k.second);
+			absvalue = (abs.max - abs.min);
+			absvalue *= p.value()/100;
+			absvalue += abs.min;
+		}
+		catch (const py::cast_error& err) {
+			absvalue = py::cast<float>(k.second);
+		}
+
+		abs.setValue(AbsPercValue(absvalue));
+	}
+	else if (pythonType.contains("still_unsupported")){
 		std::cerr << "Warning: parameter type still not supported";
 	}
 	else {

@@ -160,7 +160,7 @@ QString pymeshlab::FilterFunctionParameter::computePythonTypeString(const RichPa
 	if (v.isEnum())
 		return "int [" + par.value().typeName() + "]";
 	if (v.isAbsPerc())
-		return "float [" + par.value().typeName() + "]";
+		return "Percentage (or float)";
 	if (v.isDynamicFloat())
 		return "float [" + par.value().typeName() + "]";
 	if (v.isBool())
