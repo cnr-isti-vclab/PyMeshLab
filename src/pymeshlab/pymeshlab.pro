@@ -119,7 +119,8 @@ SOURCES += \
 	pymeshlab/plugin_management/filterfunctionset.cpp \
 	bindings/pyboundingbox.cpp \
 	bindings/pymesh.cpp \
-	bindings/pymeshset.cpp
+	bindings/pymeshset.cpp \
+	bindings/pypercentage.cpp
 
 HEADERS += \
 	docs/pymeshset_doc.h \
@@ -132,5 +133,6 @@ HEADERS += \
 	pymeshlab/plugin_management/filterfunctionset.h \
 	bindings/pyboundingbox.h \
 	bindings/pymesh.h \
-	bindings/pymeshset.h
+	bindings/pymeshset.h \
+	bindings/pypercentage.h
 

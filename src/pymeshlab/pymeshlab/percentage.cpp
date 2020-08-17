@@ -1,8 +1,8 @@
 #include "percentage.h"
 
-pymeshlab::Percentage::Percentage(float value) :
-	val(value)
+pymeshlab::Percentage::Percentage(float value)
 {
+	setValue(value);
 }
 
 void pymeshlab::Percentage::setValue(float v)
