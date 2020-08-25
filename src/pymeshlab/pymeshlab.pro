@@ -41,13 +41,13 @@ macx {
 	QMAKE_LFLAGS += -Wl,-undefined,dynamic_lookup
 
 	LIBS += \
-	    $$PYMESHLAB_DISTRIB_DIRECTORY/lib/Frameworks/libmeshlab-common.dylib
+		$$PYMESHLAB_DISTRIB_DIRECTORY/lib/Frameworks/libmeshlab-common.dylib
 
 	QMAKE_CXXFLAGS += $$PYTHON_INCLUDES #includepath python lib
 
 
 	QMAKE_POST_LINK += "\
-	    install_name_tool -change libmeshlab-common.1.dylib @loader_path/lib/Frameworks/libmeshlab-common.1.dylib $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
+		install_name_tool -change libmeshlab-common.1.dylib @loader_path/lib/Frameworks/libmeshlab-common.1.dylib $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
 		install_name_tool -change @rpath/QtOpenGL.framework/Versions/5/QtOpenGL @loader_path/lib/Frameworks/QtOpenGL.framework/Versions/5/QtOpenGL $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
 		install_name_tool -change @rpath/QtWidgets.framework/Versions/5/QtWidgets @loader_path/lib/Frameworks/QtWidgets.framework/Versions/5/QtWidgets $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \
 		install_name_tool -change @rpath/QtGui.framework/Versions/5/QtGui @loader_path/lib/Frameworks/QtGui.framework/Versions/5/QtGui $$PYMESHLAB_DISTRIB_DIRECTORY/$${TARGET}.so; \

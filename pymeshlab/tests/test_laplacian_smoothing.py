@@ -8,3 +8,7 @@ def test_laplacian_smoothing():
     ms = ml.MeshSet()
 
     ms.apply_filter('noisy_isosurface')
+
+    ms.apply_filter('laplacian_smooth')
+
+    ms.save_mesh(output_path + 'smoothed_noisy_isosurface.ply')
