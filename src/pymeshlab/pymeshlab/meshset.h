@@ -36,6 +36,10 @@ public:
 
 	void printStatus() const;
 private:
+	static GLLogStream* staticLogger;
+
+	static bool filterCallBack(const int pos, const char* str);
+
 	void updateRichParameterSet(
 			const FilterFunction& f,
 			const pybind11::kwargs& kwargs,

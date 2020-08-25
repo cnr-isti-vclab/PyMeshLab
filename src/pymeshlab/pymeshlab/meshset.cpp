@@ -9,6 +9,8 @@
 
 namespace py = pybind11;
 
+GLLogStream* pymeshlab::MeshSet::staticLogger = nullptr;
+
 pymeshlab::MeshSet::MeshSet(bool verbose) :
 	MeshDocument(), globalRPS(), pm()
 {
@@ -204,7 +206,9 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 				int req=fp->getRequirements(action);
 				if (mm() != nullptr)
 					mm()->updateDataMask(req);
-				fp->applyFilter(action, *this, rps, nullptr);
+				staticLogger = verbose ? &Log : nullptr;
+				fp->applyFilter(action, *this, rps, &MeshSet::filterCallBack);
+				filterCallBack(100, (filtername + " applied!").c_str());
 				if (mm() != nullptr) {
 					mm()->cm.svn = int(vcg::tri::UpdateSelection<CMeshO>::VertexCount(mm()->cm));
 					mm()->cm.sfn = int(vcg::tri::UpdateSelection<CMeshO>::FaceCount(mm()->cm));
@@ -232,6 +236,17 @@ void pymeshlab::MeshSet::printStatus() const
 		std::cout << "\tMesh label: " << m->label().toStdString() << "\n";
 		std::cout << "\tFull name: " << m->fullName().toStdString() << "\n\n";
 	}
+}
+
+bool pymeshlab::MeshSet::filterCallBack(const int pos, const char * str)
+{
+	int static lastPos=-1;
+	if(pos==lastPos) return true;
+	lastPos=pos;
+	std::string s = std::string(str) + "    [ " + std::to_string(pos) +"% ]";
+	if (staticLogger)
+		staticLogger->Log(GLLogStream::FILTER, s);
+	return true;
 }
 
 void pymeshlab::MeshSet::updateRichParameterSet(const FilterFunction& f, const pybind11::kwargs& kwargs, RichParameterList& rps, bool ignoreFileName)
