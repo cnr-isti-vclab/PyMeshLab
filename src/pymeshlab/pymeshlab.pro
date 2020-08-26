@@ -123,7 +123,10 @@ SOURCES += \
 	bindings/pypercentage.cpp
 
 HEADERS += \
+	docs/pyboundingbox_doc.h \
+	docs/pymesh_doc.h \
 	docs/pymeshset_doc.h \
+	docs/pypercentage_doc.h \
 	pymeshlab/common.h \
 	pymeshlab/mesh.h \
 	pymeshlab/meshset.h \

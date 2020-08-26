@@ -46,6 +46,11 @@ bool pymeshlab::Mesh::isCompact(const CMeshO& mesh)
 			mesh.edge.size() == (unsigned int)mesh.EN();
 }
 
+Box3m pymeshlab::Mesh::boundingBox(const CMeshO& mesh)
+{
+	return mesh.bbox;
+}
+
 Eigen::MatrixXd pymeshlab::Mesh::vertexMatrix(const CMeshO& mesh)
 {
 	vcg::tri::RequireCompactness(mesh);

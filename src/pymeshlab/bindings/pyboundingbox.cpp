@@ -1,6 +1,7 @@
 #include "pyboundingbox.h"
 
 #include <meshmodel.h>
+#include "docs/pyboundingbox_doc.h"
 
 namespace py = pybind11;
 
@@ -11,8 +12,8 @@ void pymeshlab::initBoundingBox(pybind11::module& m)
 	//empty constructor
 	boundingBoxClass.def(py::init());
 
-	boundingBoxClass.def("diagonal", &Box3m::Diag);
-	boundingBoxClass.def("dim_x", &Box3m::DimX);
-	boundingBoxClass.def("dim_y", &Box3m::DimY);
-	boundingBoxClass.def("dim_z", &Box3m::DimZ);
+	boundingBoxClass.def("diagonal", &Box3m::Diag, doc::PYBB_DIAGONAL);
+	boundingBoxClass.def("dim_x", &Box3m::DimX, doc::PYBB_DIM_X);
+	boundingBoxClass.def("dim_y", &Box3m::DimY, doc::PYBB_DIM_Y);
+	boundingBoxClass.def("dim_z", &Box3m::DimZ, doc::PYBB_DIM_Z);
 }

@@ -12,6 +12,7 @@ class Mesh
 public:
 	static bool isCompact(const CMeshO& mesh);
 
+	static Box3m boundingBox(const CMeshO& mesh);
 	static void updateBBox(CMeshO& mesh);
 	static void updateTopology(CMeshO& mesh);
 	static void compact(CMeshO& mesh);

@@ -10,6 +10,7 @@ PyMeshLab Classes
    classes/boundingbox
    classes/mesh
    classes/meshset
+   classes/percentage
 
 Exceptions
 ----------

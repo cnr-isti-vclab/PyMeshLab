@@ -1,5 +1,6 @@
 #include "pymeshlab/mesh.h"
 #include "pymesh.h"
+#include "docs/pymesh_doc.h"
 
 namespace py = pybind11;
 
@@ -13,10 +14,11 @@ void pymeshlab::initMesh(py::module& m)
 	//empty constructor
 	meshClass.def(py::init());
 
-	meshClass.def("vertex_number", &CMeshO::VN);
-	meshClass.def("face_number", &CMeshO::FN);
+	meshClass.def("vertex_number", &CMeshO::VN, doc::PYMESH_VN);
+	meshClass.def("face_number", &CMeshO::FN, doc::PYMESH_FN);
 	meshClass.def("edge_number", &CMeshO::EN);
 	meshClass.def("is_compact", &Mesh::isCompact);
+	meshClass.def("bounding_box", &Mesh::boundingBox);
 	meshClass.def("selected_face_number", &Mesh::selectedFaceNumber);
 
 	meshClass.def("update_bounding_box", &Mesh::updateBBox);
