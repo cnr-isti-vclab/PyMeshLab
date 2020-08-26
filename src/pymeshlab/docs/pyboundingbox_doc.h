@@ -4,6 +4,10 @@
 namespace pymeshlab {
 namespace doc {
 
+//BoundingBox::__init__
+const char* PYBB_INIT =
+		"Creates an invalid Bounding Box (min: [1,1,1], max:[-1,-1,-1]).";
+
 //BoundingBox::diagonal
 const char* PYBB_DIAGONAL =
 		"Returns the diagonal of the Bounding Box.";

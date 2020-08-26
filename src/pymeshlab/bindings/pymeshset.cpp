@@ -13,11 +13,12 @@ void pymeshlab::initMeshSet(pybind11::module& m)
 {
 	py::class_<MeshSet> meshSetClass(m, "MeshSet");
 
-	py::register_exception<MLException>(m, "PyMeshLabException");
+	auto mlexc = py::register_exception<MLException>(m, "PyMeshLabException");
+	mlexc.doc() = doc::PYEXC_MLEXC;
 
 	//empty constructor
-	meshSetClass.def(py::init());
-	meshSetClass.def(py::init<bool>(), py::arg("verbose"));
+	meshSetClass.def(py::init(), doc::PYMS_INIT);
+	meshSetClass.def(py::init<bool>(), doc::PYMS_INIT_VERB, py::arg("verbose"));
 
 	meshSetClass.def("set_versbosity", &MeshSet::setVerbosity, doc::PYMS_SET_VERBOSITY_DOC, py::arg("verbosity"));
 	meshSetClass.def("number_meshes", &MeshSet::size, doc::PYMS_SIZE_DOC);

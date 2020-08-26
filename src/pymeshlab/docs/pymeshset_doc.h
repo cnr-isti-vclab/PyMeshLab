@@ -4,6 +4,18 @@
 namespace pymeshlab {
 namespace doc {
 
+//PyMeshLabException
+const char* PYEXC_MLEXC =
+		"Generic PyMeshLab exception.";
+
+//MeshSet::__init__
+const char* PYMS_INIT =
+		"Initializes a MeshSet. Default value of verbosity is false.";
+
+//MeshSet::__init__
+const char* PYMS_INIT_VERB =
+		"Initializes a MeshSet, setting the verbosity with the given value.";
+
 //MeshSet::set_verbosity
 const char* PYMS_SET_VERBOSITY_DOC =
 		"Sets the verbosity when using the MeshSet class. When set to true, all"

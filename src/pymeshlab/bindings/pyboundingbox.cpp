@@ -10,7 +10,7 @@ void pymeshlab::initBoundingBox(pybind11::module& m)
 	py::class_<Box3m> boundingBoxClass(m, "BoundingBox");
 
 	//empty constructor
-	boundingBoxClass.def(py::init());
+	boundingBoxClass.def(py::init(), doc::PYBB_INIT);
 
 	boundingBoxClass.def("diagonal", &Box3m::Diag, doc::PYBB_DIAGONAL);
 	boundingBoxClass.def("dim_x", &Box3m::DimX, doc::PYBB_DIM_X);

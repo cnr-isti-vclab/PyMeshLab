@@ -13,4 +13,5 @@ In every non-empty MeshSet, there is a selected mesh, that
 can be accessed using the method :py:meth:`meshlab.MeshSet.current_mesh`.
 
 .. autoclass:: meshlab.MeshSet
+   :special-members:
    :members:
