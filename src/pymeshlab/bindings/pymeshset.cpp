@@ -32,8 +32,13 @@ void pymeshlab::initMeshSet(pybind11::module& m)
 	meshSetClass.def("load_project", &MeshSet::loadProject, doc::PYMS_LOAD_PROJECT, py::arg("file_name"));
 	meshSetClass.def("save_project", &MeshSet::saveProject, doc::PYMS_SAVE_PROJECT, py::arg("file_name"));
 	meshSetClass.def("apply_filter", &MeshSet::applyFilter, doc::PYMS_APPLY_FILTER, py::arg("filter_name"));
+	meshSetClass.def("load_filter_script", &MeshSet::loadFilterScript, doc::PYMS_LOAD_FILTER_SCRIPT);
+	meshSetClass.def("save_filter_script", &MeshSet::saveFilterScript, doc::PYMS_SAVE_FILTER_SCRIPT);
+	meshSetClass.def("clear_filter_script", &MeshSet::clearFilterScript, doc::PYMS_CLEAR_FILTER_SCRIPT);
+	meshSetClass.def("apply_filter_script", &MeshSet::applyFilterScript, doc::PYMS_APPLY_FILTER_SCRIPT);
 	meshSetClass.def("print_status", &MeshSet::printStatus, doc::PYMS_PRINT_STATUS);
 	meshSetClass.def("print_plugin_list", &MeshSet::printPluginList, doc::PYMS_PRINT_PLUGIN_LIST);
 	meshSetClass.def("print_filter_list", &MeshSet::printPythonFilterNamesList, doc::PYMS_PRINT_FILTER_LIST);
 	meshSetClass.def("print_filter_parameter_list", &MeshSet::printPythonFilterParameterList, doc::PYMS_PRINT_FILTER_PARAMETER_LIST, py::arg("filter_name"));
+	meshSetClass.def("print_current_filter_script", &MeshSet::printFilterScript, doc::PYMS_PRINT_CURRENT_FILTER_SCIRPT);
 }

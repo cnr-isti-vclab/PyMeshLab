@@ -1,0 +1,12 @@
+<!DOCTYPE FilterScript>
+<FilterScript>
+ <filter name="Box/Cube">
+  <Param type="RichFloat" description="Scale factor" name="size" tooltip="Scales the new mesh" value="2"/>
+ </filter>
+ <filter name="Subdivision Surfaces: Catmull-Clark"/>
+ <filter name="Subdivision Surfaces: Butterfly Subdivision">
+  <Param type="RichInt" description="Iterations" name="Iterations" tooltip="Number of time the model is subdivided." value="2"/>
+  <Param type="RichAbsPerc" description="Edge Threshold" name="Threshold" min="0" max="3.4641" tooltip="All the edges &lt;b>longer&lt;/b> than this threshold will be refined.&lt;br>Setting this value to zero will force an uniform refinement." value="0.034641"/>
+  <Param type="RichBool" description="Affect only selected faces" name="Selected" tooltip="If selected the filter affect only the selected faces" value="false"/>
+ </filter>
+</FilterScript>

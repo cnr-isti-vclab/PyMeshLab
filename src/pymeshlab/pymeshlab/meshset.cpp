@@ -114,6 +114,25 @@ void pymeshlab::MeshSet::printPythonFilterParameterList(const std::string functi
 	}
 }
 
+void pymeshlab::MeshSet::printFilterScript() const
+{
+	std::cout << "Filter Script Size : " << filterScript.size() << "\n\n";
+	uint i = 0;
+	for (const FilterNameParameterValuesPair p :filterScript){
+		std::cout << std::to_string(i) + ": " << FilterFunctionSet::toPythonName(p.filterName()).toStdString() <<
+					 "\n";
+		for (const RichParameter& par : p.second){
+			FilterFunctionParameter ffp(FilterFunctionSet::toPythonName(par.name()), par);
+			std::cout << "\t" << ffp.pythonName().toStdString() << " : "
+					  << ffp.pythonTypeString().toStdString() << " = ";
+			ffp.printDefaultValue(std::cout);
+			std::cout << "\n";
+		}
+		std::cout << "\n";
+		i++;
+	}
+}
+
 void pymeshlab::MeshSet::loadMesh(const std::string& filename, py::kwargs kwargs)
 {
 	loadMeshUsingPlugin(filename, nullptr, FilterFunction(), kwargs);
@@ -179,6 +198,41 @@ void pymeshlab::MeshSet::saveProject(const std::string& filename)
 	}
 }
 
+void pymeshlab::MeshSet::loadFilterScript(const std::string& filename)
+{
+	pymeshlab::QDebugRedirect* qdbr = nullptr;
+	if (!verbose)
+		qdbr = new pymeshlab::QDebugRedirect(); //redirect qdebug to null
+
+	filterScript.open(QString::fromStdString(filename));
+
+	delete qdbr;
+}
+
+void pymeshlab::MeshSet::saveFilterScript(const std::string& filename) const
+{
+	filterScript.save(QString::fromStdString(filename));
+}
+
+void pymeshlab::MeshSet::clearFilterScript()
+{
+	filterScript.clear();
+}
+
+void pymeshlab::MeshSet::applyFilterScript()
+{
+	for (FilterNameParameterValuesPair p : filterScript){
+		QString meshlabFilterName = p.first;
+		std::string filtername = FilterFunctionSet::toPythonName(meshlabFilterName).toStdString();
+		QAction* action = nullptr;
+		MeshFilterInterface* fp = getPluginFromFilterName(meshlabFilterName, action);
+		RichParameterList rpl;
+		fp->initParameterSet(action, *this, rpl);
+		updateRichParameterList(filtername, p.second, rpl);
+		applyFilterRPL(filtername, meshlabFilterName, action, fp, rpl);
+	}
+}
+
 void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kwargs kwargs)
 {
 	FilterFunctionSet::iterator it = filterFunctionSet.find(QString::fromStdString(filtername));
@@ -199,26 +253,10 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 		else {
 			QAction* action = nullptr;
 			MeshFilterInterface* fp = getPluginFromFilterName(meshlabFilterName, action);
-			RichParameterList rps;
-			fp->initParameterSet(action, *this, rps);
-			updateRichParameterSet(*it, kwargs, rps);
-			try {
-				int req=fp->getRequirements(action);
-				if (mm() != nullptr)
-					mm()->updateDataMask(req);
-				staticLogger = verbose ? &Log : nullptr;
-				fp->applyFilter(action, *this, rps, &MeshSet::filterCallBack);
-				filterCallBack(100, (filtername + " applied!").c_str());
-				if (mm() != nullptr) {
-					mm()->cm.svn = int(vcg::tri::UpdateSelection<CMeshO>::VertexCount(mm()->cm));
-					mm()->cm.sfn = int(vcg::tri::UpdateSelection<CMeshO>::FaceCount(mm()->cm));
-				}
-			}
-			catch(const std::exception& e) {
-				throw MLException(
-							"Failed to apply filter: " + it->pythonFunctionName() + "\n" +
-							"Details: " + e.what());
-			}
+			RichParameterList rpl;
+			fp->initParameterSet(action, *this, rpl);
+			updateRichParameterList(*it, kwargs, rpl);
+			applyFilterRPL(filtername, meshlabFilterName, action, fp, rpl);
 		}
 	}
 	else {
@@ -249,7 +287,28 @@ bool pymeshlab::MeshSet::filterCallBack(const int pos, const char * str)
 	return true;
 }
 
-void pymeshlab::MeshSet::updateRichParameterSet(const FilterFunction& f, const pybind11::kwargs& kwargs, RichParameterList& rps, bool ignoreFileName)
+void pymeshlab::MeshSet::updateRichParameterList(
+		const std::string& filtername,
+		const RichParameterList& base,
+		RichParameterList& toUpdate)
+{
+	for (const RichParameter& p : base){
+		if (toUpdate.hasParameter(p.name())){
+			toUpdate.setValue(p.name(), p.value());
+		}
+		else {
+			Log.Log(
+					GLLogStream::SYSTEM, "Warning: parameter " + p.name().toStdString() +
+					" not required by filter " + filtername.c_str());
+		}
+	}
+}
+
+void pymeshlab::MeshSet::updateRichParameterList(
+		const FilterFunction& f,
+		const pybind11::kwargs& kwargs,
+		RichParameterList& rps,
+		bool ignoreFileName)
 {
 	if (kwargs){
 		for (std::pair<py::handle, py::handle> p : kwargs){
@@ -315,7 +374,7 @@ void pymeshlab::MeshSet::loadMeshUsingPlugin(
 			plugin->initPreOpenParameter(extension, QString::fromStdString(filename), rps);
 			plugin->initOpenParameter(extension, *(this->mm()), rps);
 
-			updateRichParameterSet(ff, kwargs, rps, true);
+			updateRichParameterList(ff, kwargs, rps, true);
 
 			if (mm == nullptr)
 				mm = this->addNewMesh(finfo.filePath(), finfo.fileName());
@@ -353,7 +412,7 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 		plugin->initGlobalParameterSet(nullptr, rps);
 		plugin->initSaveParameter(extension, *(this->mm()), rps);
 
-		updateRichParameterSet(ff, kwargs, rps, true);
+		updateRichParameterList(ff, kwargs, rps, true);
 
 		if (mm == nullptr)
 			mm = this->mm();
@@ -527,6 +586,35 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 		std::cerr << "Parameter type not found. Critical Error. Exiting...";
 		assert(0);
 		exit(-1);
+	}
+}
+
+void pymeshlab::MeshSet::applyFilterRPL(
+		const std::string& filtername,
+		QString meshlabFilterName,
+		QAction* action,
+		MeshFilterInterface* fp,
+		const RichParameterList& rpl)
+{
+	try {
+		int req=fp->getRequirements(action);
+		if (mm() != nullptr)
+			mm()->updateDataMask(req);
+		staticLogger = verbose ? &Log : nullptr;
+		fp->applyFilter(action, *this, rpl, &MeshSet::filterCallBack);
+		filterCallBack(100, (filtername + " applied!").c_str());
+		if (mm() != nullptr) {
+			mm()->cm.svn = int(vcg::tri::UpdateSelection<CMeshO>::VertexCount(mm()->cm));
+			mm()->cm.sfn = int(vcg::tri::UpdateSelection<CMeshO>::FaceCount(mm()->cm));
+		}
+		FilterNameParameterValuesPair pair;
+		pair.first = meshlabFilterName; pair.second = rpl;
+		filterScript.append(pair);
+	}
+	catch(const std::exception& e) {
+		throw MLException(
+					"Failed to apply filter: " + QString::fromStdString(filtername) + "\n" +
+					"Details: " + e.what());
 	}
 }
 

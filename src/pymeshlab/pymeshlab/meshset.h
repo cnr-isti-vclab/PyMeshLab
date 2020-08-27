@@ -3,6 +3,7 @@
 
 #include <pybind11/pybind11.h>
 #include <meshmodel.h>
+#include <filterscript.h>
 #include <pluginmanager.h>
 #include "plugin_management/filterfunctionset.h"
 
@@ -25,6 +26,7 @@ public:
 	void printPluginList() const;
 	void printPythonFilterNamesList() const;
 	void printPythonFilterParameterList(const std::string functionName) const;
+	void printFilterScript() const;
 
 	void loadMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());
 	void saveMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());
@@ -32,7 +34,14 @@ public:
 	void loadProject(const std::string& filename);
 	void saveProject(const std::string& filename);
 
-	void applyFilter(const std::string& filtername, pybind11::kwargs kwargs = pybind11::kwargs());
+	void loadFilterScript(const std::string& filename);
+	void saveFilterScript(const std::string& filename) const;
+	void clearFilterScript();
+	void applyFilterScript();
+
+	void applyFilter(
+			const std::string& filtername,
+			pybind11::kwargs kwargs = pybind11::kwargs());
 
 	void printStatus() const;
 private:
@@ -40,7 +49,12 @@ private:
 
 	static bool filterCallBack(const int pos, const char* str);
 
-	void updateRichParameterSet(
+	void updateRichParameterList(
+			const std::string& filtername,
+			const RichParameterList& base,
+			RichParameterList& toUpdate);
+
+	void updateRichParameterList(
 			const FilterFunction& f,
 			const pybind11::kwargs& kwargs,
 			RichParameterList& rps,
@@ -75,10 +89,18 @@ private:
 			const FilterFunctionParameter& ffp,
 			const std::pair<pybind11::handle, pybind11::handle>& k);
 
+	void applyFilterRPL(
+			const std::string& filtername,
+			QString meshlabFilterName,
+			QAction* action,
+			MeshFilterInterface* filter,
+			const RichParameterList& rpl);
+
 	std::string basePath;
 	RichParameterList globalRPS;
 	PluginManager pm;
 	FilterFunctionSet filterFunctionSet;
+	FilterScript filterScript;
 
 	bool verbose;
 };

@@ -76,7 +76,10 @@ void pymeshlab::FilterFunctionParameter::printDefaultValue(std::ostream& o) cons
 		return;
 	}
 	if (parameter->value().isAbsPerc()) {
-		o << parameter->value().getAbsPerc();
+		RichAbsPerc* rabs = dynamic_cast<RichAbsPerc*>(parameter);
+		float abs = parameter->value().getAbsPerc();
+		float perc = (abs - rabs->min) / (rabs->max - rabs->min) * 100;
+		o << perc << "% (float = " << abs << ")";
 		return;
 	}
 	if (parameter->value().isDynamicFloat()) {
@@ -160,7 +163,7 @@ QString pymeshlab::FilterFunctionParameter::computePythonTypeString(const RichPa
 	if (v.isEnum())
 		return "int [" + par.value().typeName() + "]";
 	if (v.isAbsPerc())
-		return "Percentage (or float)";
+		return "Percentage";
 	if (v.isDynamicFloat())
 		return "float [" + par.value().typeName() + "]";
 	if (v.isBool())

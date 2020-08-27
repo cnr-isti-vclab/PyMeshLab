@@ -77,9 +77,27 @@ const char* PYMS_SAVE_PROJECT =
 //MeshSet::apply_filter
 const char* PYMS_APPLY_FILTER =
 		"Applies the filter having the given filter name in the MeshSet. "
-		"See the print_filter_list function for a list of the possible filters, "
-		"and the print_filter_parameter_list function for the list of parameters "
-		"of a filter.";
+		"Updates the current filter script, pushing the applied filter with the "
+		"given parameters. "
+		"See the :py:meth:`print_filter_list` function for a list of the possible "
+		"filters, and the :py:meth:`print_filter_parameter_list` function for "
+		"the list of parameters of a filter.";
+
+//MeshSet::load_filter_script
+const char* PYMS_LOAD_FILTER_SCRIPT =
+		"Loads from a .mlx file the current filter script.";
+
+//MeshSet::save_filter_script
+const char* PYMS_SAVE_FILTER_SCRIPT =
+		"Saves in a .mlx file the current filter script.";
+
+//MeshSet::clear_filter_script
+const char* PYMS_CLEAR_FILTER_SCRIPT =
+		"Clears the current filter script.";
+
+//MeshSet::apply_filter_script
+const char* PYMS_APPLY_FILTER_SCRIPT =
+		"Applies all the filters currently present in the filter script.";
 
 //MeshSet::print_status
 const char* PYMS_PRINT_STATUS =
@@ -98,6 +116,11 @@ const char* PYMS_PRINT_FILTER_LIST =
 const char* PYMS_PRINT_FILTER_PARAMETER_LIST =
 		"Prints the list of the parameters of the given filter, with their "
 		"default values.";
+
+//MeshSet::print_current_filter_script
+const char* PYMS_PRINT_CURRENT_FILTER_SCIRPT =
+		"Prints all the filters present on the current filter script, with all "
+		"the parameters and their values.";
 }
 }
 
