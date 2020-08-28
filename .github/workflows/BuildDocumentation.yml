@@ -4,26 +4,27 @@ on:
   workflow_dispatch
        
 jobs:
-  merge_master_to_docs:
-    name: Merge master to docs
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        ref: 'docs'
-        submodules: true
-        
-    - name: Merge master -> docs
-      uses: devmasx/merge-branch@v1.3.0
-      with:
-        type: now
-        head_to_merge: master
-        target_branch: docs
-        github_token: ${{ github.token }}
+#  merge_master_to_docs:
+#    name: Merge master to docs
+#    runs-on: ubuntu-latest
+#    steps:
+#    - uses: actions/checkout@v2
+#      with:
+#        ref: 'docs'
+#        submodules: true
+#        
+#    - name: Merge master -> docs
+#      uses: devmasx/merge-branch@v1.3.0
+#      with:
+#        type: now
+#        head_to_merge: master
+#        target_branch: docs
+#        github_token: ${{ github.token }}
+
         
   unix_build_pymeshlab:
     name: Build PyMeshLab
-    needs: merge_master_to_docs
+    #needs: merge_master_to_docs
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -40,6 +41,9 @@ jobs:
         auth_header="$(git config --local --get http.https://github.com/.extraheader)"
         git submodule sync --recursive
         git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+    - name: Merge master -> docs
+      run: |
+        git merge -X theirs master
     - name: Remove old files
       run: |
         if [[ -f pymeshlab/meshlab* ]]; then
