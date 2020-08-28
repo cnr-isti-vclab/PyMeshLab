@@ -14,6 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
+        ref: 'docs'
         submodules: true
     - name: checkout sub-submodule vcg
       run: |
@@ -21,6 +22,19 @@ jobs:
         auth_header="$(git config --local --get http.https://github.com/.extraheader)"
         git submodule sync --recursive
         git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+        
+    - name: Merge master -> docs
+      uses: devmasx/merge-branch@v1.3.0
+      with:
+        type: now
+        head_to_merge: master
+        target_branch: docs
+        github_token: ${{ github.token }}
+    - name: Remove old files
+      run: |
+        rm pymeshlab/meshlab*
+        rm -r pymeshlab/lib
+        
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
@@ -60,40 +74,17 @@ jobs:
       run: |
         export PYTHON_VERSION=${{ matrix.pyversion }}
         sh install/${{ runner.os }}/build_pymeshlab.sh
-    - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-        path: pymeshlab/
-        
-  build_docs:
-    name: Build Documentation
-    runs-on: ${{ matrix.os }}
-    needs: unix_build_pymeshlab
-    strategy:
-      matrix:
-        os: [ubuntu-16.04]
-        pyversion: [3.8]
-    steps:
-    - uses: actions/checkout@v2
-    - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-      uses: actions/download-artifact@v2
-      with:
-        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-        path: pymeshlab/
-    - name: Install Python ${{ matrix.pyversion }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.pyversion }}
-    - name: Install Sphinx
+    
+    - name: Commit message
+      id: commit_message
       run: |
-        pip3 install sphinx readthedocs-sphinx-ext sphinx_rtd_theme
-    - name: Build Docs
+        echo  ::set-output name=message::"$(git log -1 --pretty=%B)"
+    - name: Add libs
       run: |
-        cd docs
-        make html
-    - name: Upload Docs
-      uses: actions/upload-artifact@v2
+        git add --force pymeshlab/meshlab*
+        git add --force pymeshlab/lib/*
+    - name: Commit change
+      uses: stefanzweifel/git-auto-commit-action@v4.1.1
       with:
-        name: PyMeshLab_Documentation
-        path: docs/_build/
+        commit_message: ${{steps.commit_message.outputs.message}} and add libs
+        branch: docs
