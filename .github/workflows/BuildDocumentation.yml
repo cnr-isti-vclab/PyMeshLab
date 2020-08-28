@@ -60,40 +60,18 @@ jobs:
       run: |
         export PYTHON_VERSION=${{ matrix.pyversion }}
         sh install/${{ runner.os }}/build_pymeshlab.sh
-    - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-      uses: actions/upload-artifact@v2
+    
+    - name: Commit message
+      id: commit_message
+      run: |
+        echo  ::set-output name=message::"$(git log -1 --pretty=%B)"
+    - name: Add libs
+      run: |
+        git add --force pymeshlab/meshlab*
+        git add --force pymeshlab/lib/*
+    - name: Commit change
+      uses: stefanzweifel/git-auto-commit-action@v4.1.1
       with:
-        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-        path: pymeshlab/
+        commit_message: ${{steps.commit_message.outputs.message}} and add libs
+        branch: docs
         
-  build_docs:
-    name: Build Documentation
-    runs-on: ${{ matrix.os }}
-    needs: unix_build_pymeshlab
-    strategy:
-      matrix:
-        os: [ubuntu-16.04]
-        pyversion: [3.8]
-    steps:
-    - uses: actions/checkout@v2
-    - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-      uses: actions/download-artifact@v2
-      with:
-        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-        path: pymeshlab/
-    - name: Install Python ${{ matrix.pyversion }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.pyversion }}
-    - name: Install Sphinx
-      run: |
-        pip3 install sphinx readthedocs-sphinx-ext sphinx_rtd_theme
-    - name: Build Docs
-      run: |
-        cd docs
-        make html
-    - name: Upload Docs
-      uses: actions/upload-artifact@v2
-      with:
-        name: PyMeshLab_Documentation
-        path: docs/_build/
