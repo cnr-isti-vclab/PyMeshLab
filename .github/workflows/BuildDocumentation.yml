@@ -1,7 +1,9 @@
 name: BuildDocumentation
 
 on: 
-  workflow_dispatch
+  push:
+    branches:
+      - "master"
        
 jobs: 
   unix_build_pymeshlab:
@@ -75,4 +77,3 @@ jobs:
         commit_message: ${{steps.commit_message.outputs.message}} and add libs
         branch: docs
         push_options: '--force'
-        
