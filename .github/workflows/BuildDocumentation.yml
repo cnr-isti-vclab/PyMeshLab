@@ -3,9 +3,27 @@ name: BuildDocumentation
 on: 
   workflow_dispatch
        
-jobs: 
+jobs:
+  merge_master_to_docs:
+    name: Merge master to docs
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: 'docs'
+        submodules: true
+        
+    - name: Merge master -> docs
+      uses: devmasx/merge-branch@v1.3.0
+      with:
+        type: now
+        head_to_merge: master
+        target_branch: docs
+        github_token: ${{ github.token }}
+        
   unix_build_pymeshlab:
     name: Build PyMeshLab
+    needs: merge_master_to_docs
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -16,24 +34,18 @@ jobs:
       with:
         ref: 'docs'
         submodules: true
-    - name: checkout sub-submodule vcg
+    - name: Checkout sub-submodule vcg
       run: |
         cd meshlab
         auth_header="$(git config --local --get http.https://github.com/.extraheader)"
         git submodule sync --recursive
         git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
-        
-    - name: Merge master -> docs
-      uses: devmasx/merge-branch@v1.3.0
-      with:
-        type: now
-        head_to_merge: master
-        target_branch: docs
-        github_token: ${{ github.token }}
     - name: Remove old files
       run: |
-        rm pymeshlab/meshlab*
-        rm -r pymeshlab/lib
+        if [[ -f pymeshlab/meshlab* ]]; then
+          rm pymeshlab/meshlab*
+          rm -r pymeshlab/lib
+        fi
         
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
@@ -74,17 +86,23 @@ jobs:
       run: |
         export PYTHON_VERSION=${{ matrix.pyversion }}
         sh install/${{ runner.os }}/build_pymeshlab.sh
-    
+    - name: Modify README.md
+      run: |
+        printf "# Do not use this branch\nThis branch is even with the master branch, except for the PyMeshLab module that is needed to build the documentation.\n" > README.md
     - name: Commit message
       id: commit_message
       run: |
         echo  ::set-output name=message::"$(git log -1 --pretty=%B)"
-    - name: Add libs
+    - name: Commit files
       run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
         git add --force pymeshlab/meshlab*
         git add --force pymeshlab/lib/*
-    - name: Commit change
-      uses: stefanzweifel/git-auto-commit-action@v4.1.1
+        git add README.md
+        git commit -m "${{steps.commit_message.outputs.message}} and add libs" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
       with:
-        commit_message: ${{steps.commit_message.outputs.message}} and add libs
         branch: docs
+        github_token: ${{ secrets.GITHUB_TOKEN }}
