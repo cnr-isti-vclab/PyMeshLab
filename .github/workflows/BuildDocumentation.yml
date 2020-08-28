@@ -16,7 +16,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        ref: 'docs'
         submodules: true
     - name: checkout sub-submodule vcg
       run: |
@@ -24,13 +23,17 @@ jobs:
         auth_header="$(git config --local --get http.https://github.com/.extraheader)"
         git submodule sync --recursive
         git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
-        cd ../pybind11
-        auth_header="$(git config --local --get http.https://github.com/.extraheader)"
-        git submodule sync --recursive
-        git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
-    - name: Pull
+    - name: Merge docs -> master
+        uses: devmasx/merge-branch@v1.3.0
+        with:
+          type: now
+          from_branch: docs
+          target_branch: master
+          github_token: ${{ github.token }}
+    - name: Remove old files
       run: |
-        git pull $(git config branch.`git name-rev --name-only HEAD`.remote) master --allow-unrelated-histories --ff-only
+        rm pymeshlab/meshlab*
+        rm -r pymeshlab/lib
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
