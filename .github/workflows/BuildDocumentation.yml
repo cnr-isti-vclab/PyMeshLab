@@ -1,9 +1,7 @@
 name: BuildDocumentation
 
 on: 
-  push:
-    branches:
-      - "master"
+  workflow_dispatch
        
 jobs: 
   unix_build_pymeshlab:
@@ -25,7 +23,7 @@ jobs:
         git submodule sync --recursive
         git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
         
-    - name: Merge docs -> master
+    - name: Merge master -> docs
       uses: devmasx/merge-branch@v1.3.0
       with:
         type: now
@@ -90,4 +88,3 @@ jobs:
       with:
         commit_message: ${{steps.commit_message.outputs.message}} and add libs
         branch: docs
-        push_options: '--force'
