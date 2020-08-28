@@ -25,7 +25,7 @@ jobs:
         git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
     - name: Pull
       run: |
-        git pull origin docs
+        git pull $(git remote) docs
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
