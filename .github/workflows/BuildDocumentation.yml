@@ -27,7 +27,7 @@ jobs:
       uses: devmasx/merge-branch@v1.3.0
       with:
         type: now
-        from_branch: docs
+        head_to_merge: docs
         target_branch: master
         github_token: ${{ github.token }}
     - name: Remove old files
