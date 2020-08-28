@@ -74,4 +74,5 @@ jobs:
       with:
         commit_message: ${{steps.commit_message.outputs.message}} and add libs
         branch: docs
+        push_options: '--force'
         
