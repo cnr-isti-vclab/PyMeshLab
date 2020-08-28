@@ -44,6 +44,8 @@ jobs:
         git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
     - name: Merge master -> docs
       run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
         git merge -X theirs origin/master
     - name: Remove old files
       run: |
