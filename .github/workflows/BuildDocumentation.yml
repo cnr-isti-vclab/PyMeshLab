@@ -3,25 +3,7 @@ name: BuildDocumentation
 on: 
   workflow_dispatch
        
-jobs:
-#  merge_master_to_docs:
-#    name: Merge master to docs
-#    runs-on: ubuntu-latest
-#    steps:
-#    - uses: actions/checkout@v2
-#      with:
-#        ref: 'docs'
-#        submodules: true
-#        
-#    - name: Merge master -> docs
-#      uses: devmasx/merge-branch@v1.3.0
-#      with:
-#        type: now
-#        head_to_merge: master
-#        target_branch: docs
-#        github_token: ${{ github.token }}
-
-        
+jobs:        
   unix_build_pymeshlab:
     name: Build PyMeshLab
     #needs: merge_master_to_docs
@@ -70,7 +52,7 @@ jobs:
       id: envs
       run: |
         cd meshlab
-        echo  ::set-output name=meshlab_commit::$(git rev-parse --short HEAD)
+        echo  ::set-output name=meshlab_commit::$(git rev-parse --short HEAD=7)
     - name: Cache MeshLab Build
       id: cache-meshlab-build
       uses: actions/cache@v2
