@@ -24,12 +24,12 @@ jobs:
         git submodule sync --recursive
         git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
     - name: Merge docs -> master
-        uses: devmasx/merge-branch@v1.3.0
-        with:
-          type: now
-          from_branch: docs
-          target_branch: master
-          github_token: ${{ github.token }}
+      uses: devmasx/merge-branch@v1.3.0
+      with:
+        type: now
+        from_branch: docs
+        target_branch: master
+        github_token: ${{ github.token }}
     - name: Remove old files
       run: |
         rm pymeshlab/meshlab*
