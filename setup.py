@@ -21,7 +21,7 @@ osused = platform.system()
 if osused == 'Darwin':
     osused = 'macOS'
 
-if (osused != 'Linux' and osused != 'Windows' and osused != 'macOS'):
+if osused != 'Linux' and osused != 'Windows' and osused != 'macOS':
     raise Exception("Operative System not supported")
 
 if sys.version_info[0] < 3 or (sys.version_info[0] == 3 and sys.version_info[1] < 5):
