@@ -86,6 +86,25 @@ const char* PYCOLOR_SET_ALPHAF =
 		"Sets the alpha color component of this color to a. Float "
 		"components are specified in the range 0-1.";
 
+//Color::to_array3
+const char* PYCOLOR_TO_ARRAY3 =
+		"Returns a numpy array of 3 integers containing the rgb components "
+		"of this color.";
+
+//Color::to_array4
+const char* PYCOLOR_TO_ARRAY4 =
+		"Returns a numpy array of 4 integers containing the rgba components "
+		"of this color.";
+
+//Color::to_array3f
+const char* PYCOLOR_TO_ARRAY3F =
+		"Returns a numpy array of 3 floats containing the rgb components "
+		"of this color.";
+
+//Color::to_array4f
+const char* PYCOLOR_TO_ARRAY4F =
+		"Returns a numpy array of 4 floats containing the rgba components "
+		"of this color.";
 
 }
 }

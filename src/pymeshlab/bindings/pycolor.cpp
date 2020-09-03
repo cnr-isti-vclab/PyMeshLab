@@ -34,8 +34,8 @@ void pymeshlab::initColor(pybind11::module& m)
 	colorClass.def("set_blue_f", &QColor::setBlueF, doc::PYCOLOR_SET_BLUEF, py::arg("b"));
 	colorClass.def("set_alpha_f", &QColor::setAlphaF, doc::PYCOLOR_SET_ALPHA, py::arg("a"));
 
-	colorClass.def("to_array3", &Color::toArray3i);
-	colorClass.def("to_array4", &Color::toArray4i);
-	colorClass.def("to_array3f", &Color::toArray3f);
-	colorClass.def("to_array4f", &Color::toArray4f);
+	colorClass.def("to_array3", &Color::toArray3i, doc::PYCOLOR_TO_ARRAY3);
+	colorClass.def("to_array4", &Color::toArray4i, doc::PYCOLOR_TO_ARRAY4);
+	colorClass.def("to_array3f", &Color::toArray3f, doc::PYCOLOR_TO_ARRAY3F);
+	colorClass.def("to_array4f", &Color::toArray4f, doc::PYCOLOR_TO_ARRAY4F);
 }

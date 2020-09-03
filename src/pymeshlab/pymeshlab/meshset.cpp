@@ -579,6 +579,9 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 
 		abs.setValue(AbsPercValue(absvalue));
 	}
+	else if (pythonType == "Color") {
+		par.setValue(ColorValue(py::cast<QColor>(k.second)));
+	}
 	else if (pythonType.contains("still_unsupported")){
 		std::cerr << "Warning: parameter type still not supported";
 	}
