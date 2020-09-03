@@ -73,7 +73,6 @@ private:
 	void saveMeshUsingPlugin(
 			const std::string& filename,
 			MeshModel* mm = nullptr,
-			int mask = 0,
 			FilterFunction ff = FilterFunction(),
 			pybind11::kwargs kwargs = pybind11::kwargs());
 

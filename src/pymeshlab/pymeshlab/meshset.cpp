@@ -140,10 +140,9 @@ void pymeshlab::MeshSet::loadMesh(const std::string& filename, py::kwargs kwargs
 
 void pymeshlab::MeshSet::saveMesh(const std::string& filename, pybind11::kwargs kwargs)
 {
-	//todo: translate mm()->dataMask() to vcg::tri::io::Mask
 	if (mm() == nullptr)
 		throw MLException("MeshSet has no selected Mesh.");
-	saveMeshUsingPlugin(filename, nullptr, 0, FilterFunction(), kwargs);
+	saveMeshUsingPlugin(filename, nullptr, FilterFunction(), kwargs);
 }
 
 void pymeshlab::MeshSet::loadProject(const std::string& filename)
@@ -246,8 +245,7 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 		//case of save mesh:
 		else if (QString::fromStdString(filtername).startsWith("save_")){
 			std::string filename = py::str(kwargs["file_name"]);
-			//todo: translate mm()->dataMask() to vcg::tri::io::Mask
-			saveMeshUsingPlugin(filename, nullptr, 0,*it, kwargs);
+			saveMeshUsingPlugin(filename, nullptr, *it, kwargs);
 		}
 		//all the other plugins:
 		else {
@@ -393,7 +391,6 @@ void pymeshlab::MeshSet::loadMeshUsingPlugin(
 void pymeshlab::MeshSet::saveMeshUsingPlugin(
 		const std::string& filename,
 		MeshModel* mm,
-		int mask,
 		pymeshlab::FilterFunction ff,
 		pybind11::kwargs kwargs)
 {
@@ -416,7 +413,20 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 
 		if (mm == nullptr)
 			mm = this->mm();
-		bool ok = plugin->save(extension, QString::fromStdString(filename), *mm, mask & formatmask, rps);
+
+		/**
+		 * TODO:
+		 * do not use as mask formatmask & mm->dataMask()
+		 * formatmask contains all the possible things that can be saved with the format
+		 * needs to be combined with:
+		 * - all the possible things contained in the mesh
+		 *   which is NOT mm->dataMask() -> need to convert... see MeshModel::io2mm,
+		 *   but I need mm2io I think
+		 * - all the things that the user wants to save, deduced in the future by
+		 *   kwargs...
+		 */
+
+		bool ok = plugin->save(extension, QString::fromStdString(filename), *mm, formatmask & 0, rps);
 		if (!ok){
 			throw MLException("Unable to save file: " + QString::fromStdString(filename));
 		}
@@ -533,7 +543,7 @@ void pymeshlab::MeshSet::saveMLP(const QString& fileName)
 			m->setFileName(outfilename);
 			QFileInfo of(outfilename);
 			m->setLabel(of.fileName());
-			saveMeshUsingPlugin(outfilename.toStdString(), m, m->dataMask());
+			saveMeshUsingPlugin(outfilename.toStdString(), m);
 		}
 	}
 

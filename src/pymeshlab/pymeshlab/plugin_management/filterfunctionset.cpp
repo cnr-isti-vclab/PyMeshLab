@@ -51,8 +51,7 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 		MeshIOInterface* plugin = pm.allKnowOutputFormats[outputFormat];
 		RichParameterList rps;
 		plugin->initGlobalParameterSet(nullptr, rps);
-		plugin->initPreOpenParameter(outputFormat, dummyMesh, rps);
-		plugin->initOpenParameter(outputFormat, *dummyMeshDocument.mm(), rps);
+		plugin->initSaveParameter(outputFormat, *dummyMeshDocument.mm(), rps);
 
 		//filename parameter
 		QString pythonParameterName = "file_name";
