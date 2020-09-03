@@ -8,6 +8,7 @@ PyMeshLab Classes
    :maxdepth: 2
 
    classes/boundingbox
+   classes/color
    classes/mesh
    classes/meshset
    classes/percentage
