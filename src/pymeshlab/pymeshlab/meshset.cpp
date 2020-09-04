@@ -140,10 +140,9 @@ void pymeshlab::MeshSet::loadMesh(const std::string& filename, py::kwargs kwargs
 
 void pymeshlab::MeshSet::saveMesh(const std::string& filename, pybind11::kwargs kwargs)
 {
-	//todo: translate mm()->dataMask() to vcg::tri::io::Mask
 	if (mm() == nullptr)
 		throw MLException("MeshSet has no selected Mesh.");
-	saveMeshUsingPlugin(filename, nullptr, 0, FilterFunction(), kwargs);
+	saveMeshUsingPlugin(filename, nullptr, FilterFunction(), kwargs);
 }
 
 void pymeshlab::MeshSet::loadProject(const std::string& filename)
@@ -246,8 +245,7 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 		//case of save mesh:
 		else if (QString::fromStdString(filtername).startsWith("save_")){
 			std::string filename = py::str(kwargs["file_name"]);
-			//todo: translate mm()->dataMask() to vcg::tri::io::Mask
-			saveMeshUsingPlugin(filename, nullptr, 0,*it, kwargs);
+			saveMeshUsingPlugin(filename, nullptr, *it, kwargs);
 		}
 		//all the other plugins:
 		else {
@@ -320,10 +318,9 @@ void pymeshlab::MeshSet::updateRichParameterList(
 					if (it != rps.end()){
 						updateRichParameterFromKwarg(*it, ffp, p);
 					}
-					else {
-						//should be impossible
-						assert(0);
-					}
+					//else: it happens only for save flags parameters,
+					//because these parameters are managed at pymeshlab level
+					//but not at meshlab level (e.g. no param in the RichParameterList)
 				}
 				else {
 					std::cerr << "Warning: parameter " << key << " not found\n";
@@ -393,7 +390,6 @@ void pymeshlab::MeshSet::loadMeshUsingPlugin(
 void pymeshlab::MeshSet::saveMeshUsingPlugin(
 		const std::string& filename,
 		MeshModel* mm,
-		int mask,
 		pymeshlab::FilterFunction ff,
 		pybind11::kwargs kwargs)
 {
@@ -406,9 +402,8 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 		MeshIOInterface* plugin = pm.allKnowOutputFormats[extension];
 		//int mask = 0; //todo: use this mask
 		RichParameterList rps;
-		int formatmask = 0;
-		int defbits = 0;
-		plugin->GetExportMaskCapability(extension,formatmask,defbits);
+		int capability = 0, defbits = 0, capabilityMesh = 0, capabilityUser = 0;
+		plugin->GetExportMaskCapability(extension,capability,defbits);
 		plugin->initGlobalParameterSet(nullptr, rps);
 		plugin->initSaveParameter(extension, *(this->mm()), rps);
 
@@ -416,7 +411,23 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 
 		if (mm == nullptr)
 			mm = this->mm();
-		bool ok = plugin->save(extension, QString::fromStdString(filename), *mm, mask & formatmask, rps);
+
+		capabilityMesh = currentMeshIOCapabilityMask(mm);
+		capabilityUser = capabilityMaskFromKwargs(kwargs, capability & capabilityMesh);
+		/**
+		 * TODO:
+		 * do not use as mask formatmask & mm->dataMask()
+		 * formatmask contains all the possible things that can be saved with the format
+		 * needs to be combined with:
+		 * - all the possible things contained in the mesh
+		 *   which is NOT mm->dataMask() -> need to convert... see MeshModel::io2mm,
+		 *   but I need mm2io I think
+		 * - all the things that the user wants to save, deduced in the future by
+		 *   kwargs...
+		 */
+		bool ok = plugin->save(
+					extension, QString::fromStdString(filename), *mm,
+					capabilityUser, rps);
 		if (!ok){
 			throw MLException("Unable to save file: " + QString::fromStdString(filename));
 		}
@@ -424,6 +435,41 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 	else {
 		throw MLException("Unknown format for save: " + extension);
 	}
+}
+
+int pymeshlab::MeshSet::currentMeshIOCapabilityMask(const MeshModel* mm) const
+{
+	int capability = 0;
+	for (int bit : capabilitiesBits){
+		if (mm->hasDataMask(MeshModel::io2mm(bit)))
+			capability |= bit;
+	}
+
+	return capability;
+}
+
+int pymeshlab::MeshSet::capabilityMaskFromKwargs(pybind11::kwargs kwargs, int startingMask) const
+{
+	std::array<QString, 14> params;
+	for (unsigned int i = 0; i < saveCapabilitiesStrings.size(); ++i)
+		params[i] = FilterFunctionSet::toPythonName(saveCapabilitiesStrings[i]);
+
+	int capability = startingMask;
+	for (std::pair<py::handle, py::handle> p : kwargs){
+		std::string par = py::cast<std::string>(p.first);
+		auto it = std::find(params.begin(), params.end(), QString::fromStdString(par));
+		if (it != params.end()) {
+			//get the value p.second and set the right mask to capability
+			unsigned int i = it - params.begin();
+			bool value = py::cast<bool>(p.second);
+			if (value)
+				capability &= capabilitiesBits[i];
+			else
+				capability &= ~capabilitiesBits[i];
+		}
+	}
+
+	return capability;
 }
 
 void pymeshlab::MeshSet::loadALN(const QString& fileName)
@@ -533,7 +579,7 @@ void pymeshlab::MeshSet::saveMLP(const QString& fileName)
 			m->setFileName(outfilename);
 			QFileInfo of(outfilename);
 			m->setLabel(of.fileName());
-			saveMeshUsingPlugin(outfilename.toStdString(), m, m->dataMask());
+			saveMeshUsingPlugin(outfilename.toStdString(), m);
 		}
 	}
 
@@ -578,6 +624,9 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 		}
 
 		abs.setValue(AbsPercValue(absvalue));
+	}
+	else if (pythonType == "Color") {
+		par.setValue(ColorValue(py::cast<QColor>(k.second)));
 	}
 	else if (pythonType.contains("still_unsupported")){
 		std::cerr << "Warning: parameter type still not supported";

@@ -51,8 +51,7 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 		MeshIOInterface* plugin = pm.allKnowOutputFormats[outputFormat];
 		RichParameterList rps;
 		plugin->initGlobalParameterSet(nullptr, rps);
-		plugin->initPreOpenParameter(outputFormat, dummyMesh, rps);
-		plugin->initOpenParameter(outputFormat, *dummyMeshDocument.mm(), rps);
+		plugin->initSaveParameter(outputFormat, *dummyMeshDocument.mm(), rps);
 
 		//filename parameter
 		QString pythonParameterName = "file_name";
@@ -66,6 +65,10 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 			FilterFunctionParameter par(pythonParameterName, rp);
 			f.addParameter(par);
 		}
+
+		//data to save
+		updateSaveParameters(plugin, outputFormat, f);
+
 		functionSet.insert(f);
 	}
 
@@ -127,4 +130,27 @@ void pymeshlab::FilterFunctionSet::addFunction(const pymeshlab::FilterFunction& 
 void pymeshlab::FilterFunctionSet::deleteFunction(const pymeshlab::FilterFunction& f)
 {
 	functionSet.erase(f);
+}
+
+void pymeshlab::FilterFunctionSet::updateSaveParameters(
+		MeshIOInterface* plugin,
+		const QString& outputFormat,
+		pymeshlab::FilterFunction& f)
+{
+	int capabilityBits, defaultBits;
+	plugin->GetExportMaskCapability(outputFormat, capabilityBits, defaultBits);
+
+	for (unsigned int i = 0; i < capabilitiesBits.size(); ++i){
+		if (capabilityBits & capabilitiesBits[i]){
+			bool def = defaultBits & capabilitiesBits[i];
+			RichBool rb(
+						saveCapabilitiesStrings[i], def,
+						saveCapabilitiesStrings[i], saveCapabilitiesStrings[i]);
+			FilterFunctionParameter par(toPythonName(saveCapabilitiesStrings[i]), rb);
+			f.addParameter(par);
+
+		}
+	}
+
+
 }

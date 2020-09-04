@@ -4,9 +4,47 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <array>
+#include <QString>
+#include <vcg/../wrap/io_trimesh/io_mask.h>
+
 #include <QtMessageHandler>
 
 namespace pymeshlab {
+
+const static std::array<int, 14> capabilitiesBits= {
+	vcg::tri::io::Mask::IOM_VERTQUALITY,
+	vcg::tri::io::Mask::IOM_VERTFLAGS,
+	vcg::tri::io::Mask::IOM_VERTCOLOR,
+	vcg::tri::io::Mask::IOM_VERTTEXCOORD,
+	vcg::tri::io::Mask::IOM_VERTNORMAL,
+	vcg::tri::io::Mask::IOM_VERTRADIUS,
+	vcg::tri::io::Mask::IOM_FACEQUALITY,
+	vcg::tri::io::Mask::IOM_FACEFLAGS,
+	vcg::tri::io::Mask::IOM_FACECOLOR,
+	vcg::tri::io::Mask::IOM_FACENORMAL,
+	vcg::tri::io::Mask::IOM_WEDGCOLOR,
+	vcg::tri::io::Mask::IOM_WEDGTEXCOORD,
+	vcg::tri::io::Mask::IOM_WEDGNORMAL,
+	vcg::tri::io::Mask::IOM_BITPOLYGONAL
+};
+
+const static std::array<QString, 14> saveCapabilitiesStrings = {
+	"Save Vertex Quality",
+	"Save Vertex Flag",
+	"Save Vertex Color",
+	"Save Vertex Coord",
+	"Save Vertex Normal",
+	"Save Vertex Radius",
+	"Save Face Quality",
+	"Save Face Flag",
+	"Save Face Color",
+	"Save Face Normal",
+	"Save Wedge Color",
+	"Save Wedge TexCoord",
+	"Save Wedge Normal",
+	"Save Polygonal"
+};
 
 /**
  * @brief The CoutRedirect class

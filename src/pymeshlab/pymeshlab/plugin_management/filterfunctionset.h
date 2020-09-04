@@ -27,6 +27,10 @@ public:
 private:
 	void addFunction(const FilterFunction& f);
 	void deleteFunction(const FilterFunction& f);
+	void updateSaveParameters(
+			MeshIOInterface* plugin,
+			const QString& outputFormat,
+			FilterFunction& f);
 	std::set<FilterFunction> functionSet;
 };
 

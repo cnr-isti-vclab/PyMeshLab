@@ -181,7 +181,7 @@ QString pymeshlab::FilterFunctionParameter::computePythonTypeString(const RichPa
 	if (v.isShotf())
 		return "Shotf [still unsupported]";
 	if (v.isColor())
-		return "Color [still unsupported]";
+		return "Color";
 	if (v.isMesh())
 		return "Mesh [still unsupported]";
 	if (v.isFileName())
