@@ -76,6 +76,8 @@ private:
 			FilterFunction ff = FilterFunction(),
 			pybind11::kwargs kwargs = pybind11::kwargs());
 
+	int currentMeshCapabilityMask(const MeshModel* mm) const;
+
 	void loadALN(const QString& fileName);
 	void loadMLP(const QString& fileName);
 	void loadBundler(const QString& fileName);

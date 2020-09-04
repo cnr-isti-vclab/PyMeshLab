@@ -403,9 +403,9 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 		MeshIOInterface* plugin = pm.allKnowOutputFormats[extension];
 		//int mask = 0; //todo: use this mask
 		RichParameterList rps;
-		int formatmask = 0;
+		int capability = 0;
 		int defbits = 0;
-		plugin->GetExportMaskCapability(extension,formatmask,defbits);
+		plugin->GetExportMaskCapability(extension,capability,defbits);
 		plugin->initGlobalParameterSet(nullptr, rps);
 		plugin->initSaveParameter(extension, *(this->mm()), rps);
 
@@ -425,8 +425,9 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 		 * - all the things that the user wants to save, deduced in the future by
 		 *   kwargs...
 		 */
-
-		bool ok = plugin->save(extension, QString::fromStdString(filename), *mm, formatmask & 0, rps);
+		bool ok = plugin->save(
+					extension, QString::fromStdString(filename), *mm,
+					capability & currentMeshIOCapabilityMask(mm), rps);
 		if (!ok){
 			throw MLException("Unable to save file: " + QString::fromStdString(filename));
 		}
@@ -434,6 +435,35 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 	else {
 		throw MLException("Unknown format for save: " + extension);
 	}
+}
+
+int pymeshlab::MeshSet::currentMeshIOCapabilityMask(const MeshModel* mm) const
+{
+	int arrayCapabilities [] = {
+		vcg::tri::io::Mask::IOM_VERTQUALITY,
+		vcg::tri::io::Mask::IOM_VERTFLAGS,
+		vcg::tri::io::Mask::IOM_VERTCOLOR,
+		vcg::tri::io::Mask::IOM_VERTTEXCOORD,
+		vcg::tri::io::Mask::IOM_VERTNORMAL,
+		vcg::tri::io::Mask::IOM_VERTRADIUS,
+		vcg::tri::io::Mask::IOM_FACEQUALITY,
+		vcg::tri::io::Mask::IOM_FACEFLAGS,
+		vcg::tri::io::Mask::IOM_FACECOLOR,
+		vcg::tri::io::Mask::IOM_FACENORMAL,
+		vcg::tri::io::Mask::IOM_WEDGCOLOR,
+		vcg::tri::io::Mask::IOM_WEDGTEXCOORD,
+		vcg::tri::io::Mask::IOM_WEDGNORMAL,
+		vcg::tri::io::Mask::IOM_BITPOLYGONAL
+	};
+
+
+	int capability = 0;
+	for (auto bit : arrayCapabilities){
+		if (mm->hasDataMask(MeshModel::io2mm(bit)))
+			capability |= bit;
+	}
+
+	return capability;
 }
 
 void pymeshlab::MeshSet::loadALN(const QString& fileName)
