@@ -8,14 +8,18 @@ def test_convex_hull():
     output_path = samples_common.test_output_path()
     ms = ml.MeshSet()
 
+    # load mesh
     ms.load_mesh(base_path + "airplane.obj")
 
+    # apply convex hull to the current selected mesh (last loaded)
     ms.apply_filter('convex_hull')
 
     assert ms.number_meshes() == 2
 
+    # save the current selected mesh
     ms.save_mesh(output_path + "convex_hull.obj")
 
+    # get a reference to the current selected mesh
     m = ms.current_mesh()
 
     print(m.vertex_number())

@@ -318,10 +318,9 @@ void pymeshlab::MeshSet::updateRichParameterList(
 					if (it != rps.end()){
 						updateRichParameterFromKwarg(*it, ffp, p);
 					}
-					else {
-						//should be impossible
-						assert(0);
-					}
+					//else: it happens only for save flags parameters,
+					//because these parameters are managed at pymeshlab level
+					//but not at meshlab level (e.g. no param in the RichParameterList)
 				}
 				else {
 					std::cerr << "Warning: parameter " << key << " not found\n";
@@ -403,8 +402,7 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 		MeshIOInterface* plugin = pm.allKnowOutputFormats[extension];
 		//int mask = 0; //todo: use this mask
 		RichParameterList rps;
-		int capability = 0;
-		int defbits = 0;
+		int capability = 0, defbits = 0, capabilityMesh = 0, capabilityUser = 0;
 		plugin->GetExportMaskCapability(extension,capability,defbits);
 		plugin->initGlobalParameterSet(nullptr, rps);
 		plugin->initSaveParameter(extension, *(this->mm()), rps);
@@ -414,6 +412,8 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 		if (mm == nullptr)
 			mm = this->mm();
 
+		capabilityMesh = currentMeshIOCapabilityMask(mm);
+		capabilityUser = capabilityMaskFromKwargs(kwargs, capability & capabilityMesh);
 		/**
 		 * TODO:
 		 * do not use as mask formatmask & mm->dataMask()
@@ -427,7 +427,7 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 		 */
 		bool ok = plugin->save(
 					extension, QString::fromStdString(filename), *mm,
-					capability & currentMeshIOCapabilityMask(mm), rps);
+					capabilityUser, rps);
 		if (!ok){
 			throw MLException("Unable to save file: " + QString::fromStdString(filename));
 		}
@@ -439,28 +439,34 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 
 int pymeshlab::MeshSet::currentMeshIOCapabilityMask(const MeshModel* mm) const
 {
-	int arrayCapabilities [] = {
-		vcg::tri::io::Mask::IOM_VERTQUALITY,
-		vcg::tri::io::Mask::IOM_VERTFLAGS,
-		vcg::tri::io::Mask::IOM_VERTCOLOR,
-		vcg::tri::io::Mask::IOM_VERTTEXCOORD,
-		vcg::tri::io::Mask::IOM_VERTNORMAL,
-		vcg::tri::io::Mask::IOM_VERTRADIUS,
-		vcg::tri::io::Mask::IOM_FACEQUALITY,
-		vcg::tri::io::Mask::IOM_FACEFLAGS,
-		vcg::tri::io::Mask::IOM_FACECOLOR,
-		vcg::tri::io::Mask::IOM_FACENORMAL,
-		vcg::tri::io::Mask::IOM_WEDGCOLOR,
-		vcg::tri::io::Mask::IOM_WEDGTEXCOORD,
-		vcg::tri::io::Mask::IOM_WEDGNORMAL,
-		vcg::tri::io::Mask::IOM_BITPOLYGONAL
-	};
-
-
 	int capability = 0;
-	for (auto bit : arrayCapabilities){
+	for (int bit : capabilitiesBits){
 		if (mm->hasDataMask(MeshModel::io2mm(bit)))
 			capability |= bit;
+	}
+
+	return capability;
+}
+
+int pymeshlab::MeshSet::capabilityMaskFromKwargs(pybind11::kwargs kwargs, int startingMask) const
+{
+	std::array<QString, 14> params;
+	for (unsigned int i = 0; i < saveCapabilitiesStrings.size(); ++i)
+		params[i] = FilterFunctionSet::toPythonName(saveCapabilitiesStrings[i]);
+
+	int capability = startingMask;
+	for (std::pair<py::handle, py::handle> p : kwargs){
+		std::string par = py::cast<std::string>(p.first);
+		auto it = std::find(params.begin(), params.end(), QString::fromStdString(par));
+		if (it != params.end()) {
+			//get the value p.second and set the right mask to capability
+			unsigned int i = it - params.begin();
+			bool value = py::cast<bool>(p.second);
+			if (value)
+				capability &= capabilitiesBits[i];
+			else
+				capability &= ~capabilitiesBits[i];
+		}
 	}
 
 	return capability;

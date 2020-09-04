@@ -77,6 +77,7 @@ private:
 			pybind11::kwargs kwargs = pybind11::kwargs());
 
 	int currentMeshIOCapabilityMask(const MeshModel* mm) const;
+	int capabilityMaskFromKwargs(pybind11::kwargs kwargs, int startingMask) const;
 
 	void loadALN(const QString& fileName);
 	void loadMLP(const QString& fileName);
