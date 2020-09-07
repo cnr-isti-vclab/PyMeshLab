@@ -118,7 +118,7 @@ void pymeshlab::MeshSet::printFilterScript() const
 {
 	std::cout << "Filter Script Size : " << filterScript.size() << "\n\n";
 	uint i = 0;
-	for (const FilterNameParameterValuesPair p :filterScript){
+	for (const FilterNameParameterValuesPair& p :filterScript){
 		std::cout << std::to_string(i) + ": " << FilterFunctionSet::toPythonName(p.filterName()).toStdString() <<
 					 "\n";
 		for (const RichParameter& par : p.second){
@@ -259,7 +259,7 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 	}
 	else {
 		throw MLException(
-					"Failed to apply filter: " + it->pythonFunctionName() + "\n" +
+					"Failed to apply filter: " + QString::fromStdString(filtername) + "\n" +
 					"Filter does not exists. Take a look at MeshSet.print_filter_list function.");
 	}
 }
@@ -272,6 +272,23 @@ void pymeshlab::MeshSet::printStatus() const
 		std::cout << "\tMesh label: " << m->label().toStdString() << "\n";
 		std::cout << "\tFull name: " << m->fullName().toStdString() << "\n\n";
 	}
+}
+
+std::string pymeshlab::MeshSet::filtersRSTDocumentation() const
+{
+	std::string doc;
+
+	doc += ".. _filter_list:\n\n===============\nList of Filters\n===============\n\n";
+
+	doc +=
+			"   Here are listed all the filter names that can be given as paramter "
+			"to the function :py:meth:`meshlab.MeshSet.apply_filter`.\n\n";
+
+	for (auto it = filterFunctionSet.begin(); it != filterFunctionSet.end(); ++it) {
+		doc += filterRSTDocumentation(it);
+	}
+
+	return doc;
 }
 
 bool pymeshlab::MeshSet::filterCallBack(const int pos, const char * str)
@@ -414,17 +431,7 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 
 		capabilityMesh = currentMeshIOCapabilityMask(mm);
 		capabilityUser = capabilityMaskFromKwargs(kwargs, capability & capabilityMesh);
-		/**
-		 * TODO:
-		 * do not use as mask formatmask & mm->dataMask()
-		 * formatmask contains all the possible things that can be saved with the format
-		 * needs to be combined with:
-		 * - all the possible things contained in the mesh
-		 *   which is NOT mm->dataMask() -> need to convert... see MeshModel::io2mm,
-		 *   but I need mm2io I think
-		 * - all the things that the user wants to save, deduced in the future by
-		 *   kwargs...
-		 */
+
 		bool ok = plugin->save(
 					extension, QString::fromStdString(filename), *mm,
 					capabilityUser, rps);
@@ -667,6 +674,48 @@ void pymeshlab::MeshSet::applyFilterRPL(
 	}
 }
 
+std::string pymeshlab::MeshSet::filterRSTDocumentation(
+		FilterFunctionSet::iterator it) const
+{
+	std::string doc;
+
+	doc += ".. data:: " + it->pythonFunctionName().toStdString() + "\n\n";
+	doc += "   .. raw:: html\n\n";
+	QString desc = it->description();
+	cleanHTML(desc);
+	doc += "      " + desc.toStdString() + "</p>\n\n";
+
+	if (it->parametersNumber() > 0) {
+
+		doc += "   **Parameters:** \n\n";
+
+		for (const FilterFunctionParameter& p : *it){
+
+			doc += "   ``" + p.pythonName().toStdString() + " : " +
+					p.pythonTypeString().toStdString() +
+					" = " + p.defaultValueString().toStdString() + "``\n\n";
+
+			doc += "      .. raw:: html\n\n";
+			QString desc = p.longDescription();
+			cleanHTML(desc);
+			doc += "         <i>" + p.description().toStdString() + "</i>: " +
+					desc.toStdString() + "\n\n";
+		}
+
+	}
+
+	return doc;
+}
+
+void pymeshlab::MeshSet::cleanHTML(QString& htmlString)
+{
+	htmlString.replace("\n", "<br>");
+//	htmlString.replace("<br>", "\n   ");
+//	htmlString.replace("<i>", "*");
+//	htmlString.replace("</i>", "*");
+//	htmlString.replace("<b>", "**");
+//	htmlString.replace("</b>", "**");
+}
 
 
 

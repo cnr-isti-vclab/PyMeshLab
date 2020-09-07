@@ -108,6 +108,18 @@ debug_mode {
 	!win32:LIBS += $$PYTHON_LIBS #includepath python lib
 }
 
+#uncomment this only for generate automatically the filter_list.rst
+#file in the docs folder.
+#CONFIG += filter_doc_generator
+
+filter_doc_generator {
+	DEFINES+=PYMESHLAB_DEBUG #needed to not look for python env
+	TEMPLATE = app
+	SOURCES += doc_main.cpp
+	!win32:PYTHON_LIBS = $$system(python3-config --ldflags) -lpython3.8
+	!win32:LIBS += $$PYTHON_LIBS #includepath python lib
+}
+
 HEADERS += \
 	bindings/pycolor.h \
 	bindings/pyboundingbox.h \

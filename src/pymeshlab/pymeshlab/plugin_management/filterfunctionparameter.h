@@ -23,6 +23,7 @@ public:
 	QString longDescription() const;
 	const Value& defaultValue() const;
 	void printDefaultValue(std::ostream& o) const;
+	QString defaultValueString() const;
 
 	FilterFunctionParameter& operator=(FilterFunctionParameter oth);
 	bool operator< (const FilterFunctionParameter& oth) const;

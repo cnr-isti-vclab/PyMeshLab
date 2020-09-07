@@ -23,6 +23,7 @@ Contents
    installation
    intro
    classes
+   filter_list
 
 
 Indices and tables

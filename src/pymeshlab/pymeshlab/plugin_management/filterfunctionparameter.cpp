@@ -99,7 +99,7 @@ void pymeshlab::FilterFunctionParameter::printDefaultValue(std::ostream& o) cons
 		return;
 	}
 	if (parameter->value().isString()){
-		o << parameter->value().getString().toStdString();
+		o << "'" << parameter->value().getString().toStdString() << "'";
 		return;
 	}
 	if (parameter->value().isMatrix44f()){
@@ -123,7 +123,7 @@ void pymeshlab::FilterFunctionParameter::printDefaultValue(std::ostream& o) cons
 		return;
 	}
 	if (parameter->value().isFileName()){
-		o << parameter->value().getFileName().toStdString();
+		o << "'" << parameter->value().getFileName().toStdString() << "'";
 		return;
 	}
 	if (parameter->value().isFloatList()){
@@ -132,6 +132,13 @@ void pymeshlab::FilterFunctionParameter::printDefaultValue(std::ostream& o) cons
 	}
 
 	//to support: floatlist, dynamicfloat, openfile, savefile, mesh
+}
+
+QString pymeshlab::FilterFunctionParameter::defaultValueString() const
+{
+	std::stringstream ss;
+	printDefaultValue(ss);
+	return QString::fromStdString(ss.str());
 }
 
 pymeshlab::FilterFunctionParameter& pymeshlab::FilterFunctionParameter::operator=(pymeshlab::FilterFunctionParameter oth)
