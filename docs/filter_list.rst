@@ -6,6 +6,8 @@ List of Filters
 
    Here are listed all the filter names that can be given as paramter to the function :py:meth:`meshlab.MeshSet.apply_filter`.
 
+   Please note: some filter parameters depend on the mesh(es) used as input of the filter. Default values listed here are computed on a 1x1x1 cube (pymeshlab/tests/sample/cube.obj), and they will be computed on the input mesh if they are left as default.
+
 .. data:: alpha_complex_shape
 
    *MeshLab filter name*: 'Alpha Complex/Shape'
@@ -198,7 +200,7 @@ List of Filters
 
          <i>Max</i>: The value that will be mapped with the upper end of the scale (red)
 
-   ``perc : float [DynamicFloat] = 0``
+   ``perc : float (bounded) = 0 [min: 0; max: 100]``
 
       .. raw:: html
 
@@ -324,7 +326,7 @@ List of Filters
 
          <i>Max</i>: The value that will be mapped with the upper end of the scale (red)
 
-   ``perc : float [DynamicFloat] = 0``
+   ``perc : float (bounded) = 0 [min: 0; max: 100]``
 
       .. raw:: html
 
@@ -396,7 +398,7 @@ List of Filters
 
          <i>Max</i>: The value that will be mapped with the upper end of the scale (red)
 
-   ``perc : float [DynamicFloat] = 0``
+   ``perc : float (bounded) = 0 [min: 0; max: 100]``
 
       .. raw:: html
 
@@ -792,31 +794,31 @@ List of Filters
 
          <i>Radial function:</i>: The radial function used to generate craters.
 
-   ``min_radius : float [DynamicFloat] = 0.1``
+   ``min_radius : float (bounded) = 0.1 [min: 0; max: 1]``
 
       .. raw:: html
 
          <i>Min crater radius:</i>: Defines the minimum radius of craters in range [0, 1]. Values near 0 mean very small craters.
 
-   ``max_radius : float [DynamicFloat] = 0.35``
+   ``max_radius : float (bounded) = 0.35 [min: 0; max: 1]``
 
       .. raw:: html
 
          <i>Max crater radius:</i>: Defines the maximum radius of craters in range [0, 1]. Values near 1 mean very large craters.
 
-   ``min_depth : float [DynamicFloat] = 0.05``
+   ``min_depth : float (bounded) = 0.05 [min: 0; max: 1]``
 
       .. raw:: html
 
          <i>Min crater depth:</i>: Defines the minimum depth of craters in range [0, 1].
 
-   ``max_depth : float [DynamicFloat] = 0.15``
+   ``max_depth : float (bounded) = 0.15 [min: 0; max: 1]``
 
       .. raw:: html
 
          <i>Max crater depth:</i>: Defines the maximum depth of craters in range [0, 1]. Values near 1 mean very deep craters.
 
-   ``elevation : float [DynamicFloat] = 0.4``
+   ``elevation : float (bounded) = 0.4 [min: 0; max: 1]``
 
       .. raw:: html
 
@@ -828,7 +830,7 @@ List of Filters
 
          <i>Blending algorithm:</i>: The algorithm that is used to blend the perturbation towards the mesh surface.
 
-   ``blendthreshold : float [DynamicFloat] = 0.8``
+   ``blendthreshold : float (bounded) = 0.8 [min: 0; max: 1]``
 
       .. raw:: html
 
@@ -1314,7 +1316,7 @@ List of Filters
 
          <i>Vertex Mesh</i>: The mesh whose vertices are used as seed points for the color computation. These seeds point are projected onto the above mesh.
 
-   ``radius : float [DynamicFloat] = 0.34641``
+   ``radius : float (bounded) = 0.34641 [min: 0; max: 1.1547]``
 
       .. raw:: html
 
@@ -1644,7 +1646,7 @@ List of Filters
 
          <i>Max height:</i>: Defines the maximum height for the perturbation.
 
-   ``scale : float [DynamicFloat] = 1``
+   ``scale : float (bounded) = 1 [min: 0; max: 10]``
 
       .. raw:: html
 
@@ -1668,7 +1670,7 @@ List of Filters
 
          <i>Algorithm</i>: The algorithm with which the fractal terrain will be generated.
 
-   ``octaves : float [DynamicFloat] = 8``
+   ``octaves : float (bounded) = 8 [min: 1; max: 20]``
 
       .. raw:: html
 
@@ -1720,13 +1722,13 @@ List of Filters
 
          <i>Subdivision steps:</i>: Defines the detail of the generated terrain. Allowed values are in range [2,9]. Use values from 6 to 9 to obtain reasonable results.
 
-   ``maxheight : float [DynamicFloat] = 0.2``
+   ``maxheight : float (bounded) = 0.2 [min: 0; max: 1]``
 
       .. raw:: html
 
          <i>Max height:</i>: Defines the maximum perturbation height as a fraction of the terrain's side.
 
-   ``scale : float [DynamicFloat] = 1``
+   ``scale : float (bounded) = 1 [min: 0; max: 10]``
 
       .. raw:: html
 
@@ -1744,7 +1746,7 @@ List of Filters
 
          <i>Algorithm</i>: The algorithm with which the fractal terrain will be generated.
 
-   ``octaves : float [DynamicFloat] = 8``
+   ``octaves : float (bounded) = 8 [min: 1; max: 20]``
 
       .. raw:: html
 
@@ -1802,13 +1804,13 @@ List of Filters
 
          <i>Point 2</i>: A vertex on the mesh that represent one harmonic field boundary condition.
 
-   ``value1 : float [DynamicFloat] = 0``
+   ``value1 : float (bounded) = 0 [min: 0; max: 1]``
 
       .. raw:: html
 
          <i>value for the 1st point</i>: Harmonic field value for the vertex.
 
-   ``value2 : float [DynamicFloat] = 1``
+   ``value2 : float (bounded) = 1 [min: 0; max: 1]``
 
       .. raw:: html
 
@@ -2298,7 +2300,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``bordersize : float [DynamicFloat] = 0.1``
+   ``bordersize : float (bounded) = 0.1 [min: 0.01; max: 0.5]``
 
       .. raw:: html
 
@@ -4226,7 +4228,7 @@ List of Filters
 
          <i>Color 2:</i>: Sets the second color to mix with Perlin Noise function.
 
-   ``freq : float [DynamicFloat] = 10``
+   ``freq : float (bounded) = 10 [min: 0.1; max: 100]``
 
       .. raw:: html
 
@@ -4362,7 +4364,7 @@ List of Filters
 
          <i>s</i>: Simulation Steps
 
-   ``adhesion : float [DynamicFloat] = 1``
+   ``adhesion : float (bounded) = 1 [min: 0; max: 1]``
 
       .. raw:: html
 
@@ -5980,13 +5982,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``minq : float [DynamicFloat] = 1.70141e+38``
+   ``minq : float (bounded) = 1.70141e+38 [min: 3.40282e+38; max: -3.40282e+38]``
 
       .. raw:: html
 
          <i>Min Quality</i>: Minimum acceptable quality value
 
-   ``maxq : float [DynamicFloat] = -1.70141e+38``
+   ``maxq : float (bounded) = -1.70141e+38 [min: 3.40282e+38; max: -3.40282e+38]``
 
       .. raw:: html
 
@@ -6008,13 +6010,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``minq : float [DynamicFloat] = 1.70141e+38``
+   ``minq : float (bounded) = 1.70141e+38 [min: 3.40282e+38; max: -3.40282e+38]``
 
       .. raw:: html
 
          <i>Min Quality</i>: Minimum acceptable quality value
 
-   ``maxq : float [DynamicFloat] = -1.70141e+38``
+   ``maxq : float (bounded) = -1.70141e+38 [min: 3.40282e+38; max: -3.40282e+38]``
 
       .. raw:: html
 
@@ -6084,19 +6086,19 @@ List of Filters
 
          <i>Inclusive Sel.</i>: If true only the faces with <b>all</b> the vertices within the specified range are selected. Otherwise any face with at least one vertex within the range is selected.
 
-   ``percentrh : float [DynamicFloat] = 0.2``
+   ``percentrh : float (bounded) = 0.2 [min: 0; max: 1]``
 
       .. raw:: html
 
          <i>Variation from Red or Hue</i>: A float between 0 and 1 that represents the percent variation from this color that will be selected.  For example if the R was 200 and you put 0.1 then any color with R 200+-25.5 will be selected.
 
-   ``percentgs : float [DynamicFloat] = 0.2``
+   ``percentgs : float (bounded) = 0.2 [min: 0; max: 1]``
 
       .. raw:: html
 
          <i>Variation from Green or Saturation</i>: A float between 0 and 1 that represents the percent variation from this color that will be selected.  For example if the R was 200 and you put 0.1 then any color with R 200+-25.5 will be selected.
 
-   ``percentbv : float [DynamicFloat] = 0.2``
+   ``percentbv : float (bounded) = 0.2 [min: 0; max: 1]``
 
       .. raw:: html
 
@@ -6112,7 +6114,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``anglelimit : float [DynamicFloat] = 75``
+   ``anglelimit : float (bounded) = 75 [min: 0; max: 180]``
 
       .. raw:: html
 
@@ -6156,7 +6158,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``threshold : float [DynamicFloat] = 0.0173205``
+   ``threshold : float (bounded) = 0.0173205 [min: 0; max: 1.73205]``
 
       .. raw:: html
 
@@ -6172,7 +6174,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``anglethreshold : float [DynamicFloat] = 160``
+   ``anglethreshold : float (bounded) = 160 [min: 90; max: 180]``
 
       .. raw:: html
 
@@ -6226,7 +6228,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``propthreshold : float [DynamicFloat] = 0.8``
+   ``propthreshold : float (bounded) = 0.8 [min: 0; max: 1]``
 
       .. raw:: html
 
@@ -6254,7 +6256,7 @@ List of Filters
 
          <i>select by Aspect Ratio</i>: if true, faces with aspect ratio below the limit will be selected
 
-   ``aratio : float [DynamicFloat] = 0.02``
+   ``aratio : float (bounded) = 0.02 [min: 0; max: 1]``
 
       .. raw:: html
 
@@ -6266,7 +6268,7 @@ List of Filters
 
          <i>select by Normal Angle</i>: if true, adjacent faces with normals forming an angle above the limit will be selected
 
-   ``nfratio : float [DynamicFloat] = 60``
+   ``nfratio : float (bounded) = 60 [min: 0; max: 180]``
 
       .. raw:: html
 
@@ -6336,7 +6338,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``radiusthreshold : float [DynamicFloat] = 0``
+   ``radiusthreshold : float (bounded) = 0 [min: 0; max: 7]``
 
       .. raw:: html
 
@@ -7568,7 +7570,7 @@ List of Filters
 
          <i>Center of rotation:</i>: Choose a method
 
-   ``angle : float [DynamicFloat] = 0``
+   ``angle : float (bounded) = 0 [min: -360; max: 360]``
 
       .. raw:: html
 
@@ -7638,7 +7640,7 @@ List of Filters
 
          <i>Center of rotation:</i>: Choose a method
 
-   ``angle : float [DynamicFloat] = 0``
+   ``angle : float (bounded) = 0 [min: -360; max: 360]``
 
       .. raw:: html
 
@@ -7874,19 +7876,19 @@ List of Filters
 
          <i>Camera type</i>: Choose the camera to scale
 
-   ``axisx : float [DynamicFloat] = 0``
+   ``axisx : float (bounded) = 0 [min: -1000; max: 1000]``
 
       .. raw:: html
 
          <i>X Axis</i>: Absolute translation amount along the X axis
 
-   ``axisy : float [DynamicFloat] = 0``
+   ``axisy : float (bounded) = 0 [min: -1000; max: 1000]``
 
       .. raw:: html
 
          <i>Y Axis</i>: Absolute translation amount along the Y axis
 
-   ``axisz : float [DynamicFloat] = 0``
+   ``axisz : float (bounded) = 0 [min: -1000; max: 1000]``
 
       .. raw:: html
 
@@ -7926,19 +7928,19 @@ List of Filters
 
          <i>Transformation:</i>: [XYZ translation] adds X,Y and Z offset to Layer transformation, [Center on BBox] moves Layer Origin to the Bounding Box center, [Set new Origin] moves Layer Origin to a specific point
 
-   ``axisx : float [DynamicFloat] = 0``
+   ``axisx : float (bounded) = 0 [min: -17.3205; max: 17.3205]``
 
       .. raw:: html
 
          <i>X Axis</i>: when using [XYZ translation], amount of translation along the X axis (in model units)
 
-   ``axisy : float [DynamicFloat] = 0``
+   ``axisy : float (bounded) = 0 [min: -17.3205; max: 17.3205]``
 
       .. raw:: html
 
          <i>Y Axis</i>: when using [XYZ translation], amount of translation along the Y axis (in model units)
 
-   ``axisz : float [DynamicFloat] = 0``
+   ``axisz : float (bounded) = 0 [min: -17.3205; max: 17.3205]``
 
       .. raw:: html
 
@@ -8314,19 +8316,19 @@ List of Filters
 
    **Parameters:** 
 
-   ``brightness : float [DynamicFloat] = 0``
+   ``brightness : float (bounded) = 0 [min: -255; max: 255]``
 
       .. raw:: html
 
          <i>Brightness:</i>: Sets the amount of brightness that will be added/subtracted to the colors.<br>Brightness = 255  ->  all white;<br>Brightness = -255  ->  all black;
 
-   ``contrast : float [DynamicFloat] = 0``
+   ``contrast : float (bounded) = 0 [min: -255; max: 255]``
 
       .. raw:: html
 
          <i>Contrast factor:</i>: Sets the amount of contrast of the mesh.
 
-   ``gamma : float [DynamicFloat] = 1``
+   ``gamma : float (bounded) = 1 [min: 0.1; max: 5]``
 
       .. raw:: html
 
@@ -8348,25 +8350,25 @@ List of Filters
 
    **Parameters:** 
 
-   ``hue : float [DynamicFloat] = 0``
+   ``hue : float (bounded) = 0 [min: 0; max: 360]``
 
       .. raw:: html
 
          <i>Hue:</i>: Changes the hue of the mesh.
 
-   ``saturation : float [DynamicFloat] = 100``
+   ``saturation : float (bounded) = 100 [min: 0; max: 100]``
 
       .. raw:: html
 
          <i>Saturation:</i>: Changes the saturation of the mesh.
 
-   ``luminance : float [DynamicFloat] = 50``
+   ``luminance : float (bounded) = 50 [min: 0; max: 100]``
 
       .. raw:: html
 
          <i>Luminance:</i>: Changes the luminance of the mesh.
 
-   ``intensity : float [DynamicFloat] = 50``
+   ``intensity : float (bounded) = 50 [min: 0; max: 100]``
 
       .. raw:: html
 
@@ -8448,31 +8450,31 @@ List of Filters
 
    **Parameters:** 
 
-   ``gamma : float [DynamicFloat] = 1``
+   ``gamma : float (bounded) = 1 [min: 0.1; max: 5]``
 
       .. raw:: html
 
          <i>Gamma:</i>: 
 
-   ``in_min : float [DynamicFloat] = 0``
+   ``in_min : float (bounded) = 0 [min: 0; max: 255]``
 
       .. raw:: html
 
          <i>Min input level:</i>: 
 
-   ``in_max : float [DynamicFloat] = 255``
+   ``in_max : float (bounded) = 255 [min: 0; max: 255]``
 
       .. raw:: html
 
          <i>Max input level:</i>: 
 
-   ``out_min : float [DynamicFloat] = 0``
+   ``out_min : float (bounded) = 0 [min: 0; max: 255]``
 
       .. raw:: html
 
          <i>Min output level:</i>: 
 
-   ``out_max : float [DynamicFloat] = 255``
+   ``out_max : float (bounded) = 255 [min: 0; max: 255]``
 
       .. raw:: html
 
@@ -8524,13 +8526,13 @@ List of Filters
 
          <i>BaseColor</i>: The base color that is added to the mesh.
 
-   ``percentage : float [DynamicFloat] = 0.5``
+   ``percentage : float (bounded) = 0.5 [min: 0; max: 1]``
 
       .. raw:: html
 
          <i>Alpha</i>: The random color is blended with the current one with the specified alpha
 
-   ``frequency : float [DynamicFloat] = 20``
+   ``frequency : float (bounded) = 20 [min: 1; max: 200]``
 
       .. raw:: html
 
@@ -8558,7 +8560,7 @@ List of Filters
 
          <i>Color 2:</i>: Sets the color to apply above the threshold.
 
-   ``threshold : float [DynamicFloat] = 128``
+   ``threshold : float (bounded) = 128 [min: 0; max: 255]``
 
       .. raw:: html
 
@@ -8608,7 +8610,7 @@ List of Filters
 
          <i>Target Mesh</i>: The mesh that is the morph target.
 
-   ``percentmorph : float [DynamicFloat] = 0``
+   ``percentmorph : float (bounded) = 0 [min: -150; max: 250]``
 
       .. raw:: html
 
@@ -8750,7 +8752,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``threshold : float [DynamicFloat] = 10``
+   ``threshold : float (bounded) = 10 [min: 0; max: 2000]``
 
       .. raw:: html
 

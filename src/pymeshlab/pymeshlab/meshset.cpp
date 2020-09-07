@@ -282,7 +282,11 @@ std::string pymeshlab::MeshSet::filtersRSTDocumentation() const
 
 	doc +=
 			"   Here are listed all the filter names that can be given as paramter "
-			"to the function :py:meth:`meshlab.MeshSet.apply_filter`.\n\n";
+			"to the function :py:meth:`meshlab.MeshSet.apply_filter`.\n\n"
+			"   Please note: some filter parameters depend on the mesh(es) used as "
+			"input of the filter. Default values listed here are computed on a 1x1x1 cube "
+			"(pymeshlab/tests/sample/cube.obj), and they will be computed on the input mesh "
+			"if they are left as default.\n\n";
 
 	for (auto it = filterFunctionSet.begin(); it != filterFunctionSet.end(); ++it) {
 		doc += filterRSTDocumentation(it);
@@ -634,6 +638,17 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 	}
 	else if (pythonType == "Color") {
 		par.setValue(ColorValue(py::cast<QColor>(k.second)));
+	}
+	else if (pythonType == "float (bounded)") {
+		RichDynamicFloat& dyn = dynamic_cast<RichDynamicFloat&>(par);
+		float val = py::cast<float>(k.second);
+		if (val >= dyn.min && val <= dyn.max)
+			dyn.setValue(DynamicFloatValue(val));
+		else
+			throw MLException(
+					"Parameter " + ffp.pythonName() + ": float value " + QString::number(val) +
+					" out of bounds (min: " + QString::number(dyn.min) +
+					"; max: " + QString::number(dyn.max) + ").");
 	}
 	else if (pythonType.contains("still_unsupported")){
 		std::cerr << "Warning: parameter type still not supported";
