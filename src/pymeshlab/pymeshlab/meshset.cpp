@@ -680,6 +680,7 @@ std::string pymeshlab::MeshSet::filterRSTDocumentation(
 	std::string doc;
 
 	doc += ".. data:: " + it->pythonFunctionName().toStdString() + "\n\n";
+	doc += "   *MeshLab filter name*: '" + it->meshlabFunctionName().toStdString() + "'\n\n";
 	doc += "   .. raw:: html\n\n";
 	QString desc = it->description();
 	cleanHTML(desc);

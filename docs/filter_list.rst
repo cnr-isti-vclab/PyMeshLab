@@ -8,6 +8,8 @@ List of Filters
 
 .. data:: alpha_complex_shape
 
+   *MeshLab filter name*: 'Alpha Complex/Shape'
+
    .. raw:: html
 
       Calculate the <b>Alpha Shape</b> of the mesh(Edelsbrunner and P.Mucke 1994) with Qhull library (http://www.qhull.org/). <br><br>From a given finite point set in the space it computes 'the shape' of the set.The Alpha Shape is the boundary of the alpha complex, that is a subcomplex of the Delaunay triangulation of the given point set.<br>For a given value of 'alpha', the alpha complex includes all the simplices in the Delaunay triangulation which have an empty circumsphere with radius equal or smaller than 'alpha'.<br>The filter inserts the minimum value of alpha (the circumradius of the triangle) in attribute Quality foreach face.</p>
@@ -27,6 +29,8 @@ List of Filters
          <i>Get:</i>: Select the output. The Alpha Shape is the boundary of the Alpha Complex
 
 .. data:: ambient_occlusion
+
+   *MeshLab filter name*: 'Ambient Occlusion'
 
    .. raw:: html
 
@@ -78,6 +82,8 @@ List of Filters
 
 .. data:: annulus
 
+   *MeshLab filter name*: 'Annulus'
+
    .. raw:: html
 
       Create an Annulus e.g. a flat region bounded by two concentric circles, or a holed disk.</p>
@@ -104,6 +110,8 @@ List of Filters
 
 .. data:: box_cube
 
+   *MeshLab filter name*: 'Box/Cube'
+
    .. raw:: html
 
       Create a Box, Cube, Hexahedron. You can specify the side length.</p>
@@ -118,11 +126,15 @@ List of Filters
 
 .. data:: build_a_polyline_from_selected_edges
 
+   *MeshLab filter name*: 'Build a Polyline from Selected Edges'
+
    .. raw:: html
 
       Create a new Layer with an edge mesh composed only by the selected edges of the current mesh</p>
 
 .. data:: change_the_current_layer
+
+   *MeshLab filter name*: 'Change the current layer'
 
    .. raw:: html
 
@@ -137,6 +149,8 @@ List of Filters
          <i>Layer Name</i>: The name of the current layer
 
 .. data:: change_visibility_of_layers
+
+   *MeshLab filter name*: 'Change Visibility of layer(s)'
 
    .. raw:: html
 
@@ -163,6 +177,8 @@ List of Filters
          <i>Visible</i>: It makes the selected layer(s) visible or invisible.
 
 .. data:: clamp_vertex_quality
+
+   *MeshLab filter name*: 'Clamp Vertex Quality'
 
    .. raw:: html
 
@@ -196,6 +212,8 @@ List of Filters
 
 .. data:: close_holes
 
+   *MeshLab filter name*: 'Close Holes'
+
    .. raw:: html
 
       Close holes smaller than a given threshold</p>
@@ -228,6 +246,8 @@ List of Filters
 
 .. data:: clustered_vertex_sampling
 
+   *MeshLab filter name*: 'Clustered Vertex Sampling'
+
    .. raw:: html
 
       Create a new layer populated with a subsampling of the vertices of the current mesh; the subsampling is driven by a simple one-per-gridded cell strategy.</p>
@@ -254,6 +274,8 @@ List of Filters
 
 .. data:: color_noise
 
+   *MeshLab filter name*: 'Color noise'
+
    .. raw:: html
 
       Adds to the color the requested amount of bits of noise. Bits of noise are added independently for each RGB channel.</p>
@@ -274,11 +296,15 @@ List of Filters
 
 .. data:: colorize_by_border_distance
 
+   *MeshLab filter name*: 'Colorize by border distance'
+
    .. raw:: html
 
       Store in the quality field the geodesic distance from borders and color the mesh accordingly.</p>
 
 .. data:: colorize_by_face_quality
+
+   *MeshLab filter name*: 'Colorize by face Quality'
 
    .. raw:: html
 
@@ -312,6 +338,8 @@ List of Filters
 
 .. data:: colorize_by_geodesic_distance_from_a_given_point
 
+   *MeshLab filter name*: 'Colorize by geodesic distance from a given point'
+
    .. raw:: html
 
       Store in the quality field the geodesic distance from a given point on the mesh surface and color the mesh accordingly.</p>
@@ -332,6 +360,8 @@ List of Filters
 
 .. data:: colorize_by_geodesic_distance_from_the_selected_points
 
+   *MeshLab filter name*: 'Colorize by geodesic distance from the selected points'
+
    .. raw:: html
 
       Store in the quality field the geodesic distance from the selected points on the mesh surface and color the mesh accordingly.</p>
@@ -345,6 +375,8 @@ List of Filters
          <i>Max Distance</i>: If not zero it indicates a cut off value to be used during geodesic distance computation.
 
 .. data:: colorize_by_vertex_quality
+
+   *MeshLab filter name*: 'Colorize by vertex Quality'
 
    .. raw:: html
 
@@ -377,6 +409,8 @@ List of Filters
          <i>Zero Symmetric</i>: If true the min max range will be enlarged to be symmetric (so that green is always Zero)
 
 .. data:: colorize_curvature_apss
+
+   *MeshLab filter name*: 'Colorize curvature (APSS)'
 
    .. raw:: html
 
@@ -421,6 +455,8 @@ List of Filters
          <i>Curvature type</i>: The type of the curvature to plot.<br>ApproxMean uses the radius of the fitted sphere as an approximation of the mean curvature.
 
 .. data:: colorize_curvature_rimls
+
+   *MeshLab filter name*: 'Colorize curvature (RIMLS)'
 
    .. raw:: html
 
@@ -472,11 +508,15 @@ List of Filters
 
 .. data:: compact_faces
 
+   *MeshLab filter name*: 'Compact faces'
+
    .. raw:: html
 
       Compact all the faces that have been deleted and put them to the end of the vector</p>
 
 .. data:: compact_vertices
+
+   *MeshLab filter name*: 'Compact vertices'
 
    .. raw:: html
 
@@ -484,11 +524,15 @@ List of Filters
 
 .. data:: compute_area_perimeter_of_selection
 
+   *MeshLab filter name*: 'Compute Area/Perimeter of selection'
+
    .. raw:: html
 
       Compute area and perimeter of the FACE selection. Open the layer dialog to see the results.</p>
 
 .. data:: compute_curvature_principal_directions
+
+   *MeshLab filter name*: 'Compute curvature principal directions'
 
    .. raw:: html
 
@@ -516,11 +560,15 @@ List of Filters
 
 .. data:: compute_geometric_measures
 
+   *MeshLab filter name*: 'Compute Geometric Measures'
+
    .. raw:: html
 
       Compute a set of geometric measures of a mesh/pointcloud. Bounding box extents and diagonal, principal axis, thin shell barycenter (mesh only), vertex barycenter and quality-weighted barycenter (pointcloud only), surface area (mesh only), volume (closed mesh) and Inertia tensor Matrix (closed mesh). Open the layer dialog to see the results.</p>
 
 .. data:: compute_normals_for_point_sets
+
+   *MeshLab filter name*: 'Compute normals for point sets'
 
    .. raw:: html
 
@@ -553,6 +601,8 @@ List of Filters
          <i>Viewpoint Pos.</i>: The viewpoint position can be set by hand (i.e. getting the current viewpoint) or it can be retrieved from mesh camera, if the viewpoint position is stored there.
 
 .. data:: compute_planar_section
+
+   *MeshLab filter name*: 'Compute Planar Section'
 
    .. raw:: html
 
@@ -598,17 +648,23 @@ List of Filters
 
 .. data:: compute_topological_measures
 
+   *MeshLab filter name*: 'Compute Topological Measures'
+
    .. raw:: html
 
       Compute a set of topological measures over a mesh.</p>
 
 .. data:: compute_topological_measures_for_quad_meshes
 
+   *MeshLab filter name*: 'Compute Topological Measures for Quad Meshes'
+
    .. raw:: html
 
       Compute a set of topological measures over a quad mesh.</p>
 
 .. data:: conditional_face_selection
+
+   *MeshLab filter name*: 'Conditional Face Selection'
 
    .. raw:: html
 
@@ -624,6 +680,8 @@ List of Filters
 
 .. data:: conditional_vertex_selection
 
+   *MeshLab filter name*: 'Conditional Vertex Selection'
+
    .. raw:: html
 
       Boolean function using muparser lib to perform vertex selection over current mesh.<br><br>It's possible to use parenthesis <b>()</b>, and predefined operators:<br><b>&&</b> (logic and), <b>||</b> (logic or), <b>&lt;</b>, <b>&lt;=</b>, <b>></b>, <b>>=</b>, <b>!=</b> (not equal), <b>==</b> (equal), <b>_?_:_</b> (c/c++ ternary operator)<br><br>It's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
@@ -637,6 +695,8 @@ List of Filters
          <i>boolean function</i>: type a boolean function that will be evaluated in order to select a subset of vertices<br>example: (y > 0) and (ny > 0)
 
 .. data:: cone
+
+   *MeshLab filter name*: 'Cone'
 
    .. raw:: html
 
@@ -670,11 +730,15 @@ List of Filters
 
 .. data:: convert_pervertex_uv_into_perwedge_uv
 
+   *MeshLab filter name*: 'Convert PerVertex UV into PerWedge UV'
+
    .. raw:: html
 
       Converts per Vertex Texture Coordinates to per Wedge Texture Coordinates. It does not merge superfluous vertices...</p>
 
 .. data:: convert_perwedge_uv_into_pervertex_uv
+
+   *MeshLab filter name*: 'Convert PerWedge UV into PerVertex UV'
 
    .. raw:: html
 
@@ -682,11 +746,15 @@ List of Filters
 
 .. data:: convex_hull
 
+   *MeshLab filter name*: 'Convex Hull'
+
    .. raw:: html
 
       Calculate the <b>convex hull</b> with Qhull library (http://www.qhull.org/html/qconvex.htm).<br><br> The convex hull of a set of points is the boundary of the minimal convex set containing the given non-empty finite set of points.</p>
 
 .. data:: craters_generation
+
+   *MeshLab filter name*: 'Craters Generation'
 
    .. raw:: html
 
@@ -792,11 +860,15 @@ List of Filters
 
 .. data:: create_selection_perimeter_polyline
 
+   *MeshLab filter name*: 'Create Selection Perimeter Polyline'
+
    .. raw:: html
 
       Create a new Layer with the perimeter polyline(s) of the selection borders</p>
 
 .. data:: create_solid_wireframe
+
+   *MeshLab filter name*: 'Create Solid Wireframe'
 
    .. raw:: html
 
@@ -872,6 +944,8 @@ List of Filters
 
 .. data:: cross_field_creation
 
+   *MeshLab filter name*: 'Cross Field Creation'
+
    .. raw:: html
 
       </p>
@@ -885,6 +959,8 @@ List of Filters
          <i>Cross Type</i>: 
 
 .. data:: csg_operation
+
+   *MeshLab filter name*: 'CSG Operation'
 
    .. raw:: html
 
@@ -924,6 +1000,8 @@ List of Filters
 
 .. data:: curvature_flipping_optimization
 
+   *MeshLab filter name*: 'Curvature flipping optimization'
+
    .. raw:: html
 
       Mesh optimization by edge flipping, to improve local mesh curvature</p>
@@ -950,6 +1028,8 @@ List of Filters
 
 .. data:: cut_mesh_along_crease_edges
 
+   *MeshLab filter name*: 'Cut mesh along crease edges'
+
    .. raw:: html
 
       Cut the mesh along crease edges, duplicating the vertices as necessary. Crease (or sharp) edges are defined according to the variation of normal of the adjacent faces.</p>
@@ -963,6 +1043,8 @@ List of Filters
          <i>Crease Angle (degree)</i>: If the angle between the normals of two adjacent faces is <b>larger</b> that this threshold the edge is considered a creased and the mesh is cut along it.
 
 .. data:: define_new_per_face_attribute
+
+   *MeshLab filter name*: 'Define New Per Face Attribute'
 
    .. raw:: html
 
@@ -984,6 +1066,8 @@ List of Filters
 
 .. data:: define_new_per_vertex_attribute
 
+   *MeshLab filter name*: 'Define New Per Vertex Attribute'
+
    .. raw:: html
 
       Add a new Per-Vertex scalar attribute to current mesh and fill it with the defined function.<br>The name specified below can be used in other filter functionIt's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
@@ -1004,11 +1088,15 @@ List of Filters
 
 .. data:: delaunay_triangulation
 
+   *MeshLab filter name*: 'Delaunay Triangulation'
+
    .. raw:: html
 
       Calculate the <b>Delaunay triangulation</b> with Qhull library (http://www.qhull.org/html/qdelaun.htm).<br><br>The Delaunay triangulation DT(P) of a set of points P in d-dimensional spaces is a triangulation of the convex hull such that no point in P is inside the circum-sphere of any simplex in DT(P).<br> </p>
 
 .. data:: delete_all_faces
+
+   *MeshLab filter name*: 'Delete ALL Faces'
 
    .. raw:: html
 
@@ -1024,11 +1112,15 @@ List of Filters
 
 .. data:: delete_all_non_selected_rasters
 
+   *MeshLab filter name*: 'Delete all Non Selected Rasters'
+
    .. raw:: html
 
       All non selected raster layers are deleted</p>
 
 .. data:: delete_all_non_visible_mesh_layers
+
+   *MeshLab filter name*: 'Delete all non visible Mesh Layers'
 
    .. raw:: html
 
@@ -1036,11 +1128,15 @@ List of Filters
 
 .. data:: delete_current_mesh
 
+   *MeshLab filter name*: 'Delete Current Mesh'
+
    .. raw:: html
 
       The current mesh layer is deleted</p>
 
 .. data:: delete_current_raster
+
+   *MeshLab filter name*: 'Delete Current Raster'
 
    .. raw:: html
 
@@ -1048,11 +1144,15 @@ List of Filters
 
 .. data:: delete_selected_faces
 
+   *MeshLab filter name*: 'Delete Selected Faces'
+
    .. raw:: html
 
       Delete the current set of selected faces, vertices that remains unreferenced are not deleted.</p>
 
 .. data:: delete_selected_faces_and_vertices
+
+   *MeshLab filter name*: 'Delete Selected Faces and Vertices'
 
    .. raw:: html
 
@@ -1060,11 +1160,15 @@ List of Filters
 
 .. data:: delete_selected_vertices
 
+   *MeshLab filter name*: 'Delete Selected Vertices'
+
    .. raw:: html
 
       Delete the current set of selected vertices; faces that share one of the deleted vertices are deleted too.</p>
 
 .. data:: depth_complexity
+
+   *MeshLab filter name*: 'Depth complexity'
 
    .. raw:: html
 
@@ -1104,6 +1208,8 @@ List of Filters
 
 .. data:: depth_smooth
 
+   *MeshLab filter name*: 'Depth Smooth'
+
    .. raw:: html
 
       A laplacian smooth that is constrained to move vertices only in one given direction (usually the viewer direction).</p>
@@ -1136,11 +1242,15 @@ List of Filters
 
 .. data:: dilate_selection
 
+   *MeshLab filter name*: 'Dilate Selection'
+
    .. raw:: html
 
       Dilate (expand) the current set of selected faces.</p>
 
 .. data:: directional_geom_preserv
+
+   *MeshLab filter name*: 'Directional Geom. Preserv.'
 
    .. raw:: html
 
@@ -1168,6 +1278,8 @@ List of Filters
 
 .. data:: discrete_curvatures
 
+   *MeshLab filter name*: 'Discrete Curvatures'
+
    .. raw:: html
 
       Colorize according to various discrete curvature computed as described in:<br>'<i>Discrete Differential-Geometry Operators for Triangulated 2-Manifolds</i>' <br>M. Meyer, M. Desbrun, P. Schroder, A. H. Barr</p>
@@ -1181,6 +1293,8 @@ List of Filters
          <i>Type:</i>: Choose the curvature value that you want transferred onto the scalar Quality.Mean (H) and Gaussian (K) curvature are computed according the technique described in the Desbrun et al. paper.<br>Absolute curvature is defined as |H|+|K| and RMS curvature as sqrt(4* H^2 - 2K) as explained in <br><i>Improved curvature estimationfor watershed segmentation of 3-dimensional meshes </i> by S. Pulla, A. Razdan, G. Farin. 
 
 .. data:: disk_vertex_coloring
+
+   *MeshLab filter name*: 'Disk Vertex Coloring'
 
    .. raw:: html
 
@@ -1220,6 +1334,8 @@ List of Filters
 
 .. data:: distance_from_reference_mesh
 
+   *MeshLab filter name*: 'Distance from Reference Mesh'
+
    .. raw:: html
 
       Compute the signed/unsigned (per vertex) distance between a mesh/pointcloud and a reference mesh/pointcloud. Distance is stored in vertex quality.</p>
@@ -1252,17 +1368,23 @@ List of Filters
 
 .. data:: dodecahedron
 
+   *MeshLab filter name*: 'Dodecahedron'
+
    .. raw:: html
 
       Create an Dodecahedron</p>
 
 .. data:: duplicate_current_layer
 
+   *MeshLab filter name*: 'Duplicate Current layer'
+
    .. raw:: html
 
       Create a new layer containing the same model as the current one</p>
 
 .. data:: dust_accumulation
+
+   *MeshLab filter name*: 'Dust Accumulation'
 
    .. raw:: html
 
@@ -1302,6 +1424,8 @@ List of Filters
 
 .. data:: equalize_vertex_color
 
+   *MeshLab filter name*: 'Equalize Vertex Color'
+
    .. raw:: html
 
       The filter equalizes the colors histogram. It is a kind of automatic regulation of contrast; the colors histogram is expanded to fit all the range of colors.</p>
@@ -1334,11 +1458,15 @@ List of Filters
 
 .. data:: erode_selection
 
+   *MeshLab filter name*: 'Erode Selection'
+
    .. raw:: html
 
       Erode (reduce) the current set of selected faces.</p>
 
 .. data:: estimate_radius_from_density
+
+   *MeshLab filter name*: 'Estimate radius from density'
 
    .. raw:: html
 
@@ -1353,6 +1481,8 @@ List of Filters
          <i>Number of neighbors</i>: Number of neighbors used to estimate the local density. Larger values lead to smoother variations.
 
 .. data:: export_active_rasters_cameras_to_file
+
+   *MeshLab filter name*: 'Export active rasters cameras to file'
 
    .. raw:: html
 
@@ -1373,6 +1503,8 @@ List of Filters
          <i>Export file name (the right extension will be added at the end)</i>: Name of the output file, it will be saved in the same folder as the project file
 
 .. data:: export_to_sketchfab
+
+   *MeshLab filter name*: 'Export to Sketchfab'
 
    .. raw:: html
 
@@ -1430,6 +1562,8 @@ List of Filters
 
 .. data:: fit_a_plane_to_selection
 
+   *MeshLab filter name*: 'Fit a plane to selection'
+
    .. raw:: html
 
       Create a quad on the plane fitting the selection</p>
@@ -1462,6 +1596,8 @@ List of Filters
 
 .. data:: flatten_visible_layers
 
+   *MeshLab filter name*: 'Flatten Visible Layers'
+
    .. raw:: html
 
       Flatten all or only the visible layers into a single new mesh. <br> Transformations are preserved. Existing layers can be optionally deleted</p>
@@ -1493,6 +1629,8 @@ List of Filters
          <i>Keep unreferenced vertices</i>: Do not discard unreferenced vertices from source layers<br><br>Necessary for point-cloud layers
 
 .. data:: fractal_displacement
+
+   *MeshLab filter name*: 'Fractal Displacement'
 
    .. raw:: html
 
@@ -1568,6 +1706,8 @@ List of Filters
 
 .. data:: fractal_terrain
 
+   *MeshLab filter name*: 'Fractal Terrain'
+
    .. raw:: html
 
       Generates a fractal terrain perturbation with five different algorithms.<br />Some good parameter values to start with are:<br /><table align="center">    <tr style="border:1px solid black">        <td> - </td>        <td align="center"> Seed </td>        <td align="center"> Octaves </td>        <td align="center"> Lacunarity </td>        <td align="center"> Fractal increment </td>        <td align="center"> Offset </td>        <td align="center"> Gain </td>    </tr>    <tr>        <td>fBM</td>        <td align="center">1</td>        <td align="center">10</td>        <td align="center">2</td>        <td align="center">1.2</td>        <td align="center">-</td>        <td align="center">-</td>    </tr>    <tr>        <td>Standard multifractal</td>        <td align="center">1</td>        <td align="center">8</td>        <td align="center">2</td>        <td align="center">0.9</td>        <td align="center">0.9</td>        <td align="center">-</td>    </tr>    <tr>        <td>Heterogeneous multifractal</td>        <td align="center">1</td>        <td align="center">8</td>        <td align="center">3</td>        <td align="center">0.9</td>        <td align="center">0.4</td>        <td align="center">-</td>    </tr>    <tr>        <td>Hybrid multifractal</td>        <td align="center">1</td>        <td align="center">8</td>        <td align="center">4</td>        <td align="center">0.1</td>        <td align="center">0.3</td>        <td align="center">-</td>    </tr>    <tr>        <td>Ridged multifractal</td>        <td align="center">2</td>        <td align="center">8</td>        <td align="center">4</td>        <td align="center">0.5</td>        <td align="center">0.9</td>        <td align="center">2</td>    </tr></table><br /><br />Detailed algorithms descriptions can be found in:<br /><i>Ebert, D.S., Musgrave, F.K., Peachey, D., Perlin, K., and Worley, S.</i><br /><b>Texturing and Modeling: A Procedural Approach</b><br />Morgan Kaufmann Publishers Inc., San Francisco, CA, USA, 2002.<br></p>
@@ -1642,6 +1782,8 @@ List of Filters
 
 .. data:: generate_scalar_harmonic_field
 
+   *MeshLab filter name*: 'Generate Scalar Harmonic Field'
+
    .. raw:: html
 
       Generates a scalar harmonic field over the mesh. Input scalar values must be assigned to two vertices as Dirichlet boundary conditions. Applying the filter, a discrete Laplace operator generates the harmonic field values for all the mesh vertices, which are stored in the <a href='https://stackoverflow.com/questions/58610746'>quality per vertex attribute</a> of the mesh.<br>For more details see:<b>Dynamic Harmonic Fields for Surface Processing</b> by <i>Kai Xua, Hao Zhang, Daniel Cohen-Or, Yueshan Xionga</i>. Computers & Graphics, 2009 <br><a href='https://doi.org/10.1016/j.cag.2009.03.022'>doi:10.1016/j.cag.2009.03.022</a></p>
@@ -1680,6 +1822,8 @@ List of Filters
 
 .. data:: geometric_cylindrical_unwrapping
 
+   *MeshLab filter name*: 'Geometric Cylindrical Unwrapping'
+
    .. raw:: html
 
       Unwrap the geometry of current mesh along a clylindrical equatorial projection. The cylindrical projection axis is centered on the origin and directed along the vertical <b>Y</b> axis.</p>
@@ -1705,6 +1849,8 @@ List of Filters
          <i>Projection Radius</i>: If non zero, this parameter specifies the desired radius of the reference cylinder used for the projection. Changing this parameter affect the <b>X</b> horizontal scaling of the resulting mesh. If zero (default) the average distance of the mesh from the axis is chosen.
 
 .. data:: global_registration
+
+   *MeshLab filter name*: 'Global registration'
 
    .. raw:: html
 
@@ -1768,6 +1914,8 @@ List of Filters
 
 .. data:: gpu_filter_example_
 
+   *MeshLab filter name*: 'GPU Filter Example '
+
    .. raw:: html
 
       Small useless filter added only to show how to work with a gl render context inside a filter.</p>
@@ -1799,6 +1947,8 @@ List of Filters
          <i>Base Image File Name</i>: The file name used to save the image.
 
 .. data:: grid_generator
+
+   *MeshLab filter name*: 'Grid Generator'
 
    .. raw:: html
 
@@ -1837,6 +1987,8 @@ List of Filters
          <i>centered on origin</i>: center grid generated by filter on origin.<br>Grid is first generated and than moved into origin (using muparser lib to perform fast calc on every vertex)
 
 .. data:: hausdorff_distance
+
+   *MeshLab filter name*: 'Hausdorff Distance'
 
    .. raw:: html
 
@@ -1900,17 +2052,23 @@ List of Filters
 
 .. data:: hc_laplacian_smooth
 
+   *MeshLab filter name*: 'HC Laplacian Smooth'
+
    .. raw:: html
 
       HC Laplacian Smoothing. Extended version of Laplacian Smoothing based on the article: <br><b>Improved Laplacian Smoothing of Noisy Surface Meshes</b> by <i>Vollmer, Mencl and Müller</i>. EUROGRAPHICS Volume 18 (1999), Number 3, 131-138.<br><a href='https://doi.org/10.1111/1467-8659.00334'>doi:10.1111/1467-8659.00334</a></p>
 
 .. data:: icosahedron
 
+   *MeshLab filter name*: 'Icosahedron'
+
    .. raw:: html
 
       Create an Icosahedron</p>
 
 .. data:: image_alignment_mutual_information
+
+   *MeshLab filter name*: 'Image alignment: Mutual Information'
 
    .. raw:: html
 
@@ -1968,6 +2126,8 @@ List of Filters
 
 .. data:: image_registration_global_refinement_using_mutual_information
 
+   *MeshLab filter name*: 'Image Registration: Global refinement using Mutual Information'
+
    .. raw:: html
 
       Calculate a global refinement of image registration, in order to obtain a better alignment of fine detail. It will refine only the shots associated to the active rasters, the non-active ones will be used but not refined. This filter is an implementation of Dellepiane et al. 'Global refinement of image-to-geometry registration for color projection', 2013, and it was used in Corsini et al 'Fully Automatic Registration of Image Sets on Approximate Geometry', 2013. Please cite!</p>
@@ -2011,6 +2171,8 @@ List of Filters
          <i>Fine Alignment</i>: Fine alignment
 
 .. data:: implicit_surface
+
+   *MeshLab filter name*: 'Implicit Surface'
 
    .. raw:: html
 
@@ -2068,6 +2230,8 @@ List of Filters
 
 .. data:: import_cameras_for_active_rasters_from_file
 
+   *MeshLab filter name*: 'Import cameras for active rasters from file'
+
    .. raw:: html
 
       Import cameras for active rasters from .out or Agisoft .xml formats</p>
@@ -2081,6 +2245,8 @@ List of Filters
          <i>Choose the camera file to be imported</i>: It's possible to import both Bundler .out and Agisoft .xml files. In both cases, distortion parameters won't be imported. In the case of Agisoft, it's necessary to undistort the images before exporting the xml file
 
 .. data:: invert_faces_orientation
+
+   *MeshLab filter name*: 'Invert Faces Orientation'
 
    .. raw:: html
 
@@ -2102,6 +2268,8 @@ List of Filters
 
 .. data:: invert_selection
 
+   *MeshLab filter name*: 'Invert Selection'
+
    .. raw:: html
 
       Invert the current set of selected faces/vertices.</p>
@@ -2122,6 +2290,8 @@ List of Filters
 
 .. data:: iso_parametrization_build_atlased_mesh
 
+   *MeshLab filter name*: 'Iso Parametrization Build Atlased Mesh'
+
    .. raw:: html
 
       The filter build a new mesh with a standard atlased per wedge texture. The atlas is simply done by exploiting the low distortion, coarse, regular, mesh of the abstract domain<br>For more details see: <br><b>N. Pietroni, M. Tarini and P. Cignoni</b>, <br><a href="http://vcg.isti.cnr.it/Publications/2010/PTC10/">'Almost isometric mesh parameterization through abstract domains'</a> <br>IEEE Transaction of Visualization and Computer Graphics, 2010</p>
@@ -2135,6 +2305,8 @@ List of Filters
          <i>BorderSize ratio</i>: This parameter controls the amount of space that must be left between each diamond when building the atlas.It directly affects how many triangle are split during this conversion. <br>In abstract parametrization mesh triangles can naturally cross the triangles of the abstract domain, so when converting to a standard parametrization we must cut all the triangles that protrudes outside each diamond more than the specified threshold.The unit of the threshold is in percentage of the size of the diamond,The bigger the threshold the less triangles are split, but the more UV space is used (wasted).
 
 .. data:: iso_parametrization_main
+
+   *MeshLab filter name*: 'Iso Parametrization: Main'
 
    .. raw:: html
 
@@ -2186,6 +2358,8 @@ List of Filters
 
 .. data:: iso_parametrization_remeshing
 
+   *MeshLab filter name*: 'Iso Parametrization Remeshing'
+
    .. raw:: html
 
       Uniform Remeshing based on Isoparameterization, each triangle of the domain is recursively subdivided. <br>For more details see: <br><b>N. Pietroni, M. Tarini and P. Cignoni</b>, <br><a href="http://vcg.isti.cnr.it/Publications/2010/PTC10/">'Almost isometric mesh parameterization through abstract domains'</a> <br>IEEE Transaction of Visualization and Computer Graphics, 2010</p>
@@ -2199,6 +2373,8 @@ List of Filters
          <i>Sampling Rate</i>: This specify the sampling rate for remeshing. Must be greater than 2
 
 .. data:: iso_parametrization_transfer_between_meshes
+
+   *MeshLab filter name*: 'Iso Parametrization transfer between meshes'
 
    .. raw:: html
 
@@ -2219,6 +2395,8 @@ List of Filters
          <i>Target Mesh</i>: The mesh to be Isoparameterized
 
 .. data:: laplacian_smooth
+
+   *MeshLab filter name*: 'Laplacian Smooth'
 
    .. raw:: html
 
@@ -2252,6 +2430,8 @@ List of Filters
 
 .. data:: laplacian_smooth_surface_preserving
 
+   *MeshLab filter name*: 'Laplacian Smooth (surface preserving)'
+
    .. raw:: html
 
       Laplacian smooth with limited surface modification: move each vertex in the average position of neighbors vertices, only if the new position still (almost) lies on original surface</p>
@@ -2278,6 +2458,8 @@ List of Filters
 
 .. data:: load_3ds
 
+   *MeshLab filter name*: '3ds'
+
    .. raw:: html
 
       Load 3ds format.</p>
@@ -2292,6 +2474,8 @@ List of Filters
 
 .. data:: load_apts
 
+   *MeshLab filter name*: 'apts'
+
    .. raw:: html
 
       Load apts format.</p>
@@ -2305,6 +2489,8 @@ List of Filters
          <i>File Name</i>: The name of the file to load
 
 .. data:: load_asc
+
+   *MeshLab filter name*: 'asc'
 
    .. raw:: html
 
@@ -2332,6 +2518,8 @@ List of Filters
 
 .. data:: load_bre
 
+   *MeshLab filter name*: 'bre'
+
    .. raw:: html
 
       Load bre format.</p>
@@ -2358,6 +2546,8 @@ List of Filters
 
 .. data:: load_ctm
 
+   *MeshLab filter name*: 'ctm'
+
    .. raw:: html
 
       Load ctm format.</p>
@@ -2372,6 +2562,8 @@ List of Filters
 
 .. data:: load_dae
 
+   *MeshLab filter name*: 'dae'
+
    .. raw:: html
 
       Load dae format.</p>
@@ -2385,6 +2577,8 @@ List of Filters
          <i>File Name</i>: The name of the file to load
 
 .. data:: load_es
+
+   *MeshLab filter name*: 'es'
 
    .. raw:: html
 
@@ -2424,6 +2618,8 @@ List of Filters
 
 .. data:: load_fbx
 
+   *MeshLab filter name*: 'fbx'
+
    .. raw:: html
 
       Load fbx format.</p>
@@ -2443,6 +2639,8 @@ List of Filters
          <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
 
 .. data:: load_obj
+
+   *MeshLab filter name*: 'obj'
 
    .. raw:: html
 
@@ -2464,6 +2662,8 @@ List of Filters
 
 .. data:: load_off
 
+   *MeshLab filter name*: 'off'
+
    .. raw:: html
 
       Load off format.</p>
@@ -2483,6 +2683,8 @@ List of Filters
          <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
 
 .. data:: load_pdb
+
+   *MeshLab filter name*: 'pdb'
 
    .. raw:: html
 
@@ -2540,6 +2742,8 @@ List of Filters
 
 .. data:: load_ply
 
+   *MeshLab filter name*: 'ply'
+
    .. raw:: html
 
       Load ply format.</p>
@@ -2560,6 +2764,8 @@ List of Filters
 
 .. data:: load_pts
 
+   *MeshLab filter name*: 'pts'
+
    .. raw:: html
 
       Load pts format.</p>
@@ -2573,6 +2779,8 @@ List of Filters
          <i>File Name</i>: The name of the file to load
 
 .. data:: load_ptx
+
+   *MeshLab filter name*: 'ptx'
 
    .. raw:: html
 
@@ -2636,6 +2844,8 @@ List of Filters
 
 .. data:: load_qobj
 
+   *MeshLab filter name*: 'qobj'
+
    .. raw:: html
 
       Load qobj format.</p>
@@ -2655,6 +2865,8 @@ List of Filters
          <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
 
 .. data:: load_stl
+
+   *MeshLab filter name*: 'stl'
 
    .. raw:: html
 
@@ -2676,6 +2888,8 @@ List of Filters
 
 .. data:: load_tri
 
+   *MeshLab filter name*: 'tri'
+
    .. raw:: html
 
       Load tri format.</p>
@@ -2689,6 +2903,8 @@ List of Filters
          <i>File Name</i>: The name of the file to load
 
 .. data:: load_txt
+
+   *MeshLab filter name*: 'txt'
 
    .. raw:: html
 
@@ -2734,6 +2950,8 @@ List of Filters
 
 .. data:: load_vmi
 
+   *MeshLab filter name*: 'vmi'
+
    .. raw:: html
 
       Load vmi format.</p>
@@ -2754,6 +2972,8 @@ List of Filters
 
 .. data:: load_wrl
 
+   *MeshLab filter name*: 'wrl'
+
    .. raw:: html
 
       Load wrl format.</p>
@@ -2767,6 +2987,8 @@ List of Filters
          <i>File Name</i>: The name of the file to load
 
 .. data:: load_x3d
+
+   *MeshLab filter name*: 'x3d'
 
    .. raw:: html
 
@@ -2782,6 +3004,8 @@ List of Filters
 
 .. data:: load_x3dv
 
+   *MeshLab filter name*: 'x3dv'
+
    .. raw:: html
 
       Load x3dv format.</p>
@@ -2796,6 +3020,8 @@ List of Filters
 
 .. data:: load_xyz
 
+   *MeshLab filter name*: 'xyz'
+
    .. raw:: html
 
       Load xyz format.</p>
@@ -2809,6 +3035,8 @@ List of Filters
          <i>File Name</i>: The name of the file to load
 
 .. data:: marching_cubes_apss
+
+   *MeshLab filter name*: 'Marching Cubes (APSS)'
 
    .. raw:: html
 
@@ -2854,6 +3082,8 @@ List of Filters
 
 .. data:: marching_cubes_rimls
 
+   *MeshLab filter name*: 'Marching Cubes (RIMLS)'
+
    .. raw:: html
 
       Extract the iso-surface (as a mesh) of a MLS surface defined by the current point set (or mesh)using the marching cubes algorithm. The coarse extraction is followed by an accurate projectionstep onto the MLS, and an extra zero removal procedure.<br><br>This is the Robust Implicit MLS (RIMLS) variant which is an extension of Implicit MLS preserving sharp features using non linear regression. For more details see: <br>Oztireli, Guennebaud and Gross, 'Feature Preserving Point Set Surfaces based on Non-Linear Kernel Regression' Eurographics 2009.</p>
@@ -2898,6 +3128,8 @@ List of Filters
 
 .. data:: matrix_freeze_current_matrix
 
+   *MeshLab filter name*: 'Matrix: Freeze Current Matrix'
+
    .. raw:: html
 
       Freeze the current transformation matrix into the coordinates of the vertices of the mesh (and set this matrix to the identity). In other words it applies in a definetive way the current matrix to the vertex coordinates.</p>
@@ -2911,6 +3143,8 @@ List of Filters
          <i>Apply to all visible Layers</i>: If selected the filter will be applied to all visible mesh layers
 
 .. data:: matrix_invert_current_matrix
+
+   *MeshLab filter name*: 'Matrix: Invert Current Matrix'
 
    .. raw:: html
 
@@ -2932,6 +3166,8 @@ List of Filters
 
 .. data:: matrix_reset_current_matrix
 
+   *MeshLab filter name*: 'Matrix: Reset Current Matrix'
+
    .. raw:: html
 
       Set the current transformation matrix to the Identity. </p>
@@ -2945,6 +3181,8 @@ List of Filters
          <i>Apply to all visible Layers</i>: If selected the filter will be applied to all visible mesh layers
 
 .. data:: matrix_set_copy_transformation
+
+   *MeshLab filter name*: 'Matrix: Set/Copy Transformation'
 
    .. raw:: html
 
@@ -2977,6 +3215,8 @@ List of Filters
          <i>Apply to all visible Layers</i>: If selected, the filter will be applied to all visible mesh layers
 
 .. data:: matrix_set_from_translation_rotation_scale
+
+   *MeshLab filter name*: 'Matrix: Set from translation/rotation/scale'
 
    .. raw:: html
 
@@ -3058,6 +3298,8 @@ List of Filters
 
 .. data:: merge_close_vertices
 
+   *MeshLab filter name*: 'Merge Close Vertices'
+
    .. raw:: html
 
       Merge together all the vertices that are nearer than the specified threshold. Like a unify duplicated vertices but with some tolerance.</p>
@@ -3072,6 +3314,8 @@ List of Filters
 
 .. data:: merge_wedge_texture_coord
 
+   *MeshLab filter name*: 'Merge Wedge Texture Coord'
+
    .. raw:: html
 
       Merge together per-wedge texture coords that are very close. Used to correct apparent texture seams that can arise from numerical approximations when saving in ascii formats.</p>
@@ -3085,6 +3329,8 @@ List of Filters
          <i>Merging Threshold</i>: All the per-wedge texture coords that are on the same vertex and are distant less then the given threshold are merged together. It can be used to remove the fake texture seams that arise from error. Distance is in texture space (the default, 1e-4, corresponds to one texel on a 10kx10x texture) 
 
 .. data:: mesh_element_sampling
+
+   *MeshLab filter name*: 'Mesh Element Sampling'
 
    .. raw:: html
 
@@ -3105,6 +3351,8 @@ List of Filters
          <i>Number of samples</i>: The desired number of elements that must be chosen. Being a subsampling of the original elements if this number should not be larger than the number of elements of the original mesh.
 
 .. data:: mls_projection_apss
+
+   *MeshLab filter name*: 'MLS projection (APSS)'
 
    .. raw:: html
 
@@ -3174,6 +3422,8 @@ List of Filters
 
 .. data:: mls_projection_rimls
 
+   *MeshLab filter name*: 'MLS projection (RIMLS)'
+
    .. raw:: html
 
       Project a mesh (or a point set) onto the MLS surface defined by itself or another point set.<br><br>This is the Robust Implicit MLS (RIMLS) variant which is an extension of Implicit MLS preserving sharp features using non linear regression. For more details see: <br>Oztireli, Guennebaud and Gross, 'Feature Preserving Point Set Surfaces based on Non-Linear Kernel Regression' Eurographics 2009.</p>
@@ -3242,6 +3492,8 @@ List of Filters
 
 .. data:: montecarlo_sampling
 
+   *MeshLab filter name*: 'Montecarlo Sampling'
+
    .. raw:: html
 
       Create a new layer populated with a point sampling of the current mesh; samples are generated in a randomly uniform way, or with a distribution biased by the per-vertex quality values of the mesh.</p>
@@ -3286,6 +3538,8 @@ List of Filters
 
 .. data:: move_selected_faces_to_another_layer
 
+   *MeshLab filter name*: 'Move selected faces to another layer'
+
    .. raw:: html
 
       Selected faces are moved (or duplicated) in a new layer. Warning! per-vertex and per-face user defined attributes will not be transferred.</p>
@@ -3299,6 +3553,8 @@ List of Filters
          <i>Delete original selection</i>: Deletes the original selected faces/vertices, thus splitting the mesh among layers. <br><br>if false, the selected faces/vertices are duplicated in the new layer
 
 .. data:: move_selected_vertices_to_another_layer
+
+   *MeshLab filter name*: 'Move selected vertices to another layer'
 
    .. raw:: html
 
@@ -3314,6 +3570,8 @@ List of Filters
 
 .. data:: noisy_isosurface
 
+   *MeshLab filter name*: 'Noisy Isosurface'
+
    .. raw:: html
 
       Create a isosurface perturbed by a noisy isosurface.</p>
@@ -3328,11 +3586,15 @@ List of Filters
 
 .. data:: normalize_face_normals
 
+   *MeshLab filter name*: 'Normalize Face Normals'
+
    .. raw:: html
 
       Normalize Face Normal Lengths to unit vectors.</p>
 
 .. data:: normalize_vertex_normals
+
+   *MeshLab filter name*: 'Normalize Vertex Normals'
 
    .. raw:: html
 
@@ -3340,11 +3602,15 @@ List of Filters
 
 .. data:: octahedron
 
+   *MeshLab filter name*: 'Octahedron'
+
    .. raw:: html
 
       Create an Octahedron</p>
 
 .. data:: parameterization__texturing_from_registered_rasters
+
+   *MeshLab filter name*: 'Parameterization + texturing from registered rasters'
 
    .. raw:: html
 
@@ -3414,6 +3680,8 @@ List of Filters
 
 .. data:: parameterization_from_registered_rasters
 
+   *MeshLab filter name*: 'Parameterization from registered rasters'
+
    .. raw:: html
 
       The mesh is parameterized by creating some patches that correspond to projection of portions of surfaces onto the set of registered rasters.</p>
@@ -3458,6 +3726,8 @@ List of Filters
 
 .. data:: parametrization_flat_plane
 
+   *MeshLab filter name*: 'Parametrization: Flat Plane'
+
    .. raw:: html
 
       Builds a trivial flat-plane parametrization.</p>
@@ -3483,6 +3753,8 @@ List of Filters
          <i>Side Gutter</i>: Leave an empty space around the parametrization area of the specified size (in texture space); accepted range [0.0 - 0.5].
 
 .. data:: parametrization_trivial_per_triangle
+
+   *MeshLab filter name*: 'Parametrization: Trivial Per-Triangle'
 
    .. raw:: html
 
@@ -3516,6 +3788,8 @@ List of Filters
 
 .. data:: parametrization_voronoi_atlas
 
+   *MeshLab filter name*: 'Parametrization: Voronoi Atlas'
+
    .. raw:: html
 
       Build an atlased parametrization based on a geodesic voronoi partitioning of the surface and parametrizing each region using Harmonic Mapping. For the  parametrization of the disk like voronoi regions the used method is: <br><b>Ulrich Pinkall, Konrad Polthier</b><br>                                            <i>Computing Discrete Minimal Surfaces and Their Conjugates</i> <br>                                            Experimental Mathematics, Vol 2 (1), 1993<br> .</p>
@@ -3535,6 +3809,8 @@ List of Filters
          <i>Overlap</i>: If checked the resulting parametrization will be composed by <i>overlapping</i> regions, e.g. the resulting mesh will have duplicated faces: each region will have a ring of ovelapping duplicate faces that will ensure that border regions will be parametrized in the atlas twice. This is quite useful for building mipmap robust atlases
 
 .. data:: per_face_color_function
+
+   *MeshLab filter name*: 'Per Face Color Function'
 
    .. raw:: html
 
@@ -3574,6 +3850,8 @@ List of Filters
 
 .. data:: per_face_quality_according_to_triangle_shape_and_aspect_ratio
 
+   *MeshLab filter name*: 'Per Face Quality according to Triangle shape and aspect ratio'
+
    .. raw:: html
 
       Compute a quality and colorize faces depending on triangle shape:<ol><li>area/max side of triangle<li>ratio inradius/circumradius (radii of incircle and circumcircle)<li>Mean ratio of triangle = area/(a*a + b*b + c*c)<li>Area<li>Texture Angle Distortion. Difference between angle in 3D space and texture space<li>Texture Area Distortion. Difference between area in 3D space and texture space<li>Polygonal Planarity (max distance to support plane)<li>Polygonal Planarity (relative distance to support plane)</ol></p>
@@ -3587,6 +3865,8 @@ List of Filters
          <i>Metric:</i>: Choose a metric to compute triangle quality.
 
 .. data:: per_face_quality_function
+
+   *MeshLab filter name*: 'Per Face Quality Function'
 
    .. raw:: html
 
@@ -3620,6 +3900,8 @@ List of Filters
 
 .. data:: per_face_quality_histogram
 
+   *MeshLab filter name*: 'Per Face Quality Histogram'
+
    .. raw:: html
 
       Compute an histogram of the values of the per-face quality.</p>
@@ -3652,11 +3934,15 @@ List of Filters
 
 .. data:: per_face_quality_stat
 
+   *MeshLab filter name*: 'Per Face Quality Stat'
+
    .. raw:: html
 
       Compute some aggregate statistics over the per vertex quality, like Min, Max, Average, StdDev and Variance.</p>
 
 .. data:: per_vertex_color_function
+
+   *MeshLab filter name*: 'Per Vertex Color Function'
 
    .. raw:: html
 
@@ -3696,6 +3982,8 @@ List of Filters
 
 .. data:: per_vertex_geometric_function
 
+   *MeshLab filter name*: 'Per Vertex Geometric Function'
+
    .. raw:: html
 
       Geometric function using muparser lib to generate new Coord<br>You can change x,y,z for every vertex according to the function specified.<br>It's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
@@ -3727,6 +4015,8 @@ List of Filters
          <i>only on selection</i>: if checked, only affects selected vertices
 
 .. data:: per_vertex_normal_function
+
+   *MeshLab filter name*: 'Per Vertex Normal Function'
 
    .. raw:: html
 
@@ -3760,6 +4050,8 @@ List of Filters
 
 .. data:: per_vertex_quality_function
 
+   *MeshLab filter name*: 'Per Vertex Quality Function'
+
    .. raw:: html
 
       Quality function using muparser to generate new Quality for every vertex<br>It's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
@@ -3791,6 +4083,8 @@ List of Filters
          <i>only on selection</i>: if checked, only affects selected vertices
 
 .. data:: per_vertex_quality_histogram
+
+   *MeshLab filter name*: 'Per Vertex Quality Histogram'
 
    .. raw:: html
 
@@ -3824,11 +4118,15 @@ List of Filters
 
 .. data:: per_vertex_quality_stat
 
+   *MeshLab filter name*: 'Per Vertex Quality Stat'
+
    .. raw:: html
 
       Compute some aggregate statistics over the per vertex quality, like Min, Max, Average, StdDev and Variance.</p>
 
 .. data:: per_vertex_texture_function
+
+   *MeshLab filter name*: 'Per Vertex Texture Function'
 
    .. raw:: html
 
@@ -3855,6 +4153,8 @@ List of Filters
          <i>only on selection</i>: if checked, only affects selected vertices
 
 .. data:: per_wedge_texture_function
+
+   *MeshLab filter name*: 'Per Wedge Texture Function'
 
    .. raw:: html
 
@@ -3906,6 +4206,8 @@ List of Filters
 
 .. data:: perlin_color
 
+   *MeshLab filter name*: 'Perlin color'
+
    .. raw:: html
 
       Paints the mesh using PerlinColor function. The color assigned to vertices depends on their position in the space; it means that near vertices will be painted with similar colors.</p>
@@ -3944,6 +4246,8 @@ List of Filters
 
 .. data:: permesh_color_scattering
 
+   *MeshLab filter name*: 'PerMesh Color Scattering'
+
    .. raw:: html
 
       Assigns a random color to each visible mesh layer in the document. Colors change every time the filter is executed, but are always chosen so that they differ as much as possible.</p>
@@ -3957,6 +4261,8 @@ List of Filters
          <i>Seed</i>: Random seed used to generate scattered colors. Zero means totally random (each time the filter is started it generates a different result)
 
 .. data:: planar_flipping_optimization
+
+   *MeshLab filter name*: 'Planar flipping optimization'
 
    .. raw:: html
 
@@ -3989,6 +4295,8 @@ List of Filters
          <i>Post optimization relax iter</i>: number of a planar laplacian smooth iterations that have to be performed after every run
 
 .. data:: point_cloud_simplification
+
+   *MeshLab filter name*: 'Point Cloud Simplification'
 
    .. raw:: html
 
@@ -4027,6 +4335,8 @@ List of Filters
          <i>Exact number of samples</i>: If requested it will try to do a dicotomic search for the best poisson disk radius that will generate the requested number of samples with a tolerance of the 0.5%. Obviously it takes much longer.
 
 .. data:: points_cloud_movement
+
+   *MeshLab filter name*: 'Points Cloud Movement'
 
    .. raw:: html
 
@@ -4078,6 +4388,8 @@ List of Filters
 
 .. data:: points_on_a_sphere
 
+   *MeshLab filter name*: 'Points on a Sphere'
+
    .. raw:: html
 
       Create a spherical point cloud, it can be random or regularly distributed.</p>
@@ -4097,6 +4409,8 @@ List of Filters
          <i>Generation Technique:</i>: Generation Technique:<b>Montecarlo</b>: The points are randomly generated with an uniform distribution.<br><b>Poisson Disk</b>: The points are to follow a poisson disk distribution.<br><b>Disco Ball</b> Dave Rusin's disco ball algorithm for the regular placement of points on a sphere is used. <br><b>Recursive Octahedron</b> Points are generated on the vertex of a recursively subdivided octahedron <br><b>Fibonacci</b> . 
 
 .. data:: poisson_disk_sampling
+
+   *MeshLab filter name*: 'Poisson-disk Sampling'
 
    .. raw:: html
 
@@ -4178,6 +4492,8 @@ List of Filters
 
 .. data:: project_active_rasters_color_to_current_mesh
 
+   *MeshLab filter name*: 'Project active rasters color to current mesh'
+
    .. raw:: html
 
       Color information from all the active rasters is perspective-projected on the current mesh using basic weighting</p>
@@ -4233,6 +4549,8 @@ List of Filters
          <i>Color for unprojected areas</i>: Areas that cannot be projected willb e filled using this color. If R=0 G=0 B=0 A=0 old color is preserved
 
 .. data:: project_active_rasters_color_to_current_mesh_filling_the_texture
+
+   *MeshLab filter name*: 'Project active rasters color to current mesh, filling the texture'
 
    .. raw:: html
 
@@ -4302,6 +4620,8 @@ List of Filters
 
 .. data:: project_current_raster_color_to_current_mesh
 
+   *MeshLab filter name*: 'Project current raster color to current mesh'
+
    .. raw:: html
 
       Color information from the current raster is perspective-projected on the current mesh</p>
@@ -4334,6 +4654,8 @@ List of Filters
 
 .. data:: quality_from_raster_coverage_face
 
+   *MeshLab filter name*: 'Quality from raster coverage (Face)'
+
    .. raw:: html
 
       Compute a quality value representing the number of images into which each face of the active mesh is visible.</p>
@@ -4348,6 +4670,8 @@ List of Filters
 
 .. data:: quality_from_raster_coverage_vertex
 
+   *MeshLab filter name*: 'Quality from raster coverage (Vertex)'
+
    .. raw:: html
 
       Compute a quality value representing the number of images into which each vertex of the active mesh is visible.</p>
@@ -4361,6 +4685,8 @@ List of Filters
          <i>Normalize</i>: Rescale quality values to the range [0,1]
 
 .. data:: quality_mapper_applier
+
+   *MeshLab filter name*: 'Quality Mapper applier'
 
    .. raw:: html
 
@@ -4406,17 +4732,23 @@ List of Filters
 
 .. data:: random_component_color
 
+   *MeshLab filter name*: 'Random Component Color'
+
    .. raw:: html
 
       Colorize each connected component randomly.</p>
 
 .. data:: random_face_color
 
+   *MeshLab filter name*: 'Random Face Color'
+
    .. raw:: html
 
       Colorize Faces randomly. If internal edges are present they are used. Useful for quads.</p>
 
 .. data:: random_vertex_displacement
+
+   *MeshLab filter name*: 'Random Vertex Displacement'
 
    .. raw:: html
 
@@ -4438,17 +4770,23 @@ List of Filters
 
 .. data:: re_compute_face_normals
 
+   *MeshLab filter name*: 'Re-Compute Face Normals'
+
    .. raw:: html
 
       Recompute face normals as the normal of the plane of the face.<br>See <a href='https://math.stackexchange.com/questions/305642/'>How to find surface normal of a triangle</a></p>
 
 .. data:: re_compute_per_polygon_face_normals
 
+   *MeshLab filter name*: 'Re-Compute Per-Polygon Face Normals'
+
    .. raw:: html
 
       Recompute face normals as the average of the normals of the triangles that builds a polygon. Useful for showing uniformly shaded quad or polygonal meshes represented using <a href='https://stackoverflow.com/questions/59392193'>faux edges</a>.</p>
 
 .. data:: re_compute_vertex_normals
+
+   *MeshLab filter name*: 'Re-Compute Vertex Normals'
 
    .. raw:: html
 
@@ -4464,17 +4802,23 @@ List of Filters
 
 .. data:: re_orient_all_faces_coherentely
 
+   *MeshLab filter name*: 'Re-Orient all faces coherentely'
+
    .. raw:: html
 
       Re-orient in a consistent way all the faces of the mesh. <br>The filter visits a mesh face to face, reorienting any unvisited face so that it is coherent to the already visited faces. If the surface is orientable it will end with a consistent orientation of all the faces. If the surface is not orientable (e.g. it is non manifold or non orientable like a moebius strip) the filter will not build a consistent orientation simply because it is not possible. The filter can end up in a consistent orientation that can be exactly the opposite of the expected one; in that case simply invert the whole mesh orientation.</p>
 
 .. data:: re_orient_vertex_normals_using_cameras
 
+   *MeshLab filter name*: 'Re-Orient vertex normals using cameras'
+
    .. raw:: html
 
       Reorient vertex normals using cameras. For this  filter to work the mesh needs to have the attribute 'correspondences' which is only created when loading Bundler files (.out projects)</p>
 
 .. data:: refine_user_defined
+
+   *MeshLab filter name*: 'Refine User-Defined'
 
    .. raw:: html
 
@@ -4508,6 +4852,8 @@ List of Filters
 
 .. data:: regular_recursive_sampling
 
+   *MeshLab filter name*: 'Regular Recursive Sampling'
+
    .. raw:: html
 
       The bbox is recursively partitioned in a octree style, center of bbox are considered, when the center is nearer to the surface than a given thr it is projected on it. It works also for building offsetted samples.</p>
@@ -4527,6 +4873,8 @@ List of Filters
          <i>Offset</i>: Offset of the created surface (i.e. distance of the created surface from the original one).<br>If offset is zero, the created surface passes on the original mesh itself. Values greater than zero mean an external surface, and lower than zero mean an internal surface.<br> In practice this value is the threshold passed to the Marching Cube algorithm to extract the isosurface from the distance field representation.
 
 .. data:: remeshing_isotropic_explicit_remeshing
+
+   *MeshLab filter name*: 'Remeshing: Isotropic Explicit Remeshing'
 
    .. raw:: html
 
@@ -4608,11 +4956,15 @@ List of Filters
 
 .. data:: remove_duplicate_faces
 
+   *MeshLab filter name*: 'Remove Duplicate Faces'
+
    .. raw:: html
 
       Delete all the duplicate faces. Two faces are considered equal if they are composed by the same set of vertices, regardless of the order of the vertices.</p>
 
 .. data:: remove_duplicate_vertices
+
+   *MeshLab filter name*: 'Remove Duplicate Vertices'
 
    .. raw:: html
 
@@ -4620,11 +4972,15 @@ List of Filters
 
 .. data:: remove_isolated_folded_faces_by_edge_flip
 
+   *MeshLab filter name*: 'Remove Isolated Folded Faces by Edge Flip'
+
    .. raw:: html
 
       Delete all the single folded faces. A face is considered folded if its normal is opposite to all the adjacent faces. It is removed by flipping it against the face f adjacent along the edge e such that the vertex opposite to e fall inside f</p>
 
 .. data:: remove_isolated_pieces_wrt_diameter
+
+   *MeshLab filter name*: 'Remove Isolated pieces (wrt Diameter)'
 
    .. raw:: html
 
@@ -4646,6 +5002,8 @@ List of Filters
 
 .. data:: remove_isolated_pieces_wrt_face_num
 
+   *MeshLab filter name*: 'Remove Isolated pieces (wrt Face Num.)'
+
    .. raw:: html
 
       Delete isolated connected components composed by a limited number of triangles</p>
@@ -4665,6 +5023,8 @@ List of Filters
          <i>Remove unfreferenced vertices</i>: if true, the unreferenced vertices remaining after the face deletion are removed.
 
 .. data:: remove_t_vertices_by_edge_collapse
+
+   *MeshLab filter name*: 'Remove T-Vertices by Edge Collapse'
 
    .. raw:: html
 
@@ -4686,6 +5046,8 @@ List of Filters
 
 .. data:: remove_t_vertices_by_edge_flip
 
+   *MeshLab filter name*: 'Remove T-Vertices by Edge Flip'
+
    .. raw:: html
 
       Delete t-vertices by flipping the opposite edge on the degenerate face if the triangulation quality improves</p>
@@ -4706,11 +5068,15 @@ List of Filters
 
 .. data:: remove_unreferenced_vertices
 
+   *MeshLab filter name*: 'Remove Unreferenced Vertices'
+
    .. raw:: html
 
       Check for every vertex on the mesh: if it is NOT referenced by a face, removes it</p>
 
 .. data:: remove_vertices_wrt_quality
+
+   *MeshLab filter name*: 'Remove Vertices wrt Quality'
 
    .. raw:: html
 
@@ -4726,11 +5092,15 @@ List of Filters
 
 .. data:: remove_zero_area_faces
 
+   *MeshLab filter name*: 'Remove Zero Area Faces'
+
    .. raw:: html
 
       Remove null faces (the one with area equal to zero)</p>
 
 .. data:: rename_current_mesh
+
+   *MeshLab filter name*: 'Rename Current Mesh'
 
    .. raw:: html
 
@@ -4746,6 +5116,8 @@ List of Filters
 
 .. data:: rename_current_raster
 
+   *MeshLab filter name*: 'Rename Current Raster'
+
    .. raw:: html
 
       Explicitly change the label shown for a given raster</p>
@@ -4760,17 +5132,23 @@ List of Filters
 
 .. data:: repair_non_manifold_edges_by_removing_faces
 
+   *MeshLab filter name*: 'Repair non Manifold Edges by removing faces'
+
    .. raw:: html
 
       For each non Manifold edge it iteratively deletes the smallest area face until it becomes 2-Manifold.</p>
 
 .. data:: repair_non_manifold_edges_by_splitting_vertices
 
+   *MeshLab filter name*: 'Repair non Manifold Edges by splitting vertices'
+
    .. raw:: html
 
       Remove all non manifold edges splitting vertices. Each non manifold edges chain will become a border</p>
 
 .. data:: repair_non_manifold_vertices_by_splitting
+
+   *MeshLab filter name*: 'Repair non Manifold Vertices by splitting'
 
    .. raw:: html
 
@@ -4785,6 +5163,8 @@ List of Filters
          <i>Vertex Displacement Ratio</i>: When a vertex is split it is moved along the average vector going from its position to the baricyenter of the FF connected faces sharing it
 
 .. data:: saturate_vertex_quality
+
+   *MeshLab filter name*: 'Saturate Vertex Quality'
 
    .. raw:: html
 
@@ -4805,6 +5185,8 @@ List of Filters
          <i>Update ColorMap</i>: if true the color ramp is computed again
 
 .. data:: save_3ds
+
+   *MeshLab filter name*: '3ds'
 
    .. raw:: html
 
@@ -4844,6 +5226,8 @@ List of Filters
 
 .. data:: save_ctm
 
+   *MeshLab filter name*: 'ctm'
+
    .. raw:: html
 
       Save ctm format.</p>
@@ -4881,6 +5265,8 @@ List of Filters
          <i>Save Vertex Color</i>: Save Vertex Color
 
 .. data:: save_dae
+
+   *MeshLab filter name*: 'dae'
 
    .. raw:: html
 
@@ -4925,6 +5311,8 @@ List of Filters
          <i>Save Wedge Normal</i>: Save Wedge Normal
 
 .. data:: save_dxf
+
+   *MeshLab filter name*: 'dxf'
 
    .. raw:: html
 
@@ -4981,6 +5369,8 @@ List of Filters
          <i>Save Wedge Normal</i>: Save Wedge Normal
 
 .. data:: save_idtf
+
+   *MeshLab filter name*: 'idtf'
 
    .. raw:: html
 
@@ -5050,6 +5440,8 @@ List of Filters
 
 .. data:: save_json
 
+   *MeshLab filter name*: 'json'
+
    .. raw:: html
 
       Save json format.</p>
@@ -5081,6 +5473,8 @@ List of Filters
          <i>Save Vertex Normal</i>: Save Vertex Normal
 
 .. data:: save_obj
+
+   *MeshLab filter name*: 'obj'
 
    .. raw:: html
 
@@ -5144,6 +5538,8 @@ List of Filters
 
 .. data:: save_off
 
+   *MeshLab filter name*: 'off'
+
    .. raw:: html
 
       Save off format.</p>
@@ -5187,6 +5583,8 @@ List of Filters
          <i>Save Polygonal</i>: Save Polygonal
 
 .. data:: save_ply
+
+   *MeshLab filter name*: 'ply'
 
    .. raw:: html
 
@@ -5292,6 +5690,8 @@ List of Filters
 
 .. data:: save_stl
 
+   *MeshLab filter name*: 'stl'
+
    .. raw:: html
 
       Save stl format.</p>
@@ -5329,6 +5729,8 @@ List of Filters
          <i>Save Face Color</i>: Save Face Color
 
 .. data:: save_u3d
+
+   *MeshLab filter name*: 'u3d'
 
    .. raw:: html
 
@@ -5386,6 +5788,8 @@ List of Filters
 
 .. data:: save_wrl
 
+   *MeshLab filter name*: 'wrl'
+
    .. raw:: html
 
       Save wrl format.</p>
@@ -5423,6 +5827,8 @@ List of Filters
          <i>Save Wedge TexCoord</i>: Save Wedge TexCoord
 
 .. data:: save_x3d
+
+   *MeshLab filter name*: 'x3d'
 
    .. raw:: html
 
@@ -5486,6 +5892,8 @@ List of Filters
 
 .. data:: save_xyz
 
+   *MeshLab filter name*: 'xyz'
+
    .. raw:: html
 
       Save xyz format.</p>
@@ -5505,6 +5913,8 @@ List of Filters
          <i>Save Vertex Normal</i>: Save Vertex Normal
 
 .. data:: scaledependent_laplacian_smooth
+
+   *MeshLab filter name*: 'ScaleDependent Laplacian Smooth'
 
    .. raw:: html
 
@@ -5532,6 +5942,8 @@ List of Filters
 
 .. data:: select_all
 
+   *MeshLab filter name*: 'Select All'
+
    .. raw:: html
 
       Select all the faces/vertices of the current mesh.</p>
@@ -5552,11 +5964,15 @@ List of Filters
 
 .. data:: select_border
 
+   *MeshLab filter name*: 'Select Border'
+
    .. raw:: html
 
       Select vertices and faces on the boundary.</p>
 
 .. data:: select_by_face_quality
+
+   *MeshLab filter name*: 'Select by Face Quality'
 
    .. raw:: html
 
@@ -5584,6 +6000,8 @@ List of Filters
 
 .. data:: select_by_vertex_quality
 
+   *MeshLab filter name*: 'Select by Vertex Quality'
+
    .. raw:: html
 
       Select all the faces/vertices within the specified vertex quality range.</p>
@@ -5610,11 +6028,15 @@ List of Filters
 
 .. data:: select_connected_faces
 
+   *MeshLab filter name*: 'Select Connected Faces'
+
    .. raw:: html
 
       Expand the current face selection so that it includes all the faces in the connected components where there is at least a selected face.</p>
 
 .. data:: select_crease_edges
+
+   *MeshLab filter name*: 'Select Crease Edges'
 
    .. raw:: html
 
@@ -5635,6 +6057,8 @@ List of Filters
          <i>Convex Angle Thr. (deg)</i>: The angle threshold for considering an edge a crease. If the normals between two faces forms an angle larger than the threshold the edge is considered a crease.
 
 .. data:: select_faces_by_color
+
+   *MeshLab filter name*: 'Select Faces by Color'
 
    .. raw:: html
 
@@ -5680,6 +6104,8 @@ List of Filters
 
 .. data:: select_faces_by_view_angle
 
+   *MeshLab filter name*: 'Select Faces by view angle'
+
    .. raw:: html
 
       Select faces according to the angle between their normal and the view direction. It is used in range map processing to select and delete steep faces parallel to viewdirection.</p>
@@ -5706,6 +6132,8 @@ List of Filters
 
 .. data:: select_faces_from_vertices
 
+   *MeshLab filter name*: 'Select Faces from Vertices'
+
    .. raw:: html
 
       Select faces from selected vertices.</p>
@@ -5719,6 +6147,8 @@ List of Filters
          <i>Strict Selection</i>: If true only the faces with <b>all</b> selected vertices are selected. Otherwise any face with at least one selected vertex will be selected.
 
 .. data:: select_faces_with_edges_longer_than
+
+   *MeshLab filter name*: 'Select Faces with edges longer than...'
 
    .. raw:: html
 
@@ -5734,6 +6164,8 @@ List of Filters
 
 .. data:: select_folded_faces
 
+   *MeshLab filter name*: 'Select Folded Faces'
+
    .. raw:: html
 
       Select the folded faces created by the Quadric Edge Collapse decimation. The face is selected if the angle between the face normal and the normal of the best fitting plane of the neighbor vertices is above the selected threshold.</p>
@@ -5748,17 +6180,23 @@ List of Filters
 
 .. data:: select_non_manifold_edges_
 
+   *MeshLab filter name*: 'Select non Manifold Edges '
+
    .. raw:: html
 
       Select the faces and the vertices incident on non manifold edges (e.g. edges where more than two faces are incident); note that this function select the components that are related to non manifold edges. The case of non manifold vertices is specifically managed by the pertinent filter.</p>
 
 .. data:: select_non_manifold_vertices
 
+   *MeshLab filter name*: 'Select non Manifold Vertices'
+
    .. raw:: html
 
       Select the non manifold vertices that do not belong to non manifold edges. For example two cones connected by their apex. Vertices incident on non manifold edges are ignored.</p>
 
 .. data:: select_none
+
+   *MeshLab filter name*: 'Select None'
 
    .. raw:: html
 
@@ -5780,6 +6218,8 @@ List of Filters
 
 .. data:: select_outliers
 
+   *MeshLab filter name*: 'Select Outliers'
+
    .. raw:: html
 
       Select the vertex classified as outlier using Local Outlier Propabilty measure described in:<br> <b>'LoOP: Local Outlier Probabilities'</b> Kriegel et al.<br>CIKM 2009</p>
@@ -5799,6 +6239,8 @@ List of Filters
          <i>Number of neighbors</i>: Number of neighbours used to compute the LoOP
 
 .. data:: select_problematic_faces
+
+   *MeshLab filter name*: 'Select 'problematic' faces'
 
    .. raw:: html
 
@@ -5832,11 +6274,15 @@ List of Filters
 
 .. data:: select_self_intersecting_faces
 
+   *MeshLab filter name*: 'Select Self Intersecting Faces'
+
    .. raw:: html
 
       Select only self intersecting faces.</p>
 
 .. data:: select_small_disconnected_component
+
+   *MeshLab filter name*: 'Select small disconnected component'
 
    .. raw:: html
 
@@ -5858,11 +6304,15 @@ List of Filters
 
 .. data:: select_vertex_texture_seams
 
+   *MeshLab filter name*: 'Select Vertex Texture Seams'
+
    .. raw:: html
 
       Colorize only border edges.</p>
 
 .. data:: select_vertices_from_faces
+
+   *MeshLab filter name*: 'Select Vertices from Faces'
 
    .. raw:: html
 
@@ -5877,6 +6327,8 @@ List of Filters
          <i>Strict Selection</i>: If true only the vertices with <b>all</b> the incident face selected are selected. Otherwise any vertex with at least one incident selected face will be selected.
 
 .. data:: select_visible_points
+
+   *MeshLab filter name*: 'Select Visible Points'
 
    .. raw:: html
 
@@ -5916,6 +6368,8 @@ List of Filters
 
 .. data:: set_mesh_camera
 
+   *MeshLab filter name*: 'Set Mesh Camera'
+
    .. raw:: html
 
       This filter allows one to set a shot for the current mesh</p>
@@ -5930,6 +6384,8 @@ List of Filters
 
 .. data:: set_raster_camera
 
+   *MeshLab filter name*: 'Set Raster Camera'
+
    .. raw:: html
 
       This filter allows one to set a shot for the current mesh</p>
@@ -5943,6 +6399,8 @@ List of Filters
          <i>New shot</i>: This filter allows one to set a shot for the current raster.
 
 .. data:: set_texture
+
+   *MeshLab filter name*: 'Set Texture'
 
    .. raw:: html
 
@@ -5963,6 +6421,8 @@ List of Filters
          <i>Texture Dimension (px)</i>: If the named texture doesn't exists the dummy one will be squared with this size
 
 .. data:: shape_diameter_function
+
+   *MeshLab filter name*: 'Shape Diameter Function'
 
    .. raw:: html
 
@@ -6020,11 +6480,15 @@ List of Filters
 
 .. data:: simplfication_edge_collapse_for_marching_cube_meshes
 
+   *MeshLab filter name*: 'Simplfication: Edge Collapse for Marching Cube meshes'
+
    .. raw:: html
 
       A simplification/cleaning algorithm that works ONLY on meshes generated by Marching Cubes algorithm.</p>
 
 .. data:: simplification_clustering_decimation
+
+   *MeshLab filter name*: 'Simplification: Clustering Decimation'
 
    .. raw:: html
 
@@ -6045,6 +6509,8 @@ List of Filters
          <i>Affect only selected faces</i>: If selected the filter affect only the selected faces
 
 .. data:: simplification_quadric_edge_collapse_decimation
+
+   *MeshLab filter name*: 'Simplification: Quadric Edge Collapse Decimation'
 
    .. raw:: html
 
@@ -6132,6 +6598,8 @@ List of Filters
 
 .. data:: simplification_quadric_edge_collapse_decimation_with_texture
 
+   *MeshLab filter name*: 'Simplification: Quadric Edge Collapse Decimation (with texture)'
+
    .. raw:: html
 
       Simplify a textured mesh using a Quadric based Edge Collapse Strategy preserving UV parametrization; better than clustering but slower</p>
@@ -6200,11 +6668,15 @@ List of Filters
 
 .. data:: smooth_face_normals
 
+   *MeshLab filter name*: 'Smooth Face Normals'
+
    .. raw:: html
 
       Laplacian smooth of the face normals, without touching the position of the vertices.</p>
 
 .. data:: smooth_laplacian_face_color
+
+   *MeshLab filter name*: 'Smooth: Laplacian Face Color'
 
    .. raw:: html
 
@@ -6220,6 +6692,8 @@ List of Filters
 
 .. data:: smooth_laplacian_vertex_color
 
+   *MeshLab filter name*: 'Smooth: Laplacian Vertex Color'
+
    .. raw:: html
 
       Laplacian Smooth Vertex Color</p>
@@ -6234,11 +6708,15 @@ List of Filters
 
 .. data:: smooth_vertex_quality
 
+   *MeshLab filter name*: 'Smooth Vertex Quality'
+
    .. raw:: html
 
       Laplacian smooth of the <a href='https://stackoverflow.com/questions/58610746'>quality per vertex</a> values.</p>
 
 .. data:: smooths_normals_on_a_point_sets
+
+   *MeshLab filter name*: 'Smooths normals on a point sets'
 
    .. raw:: html
 
@@ -6260,6 +6738,8 @@ List of Filters
 
 .. data:: snap_mismatched_borders
 
+   *MeshLab filter name*: 'Snap Mismatched Borders'
+
    .. raw:: html
 
       Try to snap together adjacent borders that are slightly mismatched.<br>This situation can happen on badly triangulated adjacent patches defined by high order surfaces.<br>For each border vertex the filter snap it onto the closest boundary edge only if it is closest of <i>edge_length*threshold</i>. When vertex is snapped the corresponding face is split and a new vertex is created.</p>
@@ -6279,6 +6759,8 @@ List of Filters
          <i>UnifyVertices</i>: if true the snap vertices are weld together.
 
 .. data:: sphere
+
+   *MeshLab filter name*: 'Sphere'
 
    .. raw:: html
 
@@ -6300,6 +6782,8 @@ List of Filters
 
 .. data:: sphere_cap
 
+   *MeshLab filter name*: 'Sphere Cap'
+
    .. raw:: html
 
       Create a Sphere Cap, or spherical dome, subtended by a cone of given angle</p>
@@ -6320,11 +6804,15 @@ List of Filters
 
 .. data:: split_in_connected_components
 
+   *MeshLab filter name*: 'Split in Connected Components'
+
    .. raw:: html
 
       Split current Layer into many layers, one for each connected components</p>
 
 .. data:: stratified_triangle_sampling
+
+   *MeshLab filter name*: 'Stratified Triangle Sampling'
 
    .. raw:: html
 
@@ -6352,6 +6840,8 @@ List of Filters
 
 .. data:: structure_synth_mesh_creation
 
+   *MeshLab filter name*: 'Structure Synth Mesh Creation'
+
    .. raw:: html
 
       Structure Synth mesh creation based on Eisen Script.<br> For further instruction visit http://structuresynth.sourceforge.net/reference.php</p>
@@ -6377,6 +6867,8 @@ List of Filters
          <i>set maximum resolution of sphere primitives, it must be included between 1 and 4</i>: increasing the resolution of the spheres will improve the quality of the mesh 
 
 .. data:: subdivision_surfaces_butterfly_subdivision
+
+   *MeshLab filter name*: 'Subdivision Surfaces: Butterfly Subdivision'
 
    .. raw:: html
 
@@ -6404,11 +6896,15 @@ List of Filters
 
 .. data:: subdivision_surfaces_catmull_clark
 
+   *MeshLab filter name*: 'Subdivision Surfaces: Catmull-Clark'
+
    .. raw:: html
 
       Apply the Catmull-Clark Subdivision Surfaces. Note that position of the new vertices is simply linearly interpolated. If the mesh is triangle based (no <a href='https://stackoverflow.com/questions/59392193'>faux edges</a>) it generates a quad mesh, otherwise it honores it the faux-edge bits</p>
 
 .. data:: subdivision_surfaces_loop
+
+   *MeshLab filter name*: 'Subdivision Surfaces: Loop'
 
    .. raw:: html
 
@@ -6442,6 +6938,8 @@ List of Filters
 
 .. data:: subdivision_surfaces_ls3_loop
 
+   *MeshLab filter name*: 'Subdivision Surfaces: LS3 Loop'
+
    .. raw:: html
 
       Apply LS3 Subdivision Surface algorithm using Loop's weights. This refinement method take normals into account. <br>See:<i>Boye', S. Guennebaud, G. & Schlick, C.</i> <br><b>Least squares subdivision surfaces</b><br>Computer Graphics Forum, 2010.<br/><br/>Alternatives weighting schemes are based on the paper: <i>Barthe, L. & Kobbelt, L.</i><br><b>Subdivision scheme tuning around extraordinary vertices</b><br>Computer Aided Geometric Design, 2004, 21, 561-583.<br/>The current implementation of these schemes don't handle vertices of valence > 12</p>
@@ -6474,6 +6972,8 @@ List of Filters
 
 .. data:: subdivision_surfaces_midpoint
 
+   *MeshLab filter name*: 'Subdivision Surfaces: Midpoint'
+
    .. raw:: html
 
       Apply a plain subdivision scheme where every edge is split on its midpoint. Useful to uniformly refine a mesh substituting each triangle with four smaller triangles.</p>
@@ -6499,6 +6999,8 @@ List of Filters
          <i>Affect only selected faces</i>: If selected the filter affect only the selected faces
 
 .. data:: surface_reconstruction_ball_pivoting
+
+   *MeshLab filter name*: 'Surface Reconstruction: Ball Pivoting'
 
    .. raw:: html
 
@@ -6531,6 +7033,8 @@ List of Filters
          <i>Delete initial set of faces</i>: if true all the initial faces of the mesh are deleted and the whole surface is rebuilt from scratch. Otherwise the current faces are used as a starting point. Useful if you run the algorithm multiple times with an increasing ball radius.
 
 .. data:: surface_reconstruction_screened_poisson
+
+   *MeshLab filter name*: 'Surface Reconstruction: Screened Poisson'
 
    .. raw:: html
 
@@ -6600,6 +7104,8 @@ List of Filters
 
 .. data:: surface_reconstruction_vcg
 
+   *MeshLab filter name*: 'Surface Reconstruction: VCG'
+
    .. raw:: html
 
       The surface reconstrction algorithm that have been used for a long time inside the ISTI-Visual Computer Lab.It is mostly a variant of the Curless et al. e.g. a volumetric approach with some original weighting schemes,a different expansion rule, and another approach to hole filling through volume dilation/relaxations.<br>The filter is applied to <b>ALL</b> the visible layers. In practice, all the meshes/point clouds that are currently <i>visible</i> are used to build the volumetric distance field.</p>
@@ -6662,6 +7168,8 @@ List of Filters
 
 .. data:: taubin_smooth
 
+   *MeshLab filter name*: 'Taubin Smooth'
+
    .. raw:: html
 
       The &lambda;-&mu; Taubin smoothing, combines two steps of low-pass filtering for each iteration. Based on the article:<br><b>A signal processing approach to fair surface design</b> by <i>Gabriel Taubin</i>, SIGGRAPH 1995<br><a href='https://doi.org/10.1145/218380.218473'>doi:10.1145/218380.218473</a></p>
@@ -6694,11 +7202,15 @@ List of Filters
 
 .. data:: tetrahedron
 
+   *MeshLab filter name*: 'Tetrahedron'
+
    .. raw:: html
 
       Create a Tetrahedron</p>
 
 .. data:: texel_sampling
+
+   *MeshLab filter name*: 'Texel Sampling'
 
    .. raw:: html
 
@@ -6732,6 +7244,8 @@ List of Filters
 
 .. data:: torus
 
+   *MeshLab filter name*: 'Torus'
+
    .. raw:: html
 
       Create a Torus</p>
@@ -6764,11 +7278,15 @@ List of Filters
 
 .. data:: transfer_color_face_to_vertex
 
+   *MeshLab filter name*: 'Transfer Color: Face to Vertex'
+
    .. raw:: html
 
       Face to Vertex color transfer</p>
 
 .. data:: transfer_color_mesh_to_face
+
+   *MeshLab filter name*: 'Transfer Color: Mesh to Face'
 
    .. raw:: html
 
@@ -6784,17 +7302,23 @@ List of Filters
 
 .. data:: transfer_color_texture_to_vertex
 
+   *MeshLab filter name*: 'Transfer Color: Texture to Vertex'
+
    .. raw:: html
 
       Texture to Vertex color transfer</p>
 
 .. data:: transfer_color_vertex_to_face
 
+   *MeshLab filter name*: 'Transfer Color: Vertex to Face'
+
    .. raw:: html
 
       Vertex to Face color transfer</p>
 
 .. data:: transfer_texture_to_vertex_color_1_or_2_meshes
+
+   *MeshLab filter name*: 'Transfer: Texture to Vertex Color (1 or 2 meshes)'
 
    .. raw:: html
 
@@ -6821,6 +7345,8 @@ List of Filters
          <i>Max Dist Search</i>: Sample points for which we do not find anything within this distance are rejected and not considered for recovering color
 
 .. data:: transfer_vertex_attributes_to_texture_1_or_2_meshes
+
+   *MeshLab filter name*: 'Transfer: Vertex Attributes to Texture (1 or 2 meshes)'
 
    .. raw:: html
 
@@ -6890,6 +7416,8 @@ List of Filters
 
 .. data:: transfer_vertex_color_to_texture
 
+   *MeshLab filter name*: 'Transfer: Vertex Color to Texture'
+
    .. raw:: html
 
       Fills the specified texture using per-vertex color data of the mesh.</p>
@@ -6934,6 +7462,8 @@ List of Filters
 
 .. data:: transform_align_to_principal_axis
 
+   *MeshLab filter name*: 'Transform: Align to Principal Axis'
+
    .. raw:: html
 
       Generate a matrix transformation that rotates the mesh aligning it to its principal axis of inertia.If the mesh is watertight the Itertia tensor is computed assuming the interior of the mesh has a uniform density.In case of an open mesh or a point clouds the inerta tensor is computed assuming each vertex is a constant puntual mass.</p>
@@ -6959,6 +7489,8 @@ List of Filters
          <i>Apply to all visible Layers</i>: If selected the filter will be applied to all visible mesh layers
 
 .. data:: transform_flip_and_or_swap_axis
+
+   *MeshLab filter name*: 'Transform: Flip and/or swap axis'
 
    .. raw:: html
 
@@ -7015,6 +7547,8 @@ List of Filters
          <i>Apply to all visible Layers</i>: If selected the filter will be applied to all visible mesh layers
 
 .. data:: transform_rotate
+
+   *MeshLab filter name*: 'Transform: Rotate'
 
    .. raw:: html
 
@@ -7078,6 +7612,8 @@ List of Filters
 
 .. data:: transform_rotate_camera_or_set_of_cameras
 
+   *MeshLab filter name*: 'Transform: Rotate Camera or set of cameras'
+
    .. raw:: html
 
       Rotate the camera, or all the cameras of the project. The selected raster is the reference if viewpoint rotation is selected.</p>
@@ -7134,6 +7670,8 @@ List of Filters
 
 .. data:: transform_rotate_to_fit_to_a_plane
 
+   *MeshLab filter name*: 'Transform: Rotate to Fit to a plane'
+
    .. raw:: html
 
       Generate a matrix transformation that rotates the mesh so that the selection fits one of the main planes XY YZ ZX. May also translate such that the selection centroid rest on the origin. It reports on the log the average error of the fitting (in mesh units).</p>
@@ -7171,6 +7709,8 @@ List of Filters
          <i>Apply to all visible Layers</i>: If selected the filter will be applied to all visible mesh layers
 
 .. data:: transform_scale_camera_or_set_of_cameras
+
+   *MeshLab filter name*: 'Transform: Scale Camera or set of cameras'
 
    .. raw:: html
 
@@ -7215,6 +7755,8 @@ List of Filters
          <i>Apply to all active Raster and visible Mesh layers</i>: Apply the same scaling to all the layers, including any visible 3D layer
 
 .. data:: transform_scale_normalize
+
+   *MeshLab filter name*: 'Transform: Scale, Normalize'
 
    .. raw:: html
 
@@ -7278,6 +7820,8 @@ List of Filters
 
 .. data:: transform_the_camera_extrinsics_or_all_the_cameras_of_the_project
 
+   *MeshLab filter name*: 'Transform the camera extrinsics, or all the cameras of the project.'
+
    .. raw:: html
 
       Transform the camera extrinsics, or all the cameras of the project.</p>
@@ -7315,6 +7859,8 @@ List of Filters
          <i>Apply to all active Raster and visible Mesh layers</i>: Apply the same scaling to all the layers, including any visible 3D layer
 
 .. data:: transform_translate_camera_or_set_of_cameras
+
+   *MeshLab filter name*: 'Transform: Translate Camera or set of cameras'
 
    .. raw:: html
 
@@ -7366,6 +7912,8 @@ List of Filters
 
 .. data:: transform_translate_center_set_origin
 
+   *MeshLab filter name*: 'Transform: Translate, Center, set Origin'
+
    .. raw:: html
 
       Generate a matrix transformation that translate the mesh. The mesh can be translated around one of the axis or a given axis and w.r.t. to the origin or the baricenter, or a given point.</p>
@@ -7416,11 +7964,15 @@ List of Filters
 
 .. data:: tri_to_quad_by_4_8_subdivision
 
+   *MeshLab filter name*: 'Tri to Quad by 4-8 Subdivision'
+
    .. raw:: html
 
       Convert a tri mesh into a quad mesh by applying a 4-8 subdivision scheme.It introduces less overhead than the plain Catmull-Clark Subdivision Surfaces(it adds only a single vertex for each triangle instead of four).<br> See: <br><b>4-8 Subdivision</b><br> <i>Luiz Velho, Denis Zorin </i><br>CAGD, volume 18, Issue 5, Pages 397-427. </p>
 
 .. data:: tri_to_quad_by_smart_triangle_pairing
+
+   *MeshLab filter name*: 'Tri to Quad by smart triangle pairing'
 
    .. raw:: html
 
@@ -7428,11 +7980,15 @@ List of Filters
 
 .. data:: turn_into_a_pure_triangular_mesh
 
+   *MeshLab filter name*: 'Turn into a Pure-Triangular mesh'
+
    .. raw:: html
 
       Convert into a tri-mesh by splitting any polygonal face.</p>
 
 .. data:: turn_into_quad_dominant_mesh
+
+   *MeshLab filter name*: 'Turn into Quad-Dominant mesh'
 
    .. raw:: html
 
@@ -7447,6 +8003,8 @@ List of Filters
          <i>Optimize For:</i>: Choose any of three different greedy strategies.
 
 .. data:: twostep_smooth
+
+   *MeshLab filter name*: 'TwoStep Smooth'
 
    .. raw:: html
 
@@ -7485,6 +8043,8 @@ List of Filters
          <i>Affect only selected faces</i>: If checked the filter is performed only on the selected faces
 
 .. data:: uniform_mesh_resampling
+
+   *MeshLab filter name*: 'Uniform Mesh Resampling'
 
    .. raw:: html
 
@@ -7530,6 +8090,8 @@ List of Filters
 
 .. data:: unsharp_mask_color
 
+   *MeshLab filter name*: 'UnSharp Mask Color'
+
    .. raw:: html
 
       Apply Unsharp filter to the vertex color, putting in more evidence color variations.<br>See <a href='https://en.wikipedia.org/wiki/Unsharp_masking'>Unsharp Masking</a></p>
@@ -7556,6 +8118,8 @@ List of Filters
 
 .. data:: unsharp_mask_geometry
 
+   *MeshLab filter name*: 'UnSharp Mask Geometry'
+
    .. raw:: html
 
       Apply Unsharp filter to geometric shape, putting in more evidence ridges and valleys variations.<br><a href='https://en.wikipedia.org/wiki/Unsharp_masking'>Unsharp Masking</a></p>
@@ -7581,6 +8145,8 @@ List of Filters
          <i>Smooth Iterations</i>: number of iterations of laplacian smooth in every run
 
 .. data:: unsharp_mask_normals
+
+   *MeshLab filter name*: 'UnSharp Mask Normals'
 
    .. raw:: html
 
@@ -7614,6 +8180,8 @@ List of Filters
 
 .. data:: unsharp_mask_quality
 
+   *MeshLab filter name*: 'UnSharp Mask Quality'
+
    .. raw:: html
 
       Apply Unsharp filter to values of <a href='https://stackoverflow.com/questions/58610746'>quality per vertex</a>.<br>See <a href='https://en.wikipedia.org/wiki/Unsharp_masking'>Unsharp Masking</a></p>
@@ -7640,6 +8208,8 @@ List of Filters
 
 .. data:: vertex_attribute_seam
 
+   *MeshLab filter name*: 'Vertex Attribute Seam'
+
    .. raw:: html
 
       Make all selected vertex attributes connectivity-independent:<br/>vertices are duplicated whenever two or more selected wedge or face attributes do not match.<br/>This is particularly useful for GPU-friendly mesh layout, where a single index must be used to access all required vertex attributes.</p>
@@ -7665,6 +8235,8 @@ List of Filters
          <i>Texcoord Source:</i>: Choose a method
 
 .. data:: vertex_attribute_transfer
+
+   *MeshLab filter name*: 'Vertex Attribute Transfer'
 
    .. raw:: html
 
@@ -7734,6 +8306,8 @@ List of Filters
 
 .. data:: vertex_color_brightness_contrast_gamma
 
+   *MeshLab filter name*: 'Vertex Color Brightness Contrast Gamma'
+
    .. raw:: html
 
       Change the color the vertices of the mesh adjusting brightness, contrast and gamma.</p>
@@ -7765,6 +8339,8 @@ List of Filters
          <i>Only on selection</i>: If checked, only affects selected vertices
 
 .. data:: vertex_color_colourisation
+
+   *MeshLab filter name*: 'Vertex Color Colourisation'
 
    .. raw:: html
 
@@ -7804,6 +8380,8 @@ List of Filters
 
 .. data:: vertex_color_desaturation
 
+   *MeshLab filter name*: 'Vertex Color Desaturation'
+
    .. raw:: html
 
       The filter desaturates the colors of the mesh. This provides a simple way to convert a mesh in gray tones. The user can choose the desaturation method to apply; they are based on Lightness, Luminosity and Average.</p>
@@ -7823,6 +8401,8 @@ List of Filters
          <i>Only on selection</i>: If checked, only affects selected vertices
 
 .. data:: vertex_color_filling
+
+   *MeshLab filter name*: 'Vertex Color Filling'
 
    .. raw:: html
 
@@ -7844,6 +8424,8 @@ List of Filters
 
 .. data:: vertex_color_invert
 
+   *MeshLab filter name*: 'Vertex Color Invert'
+
    .. raw:: html
 
       Inverts the colors of the vertices of the mesh.</p>
@@ -7857,6 +8439,8 @@ List of Filters
          <i>Only on selection</i>: If checked, only affects selected vertices
 
 .. data:: vertex_color_levels_adjustment
+
+   *MeshLab filter name*: 'Vertex Color Levels Adjustment'
 
    .. raw:: html
 
@@ -7926,6 +8510,8 @@ List of Filters
 
 .. data:: vertex_color_noise
 
+   *MeshLab filter name*: 'Vertex Color Noise'
+
    .. raw:: html
 
       Randomly add a small amount of a random base color to the mesh</p>
@@ -7951,6 +8537,8 @@ List of Filters
          <i>Noisy Frequency</i>: The frequency of the Noise on the mesh. Higher numbers means smaller spots.
 
 .. data:: vertex_color_thresholding
+
+   *MeshLab filter name*: 'Vertex Color Thresholding'
 
    .. raw:: html
 
@@ -7984,6 +8572,8 @@ List of Filters
 
 .. data:: vertex_color_white_balance
 
+   *MeshLab filter name*: 'Vertex Color White Balance'
+
    .. raw:: html
 
       The filter provides a standard white balance transformation. It is done correcting the RGB channels with a factor such that, the brighter color in the mesh, that is supposed to be white, becomes really white.</p>
@@ -8004,6 +8594,8 @@ List of Filters
 
 .. data:: vertex_linear_morphing
 
+   *MeshLab filter name*: 'Vertex Linear Morphing'
+
    .. raw:: html
 
       Morph deformation of current mesh towards a target mesh with the same number of vertices and same vertex ordering. Each vertex of the source mesh is linearly interpolated towards the corresponding vertex on the target mesh using the formula:<p align='center'>result<sub><big>i</big></sub> = (1-&lambda;)*source<sub><big>i</big></sub> + &lambda;*target<sub><big>i</big></sub></p><b>Three-dimensional metamorphosis: a survey</b><br>by <i>F. Lazarus and A. Verroust</i>, Visual Computer, 1998<br><a href='https://doi.org/10.1007/s003710050149'>doi:10.1007/s003710050149</a></p>
@@ -8023,6 +8615,8 @@ List of Filters
          <i>% Morph</i>: The percent you want to morph towards (or away from) the target. <br>0 means current mesh <br>100 means targe mesh <br><0 and >100 linearly extrapolate between the two mesh <br>
 
 .. data:: vertex_quality_from_camera
+
+   *MeshLab filter name*: 'Vertex Quality from Camera'
 
    .. raw:: html
 
@@ -8061,6 +8655,8 @@ List of Filters
          <i>map into color</i>: if checked map quality generated values into per-vertex color
 
 .. data:: volumetric_obscurance
+
+   *MeshLab filter name*: 'Volumetric obscurance'
 
    .. raw:: html
 
@@ -8112,6 +8708,8 @@ List of Filters
 
 .. data:: volumetric_sampling
 
+   *MeshLab filter name*: 'Volumetric Sampling'
+
    .. raw:: html
 
       Compute a volumetric sampling over a watertight mesh.</p>
@@ -8144,6 +8742,8 @@ List of Filters
 
 .. data:: voronoi_filtering
 
+   *MeshLab filter name*: 'Voronoi Filtering'
+
    .. raw:: html
 
       Compute a <b>Voronoi filtering</b> (Amenta and Bern 1998) with Qhull library (http://www.qhull.org/). <br><br>The algorithm calculates a triangulation of the input point cloud without requiring vertex normals.It uses a subset of the Voronoi vertices to remove triangles from the Delaunay triangulation. <br>After computing the Voronoi diagram, foreach sample point it chooses the two farthest opposite Voronoi vertices.Then computes a Delaunay triangulation of the sample points and the selected Voronoi vertices, and keep only those triangles in witch all three vertices are sample points.</p>
@@ -8157,6 +8757,8 @@ List of Filters
          <i>Pole Discard Thr</i>: Threshold used to discard the Voronoi vertices too far from the origin.We discard vertices are further than this factor times the bbox diagonal <br>Growing values of this value will add more Voronoi vertices for a better tightier surface reconstruction.On the other hand they will increase processing time and could cause numerical problems to the qhull library.<br>
 
 .. data:: voronoi_sampling
+
+   *MeshLab filter name*: 'Voronoi Sampling'
 
    .. raw:: html
 
@@ -8232,6 +8834,8 @@ List of Filters
 
 .. data:: voronoi_scaffolding
 
+   *MeshLab filter name*: 'Voronoi Scaffolding'
+
    .. raw:: html
 
       Compute a volumetric sampling over a watertight mesh.</p>
@@ -8287,6 +8891,8 @@ List of Filters
          <i>Voronoi Element</i>: 
 
 .. data:: voronoi_vertex_coloring
+
+   *MeshLab filter name*: 'Voronoi Vertex Coloring'
 
    .. raw:: html
 
