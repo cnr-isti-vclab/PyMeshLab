@@ -131,10 +131,6 @@ void pymeshlab::FilterFunctionParameter::printDefaultValue(std::ostream& o) cons
 		o << "'" << parameter->value().getFileName().toStdString() << "'";
 		return;
 	}
-	if (parameter->value().isFloatList()){
-		o << "None";
-		return;
-	}
 
 	//to support: dynamicfloat, filename, mesh
 }
@@ -198,7 +194,5 @@ QString pymeshlab::FilterFunctionParameter::computePythonTypeString(const RichPa
 		return "Mesh [still unsupported]";
 	if (v.isFileName())
 		return "str";
-	if (v.isFloatList())
-		return "FloatList [still unsupported]";
 	return "still_unsupported";
 }
