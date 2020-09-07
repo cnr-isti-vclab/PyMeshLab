@@ -79,7 +79,7 @@ void pymeshlab::FilterFunctionParameter::printDefaultValue(std::ostream& o) cons
 		RichAbsPerc* rabs = dynamic_cast<RichAbsPerc*>(parameter);
 		float abs = parameter->value().getAbsPerc();
 		float perc = (abs - rabs->min) / (rabs->max - rabs->min) * 100;
-		o << perc << "% (float = " << abs << ")";
+		o << perc << "%";
 		return;
 	}
 	if (parameter->value().isDynamicFloat()) {
@@ -115,7 +115,12 @@ void pymeshlab::FilterFunctionParameter::printDefaultValue(std::ostream& o) cons
 		return;
 	}
 	if (parameter->value().isColor()) {
-		o << "None";
+		QColor c = parameter->value().getColor();
+		o <<
+			"[" + std::to_string(c.red()) + "; " +
+			std::to_string(c.green()) + "; " +
+			std::to_string(c.blue()) + "; " +
+			std::to_string(c.alpha()) + "]";
 		return;
 	}
 	if (parameter->value().isMesh()){
@@ -131,7 +136,7 @@ void pymeshlab::FilterFunctionParameter::printDefaultValue(std::ostream& o) cons
 		return;
 	}
 
-	//to support: floatlist, dynamicfloat, openfile, savefile, mesh
+	//to support: dynamicfloat, filename, mesh
 }
 
 QString pymeshlab::FilterFunctionParameter::defaultValueString() const

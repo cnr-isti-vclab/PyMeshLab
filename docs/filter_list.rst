@@ -16,7 +16,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``alpha : Percentage = 1% (float = 0.034641)``
+   ``alpha : Percentage = 1%``
 
       .. raw:: html
 
@@ -254,7 +254,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``threshold : Percentage = 1% (float = 0.034641)``
+   ``threshold : Percentage = 1%``
 
       .. raw:: html
 
@@ -352,7 +352,7 @@ List of Filters
 
          <i>Starting point</i>: The starting point from which geodesic distance has to be computed. If it is not a surface vertex, the closest vertex to the specified point is used as starting seed point.
 
-   ``maxdistance : Percentage = 50% (float = 3.4641)``
+   ``maxdistance : Percentage = 50%``
 
       .. raw:: html
 
@@ -368,7 +368,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``maxdistance : Percentage = 50% (float = 3.4641)``
+   ``maxdistance : Percentage = 50%``
 
       .. raw:: html
 
@@ -882,7 +882,7 @@ List of Filters
 
          <i>Edge -> Cyl.</i>: If True all the edges are converted into cylinders.
 
-   ``edgecylradius : Percentage = 1% (float = 0.034641)``
+   ``edgecylradius : Percentage = 1%``
 
       .. raw:: html
 
@@ -894,7 +894,7 @@ List of Filters
 
          <i>Vertex -> Cyl.</i>: If True all the vertices are converted into cylinders.
 
-   ``vertcylradius : Percentage = 1% (float = 0.034641)``
+   ``vertcylradius : Percentage = 1%``
 
       .. raw:: html
 
@@ -906,7 +906,7 @@ List of Filters
 
          <i>Vertex -> Sph.</i>: If True all the vertices are converted into sphere.
 
-   ``vertsphradius : Percentage = 1% (float = 0.034641)``
+   ``vertsphradius : Percentage = 1%``
 
       .. raw:: html
 
@@ -918,13 +918,13 @@ List of Filters
 
          <i>Face -> Prism</i>: If True all the faces are converted into prism.
 
-   ``faceextheight : Percentage = 0.5% (float = 0.0173205)``
+   ``faceextheight : Percentage = 0.5%``
 
       .. raw:: html
 
          <i>Face Prism Height</i>: The Height of the prism that is substitued with each face.
 
-   ``faceextinset : Percentage = 0.5% (float = 0.0173205)``
+   ``faceextinset : Percentage = 0.5%``
 
       .. raw:: html
 
@@ -980,7 +980,7 @@ List of Filters
 
          <i>Second Mesh</i>: The second operand of the CSG operation
 
-   ``delta : Percentage = 1% (float = -0.02)``
+   ``delta : Percentage = 1%``
 
       .. raw:: html
 
@@ -1228,7 +1228,7 @@ List of Filters
 
          <i>Viewpoint</i>: The position of the view point that is used to get the constraint direction.
 
-   ``delta : Percentage = 100% (float = 1)``
+   ``delta : Percentage = 100%``
 
       .. raw:: html
 
@@ -1360,7 +1360,7 @@ List of Filters
 
          <i>Compute Signed Distance</i>: If TRUE, the distance is signed; if FALSE, it will compute the distance absolute value.
 
-   ``maxdist : Percentage = 100% (float = 3.4641)``
+   ``maxdist : Percentage = 100%``
 
       .. raw:: html
 
@@ -1638,7 +1638,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``maxheight : Percentage = 4% (float = 0.069282)``
+   ``maxheight : Percentage = 4%``
 
       .. raw:: html
 
@@ -1870,7 +1870,7 @@ List of Filters
 
          <i>Target Mesh</i>: Point-cloud or mesh to be aligned to the reference
 
-   ``overlap : Percentage = 50% (float = 50)``
+   ``overlap : Percentage = 50%``
 
       .. raw:: html
 
@@ -1922,7 +1922,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``imagebackgroundcolor : Color = None``
+   ``imagebackgroundcolor : Color = [50; 50; 50; 255]``
 
       .. raw:: html
 
@@ -2044,7 +2044,7 @@ List of Filters
 
          <i>Number of samples</i>: The desired number of samples. It can be smaller or larger than the mesh size, and according to the chosen sampling strategy it will try to adapt.
 
-   ``maxdist : Percentage = 50% (float = 1.73205)``
+   ``maxdist : Percentage = 50%``
 
       .. raw:: html
 
@@ -3306,7 +3306,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``threshold : Percentage = 1% (float = 0.00034641)``
+   ``threshold : Percentage = 1%``
 
       .. raw:: html
 
@@ -4214,13 +4214,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``color1 : Color = None``
+   ``color1 : Color = [0; 0; 0; 255]``
 
       .. raw:: html
 
          <i>Color 1:</i>: Sets the first color to mix with Perlin Noise function.
 
-   ``color2 : Color = None``
+   ``color2 : Color = [255; 255; 255; 255]``
 
       .. raw:: html
 
@@ -4310,7 +4310,7 @@ List of Filters
 
          <i>Number of samples</i>: The desired number of samples. The ray of the disk is calculated according to the sampling density.
 
-   ``radius : Percentage = 0% (float = 0)``
+   ``radius : Percentage = 0%``
 
       .. raw:: html
 
@@ -4424,7 +4424,7 @@ List of Filters
 
          <i>Number of samples</i>: The desired number of samples. The ray of the disk is calculated according to the sampling density.
 
-   ``radius : Percentage = 0% (float = 0)``
+   ``radius : Percentage = 0%``
 
       .. raw:: html
 
@@ -4542,7 +4542,7 @@ List of Filters
 
          <i>use image alpha weight</i>: If true, alpha channel of the image is used as additional weight. In this way it is possible to mask-out parts of the images that should not be projected on the mesh. Please note this is not a transparency effect, but just influences the weigthing between different images
 
-   ``blankcolor : Color = None``
+   ``blankcolor : Color = [0; 0; 0; 255]``
 
       .. raw:: html
 
@@ -4646,7 +4646,7 @@ List of Filters
 
          <i>Only on selection</i>: If true, projection is only done for selected vertices
 
-   ``blankcolor : Color = None``
+   ``blankcolor : Color = [0; 0; 0; 255]``
 
       .. raw:: html
 
@@ -4762,7 +4762,7 @@ List of Filters
 
          <i>Recompute normals</i>: Toggle the recomputation of the normals after the random displacement.<br><br>If disabled the face normals will remains unchanged resulting in a visually pleasant effect.
 
-   ``displacement : Percentage = 1% (float = 0.034641)``
+   ``displacement : Percentage = 1%``
 
       .. raw:: html
 
@@ -4860,13 +4860,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``cellsize : Percentage = 2% (float = 0.069282)``
+   ``cellsize : Percentage = 2%``
 
       .. raw:: html
 
          <i>Precision</i>: Size of the cell, the default is 1/50 of the box diag. Smaller cells give better precision at a higher computational cost. Remember that halving the cell size means that you build a volume 8 times larger.
 
-   ``offset : Percentage = 50% (float = 0)``
+   ``offset : Percentage = 50%``
 
       .. raw:: html
 
@@ -4900,7 +4900,7 @@ List of Filters
 
          <i>Remesh only selected faces</i>: If checked the remeshing operations will be applied only to the selected faces.
 
-   ``targetlen : Percentage = 1% (float = 0.034641)``
+   ``targetlen : Percentage = 1%``
 
       .. raw:: html
 
@@ -4918,7 +4918,7 @@ List of Filters
 
          <i>Check Surface Distance</i>: If toggled each local operation must deviate from original mesh by [Max. surface distance]
 
-   ``maxsurfdist : Percentage = 1% (float = 0.034641)``
+   ``maxsurfdist : Percentage = 1%``
 
       .. raw:: html
 
@@ -4988,7 +4988,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``mincomponentdiag : Percentage = 10% (float = 0.34641)``
+   ``mincomponentdiag : Percentage = 10%``
 
       .. raw:: html
 
@@ -5084,7 +5084,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``maxqualitythr : Percentage = 0% (float = 1)``
+   ``maxqualitythr : Percentage = 0%``
 
       .. raw:: html
 
@@ -5928,7 +5928,7 @@ List of Filters
 
          <i>Smoothing steps</i>: The number of times that the whole algorithm (normal smoothing + vertex fitting) is iterated.
 
-   ``delta : Percentage = 1% (float = 0.0034641)``
+   ``delta : Percentage = 1%``
 
       .. raw:: html
 
@@ -6066,7 +6066,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``color : Color = None``
+   ``color : Color = [0; 0; 0; 255]``
 
       .. raw:: html
 
@@ -6496,7 +6496,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``threshold : Percentage = 1% (float = 0.034641)``
+   ``threshold : Percentage = 1%``
 
       .. raw:: html
 
@@ -6882,7 +6882,7 @@ List of Filters
 
          <i>Iterations</i>: Number of time the model is subdivided.
 
-   ``threshold : Percentage = 1% (float = 0.034641)``
+   ``threshold : Percentage = 1%``
 
       .. raw:: html
 
@@ -6924,7 +6924,7 @@ List of Filters
 
          <i>Iterations</i>: Number of time the model is subdivided.
 
-   ``threshold : Percentage = 1% (float = 0.034641)``
+   ``threshold : Percentage = 1%``
 
       .. raw:: html
 
@@ -6958,7 +6958,7 @@ List of Filters
 
          <i>Iterations</i>: Number of time the model is subdivided.
 
-   ``threshold : Percentage = 1% (float = 0.034641)``
+   ``threshold : Percentage = 1%``
 
       .. raw:: html
 
@@ -6986,7 +6986,7 @@ List of Filters
 
          <i>Iterations</i>: Number of time the model is subdivided.
 
-   ``threshold : Percentage = 1% (float = 0.034641)``
+   ``threshold : Percentage = 1%``
 
       .. raw:: html
 
@@ -7008,7 +7008,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``ballradius : Percentage = 0% (float = 0)``
+   ``ballradius : Percentage = 0%``
 
       .. raw:: html
 
@@ -7112,7 +7112,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``voxsize : Percentage = 1% (float = 0.034641)``
+   ``voxsize : Percentage = 1%``
 
       .. raw:: html
 
@@ -7338,7 +7338,7 @@ List of Filters
 
          <i>Target Mesh</i>: The mesh whose vertex color will be filled according to source mesh texture
 
-   ``upperbound : Percentage = 2% (float = 0.069282)``
+   ``upperbound : Percentage = 2%``
 
       .. raw:: html
 
@@ -7372,7 +7372,7 @@ List of Filters
 
          <i>Color Data Source</i>: Choose what attribute has to be transferred onto the target texture. You can choose bettween Per vertex attributes (clor,normal,quality) or to transfer color information from source mesh texture
 
-   ``upperbound : Percentage = 2% (float = 0.069282)``
+   ``upperbound : Percentage = 2%``
 
       .. raw:: html
 
@@ -8052,13 +8052,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``cellsize : Percentage = 2% (float = 0.069282)``
+   ``cellsize : Percentage = 2%``
 
       .. raw:: html
 
          <i>Precision</i>: Size of the cell, the default is 1/50 of the box diag. Smaller cells give better precision at a higher computational cost. Remember that halving the cell size means that you build a volume 8 times larger.
 
-   ``offset : Percentage = 50% (float = 0)``
+   ``offset : Percentage = 50%``
 
       .. raw:: html
 
@@ -8292,7 +8292,7 @@ List of Filters
 
          <i>Store dist. as quality</i>: if enabled, we store the distance of the transferred value as in the vertex quality
 
-   ``upperbound : Percentage = 2% (float = 0.069282)``
+   ``upperbound : Percentage = 2%``
 
       .. raw:: html
 
@@ -8410,7 +8410,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``color1 : Color = None``
+   ``color1 : Color = [0; 0; 0; 255]``
 
       .. raw:: html
 
@@ -8518,7 +8518,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``basecolor : Color = None``
+   ``basecolor : Color = [0; 0; 0; 255]``
 
       .. raw:: html
 
@@ -8546,13 +8546,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``color1 : Color = None``
+   ``color1 : Color = [0; 0; 0; 255]``
 
       .. raw:: html
 
          <i>Color 1:</i>: Sets the color to apply below the threshold.
 
-   ``color2 : Color = None``
+   ``color2 : Color = [255; 255; 255; 255]``
 
       .. raw:: html
 
@@ -8580,7 +8580,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``color : Color = None``
+   ``color : Color = [255; 255; 255; 255]``
 
       .. raw:: html
 
@@ -8716,7 +8716,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``samplesurfradius : Percentage = 0.2% (float = 0.0069282)``
+   ``samplesurfradius : Percentage = 0.2%``
 
       .. raw:: html
 
@@ -8734,7 +8734,7 @@ List of Filters
 
          <i>Poisson Filtering</i>: If true the base montecarlo sampling of the volume is filtered to get a poisson disk volumetric distribution.
 
-   ``poissonradius : Percentage = 1% (float = 0.034641)``
+   ``poissonradius : Percentage = 1%``
 
       .. raw:: html
 
@@ -8842,7 +8842,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``samplesurfradius : Percentage = 1% (float = 0.034641)``
+   ``samplesurfradius : Percentage = 1%``
 
       .. raw:: html
 
