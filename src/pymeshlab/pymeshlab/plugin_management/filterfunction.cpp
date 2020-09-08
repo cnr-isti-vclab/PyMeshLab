@@ -6,8 +6,11 @@ pymeshlab::FilterFunction::FilterFunction()
 {
 }
 
-pymeshlab::FilterFunction::FilterFunction(const QString pythonFunctionName, const QString meshlabFilterName) :
-	pythonFunName(pythonFunctionName), meshlabFunName(meshlabFilterName)
+pymeshlab::FilterFunction::FilterFunction(
+		const QString pythonFunctionName,
+		const QString meshlabFilterName,
+		const QString description) :
+	pythonFunName(pythonFunctionName), meshlabFunName(meshlabFilterName), funDescription(description)
 {
 }
 
@@ -24,6 +27,11 @@ QString pymeshlab::FilterFunction::pythonFunctionName() const
 QString pymeshlab::FilterFunction::meshlabFunctionName() const
 {
 	return meshlabFunName;
+}
+
+QString pymeshlab::FilterFunction::description() const
+{
+	return funDescription;
 }
 
 unsigned int pymeshlab::FilterFunction::parametersNumber() const

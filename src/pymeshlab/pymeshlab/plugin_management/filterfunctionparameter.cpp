@@ -1,5 +1,6 @@
 #include "filterfunctionparameter.h"
 
+#include "../common.h"
 #include "filter_parameter/rich_parameter_list.h"
 
 pymeshlab::FilterFunctionParameter::FilterFunctionParameter(const QString& pName,
@@ -79,11 +80,13 @@ void pymeshlab::FilterFunctionParameter::printDefaultValue(std::ostream& o) cons
 		RichAbsPerc* rabs = dynamic_cast<RichAbsPerc*>(parameter);
 		float abs = parameter->value().getAbsPerc();
 		float perc = (abs - rabs->min) / (rabs->max - rabs->min) * 100;
-		o << perc << "% (float = " << abs << ")";
+		o << perc << "%";
 		return;
 	}
 	if (parameter->value().isDynamicFloat()) {
-		o << parameter->value().getDynamicFloat();
+		RichDynamicFloat* rdyn = dynamic_cast<RichDynamicFloat*>(parameter);
+		o << parameter->value().getDynamicFloat() <<
+			 " [min: " << rdyn->min << "; max: " << rdyn->max << "]";
 		return;
 	}
 	if (parameter->value().isBool()) {
@@ -99,15 +102,21 @@ void pymeshlab::FilterFunctionParameter::printDefaultValue(std::ostream& o) cons
 		return;
 	}
 	if (parameter->value().isString()){
-		o << parameter->value().getString().toStdString();
+		o << "'" << parameter->value().getString().toStdString() << "'";
 		return;
 	}
 	if (parameter->value().isMatrix44f()){
-		o << "None";
+		const float* v = parameter->value().getMatrix44f().V();
+		o << "[[" << v[0] << ", " << v[1] << ", " << v[2] << ", " << v[3] << "],"
+			<< "[" << v[4] << ", " << v[5] << ", " << v[6] << ", " << v[7] << "],"
+			<< "[" << v[8] << ", " << v[9] << ", " << v[10] << ", " << v[11] << "],"
+			<< "[" << v[12] << ", " << v[13] << ", " << v[14] << ", " << v[15] << "]]";
 		return;
 	}
 	if (parameter->value().isPoint3f()) {
-		o << "None";
+		o << "[" << parameter->value().getPoint3f().X() << ", "
+			<< parameter->value().getPoint3f().Y() << ", "
+			<< parameter->value().getPoint3f().Z() << "]";
 		return;
 	}
 	if (parameter->value().isShotf()) {
@@ -115,7 +124,12 @@ void pymeshlab::FilterFunctionParameter::printDefaultValue(std::ostream& o) cons
 		return;
 	}
 	if (parameter->value().isColor()) {
-		o << "None";
+		QColor c = parameter->value().getColor();
+		o <<
+			"[" + std::to_string(c.red()) + "; " +
+			std::to_string(c.green()) + "; " +
+			std::to_string(c.blue()) + "; " +
+			std::to_string(c.alpha()) + "]";
 		return;
 	}
 	if (parameter->value().isMesh()){
@@ -123,15 +137,18 @@ void pymeshlab::FilterFunctionParameter::printDefaultValue(std::ostream& o) cons
 		return;
 	}
 	if (parameter->value().isFileName()){
-		o << parameter->value().getFileName().toStdString();
-		return;
-	}
-	if (parameter->value().isFloatList()){
-		o << "None";
+		o << "'" << parameter->value().getFileName().toStdString() << "'";
 		return;
 	}
 
-	//to support: floatlist, dynamicfloat, openfile, savefile, mesh
+	//to support: dynamicfloat, filename, mesh
+}
+
+QString pymeshlab::FilterFunctionParameter::defaultValueString() const
+{
+	std::stringstream ss;
+	printDefaultValue(ss);
+	return QString::fromStdString(ss.str());
 }
 
 pymeshlab::FilterFunctionParameter& pymeshlab::FilterFunctionParameter::operator=(pymeshlab::FilterFunctionParameter oth)
@@ -161,32 +178,30 @@ QString pymeshlab::FilterFunctionParameter::computePythonTypeString(const RichPa
 {
 	const Value& v = par.value();
 	if (v.isEnum())
-		return "int [" + par.value().typeName() + "]";
+		return PYTHON_TYPE_ENUM;
 	if (v.isAbsPerc())
-		return "Percentage";
+		return PYTHON_TYPE_ABSPERC;
 	if (v.isDynamicFloat())
-		return "float [" + par.value().typeName() + "]";
+		return PYTHON_TYPE_DYNAMIC_FLOAT;
 	if (v.isBool())
-		return "bool";
+		return PYTHON_TYPE_BOOL;
 	if (v.isInt())
-		return "int";
+		return PYTHON_TYPE_INT;
 	if (v.isFloat())
-		return "float";
+		return PYTHON_TYPE_FLOAT;
 	if (v.isString())
-		return "str";
+		return PYTHON_TYPE_STRING;
 	if (v.isMatrix44f())
-		return "Matrix44f [still unsupported]";
+		return PYTHON_TYPE_MATRIX44F;
 	if (v.isPoint3f())
-		return "Point3f [still unsupported]";
+		return PYTHON_TYPE_POINT3F;
 	if (v.isShotf())
-		return "Shotf [still unsupported]";
+		return PYTHON_TYPE_SHOTF;
 	if (v.isColor())
-		return "Color [still unsupported]";
+		return PYTHON_TYPE_COLOR;
 	if (v.isMesh())
-		return "Mesh [still unsupported]";
+		return PYTHON_TYPE_MESH;
 	if (v.isFileName())
-		return "str";
-	if (v.isFloatList())
-		return "FloatList [still unsupported]";
+		return PYTHON_TYPE_FILENAME;
 	return "still_unsupported";
 }

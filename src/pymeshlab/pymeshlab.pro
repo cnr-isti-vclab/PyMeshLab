@@ -108,34 +108,51 @@ debug_mode {
 	!win32:LIBS += $$PYTHON_LIBS #includepath python lib
 }
 
-SOURCES += \
-	main.cpp \
-	pymeshlab/common.cpp \
-	pymeshlab/mesh.cpp \
-	pymeshlab/meshset.cpp \
-	pymeshlab/percentage.cpp \
-	pymeshlab/plugin_management/filterfunction.cpp \
-	pymeshlab/plugin_management/filterfunctionparameter.cpp \
-	pymeshlab/plugin_management/filterfunctionset.cpp \
-	bindings/pyboundingbox.cpp \
-	bindings/pymesh.cpp \
-	bindings/pymeshset.cpp \
-	bindings/pypercentage.cpp
+#uncomment this only for generate automatically the filter_list.rst
+#file in the docs folder.
+#CONFIG += filter_doc_generator
+
+filter_doc_generator {
+	DEFINES+=PYMESHLAB_DEBUG #needed to not look for python env
+	TEMPLATE = app
+	SOURCES += doc_main.cpp
+	!win32:PYTHON_LIBS = $$system(python3-config --ldflags) -lpython3.8
+	!win32:LIBS += $$PYTHON_LIBS #includepath python lib
+}
 
 HEADERS += \
+	bindings/pycolor.h \
+	bindings/pyboundingbox.h \
+	bindings/pymesh.h \
+	bindings/pymeshset.h \
+	bindings/pypercentage.h \
 	docs/pyboundingbox_doc.h \
+	docs/pycolor_doc.h \
 	docs/pymesh_doc.h \
 	docs/pymeshset_doc.h \
 	docs/pypercentage_doc.h \
+	pymeshlab/color.h \
 	pymeshlab/common.h \
 	pymeshlab/mesh.h \
 	pymeshlab/meshset.h \
 	pymeshlab/percentage.h \
 	pymeshlab/plugin_management/filterfunction.h \
 	pymeshlab/plugin_management/filterfunctionparameter.h \
-	pymeshlab/plugin_management/filterfunctionset.h \
-	bindings/pyboundingbox.h \
-	bindings/pymesh.h \
-	bindings/pymeshset.h \
-	bindings/pypercentage.h
+	pymeshlab/plugin_management/filterfunctionset.h
+
+SOURCES += \
+	main.cpp \
+	bindings/pyboundingbox.cpp \
+	bindings/pycolor.cpp \
+	bindings/pymesh.cpp \
+	bindings/pymeshset.cpp \
+	bindings/pypercentage.cpp \
+	pymeshlab/color.cpp \
+	pymeshlab/common.cpp \
+	pymeshlab/mesh.cpp \
+	pymeshlab/meshset.cpp \
+	pymeshlab/percentage.cpp \
+	pymeshlab/plugin_management/filterfunction.cpp \
+	pymeshlab/plugin_management/filterfunctionparameter.cpp \
+	pymeshlab/plugin_management/filterfunctionset.cpp
 

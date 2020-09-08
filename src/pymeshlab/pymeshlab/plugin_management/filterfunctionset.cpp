@@ -21,7 +21,7 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 	for (auto inputFormat : pm.allKnowInputFormats.keys()){
 		QString originalFilterName = inputFormat;
 		QString pythonFilterName = "load_" + inputFormat.toLower();
-		FilterFunction f(pythonFilterName, originalFilterName);
+		FilterFunction f(pythonFilterName, originalFilterName, "Load " + inputFormat + " format.");
 		MeshIOInterface* plugin = pm.allKnowInputFormats[inputFormat];
 		RichParameterList rps;
 		plugin->initGlobalParameterSet(nullptr, rps);
@@ -32,7 +32,7 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 		QString pythonParameterName = "file_name";
 		QString sv = "file_name." + inputFormat;
 		QStringList sl(inputFormat);
-		RichOpenFile of("fileName", sv, sl, "The name of the file to load", "File Name");
+		RichOpenFile of("fileName", sv, sl, "File Name", "The name of the file to load");
 		FilterFunctionParameter par(pythonParameterName, of);
 		f.addParameter(par);
 
@@ -47,17 +47,16 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 	for (auto outputFormat : pm.allKnowOutputFormats.keys()){
 		QString originalFilterName = outputFormat;
 		QString pythonFilterName = "save_" + outputFormat.toLower();
-		FilterFunction f(pythonFilterName, originalFilterName);
+		FilterFunction f(pythonFilterName, originalFilterName, "Save " + outputFormat + " format.");
 		MeshIOInterface* plugin = pm.allKnowOutputFormats[outputFormat];
 		RichParameterList rps;
 		plugin->initGlobalParameterSet(nullptr, rps);
-		plugin->initPreOpenParameter(outputFormat, dummyMesh, rps);
-		plugin->initOpenParameter(outputFormat, *dummyMeshDocument.mm(), rps);
+		plugin->initSaveParameter(outputFormat, *dummyMeshDocument.mm(), rps);
 
 		//filename parameter
 		QString pythonParameterName = "file_name";
 		QString sv = "file_name." + outputFormat;
-		RichSaveFile of("fileName", sv, outputFormat, "The name of the file to save", "File Name");
+		RichSaveFile of("fileName", sv, outputFormat, "File Name", "The name of the file to save");
 		FilterFunctionParameter par(pythonParameterName, of);
 		f.addParameter(par);
 
@@ -66,6 +65,10 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 			FilterFunctionParameter par(pythonParameterName, rp);
 			f.addParameter(par);
 		}
+
+		//data to save
+		updateSaveParameters(plugin, outputFormat, f);
+
 		functionSet.insert(f);
 	}
 
@@ -73,8 +76,9 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 		QList<QAction*> acts = fp->actions();
 		for (QAction* act : acts) {
 			QString originalFilterName = fp->filterName(act);
+			QString description = fp->filterInfo(act);
 			QString pythonFilterName = toPythonName(originalFilterName);
-			FilterFunction f(pythonFilterName, originalFilterName);
+			FilterFunction f(pythonFilterName, originalFilterName, description);
 
 			RichParameterList rps;
 			fp->initGlobalParameterSet(act, rps);
@@ -101,7 +105,7 @@ QStringList pymeshlab::FilterFunctionSet::pythonFunctionNames() const
 
 pymeshlab::FilterFunctionSet::iterator pymeshlab::FilterFunctionSet::find(const QString& pythonFunctionName) const
 {
-	return functionSet.find(FilterFunction(pythonFunctionName, ""));
+	return functionSet.find(FilterFunction(pythonFunctionName, "", ""));
 }
 
 bool pymeshlab::FilterFunctionSet::contains(const QString& pythonFunctionName) const
@@ -127,4 +131,27 @@ void pymeshlab::FilterFunctionSet::addFunction(const pymeshlab::FilterFunction& 
 void pymeshlab::FilterFunctionSet::deleteFunction(const pymeshlab::FilterFunction& f)
 {
 	functionSet.erase(f);
+}
+
+void pymeshlab::FilterFunctionSet::updateSaveParameters(
+		MeshIOInterface* plugin,
+		const QString& outputFormat,
+		pymeshlab::FilterFunction& f)
+{
+	int capabilityBits, defaultBits;
+	plugin->GetExportMaskCapability(outputFormat, capabilityBits, defaultBits);
+
+	for (unsigned int i = 0; i < capabilitiesBits.size(); ++i){
+		if (capabilityBits & capabilitiesBits[i]){
+			bool def = defaultBits & capabilitiesBits[i];
+			RichBool rb(
+						saveCapabilitiesStrings[i], def,
+						saveCapabilitiesStrings[i], saveCapabilitiesStrings[i]);
+			FilterFunctionParameter par(toPythonName(saveCapabilitiesStrings[i]), rb);
+			f.addParameter(par);
+
+		}
+	}
+
+
 }

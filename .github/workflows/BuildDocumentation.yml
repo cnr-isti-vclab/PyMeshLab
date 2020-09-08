@@ -59,18 +59,7 @@ jobs:
       with:
         path: pymeshlab/lib
         key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
-    - name: Install MeshLab-Ubuntu dependencies
-      if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && runner.os == 'Linux'
-      run: |
-        sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
-    - name: Install MeshLab-MacOS dependencies
-      if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && runner.os == 'macOS'
-      run: |
-        brew install libomp
-    - name: Build MeshLab
-      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
-      run: |
-        sh install/${{ runner.os }}/build_meshlab.sh
+    # not building meshlab -- we need to hit always cache
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
         export PYTHON_VERSION=${{ matrix.pyversion }}

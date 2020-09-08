@@ -1,6 +1,8 @@
 #include "meshset.h"
 #include "percentage.h"
 
+#include <pybind11/numpy.h>
+#include <pybind11/eigen.h>
 #include <mlexception.h>
 #include <meshlabdocumentxml.h>
 #include <meshlabdocumentbundler.h>
@@ -118,7 +120,7 @@ void pymeshlab::MeshSet::printFilterScript() const
 {
 	std::cout << "Filter Script Size : " << filterScript.size() << "\n\n";
 	uint i = 0;
-	for (const FilterNameParameterValuesPair p :filterScript){
+	for (const FilterNameParameterValuesPair& p :filterScript){
 		std::cout << std::to_string(i) + ": " << FilterFunctionSet::toPythonName(p.filterName()).toStdString() <<
 					 "\n";
 		for (const RichParameter& par : p.second){
@@ -140,10 +142,9 @@ void pymeshlab::MeshSet::loadMesh(const std::string& filename, py::kwargs kwargs
 
 void pymeshlab::MeshSet::saveMesh(const std::string& filename, pybind11::kwargs kwargs)
 {
-	//todo: translate mm()->dataMask() to vcg::tri::io::Mask
 	if (mm() == nullptr)
 		throw MLException("MeshSet has no selected Mesh.");
-	saveMeshUsingPlugin(filename, nullptr, 0, FilterFunction(), kwargs);
+	saveMeshUsingPlugin(filename, nullptr, FilterFunction(), kwargs);
 }
 
 void pymeshlab::MeshSet::loadProject(const std::string& filename)
@@ -246,8 +247,7 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 		//case of save mesh:
 		else if (QString::fromStdString(filtername).startsWith("save_")){
 			std::string filename = py::str(kwargs["file_name"]);
-			//todo: translate mm()->dataMask() to vcg::tri::io::Mask
-			saveMeshUsingPlugin(filename, nullptr, 0,*it, kwargs);
+			saveMeshUsingPlugin(filename, nullptr, *it, kwargs);
 		}
 		//all the other plugins:
 		else {
@@ -261,7 +261,7 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 	}
 	else {
 		throw MLException(
-					"Failed to apply filter: " + it->pythonFunctionName() + "\n" +
+					"Failed to apply filter: " + QString::fromStdString(filtername) + "\n" +
 					"Filter does not exists. Take a look at MeshSet.print_filter_list function.");
 	}
 }
@@ -274,6 +274,27 @@ void pymeshlab::MeshSet::printStatus() const
 		std::cout << "\tMesh label: " << m->label().toStdString() << "\n";
 		std::cout << "\tFull name: " << m->fullName().toStdString() << "\n\n";
 	}
+}
+
+std::string pymeshlab::MeshSet::filtersRSTDocumentation() const
+{
+	std::string doc;
+
+	doc += ".. _filter_list:\n\n===============\nList of Filters\n===============\n\n";
+
+	doc +=
+			"   Here are listed all the filter names that can be given as paramter "
+			"to the function :py:meth:`meshlab.MeshSet.apply_filter`.\n\n"
+			"   Please note: some filter parameters depend on the mesh(es) used as "
+			"input of the filter. Default values listed here are computed on a 1x1x1 cube "
+			"(pymeshlab/tests/sample/cube.obj), and they will be computed on the input mesh "
+			"if they are left as default.\n\n";
+
+	for (auto it = filterFunctionSet.begin(); it != filterFunctionSet.end(); ++it) {
+		doc += filterRSTDocumentation(it);
+	}
+
+	return doc;
 }
 
 bool pymeshlab::MeshSet::filterCallBack(const int pos, const char * str)
@@ -320,10 +341,9 @@ void pymeshlab::MeshSet::updateRichParameterList(
 					if (it != rps.end()){
 						updateRichParameterFromKwarg(*it, ffp, p);
 					}
-					else {
-						//should be impossible
-						assert(0);
-					}
+					//else: it happens only for save flags parameters,
+					//because these parameters are managed at pymeshlab level
+					//but not at meshlab level (e.g. no param in the RichParameterList)
 				}
 				else {
 					std::cerr << "Warning: parameter " << key << " not found\n";
@@ -393,7 +413,6 @@ void pymeshlab::MeshSet::loadMeshUsingPlugin(
 void pymeshlab::MeshSet::saveMeshUsingPlugin(
 		const std::string& filename,
 		MeshModel* mm,
-		int mask,
 		pymeshlab::FilterFunction ff,
 		pybind11::kwargs kwargs)
 {
@@ -406,9 +425,8 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 		MeshIOInterface* plugin = pm.allKnowOutputFormats[extension];
 		//int mask = 0; //todo: use this mask
 		RichParameterList rps;
-		int formatmask = 0;
-		int defbits = 0;
-		plugin->GetExportMaskCapability(extension,formatmask,defbits);
+		int capability = 0, defbits = 0, capabilityMesh = 0, capabilityUser = 0;
+		plugin->GetExportMaskCapability(extension,capability,defbits);
 		plugin->initGlobalParameterSet(nullptr, rps);
 		plugin->initSaveParameter(extension, *(this->mm()), rps);
 
@@ -416,7 +434,13 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 
 		if (mm == nullptr)
 			mm = this->mm();
-		bool ok = plugin->save(extension, QString::fromStdString(filename), *mm, mask & formatmask, rps);
+
+		capabilityMesh = currentMeshIOCapabilityMask(mm);
+		capabilityUser = capabilityMaskFromKwargs(kwargs, capability & capabilityMesh);
+
+		bool ok = plugin->save(
+					extension, QString::fromStdString(filename), *mm,
+					capabilityUser, rps);
 		if (!ok){
 			throw MLException("Unable to save file: " + QString::fromStdString(filename));
 		}
@@ -424,6 +448,41 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 	else {
 		throw MLException("Unknown format for save: " + extension);
 	}
+}
+
+int pymeshlab::MeshSet::currentMeshIOCapabilityMask(const MeshModel* mm) const
+{
+	int capability = 0;
+	for (int bit : capabilitiesBits){
+		if (mm->hasDataMask(MeshModel::io2mm(bit)))
+			capability |= bit;
+	}
+
+	return capability;
+}
+
+int pymeshlab::MeshSet::capabilityMaskFromKwargs(pybind11::kwargs kwargs, int startingMask) const
+{
+	std::array<QString, 14> params;
+	for (unsigned int i = 0; i < saveCapabilitiesStrings.size(); ++i)
+		params[i] = FilterFunctionSet::toPythonName(saveCapabilitiesStrings[i]);
+
+	int capability = startingMask;
+	for (std::pair<py::handle, py::handle> p : kwargs){
+		std::string par = py::cast<std::string>(p.first);
+		auto it = std::find(params.begin(), params.end(), QString::fromStdString(par));
+		if (it != params.end()) {
+			//get the value p.second and set the right mask to capability
+			unsigned int i = it - params.begin();
+			bool value = py::cast<bool>(p.second);
+			if (value)
+				capability &= capabilitiesBits[i];
+			else
+				capability &= ~capabilitiesBits[i];
+		}
+	}
+
+	return capability;
 }
 
 void pymeshlab::MeshSet::loadALN(const QString& fileName)
@@ -533,7 +592,7 @@ void pymeshlab::MeshSet::saveMLP(const QString& fileName)
 			m->setFileName(outfilename);
 			QFileInfo of(outfilename);
 			m->setLabel(of.fileName());
-			saveMeshUsingPlugin(outfilename.toStdString(), m, m->dataMask());
+			saveMeshUsingPlugin(outfilename.toStdString(), m);
 		}
 	}
 
@@ -551,20 +610,20 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 		const std::pair<py::handle, py::handle>& k)
 {
 	QString pythonType = ffp.pythonTypeString();
-	if (pythonType == "bool"){
+	if (pythonType == PYTHON_TYPE_BOOL){
 		par.setValue(BoolValue(py::cast<bool>(k.second)));
 	}
-	else if (pythonType == "int") {
+	else if (pythonType == PYTHON_TYPE_INT) {
 		par.setValue(IntValue(py::cast<int>(k.second)));
 	}
-	else if (pythonType == "float") {
+	else if (pythonType == PYTHON_TYPE_FLOAT) {
 		par.setValue(FloatValue(py::cast<float>(k.second)));
 	}
-	else if (pythonType == "str") {
+	else if (pythonType == PYTHON_TYPE_STRING) {
 		par.setValue(StringValue(
 					QString::fromStdString(py::cast<std::string>(k.second))));
 	}
-	else if (pythonType.contains("Percentage")) {
+	else if (pythonType == PYTHON_TYPE_ABSPERC) {
 		RichAbsPerc& abs = dynamic_cast<RichAbsPerc&>(par);
 		float absvalue;
 		try {
@@ -578,6 +637,51 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 		}
 
 		abs.setValue(AbsPercValue(absvalue));
+	}
+	else if (pythonType == PYTHON_TYPE_COLOR) {
+		par.setValue(ColorValue(py::cast<QColor>(k.second)));
+	}
+	else if (pythonType == PYTHON_TYPE_DYNAMIC_FLOAT) {
+		RichDynamicFloat& dyn = dynamic_cast<RichDynamicFloat&>(par);
+		float val = py::cast<float>(k.second);
+		if (val >= dyn.min && val <= dyn.max)
+			dyn.setValue(DynamicFloatValue(val));
+		else
+			throw MLException(
+					"Parameter " + ffp.pythonName() + ": float value " + QString::number(val) +
+					" out of bounds (min: " + QString::number(dyn.min) +
+					"; max: " + QString::number(dyn.max) + ").");
+	}
+	else if (pythonType == PYTHON_TYPE_POINT3F) {
+		py::array_t<float> arr = py::cast<py::array_t<float>>(k.second);
+		if (arr.size() != 3){
+			throw MLException(
+					"Parameter " + ffp.pythonName() + ": invalid array. Expected a "
+					"numpy float32 array of 3 elements.");
+		}
+		else {
+			vcg::Point3f p(arr.at(0), arr.at(1), arr.at(2));
+			par.setValue(Point3fValue(p));
+		}
+	}
+	else if (pythonType == PYTHON_TYPE_MATRIX44F){
+		Eigen::Matrix4f arr = py::cast<Eigen::Matrix4f>(k.second);
+		if (arr.size() != 16){
+			throw MLException(
+					"Parameter " + ffp.pythonName() + ": invalid array. Expected a "
+					"numpy float32 array of 4x4 elements.");
+		}
+		else {
+			vcg::Matrix44f m;
+			float* v = m.V();
+			int k = 0;
+			for (int i = 0; i < 4; i++){
+				for (int j = 0; j < 4; j++) {
+					v[k++] = arr(i,j);
+				}
+			}
+			par.setValue(Matrix44fValue(m));
+		}
 	}
 	else if (pythonType.contains("still_unsupported")){
 		std::cerr << "Warning: parameter type still not supported";
@@ -618,6 +722,49 @@ void pymeshlab::MeshSet::applyFilterRPL(
 	}
 }
 
+std::string pymeshlab::MeshSet::filterRSTDocumentation(
+		FilterFunctionSet::iterator it) const
+{
+	std::string doc;
+
+	doc += ".. data:: " + it->pythonFunctionName().toStdString() + "\n\n";
+	doc += "   *MeshLab filter name*: '" + it->meshlabFunctionName().toStdString() + "'\n\n";
+	doc += "   .. raw:: html\n\n";
+	QString desc = it->description();
+	cleanHTML(desc);
+	doc += "      " + desc.toStdString() + "</p>\n\n";
+
+	if (it->parametersNumber() > 0) {
+
+		doc += "   **Parameters:** \n\n";
+
+		for (const FilterFunctionParameter& p : *it){
+
+			doc += "   ``" + p.pythonName().toStdString() + " : " +
+					p.pythonTypeString().toStdString() +
+					" = " + p.defaultValueString().toStdString() + "``\n\n";
+
+			doc += "      .. raw:: html\n\n";
+			QString desc = p.longDescription();
+			cleanHTML(desc);
+			doc += "         <i>" + p.description().toStdString() + "</i>: " +
+					desc.toStdString() + "\n\n";
+		}
+
+	}
+
+	return doc;
+}
+
+void pymeshlab::MeshSet::cleanHTML(QString& htmlString)
+{
+	htmlString.replace("\n", "<br>");
+//	htmlString.replace("<br>", "\n   ");
+//	htmlString.replace("<i>", "*");
+//	htmlString.replace("</i>", "*");
+//	htmlString.replace("<b>", "**");
+//	htmlString.replace("</b>", "**");
+}
 
 
 

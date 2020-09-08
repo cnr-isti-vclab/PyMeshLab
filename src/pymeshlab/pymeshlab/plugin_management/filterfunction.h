@@ -13,10 +13,11 @@ class FilterFunction
 {
 public:
 	FilterFunction();
-	FilterFunction(const QString pythonFunName, const QString meshlabFunName);
+	FilterFunction(const QString pythonFunName, const QString meshlabFunName, const QString description);
 	void addParameter(const FilterFunctionParameter& p);
 	QString pythonFunctionName() const;
 	QString meshlabFunctionName() const;
+	QString description() const;
 	unsigned int parametersNumber() const;
 	QStringList pythonFunctionParameters() const;
 	bool contains(const QString& pythonParameter) const;
@@ -32,6 +33,7 @@ public:
 private:
 	QString pythonFunName;
 	QString meshlabFunName;
+	QString funDescription;
 	std::list<FilterFunctionParameter> parameters;
 };
 

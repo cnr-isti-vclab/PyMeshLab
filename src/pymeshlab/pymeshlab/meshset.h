@@ -12,6 +12,7 @@ namespace pymeshlab {
 class MeshSet : public MeshDocument
 {
 public:
+	/** Member functions binded on Python **/
 	MeshSet(bool verbose = false);
 	virtual ~MeshSet();
 
@@ -44,6 +45,9 @@ public:
 			pybind11::kwargs kwargs = pybind11::kwargs());
 
 	void printStatus() const;
+
+	/** Member functions not binded on Python **/
+	std::string filtersRSTDocumentation() const;
 private:
 	static GLLogStream* staticLogger;
 
@@ -73,9 +77,11 @@ private:
 	void saveMeshUsingPlugin(
 			const std::string& filename,
 			MeshModel* mm = nullptr,
-			int mask = 0,
 			FilterFunction ff = FilterFunction(),
 			pybind11::kwargs kwargs = pybind11::kwargs());
+
+	int currentMeshIOCapabilityMask(const MeshModel* mm) const;
+	int capabilityMaskFromKwargs(pybind11::kwargs kwargs, int startingMask) const;
 
 	void loadALN(const QString& fileName);
 	void loadMLP(const QString& fileName);
@@ -95,6 +101,9 @@ private:
 			QAction* action,
 			MeshFilterInterface* filter,
 			const RichParameterList& rpl);
+
+	std::string filterRSTDocumentation(FilterFunctionSet::iterator it) const;
+	static void cleanHTML(QString& htmlString);
 
 	std::string basePath;
 	RichParameterList globalRPS;

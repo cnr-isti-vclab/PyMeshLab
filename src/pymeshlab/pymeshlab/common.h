@@ -4,9 +4,61 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <array>
+#include <QString>
+#include <vcg/../wrap/io_trimesh/io_mask.h>
+
 #include <QtMessageHandler>
 
 namespace pymeshlab {
+
+const static std::array<int, 14> capabilitiesBits= {
+	vcg::tri::io::Mask::IOM_VERTQUALITY,
+	vcg::tri::io::Mask::IOM_VERTFLAGS,
+	vcg::tri::io::Mask::IOM_VERTCOLOR,
+	vcg::tri::io::Mask::IOM_VERTTEXCOORD,
+	vcg::tri::io::Mask::IOM_VERTNORMAL,
+	vcg::tri::io::Mask::IOM_VERTRADIUS,
+	vcg::tri::io::Mask::IOM_FACEQUALITY,
+	vcg::tri::io::Mask::IOM_FACEFLAGS,
+	vcg::tri::io::Mask::IOM_FACECOLOR,
+	vcg::tri::io::Mask::IOM_FACENORMAL,
+	vcg::tri::io::Mask::IOM_WEDGCOLOR,
+	vcg::tri::io::Mask::IOM_WEDGTEXCOORD,
+	vcg::tri::io::Mask::IOM_WEDGNORMAL,
+	vcg::tri::io::Mask::IOM_BITPOLYGONAL
+};
+
+const static std::array<QString, 14> saveCapabilitiesStrings = {
+	"Save Vertex Quality",
+	"Save Vertex Flag",
+	"Save Vertex Color",
+	"Save Vertex Coord",
+	"Save Vertex Normal",
+	"Save Vertex Radius",
+	"Save Face Quality",
+	"Save Face Flag",
+	"Save Face Color",
+	"Save Face Normal",
+	"Save Wedge Color",
+	"Save Wedge TexCoord",
+	"Save Wedge Normal",
+	"Save Polygonal"
+};
+
+const char PYTHON_TYPE_ENUM[] = "int [Enum]";
+const char PYTHON_TYPE_ABSPERC[] = "Percentage";
+const char PYTHON_TYPE_DYNAMIC_FLOAT[] = "float (bounded)";
+const char PYTHON_TYPE_BOOL[] = "bool";
+const char PYTHON_TYPE_INT[] = "int";
+const char PYTHON_TYPE_FLOAT[] = "float";
+const char PYTHON_TYPE_STRING[] = "str";
+const char PYTHON_TYPE_MATRIX44F[] = "numpy.ndarray[numpy.float32[4, 4]]";
+const char PYTHON_TYPE_POINT3F[] = "numpy.ndarray[numpy.float32[3]]";
+const char PYTHON_TYPE_SHOTF[] = "Shotf [still unsupported]";
+const char PYTHON_TYPE_COLOR[] = "Color";
+const char PYTHON_TYPE_MESH[] = "Mesh [still unsupported]";
+const char PYTHON_TYPE_FILENAME[] = "str";
 
 /**
  * @brief The CoutRedirect class
