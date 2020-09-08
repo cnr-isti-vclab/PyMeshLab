@@ -2,6 +2,7 @@
 #include "percentage.h"
 
 #include <pybind11/numpy.h>
+#include <pybind11/eigen.h>
 #include <mlexception.h>
 #include <meshlabdocumentxml.h>
 #include <meshlabdocumentbundler.h>
@@ -622,7 +623,7 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 		par.setValue(StringValue(
 					QString::fromStdString(py::cast<std::string>(k.second))));
 	}
-	else if (pythonType.contains(PYTHON_TYPE_ABSPERC)) {
+	else if (pythonType == PYTHON_TYPE_ABSPERC) {
 		RichAbsPerc& abs = dynamic_cast<RichAbsPerc&>(par);
 		float absvalue;
 		try {
@@ -661,6 +662,25 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 		else {
 			vcg::Point3f p(arr.at(0), arr.at(1), arr.at(2));
 			par.setValue(Point3fValue(p));
+		}
+	}
+	else if (pythonType == PYTHON_TYPE_MATRIX44F){
+		Eigen::Matrix4f arr = py::cast<Eigen::Matrix4f>(k.second);
+		if (arr.size() != 16){
+			throw MLException(
+					"Parameter " + ffp.pythonName() + ": invalid array. Expected a "
+					"numpy float32 array of 4x4 elements.");
+		}
+		else {
+			vcg::Matrix44f m;
+			float* v = m.V();
+			int k = 0;
+			for (int i = 0; i < 4; i++){
+				for (int j = 0; j < 4; j++) {
+					v[k++] = arr(i,j);
+				}
+			}
+			par.setValue(Matrix44fValue(m));
 		}
 	}
 	else if (pythonType.contains("still_unsupported")){

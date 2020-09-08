@@ -3192,7 +3192,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``transformmatrix : Matrix44f [still unsupported] = None``
+   ``transformmatrix : numpy.ndarray[numpy.float32[4, 4]] = [[1, 0, 0, 0],[0, 1, 0, 0],[0, 0, 1, 0],[0, 0, 0, 1]]``
 
       .. raw:: html
 
@@ -7830,7 +7830,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``transformmatrix : Matrix44f [still unsupported] = None``
+   ``transformmatrix : numpy.ndarray[numpy.float32[4, 4]] = [[1, 0, 0, 0],[0, 1, 0, 0],[0, 0, 1, 0],[0, 0, 0, 1]]``
 
       .. raw:: html
 
