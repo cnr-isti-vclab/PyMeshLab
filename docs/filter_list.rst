@@ -58,7 +58,7 @@ List of Filters
 
          <i>Requested views</i>: Number of different views uniformly placed around the mesh. More views means better accuracy at the cost of increased calculation time
 
-   ``conedir : Point3f [still unsupported] = None``
+   ``conedir : numpy.ndarray[numpy.float32[3]] = [0, 1, 0]``
 
       .. raw:: html
 
@@ -348,7 +348,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``startpoint : Point3f [still unsupported] = None``
+   ``startpoint : numpy.ndarray[numpy.float32[3]] = [1, 1, 1]``
 
       .. raw:: html
 
@@ -596,7 +596,7 @@ List of Filters
 
          <i>Flip normals w.r.t. viewpoint</i>: If the 'viewpoint' (i.e. scanner position) is known, it can be used to disambiguate normals orientation, so that all the normals will be oriented in the same direction.
 
-   ``viewpos : Point3f [still unsupported] = None``
+   ``viewpos : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -618,7 +618,7 @@ List of Filters
 
          <i>Plane perpendicular to</i>: The Slicing plane will be done perpendicular to the axis
 
-   ``customaxis : Point3f [still unsupported] = None``
+   ``customaxis : numpy.ndarray[numpy.float32[3]] = [0, 1, 0]``
 
       .. raw:: html
 
@@ -1224,7 +1224,7 @@ List of Filters
 
          <i>Smoothing steps</i>: The number of times that the whole algorithm (normal smoothing + vertex fitting) is iterated.
 
-   ``viewpoint : Point3f [still unsupported] = None``
+   ``viewpoint : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -1266,7 +1266,7 @@ List of Filters
 
          <i>Step:</i>: The purpose of this filter is to <b>constrain</b> any smoothing algorithm to moving vertices only along a give line of sight.<br> First you should store current vertex position, than after applying  one of the many smoothing algorithms you should re start this filter and blend the original positions with the smoothed results.<br>Given a view point  <i>vp</i> , the smoothed vertex position <i>vs</i> and the original position  <i>v</i>, The new vertex position is computed as the projection of  <i>vs</i> on the line  connecting  <i>v</i>  and <i>vp</i>.
 
-   ``viewpoint : Point3f [still unsupported] = None``
+   ``viewpoint : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -1394,7 +1394,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``dust_dir : Point3f [still unsupported] = None``
+   ``dust_dir : numpy.ndarray[numpy.float32[3]] = [0, 1, 0]``
 
       .. raw:: html
 
@@ -1792,13 +1792,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``point1 : Point3f [still unsupported] = None``
+   ``point1 : numpy.ndarray[numpy.float32[3]] = [1, 1, 1]``
 
       .. raw:: html
 
          <i>Point 1</i>: A vertex on the mesh that represent one harmonic field boundary condition.
 
-   ``point2 : Point3f [still unsupported] = None``
+   ``point2 : numpy.ndarray[numpy.float32[3]] = [-1, -1, -1]``
 
       .. raw:: html
 
@@ -4234,7 +4234,7 @@ List of Filters
 
          <i>Frequency:</i>: Frequency of the Perlin Noise function, expressed as multiples of mesh bbox (frequency 10 means a noise period of bbox diagonal / 10). High frequencies produces many small splashes of colours, while low frequencies produces few big splashes.
 
-   ``offset : Point3f [still unsupported] = None``
+   ``offset : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -4346,13 +4346,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``gravity_dir : Point3f [still unsupported] = None``
+   ``gravity_dir : numpy.ndarray[numpy.float32[3]] = [0, -1, 0]``
 
       .. raw:: html
 
          <i>g</i>: Direction of gravity
 
-   ``force_dir : Point3f [still unsupported] = None``
+   ``force_dir : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -5386,13 +5386,13 @@ List of Filters
 
          <i>File Name</i>: The name of the file to save
 
-   ``position_val : Point3f [still unsupported] = None``
+   ``position_val : numpy.ndarray[numpy.float32[3]] = [0, 0, -3.4641]``
 
       .. raw:: html
 
          <i>Camera Position</i>: The position in which the camera is set. The default value is derived by the 3d mesh's bounding box.
 
-   ``target_val : Point3f [still unsupported] = None``
+   ``target_val : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -5746,13 +5746,13 @@ List of Filters
 
          <i>File Name</i>: The name of the file to save
 
-   ``position_val : Point3f [still unsupported] = None``
+   ``position_val : numpy.ndarray[numpy.float32[3]] = [0, 0, -3.4641]``
 
       .. raw:: html
 
          <i>Camera Position</i>: The position in which the camera is set. The default value is derived by the 3d mesh's bounding box.
 
-   ``target_val : Point3f [still unsupported] = None``
+   ``target_val : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -6126,7 +6126,7 @@ List of Filters
 
          <i>Use ViewPoint from Mesh Camera</i>: Uses the ViewPoint from the camera associated to the current mesh<br> if there is no camera, an error occurs
 
-   ``viewpoint : Point3f [still unsupported] = None``
+   ``viewpoint : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -6350,7 +6350,7 @@ List of Filters
 
          <i>Use ViewPoint from Mesh Camera</i>: Uses the ViewPoint from the camera associated to the current mesh<br> if there is no camera, an error occurs
 
-   ``viewpoint : Point3f [still unsupported] = None``
+   ``viewpoint : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -7372,7 +7372,7 @@ List of Filters
 
       .. raw:: html
 
-         <i>Color Data Source</i>: Choose what attribute has to be transferred onto the target texture. You can choose bettween Per vertex attributes (clor,normal,quality) or to transfer color information from source mesh texture
+         <i>Color Data Source</i>: Choose what attribute has to be transferred onto the target texture. You can choose bettween Per vertex attributes (color,normal,quality) or to transfer color information from source mesh texture
 
    ``upperbound : Percentage = 2%``
 
@@ -7576,13 +7576,13 @@ List of Filters
 
          <i>Rotation Angle</i>: Angle of rotation (in <b>degree</b>). If snapping is enabled this value is rounded according to the snap value
 
-   ``customaxis : Point3f [still unsupported] = None``
+   ``customaxis : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
 
       .. raw:: html
 
          <i>Custom axis</i>: This rotation axis is used only if the 'custom axis' option is chosen.
 
-   ``customcenter : Point3f [still unsupported] = None``
+   ``customcenter : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -7646,13 +7646,13 @@ List of Filters
 
          <i>Rotation Angle</i>: Angle of rotation (in <b>degree</b>). If snapping is enabled this value is rounded according to the snap value
 
-   ``customaxis : Point3f [still unsupported] = None``
+   ``customaxis : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
 
       .. raw:: html
 
          <i>Custom axis</i>: This rotation axis is used only if the 'custom axis' option is chosen.
 
-   ``customcenter : Point3f [still unsupported] = None``
+   ``customcenter : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -7732,7 +7732,7 @@ List of Filters
 
          <i>Center of scaling:</i>: Choose a method
 
-   ``customcenter : Point3f [still unsupported] = None``
+   ``customcenter : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -7796,7 +7796,7 @@ List of Filters
 
          <i>Center of scaling:</i>: Choose a method
 
-   ``customcenter : Point3f [still unsupported] = None``
+   ``customcenter : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -7946,7 +7946,7 @@ List of Filters
 
          <i>Z Axis</i>: when using [XYZ translation], amount of translation along the Z axis (in model units)
 
-   ``neworigin : Point3f [still unsupported] = None``
+   ``neworigin : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
 
       .. raw:: html
 

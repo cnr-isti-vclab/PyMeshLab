@@ -46,6 +46,20 @@ const static std::array<QString, 14> saveCapabilitiesStrings = {
 	"Save Polygonal"
 };
 
+const char PYTHON_TYPE_ENUM[] = "int [Enum]";
+const char PYTHON_TYPE_ABSPERC[] = "Percentage";
+const char PYTHON_TYPE_DYNAMIC_FLOAT[] = "float (bounded)";
+const char PYTHON_TYPE_BOOL[] = "bool";
+const char PYTHON_TYPE_INT[] = "int";
+const char PYTHON_TYPE_FLOAT[] = "float";
+const char PYTHON_TYPE_STRING[] = "str";
+const char PYTHON_TYPE_MATRIX44F[] = "Matrix44f [still unsupported]";
+const char PYTHON_TYPE_POINT3F[] = "numpy.ndarray[numpy.float32[3]]";
+const char PYTHON_TYPE_SHOTF[] = "Shotf [still unsupported]";
+const char PYTHON_TYPE_COLOR[] = "Color";
+const char PYTHON_TYPE_MESH[] = "Mesh [still unsupported]";
+const char PYTHON_TYPE_FILENAME[] = "str";
+
 /**
  * @brief The CoutRedirect class
  * Will redirect the cout buffer in the scope that is declared an instance this class.

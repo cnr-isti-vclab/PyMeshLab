@@ -1,6 +1,7 @@
 #include "meshset.h"
 #include "percentage.h"
 
+#include <pybind11/numpy.h>
 #include <mlexception.h>
 #include <meshlabdocumentxml.h>
 #include <meshlabdocumentbundler.h>
@@ -608,20 +609,20 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 		const std::pair<py::handle, py::handle>& k)
 {
 	QString pythonType = ffp.pythonTypeString();
-	if (pythonType == "bool"){
+	if (pythonType == PYTHON_TYPE_BOOL){
 		par.setValue(BoolValue(py::cast<bool>(k.second)));
 	}
-	else if (pythonType == "int") {
+	else if (pythonType == PYTHON_TYPE_INT) {
 		par.setValue(IntValue(py::cast<int>(k.second)));
 	}
-	else if (pythonType == "float") {
+	else if (pythonType == PYTHON_TYPE_FLOAT) {
 		par.setValue(FloatValue(py::cast<float>(k.second)));
 	}
-	else if (pythonType == "str") {
+	else if (pythonType == PYTHON_TYPE_STRING) {
 		par.setValue(StringValue(
 					QString::fromStdString(py::cast<std::string>(k.second))));
 	}
-	else if (pythonType.contains("Percentage")) {
+	else if (pythonType.contains(PYTHON_TYPE_ABSPERC)) {
 		RichAbsPerc& abs = dynamic_cast<RichAbsPerc&>(par);
 		float absvalue;
 		try {
@@ -636,10 +637,10 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 
 		abs.setValue(AbsPercValue(absvalue));
 	}
-	else if (pythonType == "Color") {
+	else if (pythonType == PYTHON_TYPE_COLOR) {
 		par.setValue(ColorValue(py::cast<QColor>(k.second)));
 	}
-	else if (pythonType == "float (bounded)") {
+	else if (pythonType == PYTHON_TYPE_DYNAMIC_FLOAT) {
 		RichDynamicFloat& dyn = dynamic_cast<RichDynamicFloat&>(par);
 		float val = py::cast<float>(k.second);
 		if (val >= dyn.min && val <= dyn.max)
@@ -649,6 +650,18 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 					"Parameter " + ffp.pythonName() + ": float value " + QString::number(val) +
 					" out of bounds (min: " + QString::number(dyn.min) +
 					"; max: " + QString::number(dyn.max) + ").");
+	}
+	else if (pythonType == PYTHON_TYPE_POINT3F) {
+		py::array_t<float> arr = py::cast<py::array_t<float>>(k.second);
+		if (arr.size() != 3){
+			throw MLException(
+					"Parameter " + ffp.pythonName() + ": invalid array. Expected a "
+					"numpy float32 array of 3 elements.");
+		}
+		else {
+			vcg::Point3f p(arr.at(0), arr.at(1), arr.at(2));
+			par.setValue(Point3fValue(p));
+		}
 	}
 	else if (pythonType.contains("still_unsupported")){
 		std::cerr << "Warning: parameter type still not supported";
