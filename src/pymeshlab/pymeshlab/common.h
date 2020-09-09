@@ -7,7 +7,6 @@
 #include <array>
 #include <QString>
 #include <vcg/../wrap/io_trimesh/io_mask.h>
-
 #include <QtMessageHandler>
 
 namespace pymeshlab {
@@ -108,6 +107,7 @@ private:
 	QtMessageHandler old;
 };
 
+/** Utilities **/
 std::string getRootPath();
 std::string getPluginsPath();
 std::string getSamplesPath();

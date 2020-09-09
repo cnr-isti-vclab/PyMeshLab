@@ -105,9 +105,7 @@ private:
 	std::string filterRSTDocumentation(FilterFunctionSet::iterator it) const;
 	static void cleanHTML(QString& htmlString);
 
-	std::string basePath;
-	RichParameterList globalRPS;
-	PluginManager pm;
+	PluginManager& pm;
 	FilterFunctionSet filterFunctionSet;
 	FilterScript filterScript;
 

@@ -134,6 +134,7 @@ HEADERS += \
 	pymeshlab/color.h \
 	pymeshlab/common.h \
 	pymeshlab/mesh.h \
+	pymeshlab/meshlabsingletons.h \
 	pymeshlab/meshset.h \
 	pymeshlab/percentage.h \
 	pymeshlab/plugin_management/filterfunction.h \
@@ -150,6 +151,7 @@ SOURCES += \
 	pymeshlab/color.cpp \
 	pymeshlab/common.cpp \
 	pymeshlab/mesh.cpp \
+	pymeshlab/meshlabsingletons.cpp \
 	pymeshlab/meshset.cpp \
 	pymeshlab/percentage.cpp \
 	pymeshlab/plugin_management/filterfunction.cpp \

@@ -8,22 +8,18 @@
 #include <meshlabdocumentbundler.h>
 #include <wrap/io_trimesh/alnParser.h>
 #include "common.h"
+#include "meshlabsingletons.h"
 
 namespace py = pybind11;
 
 GLLogStream* pymeshlab::MeshSet::staticLogger = nullptr;
 
 pymeshlab::MeshSet::MeshSet(bool verbose) :
-	MeshDocument(), globalRPS(), pm()
+	MeshDocument(),
+	pm(MeshLabSingletons::pluginManagerInstance(verbose))
 {
-	QDir dir(QString::fromStdString(pymeshlab::getPluginsPath()));
-	pymeshlab::QDebugRedirect* qdbr = nullptr;
-	if (!verbose)
-		qdbr = new pymeshlab::QDebugRedirect(); //redirect qdebug to null, just for this scope
-	pm.loadPlugins(globalRPS, dir);
 	filterFunctionSet.popolate(pm);
 	setVerbosity(verbose);
-	delete qdbr;
 }
 
 pymeshlab::MeshSet::~MeshSet()
