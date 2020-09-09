@@ -14,6 +14,7 @@ PluginManager& pymeshlab::MeshLabSingletons::pluginManagerInstance(bool verbose)
 	static bool initialized = false;
 	static PluginManager pm;
 	if (!initialized){
+		initialized = true;
 		QDir dir(QString::fromStdString(getPluginsPath()));
 		pymeshlab::QDebugRedirect* qdbr = nullptr;
 		RichParameterList& globalRPS = globalRPLInstance();
