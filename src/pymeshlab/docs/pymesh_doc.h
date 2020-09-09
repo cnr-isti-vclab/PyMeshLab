@@ -19,6 +19,10 @@ const char* PYEXC_COMPONENT =
 const char* PYMESH_INIT =
 		"Creates an empty Mesh.";
 
+//Mesh::__init__
+const char* PYMESH_INIT_MAT =
+		"Creates a mesh containing the data passed as input.";
+
 //Mesh::vertex_number
 const char* PYMESH_VN =
 		"Returns the number of vertices of the mesh.";

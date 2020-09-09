@@ -38,6 +38,30 @@ int pymeshlab::Mesh::selectedFaceNumber(const CMeshO& mesh)
 	return counter;
 }
 
+CMeshO pymeshlab::Mesh::createFromMatrices(
+		const Eigen::MatrixX3f& vertices,
+		const Eigen::MatrixX3i& faces)
+{
+	CMeshO m;
+	CMeshO::VertexIterator vi =
+			vcg::tri::Allocator<CMeshO>::AddVertices(m, vertices.rows());
+	CMeshO::VertexPointer ivp[vertices.rows()];
+	for (unsigned int i = 0; i < vertices.rows(); ++i, ++vi){
+		ivp[i] = &*vi;
+		vi->P() = CMeshO::CoordType(vertices(i,0), vertices(i,1), vertices(i,2));
+	}
+
+	CMeshO::FaceIterator fi =
+			vcg::tri::Allocator<CMeshO>::AddFaces(m, faces.rows());
+	for (unsigned int i = 0; i < faces.rows(); ++i, ++fi){
+		fi->V(0)=ivp[faces(i,0)];
+		fi->V(1)=ivp[faces(i,1)];
+		fi->V(2)=ivp[faces(i,2)];
+	}
+
+	return m;
+}
+
 bool pymeshlab::Mesh::isCompact(const CMeshO& mesh)
 {
 	return

@@ -10,6 +10,10 @@ namespace pymeshlab {
 class Mesh
 {
 public:
+	static CMeshO createFromMatrices(
+			const Eigen::MatrixX3f& vertices,
+			const Eigen::MatrixX3i& faces = Eigen::MatrixX3i());
+
 	static bool isCompact(const CMeshO& mesh);
 
 	static Box3m boundingBox(const CMeshO& mesh);
