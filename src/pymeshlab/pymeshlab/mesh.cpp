@@ -45,7 +45,7 @@ CMeshO pymeshlab::Mesh::createFromMatrices(
 	CMeshO m;
 	CMeshO::VertexIterator vi =
 			vcg::tri::Allocator<CMeshO>::AddVertices(m, vertices.rows());
-	CMeshO::VertexPointer ivp[vertices.rows()];
+	std::vector<CMeshO::VertexPointer> ivp(vertices.rows());
 	for (unsigned int i = 0; i < vertices.rows(); ++i, ++vi){
 		ivp[i] = &*vi;
 		vi->P() = CMeshO::CoordType(vertices(i,0), vertices(i,1), vertices(i,2));
