@@ -10,9 +10,12 @@ namespace pymeshlab {
 class Mesh
 {
 public:
+	//constructor:
 	static CMeshO createFromMatrices(
-			const Eigen::MatrixX3f& vertices,
-			const Eigen::MatrixX3i& faces = Eigen::MatrixX3i());
+			const Eigen::MatrixX3f& vertices = Eigen::MatrixX3f(),
+			const Eigen::MatrixX3i& faces = Eigen::MatrixX3i(),
+			const Eigen::MatrixX3f& vertexNormals = Eigen::MatrixX3f(),
+			const Eigen::MatrixX3f& faceNormals = Eigen::MatrixX3f());
 
 	static bool isCompact(const CMeshO& mesh);
 

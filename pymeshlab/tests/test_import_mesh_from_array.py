@@ -6,7 +6,6 @@ import numpy
 
 def test_import_mesh_from_array():
     print('\n')
-    base_path = samples_common.samples_absolute_path()
     output_path = samples_common.test_output_path()
 
     verts = numpy.array([
@@ -41,4 +40,3 @@ def test_import_mesh_from_array():
     ms = ml.MeshSet()
     ms.add_mesh(m, "cube_mesh")
     ms.save_mesh(output_path + "saved_cube_from_array.ply")
-

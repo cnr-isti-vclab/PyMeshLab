@@ -41,23 +41,47 @@ int pymeshlab::Mesh::selectedFaceNumber(const CMeshO& mesh)
 
 CMeshO pymeshlab::Mesh::createFromMatrices(
 		const Eigen::MatrixX3f& vertices,
-		const Eigen::MatrixX3i& faces)
+		const Eigen::MatrixX3i& faces,
+		const Eigen::MatrixX3f& vertexNormals,
+		const Eigen::MatrixX3f& faceNormals)
 {
 	CMeshO m;
-	CMeshO::VertexIterator vi =
-			vcg::tri::Allocator<CMeshO>::AddVertices(m, vertices.rows());
-	std::vector<CMeshO::VertexPointer> ivp(vertices.rows());
-	for (unsigned int i = 0; i < vertices.rows(); ++i, ++vi) {
-		ivp[i] = &*vi;
-		vi->P() = CMeshO::CoordType(vertices(i,0), vertices(i,1), vertices(i,2));
-	}
+	if (vertices.rows() > 0) {
+		CMeshO::VertexIterator vi =
+				vcg::tri::Allocator<CMeshO>::AddVertices(m, vertices.rows());
+		std::vector<CMeshO::VertexPointer> ivp(vertices.rows());
 
-	CMeshO::FaceIterator fi =
-			vcg::tri::Allocator<CMeshO>::AddFaces(m, faces.rows());
-	for (unsigned int i = 0; i < faces.rows(); ++i, ++fi) {
-		fi->V(0)=ivp[faces(i,0)];
-		fi->V(1)=ivp[faces(i,1)];
-		fi->V(2)=ivp[faces(i,2)];
+		bool hasVNormals = vertexNormals.rows() == vertices.rows();
+		for (unsigned int i = 0; i < vertices.rows(); ++i, ++vi) {
+			ivp[i] = &*vi;
+			vi->P() = CMeshO::CoordType(vertices(i,0), vertices(i,1), vertices(i,2));
+			if (hasVNormals) {
+				vi->N() = CMeshO::CoordType(
+							vertexNormals(i,0),
+							vertexNormals(i,1),
+							vertexNormals(i,2));
+			}
+		}
+
+		CMeshO::FaceIterator fi =
+				vcg::tri::Allocator<CMeshO>::AddFaces(m, faces.rows());
+
+		bool hasFNormals = faceNormals.rows() == faces.rows();
+		for (unsigned int i = 0; i < faces.rows(); ++i, ++fi) {
+			//manage error:
+			// ivp[faces(x,y)] could not exists
+			// if faces(x,y) >= ivp.size()
+			fi->V(0)=ivp[faces(i,0)];
+			fi->V(1)=ivp[faces(i,1)];
+			fi->V(2)=ivp[faces(i,2)];
+
+			if (hasFNormals){
+				fi->N() = CMeshO::CoordType(
+							faceNormals(i,0),
+							faceNormals(i,1),
+							faceNormals(i,2));
+			}
+		}
 	}
 
 	return m;
