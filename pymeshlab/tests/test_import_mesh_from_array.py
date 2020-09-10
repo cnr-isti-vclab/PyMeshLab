@@ -3,6 +3,7 @@ import pymeshlab as ml
 from . import samples_common
 import numpy
 
+
 def test_import_mesh_from_array():
     print('\n')
     base_path = samples_common.samples_absolute_path()
@@ -36,4 +37,8 @@ def test_import_mesh_from_array():
 
     assert m.vertex_number() == 8
     assert m.face_number() == 12
+
+    ms = ml.MeshSet()
+    ms.add_mesh(m, "cube_mesh")
+    ms.save_mesh(output_path + "saved_cube_from_array.ply")
 

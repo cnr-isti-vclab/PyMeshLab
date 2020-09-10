@@ -66,6 +66,13 @@ const char* PYMS_SAVE_MESH =
 		"has no current selected mesh, if the format of the file is not known "
 		"by PyMeshLab or if there was an error while writing the file.";
 
+//MeshSet::save_mesh
+const char* PYMS_ADD_MESH =
+		"Adds a **copy** of the given mesh in the current MeshSet, with the given "
+		"name. By default, the added mesh will be set as the current mesh. "
+		"This behaviour can be changed by setting the arg ``set_as_current`` to "
+		"``False``.";
+
 //MeshSet::load_project
 const char* PYMS_LOAD_PROJECT =
 		"Loads a project from the given file name and stores it in the MeshSet.";

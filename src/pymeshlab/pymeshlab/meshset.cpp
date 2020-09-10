@@ -143,6 +143,12 @@ void pymeshlab::MeshSet::saveMesh(const std::string& filename, pybind11::kwargs 
 	saveMeshUsingPlugin(filename, nullptr, FilterFunction(), kwargs);
 }
 
+void pymeshlab::MeshSet::addMesh(CMeshO& mesh, const std::string& name, bool setAsCurrent)
+{
+	MeshModel* mm = this->addNewMesh("", QString::fromStdString(name), setAsCurrent);
+	mm->cm = mesh;
+}
+
 void pymeshlab::MeshSet::loadProject(const std::string& filename)
 {
 	QString fileName = QString::fromStdString(filename);
