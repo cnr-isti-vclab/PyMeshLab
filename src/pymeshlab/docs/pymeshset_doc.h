@@ -9,12 +9,9 @@ const char* PYEXC_MLEXC =
 		"Generic PyMeshLab exception.";
 
 //MeshSet::__init__
-const char* PYMS_INIT =
-		"Initializes a MeshSet. Default value of verbosity is false.";
-
-//MeshSet::__init__
 const char* PYMS_INIT_VERB =
-		"Initializes a MeshSet, setting the verbosity with the given value.";
+		"Initializes a MeshSet, setting the verbosity with the given value "
+		"(default is ``False``).";
 
 //MeshSet::set_verbosity
 const char* PYMS_SET_VERBOSITY_DOC =
@@ -86,9 +83,8 @@ const char* PYMS_APPLY_FILTER =
 		"Applies the filter having the given filter name in the MeshSet. "
 		"Updates the current filter script, pushing the applied filter with the "
 		"given parameters. "
-		"See the :py:meth:`print_filter_list` function for a list of the possible "
-		"filters, and the :py:meth:`print_filter_parameter_list` function for "
-		"the list of parameters of a filter.";
+		"See the :ref:`filter_list` page to a list of all the possible filters "
+		"that can be applied using this function.";
 
 //MeshSet::load_filter_script
 const char* PYMS_LOAD_FILTER_SCRIPT =
