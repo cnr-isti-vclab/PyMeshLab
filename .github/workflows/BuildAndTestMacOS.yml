@@ -1,4 +1,4 @@
-name: BuildAndTestUnix
+name: BuildAndTestMacOS
 
 on:
   [push, pull_request]

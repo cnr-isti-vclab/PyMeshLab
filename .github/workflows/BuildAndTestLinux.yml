@@ -1,4 +1,4 @@
-name: BuildAndTestUnix
+name: BuildAndTestLinux
 
 on:
   [push, pull_request]
