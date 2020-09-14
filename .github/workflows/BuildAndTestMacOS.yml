@@ -1,0 +1,83 @@
+name: BuildAndTestUnix
+
+on:
+  [push, pull_request]
+
+jobs:
+  unix_build_pymeshlab:
+    name: Build PyMeshLab
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        pyversion: [3.5, 3.6, 3.7, 3.8]
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+    - name: checkout sub-submodule vcg
+      run: |
+        cd meshlab
+        auth_header="$(git config --local --get http.https://github.com/.extraheader)"
+        git submodule sync --recursive
+        git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+      with:
+        modules: xmlpatterns
+    - name: Install Python ${{ matrix.pyversion }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.pyversion }}
+    - name: Environment variables
+      id: envs
+      run: |
+        cd meshlab
+        echo  ::set-output name=meshlab_commit::$(git rev-parse --short HEAD)
+    - name: Cache MeshLab Build
+      id: cache-meshlab-build
+      uses: actions/cache@v2
+      with:
+        path: pymeshlab/lib
+        key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
+    - name: Install MeshLab-MacOS dependencies
+      if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && runner.os == 'macOS'
+      run: |
+        brew install libomp
+    - name: Build MeshLab
+      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
+      run: |
+        sh install/${{ runner.os }}/build_meshlab.sh
+    - name: Build PyMeshLab ${{ matrix.pyversion }}
+      run: |
+        export PYTHON_VERSION=${{ matrix.pyversion }}
+        sh install/${{ runner.os }}/build_pymeshlab.sh
+    - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+        path: pymeshlab/
+  
+  
+  tests:
+    name: Test PyMeshLab
+    runs-on: macos-latest
+    needs: unix_build_pymeshlab
+    strategy:
+      matrix:
+        pyversion: [3.5, 3.6, 3.7, 3.8]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+      uses: actions/download-artifact@v2
+      with:
+        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+        path: pymeshlab/
+    - name: Install Python ${{ matrix.pyversion }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.pyversion }}
+    - name: Run Tests ${{ matrix.pyversion }}
+      run: |
+        pip install pytest
+        pip install numpy
+        pytest -s pymeshlab
