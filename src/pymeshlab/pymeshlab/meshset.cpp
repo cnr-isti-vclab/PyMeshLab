@@ -390,7 +390,7 @@ void pymeshlab::MeshSet::loadMeshUsingPlugin(
 				ff = *filterFunctionSet.find("load_" + extension);
 			}
 			MeshIOInterface* plugin = pm.allKnowInputFormats[extension];
-			int mask = 0; //todo: use this mask
+			int mask = 0;
 			RichParameterList rps;
 			plugin->initGlobalParameterSet(nullptr, rps);
 			plugin->initPreOpenParameter(extension, QString::fromStdString(filename), rps);
