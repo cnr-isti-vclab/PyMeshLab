@@ -1,5 +1,4 @@
 #include "meshset.h"
-#include "percentage.h"
 
 #include <pybind11/numpy.h>
 #include <pybind11/eigen.h>
@@ -7,23 +6,22 @@
 #include <meshlabdocumentxml.h>
 #include <meshlabdocumentbundler.h>
 #include <wrap/io_trimesh/alnParser.h>
+
+#include "percentage.h"
+#include "enum.h"
 #include "common.h"
+#include "meshlabsingletons.h"
 
 namespace py = pybind11;
 
 GLLogStream* pymeshlab::MeshSet::staticLogger = nullptr;
 
 pymeshlab::MeshSet::MeshSet(bool verbose) :
-	MeshDocument(), globalRPS(), pm()
+	MeshDocument(),
+	pm(MeshLabSingletons::pluginManagerInstance(verbose))
 {
-	QDir dir(QString::fromStdString(pymeshlab::getPluginsPath()));
-	pymeshlab::QDebugRedirect* qdbr = nullptr;
-	if (!verbose)
-		qdbr = new pymeshlab::QDebugRedirect(); //redirect qdebug to null, just for this scope
-	pm.loadPlugins(globalRPS, dir);
 	filterFunctionSet.popolate(pm);
 	setVerbosity(verbose);
-	delete qdbr;
 }
 
 pymeshlab::MeshSet::~MeshSet()
@@ -145,6 +143,12 @@ void pymeshlab::MeshSet::saveMesh(const std::string& filename, pybind11::kwargs 
 	if (mm() == nullptr)
 		throw MLException("MeshSet has no selected Mesh.");
 	saveMeshUsingPlugin(filename, nullptr, FilterFunction(), kwargs);
+}
+
+void pymeshlab::MeshSet::addMesh(CMeshO& mesh, const std::string& name, bool setAsCurrent)
+{
+	MeshModel* mm = this->addNewMesh("", QString::fromStdString(name), setAsCurrent);
+	mm->cm = mesh;
 }
 
 void pymeshlab::MeshSet::loadProject(const std::string& filename)
@@ -388,7 +392,7 @@ void pymeshlab::MeshSet::loadMeshUsingPlugin(
 				ff = *filterFunctionSet.find("load_" + extension);
 			}
 			MeshIOInterface* plugin = pm.allKnowInputFormats[extension];
-			int mask = 0; //todo: use this mask
+			int mask = 0;
 			RichParameterList rps;
 			plugin->initGlobalParameterSet(nullptr, rps);
 			plugin->initPreOpenParameter(extension, QString::fromStdString(filename), rps);
@@ -683,6 +687,31 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 			par.setValue(Matrix44fValue(m));
 		}
 	}
+	else if (pythonType == PYTHON_TYPE_ENUM){
+		RichEnum& en = dynamic_cast<RichEnum&>(par);
+		int value;
+		try{
+			Enum e = py::cast<Enum>(k.second);
+			value = en.enumvalues.indexOf(QString::fromStdString(e.value()));
+			if (value == -1){
+				std::string list;
+				for (const QString& s : en.enumvalues){
+					list += "'" + s.toStdString() + "'; ";
+				}
+				std::string message =
+						"Enum '" + e.value() + "' not found. Possible values are " + list;
+				throw InvalidEnumException(message);
+			}
+		}
+		catch(const py::cast_error& err){
+			value = py::cast<int>(k.second);
+			if (! (value>= 0 && value < en.enumvalues.size()))
+				throw InvalidEnumException(
+						"Enum " +std::to_string(value)+ " not valid. Must be a "
+						"value between 0 and " + std::to_string(en.enumvalues.size()));
+		}
+		en.setValue(EnumValue(value));
+	}
 	else if (pythonType.contains("still_unsupported")){
 		std::cerr << "Warning: parameter type still not supported";
 	}
@@ -740,9 +769,27 @@ std::string pymeshlab::MeshSet::filterRSTDocumentation(
 
 		for (const FilterFunctionParameter& p : *it){
 
-			doc += "   ``" + p.pythonName().toStdString() + " : " +
-					p.pythonTypeString().toStdString() +
-					" = " + p.defaultValueString().toStdString() + "``\n\n";
+			if (! p.defaultValue().isEnum()){
+				doc += "   ``" + p.pythonName().toStdString() + " : " +
+						p.pythonTypeString().toStdString() +
+						" = " + p.defaultValueString().toStdString() + "``\n\n";
+			}
+			else {
+				doc += "   ``" + p.pythonName().toStdString() + " : " +
+						p.pythonTypeString().toStdString() +
+						" = " + p.defaultValueString().toStdString() +
+						" (or int = " + std::to_string(p.defaultValue().getEnum()) +
+						")``\n\n";
+				doc += "      Possible enum values:\n\n";
+
+				const RichEnum& ren = dynamic_cast<const RichEnum&>(p.richParameter());
+				unsigned int i = 0;
+				for (const QString& v : ren.enumvalues){
+					doc += "         " + std::to_string(i++) +". ``'" + v.toStdString() +
+							"'``\n";
+				}
+				doc +="\n";
+			}
 
 			doc += "      .. raw:: html\n\n";
 			QString desc = p.longDescription();

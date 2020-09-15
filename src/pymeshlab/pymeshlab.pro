@@ -123,17 +123,21 @@ filter_doc_generator {
 HEADERS += \
 	bindings/pycolor.h \
 	bindings/pyboundingbox.h \
+	bindings/pyenum.h \
 	bindings/pymesh.h \
 	bindings/pymeshset.h \
 	bindings/pypercentage.h \
 	docs/pyboundingbox_doc.h \
 	docs/pycolor_doc.h \
+	docs/pyenum_doc.h \
 	docs/pymesh_doc.h \
 	docs/pymeshset_doc.h \
 	docs/pypercentage_doc.h \
 	pymeshlab/color.h \
 	pymeshlab/common.h \
+	pymeshlab/enum.h \
 	pymeshlab/mesh.h \
+	pymeshlab/meshlabsingletons.h \
 	pymeshlab/meshset.h \
 	pymeshlab/percentage.h \
 	pymeshlab/plugin_management/filterfunction.h \
@@ -141,6 +145,7 @@ HEADERS += \
 	pymeshlab/plugin_management/filterfunctionset.h
 
 SOURCES += \
+	bindings/pyenum.cpp \
 	main.cpp \
 	bindings/pyboundingbox.cpp \
 	bindings/pycolor.cpp \
@@ -149,7 +154,9 @@ SOURCES += \
 	bindings/pypercentage.cpp \
 	pymeshlab/color.cpp \
 	pymeshlab/common.cpp \
+	pymeshlab/enum.cpp \
 	pymeshlab/mesh.cpp \
+	pymeshlab/meshlabsingletons.cpp \
 	pymeshlab/meshset.cpp \
 	pymeshlab/percentage.cpp \
 	pymeshlab/plugin_management/filterfunction.cpp \

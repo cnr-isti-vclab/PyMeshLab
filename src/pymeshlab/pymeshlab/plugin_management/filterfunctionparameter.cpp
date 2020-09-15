@@ -68,12 +68,18 @@ const Value& pymeshlab::FilterFunctionParameter::defaultValue() const
 	return parameter->value();
 }
 
+const RichParameter& pymeshlab::FilterFunctionParameter::richParameter() const
+{
+	return *parameter;
+}
+
 void pymeshlab::FilterFunctionParameter::printDefaultValue(std::ostream& o) const
 {
 	if (!parameter)
 		o << "no_value";
 	if (parameter->value().isEnum()) {
-		o << parameter->value().getEnum();
+		RichEnum* ren = dynamic_cast<RichEnum*>(parameter);
+		o << "'" << ren->enumvalues.at(ren->value().getEnum()).toStdString() << "'";
 		return;
 	}
 	if (parameter->value().isAbsPerc()) {

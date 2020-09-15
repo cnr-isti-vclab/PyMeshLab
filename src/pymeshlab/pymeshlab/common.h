@@ -7,7 +7,6 @@
 #include <array>
 #include <QString>
 #include <vcg/../wrap/io_trimesh/io_mask.h>
-
 #include <QtMessageHandler>
 
 namespace pymeshlab {
@@ -46,7 +45,7 @@ const static std::array<QString, 14> saveCapabilitiesStrings = {
 	"Save Polygonal"
 };
 
-const char PYTHON_TYPE_ENUM[] = "int [Enum]";
+const char PYTHON_TYPE_ENUM[] = "Enum";
 const char PYTHON_TYPE_ABSPERC[] = "Percentage";
 const char PYTHON_TYPE_DYNAMIC_FLOAT[] = "float (bounded)";
 const char PYTHON_TYPE_BOOL[] = "bool";
@@ -108,6 +107,7 @@ private:
 	QtMessageHandler old;
 };
 
+/** Utilities **/
 std::string getRootPath();
 std::string getPluginsPath();
 std::string getSamplesPath();

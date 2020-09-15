@@ -3,10 +3,12 @@
 #include <pybind11/pybind11.h>
 #include <QDir>
 
-namespace py = pybind11;
+/** Ridirects **/
 
 std::stringstream pymeshlab::CoutRedirect::buffer;
 std::stringstream pymeshlab::CerrRedirect::buffer;
+
+namespace py = pybind11;
 
 std::string pymeshlab::getRootPath()
 {
@@ -24,7 +26,7 @@ std::string pymeshlab::getRootPath()
 
 std::string pymeshlab::getPluginsPath()
 {
-	QDir dir(QString::fromStdString(pymeshlab::getRootPath()));
+	QDir dir(QString::fromStdString(getRootPath()));
 #ifndef __APPLE__
 	dir.cd("lib/meshlab/plugins");
 #else
@@ -32,9 +34,6 @@ std::string pymeshlab::getPluginsPath()
 #endif
 	return dir.absolutePath().toStdString();
 }
-
-
-
 
 std::string pymeshlab::getSamplesPath()
 {

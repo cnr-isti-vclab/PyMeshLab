@@ -1,4 +1,4 @@
-name: BuildAndTestUnix
+name: BuildAndTestMacOS
 
 on:
   [push, pull_request]
@@ -6,10 +6,9 @@ on:
 jobs:
   unix_build_pymeshlab:
     name: Build PyMeshLab
-    runs-on: ${{ matrix.os }}
+    runs-on: macos-latest
     strategy:
       matrix:
-        os: [ubuntu-16.04, macos-latest]
         pyversion: [3.5, 3.6, 3.7, 3.8]
     steps:
     - uses: actions/checkout@v2
@@ -29,10 +28,6 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.pyversion }}
-    - name: Install Ubuntu dependencies
-      if: runner.os == 'Linux'
-      run: |
-        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev 
     - name: Environment variables
       id: envs
       run: |
@@ -44,10 +39,6 @@ jobs:
       with:
         path: pymeshlab/lib
         key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
-    - name: Install MeshLab-Ubuntu dependencies
-      if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && runner.os == 'Linux'
-      run: |
-        sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
     - name: Install MeshLab-MacOS dependencies
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && runner.os == 'macOS'
       run: |
@@ -69,11 +60,10 @@ jobs:
   
   tests:
     name: Test PyMeshLab
-    runs-on: ${{ matrix.os }}
+    runs-on: macos-latest
     needs: unix_build_pymeshlab
     strategy:
       matrix:
-        os: [ubuntu-16.04, macos-latest]
         pyversion: [3.5, 3.6, 3.7, 3.8]
     steps:
     - uses: actions/checkout@v2

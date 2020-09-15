@@ -9,6 +9,7 @@ PyMeshLab Classes
 
    classes/boundingbox
    classes/color
+   classes/enum
    classes/mesh
    classes/meshset
    classes/percentage

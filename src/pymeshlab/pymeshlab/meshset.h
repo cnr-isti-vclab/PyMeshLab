@@ -31,6 +31,7 @@ public:
 
 	void loadMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());
 	void saveMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());
+	void addMesh(CMeshO& mesh, const std::string& name = "new_mesh", bool setAsCurrent = true);
 
 	void loadProject(const std::string& filename);
 	void saveProject(const std::string& filename);
@@ -105,9 +106,7 @@ private:
 	std::string filterRSTDocumentation(FilterFunctionSet::iterator it) const;
 	static void cleanHTML(QString& htmlString);
 
-	std::string basePath;
-	RichParameterList globalRPS;
-	PluginManager pm;
+	PluginManager& pm;
 	FilterFunctionSet filterFunctionSet;
 	FilterScript filterScript;
 

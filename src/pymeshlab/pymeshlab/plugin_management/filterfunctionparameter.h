@@ -22,6 +22,7 @@ public:
 	QString description() const;
 	QString longDescription() const;
 	const Value& defaultValue() const;
+	const RichParameter& richParameter() const;
 	void printDefaultValue(std::ostream& o) const;
 	QString defaultValueString() const;
 
