@@ -29,6 +29,16 @@ void pymeshlab::Mesh::compact(CMeshO& mesh)
 	vcg::tri::Allocator<CMeshO>::CompactEveryVector(mesh);
 }
 
+void pymeshlab::Mesh::compactVertices(CMeshO& mesh)
+{
+	vcg::tri::Allocator<CMeshO>::CompactVertexVector(mesh);
+}
+
+void pymeshlab::Mesh::compactFaces(CMeshO& mesh)
+{
+	vcg::tri::Allocator<CMeshO>::CompactFaceVector(mesh);
+}
+
 int pymeshlab::Mesh::selectedFaceNumber(const CMeshO& mesh)
 {
 	int counter = 0;
@@ -68,7 +78,7 @@ CMeshO pymeshlab::Mesh::createFromMatrices(
 
 		bool hasFNormals = faceNormals.rows() == faces.rows();
 		for (unsigned int i = 0; i < faces.rows(); ++i, ++fi) {
-			//manage error:
+			//TODO manage error:
 			// ivp[faces(x,y)] could not exists
 			// if faces(x,y) >= ivp.size()
 			fi->V(0)=ivp[faces(i,0)];

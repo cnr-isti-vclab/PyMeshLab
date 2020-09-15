@@ -23,6 +23,8 @@ public:
 	static void updateBBox(CMeshO& mesh);
 	static void updateTopology(CMeshO& mesh);
 	static void compact(CMeshO& mesh);
+	static void compactVertices(CMeshO& mesh);
+	static void compactFaces(CMeshO& mesh);
 
 	static int selectedFaceNumber(const CMeshO& mesh);
 
