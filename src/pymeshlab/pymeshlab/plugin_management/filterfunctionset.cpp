@@ -1,5 +1,7 @@
 #include "filterfunctionset.h"
 
+#include <QRegularExpression>
+
 #include "../common.h"
 
 pymeshlab::FilterFunctionSet::FilterFunctionSet()
@@ -22,9 +24,8 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 		QString originalFilterName = inputFormat;
 		QString pythonFilterName = "load_" + inputFormat.toLower();
 		FilterFunction f(pythonFilterName, originalFilterName, "Load " + inputFormat + " format.");
-		MeshIOInterface* plugin = pm.allKnowInputFormats[inputFormat];
+		IOPluginInterface* plugin = pm.allKnowInputFormats[inputFormat];
 		RichParameterList rps;
-		plugin->initGlobalParameterSet(nullptr, rps);
 		plugin->initPreOpenParameter(inputFormat, dummyMesh, rps);
 		plugin->initOpenParameter(inputFormat, *dummyMeshDocument.mm(), rps);
 
@@ -48,9 +49,8 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 		QString originalFilterName = outputFormat;
 		QString pythonFilterName = "save_" + outputFormat.toLower();
 		FilterFunction f(pythonFilterName, originalFilterName, "Save " + outputFormat + " format.");
-		MeshIOInterface* plugin = pm.allKnowOutputFormats[outputFormat];
+		IOPluginInterface* plugin = pm.allKnowOutputFormats[outputFormat];
 		RichParameterList rps;
-		plugin->initGlobalParameterSet(nullptr, rps);
 		plugin->initSaveParameter(outputFormat, *dummyMeshDocument.mm(), rps);
 
 		//filename parameter
@@ -72,7 +72,7 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 		functionSet.insert(f);
 	}
 
-	for (MeshFilterInterface* fp : pm.meshFilterPlug){
+	for (FilterPluginInterface* fp : pm.meshFilterPlug){
 		QList<QAction*> acts = fp->actions();
 		for (QAction* act : acts) {
 			QString originalFilterName = fp->filterName(act);
@@ -81,8 +81,7 @@ void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
 			FilterFunction f(pythonFilterName, originalFilterName, description);
 
 			RichParameterList rps;
-			fp->initGlobalParameterSet(act, rps);
-			fp->initParameterSet(act, dummyMeshDocument, rps);
+			fp->initParameterList(act, dummyMeshDocument, rps);
 
 			for (const RichParameter& rp : rps){
 				QString pythonParameterName = toPythonName(rp.name());
@@ -133,8 +132,7 @@ void pymeshlab::FilterFunctionSet::deleteFunction(const pymeshlab::FilterFunctio
 	functionSet.erase(f);
 }
 
-void pymeshlab::FilterFunctionSet::updateSaveParameters(
-		MeshIOInterface* plugin,
+void pymeshlab::FilterFunctionSet::updateSaveParameters(IOPluginInterface* plugin,
 		const QString& outputFormat,
 		pymeshlab::FilterFunction& f)
 {
