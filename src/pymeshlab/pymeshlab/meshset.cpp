@@ -71,7 +71,7 @@ CMeshO& pymeshlab::MeshSet::mesh(int id)
 void pymeshlab::MeshSet::printPluginList() const
 {
 	std::cout << "MeshSet class - list of loaded plugins:\n";
-	for (const MeshCommonInterface* p : pm.ownerPlug){
+	for (const PluginInterface* p : pm.ownerPlug){
 		std::cout << "\t" << p->pluginName().toStdString() << "\n";
 	}
 }
@@ -230,9 +230,9 @@ void pymeshlab::MeshSet::applyFilterScript()
 		QString meshlabFilterName = p.first;
 		std::string filtername = FilterFunctionSet::toPythonName(meshlabFilterName).toStdString();
 		QAction* action = nullptr;
-		MeshFilterInterface* fp = getPluginFromFilterName(meshlabFilterName, action);
+		FilterPluginInterface* fp = getPluginFromFilterName(meshlabFilterName, action);
 		RichParameterList rpl;
-		fp->initParameterSet(action, *this, rpl);
+		fp->initParameterList(action, *this, rpl);
 		updateRichParameterList(filtername, p.second, rpl);
 		applyFilterRPL(filtername, meshlabFilterName, action, fp, rpl);
 	}
@@ -256,9 +256,9 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 		//all the other plugins:
 		else {
 			QAction* action = nullptr;
-			MeshFilterInterface* fp = getPluginFromFilterName(meshlabFilterName, action);
+			FilterPluginInterface* fp = getPluginFromFilterName(meshlabFilterName, action);
 			RichParameterList rpl;
-			fp->initParameterSet(action, *this, rpl);
+			fp->initParameterList(action, *this, rpl);
 			updateRichParameterList(*it, kwargs, rpl);
 			applyFilterRPL(filtername, meshlabFilterName, action, fp, rpl);
 		}
@@ -358,9 +358,11 @@ void pymeshlab::MeshSet::updateRichParameterList(
 	}
 }
 
-MeshFilterInterface* pymeshlab::MeshSet::getPluginFromFilterName(const QString& filterName, QAction*& action) const
+FilterPluginInterface* pymeshlab::MeshSet::getPluginFromFilterName(
+		const QString& filterName, 
+		QAction*& action) const
 {
-	for (MeshFilterInterface* fp : pm.meshFilterPlug){
+	for (FilterPluginInterface* fp : pm.meshFilterPlug){
 		QList<QAction*> acts = fp->actions();
 		for (QAction* act : acts) {
 			if (filterName == fp->filterName(act)){
@@ -391,10 +393,9 @@ void pymeshlab::MeshSet::loadMeshUsingPlugin(
 			if (ff.pythonFunctionName().isEmpty()){
 				ff = *filterFunctionSet.find("load_" + extension);
 			}
-			MeshIOInterface* plugin = pm.allKnowInputFormats[extension];
+			IOPluginInterface* plugin = pm.allKnowInputFormats[extension];
 			int mask = 0;
 			RichParameterList rps;
-			plugin->initGlobalParameterSet(nullptr, rps);
 			plugin->initPreOpenParameter(extension, QString::fromStdString(filename), rps);
 			plugin->initOpenParameter(extension, *(this->mm()), rps);
 
@@ -426,12 +427,11 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 		if (ff.pythonFunctionName().isEmpty()){
 			ff = *filterFunctionSet.find("save_" + extension);
 		}
-		MeshIOInterface* plugin = pm.allKnowOutputFormats[extension];
+		IOPluginInterface* plugin = pm.allKnowOutputFormats[extension];
 		//int mask = 0; //todo: use this mask
 		RichParameterList rps;
 		int capability = 0, defbits = 0, capabilityMesh = 0, capabilityUser = 0;
 		plugin->GetExportMaskCapability(extension,capability,defbits);
-		plugin->initGlobalParameterSet(nullptr, rps);
 		plugin->initSaveParameter(extension, *(this->mm()), rps);
 
 		updateRichParameterList(ff, kwargs, rps, true);
@@ -508,7 +508,7 @@ void pymeshlab::MeshSet::loadALN(const QString& fileName)
 	for(ir=rmv.begin();ir!=rmv.end() && openRes;++ir) {
 		QString relativeToProj = fi.absoluteDir().absolutePath() + "/" + (*ir).filename.c_str();
 		loadMesh(relativeToProj.toStdString(), py::kwargs());
-		mm()->cm.Tr = ir->trasformation;
+		mm()->cm.Tr = ir->transformation;
 	}
 
 	//restore current dir
@@ -726,7 +726,7 @@ void pymeshlab::MeshSet::applyFilterRPL(
 		const std::string& filtername,
 		QString meshlabFilterName,
 		QAction* action,
-		MeshFilterInterface* fp,
+		FilterPluginInterface* fp,
 		const RichParameterList& rpl)
 {
 	try {
@@ -734,7 +734,8 @@ void pymeshlab::MeshSet::applyFilterRPL(
 		if (mm() != nullptr)
 			mm()->updateDataMask(req);
 		staticLogger = verbose ? &Log : nullptr;
-		fp->applyFilter(action, *this, rpl, &MeshSet::filterCallBack);
+		unsigned int postConditionMask;
+		fp->applyFilter(action, *this, postConditionMask, rpl, &MeshSet::filterCallBack);
 		filterCallBack(100, (filtername + " applied!").c_str());
 		if (mm() != nullptr) {
 			mm()->cm.svn = int(vcg::tri::UpdateSelection<CMeshO>::VertexCount(mm()->cm));

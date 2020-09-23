@@ -65,7 +65,7 @@ private:
 			RichParameterList& rps,
 			bool ignoreFileName = false);
 
-	MeshFilterInterface* getPluginFromFilterName(
+	FilterPluginInterface* getPluginFromFilterName(
 			const QString& filterName,
 			QAction*& action) const;
 
@@ -100,7 +100,7 @@ private:
 			const std::string& filtername,
 			QString meshlabFilterName,
 			QAction* action,
-			MeshFilterInterface* filter,
+			FilterPluginInterface* filter,
 			const RichParameterList& rpl);
 
 	std::string filterRSTDocumentation(FilterFunctionSet::iterator it) const;
