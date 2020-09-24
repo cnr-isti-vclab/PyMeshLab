@@ -8,7 +8,7 @@
 #include <wrap/io_trimesh/alnParser.h>
 
 #include "percentage.h"
-#include "enum.h"
+#include "exceptions.h"
 #include "common.h"
 #include "meshlabsingletons.h"
 
@@ -613,21 +613,21 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 		const FilterFunctionParameter& ffp,
 		const std::pair<py::handle, py::handle>& k)
 {
-	QString pythonType = ffp.pythonTypeString();
-	if (pythonType == PYTHON_TYPE_BOOL){
+	QString meshlabType = ffp.defaultValue().typeName();
+	if (meshlabType == MESHLAB_TYPE_BOOL){
 		par.setValue(BoolValue(py::cast<bool>(k.second)));
 	}
-	else if (pythonType == PYTHON_TYPE_INT) {
+	else if (meshlabType == MESHLAB_TYPE_INT) {
 		par.setValue(IntValue(py::cast<int>(k.second)));
 	}
-	else if (pythonType == PYTHON_TYPE_FLOAT) {
+	else if (meshlabType == MESHLAB_TYPE_FLOAT) {
 		par.setValue(FloatValue(py::cast<float>(k.second)));
 	}
-	else if (pythonType == PYTHON_TYPE_STRING) {
+	else if (meshlabType == MESHLAB_TYPE_STRING) {
 		par.setValue(StringValue(
 					QString::fromStdString(py::cast<std::string>(k.second))));
 	}
-	else if (pythonType == PYTHON_TYPE_ABSPERC) {
+	else if (meshlabType == MESHLAB_TYPE_ABSPERC) {
 		RichAbsPerc& abs = dynamic_cast<RichAbsPerc&>(par);
 		float absvalue;
 		try {
@@ -642,10 +642,10 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 
 		abs.setValue(AbsPercValue(absvalue));
 	}
-	else if (pythonType == PYTHON_TYPE_COLOR) {
+	else if (meshlabType == MESHLAB_TYPE_COLOR) {
 		par.setValue(ColorValue(py::cast<QColor>(k.second)));
 	}
-	else if (pythonType == PYTHON_TYPE_DYNAMIC_FLOAT) {
+	else if (meshlabType == MESHLAB_TYPE_DYNAMIC_FLOAT) {
 		RichDynamicFloat& dyn = dynamic_cast<RichDynamicFloat&>(par);
 		float val = py::cast<float>(k.second);
 		if (val >= dyn.min && val <= dyn.max)
@@ -656,7 +656,7 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 					" out of bounds (min: " + QString::number(dyn.min) +
 					"; max: " + QString::number(dyn.max) + ").");
 	}
-	else if (pythonType == PYTHON_TYPE_POINT3F) {
+	else if (meshlabType == MESHLAB_TYPE_POINT3F) {
 		py::array_t<float> arr = py::cast<py::array_t<float>>(k.second);
 		if (arr.size() != 3){
 			throw MLException(
@@ -668,7 +668,7 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 			par.setValue(Point3fValue(p));
 		}
 	}
-	else if (pythonType == PYTHON_TYPE_MATRIX44F){
+	else if (meshlabType == MESHLAB_TYPE_MATRIX44F){
 		Eigen::Matrix4f arr = py::cast<Eigen::Matrix4f>(k.second);
 		if (arr.size() != 16){
 			throw MLException(
@@ -687,19 +687,19 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 			par.setValue(Matrix44fValue(m));
 		}
 	}
-	else if (pythonType == PYTHON_TYPE_ENUM){
+	else if (meshlabType == MESHLAB_TYPE_ENUM){
 		RichEnum& en = dynamic_cast<RichEnum&>(par);
 		int value;
 		try{
-			Enum e = py::cast<Enum>(k.second);
-			value = en.enumvalues.indexOf(QString::fromStdString(e.value()));
+			std::string e = py::cast<std::string>(k.second);
+			value = en.enumvalues.indexOf(QString::fromStdString(e));
 			if (value == -1){
 				std::string list;
 				for (const QString& s : en.enumvalues){
 					list += "'" + s.toStdString() + "'; ";
 				}
 				std::string message =
-						"Enum '" + e.value() + "' not found. Possible values are " + list;
+						"Enum '" + e + "' not found. Possible values are " + list;
 				throw InvalidEnumException(message);
 			}
 		}
@@ -712,7 +712,7 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 		}
 		en.setValue(EnumValue(value));
 	}
-	else if (pythonType.contains("still_unsupported")){
+	else if (meshlabType.contains("still_unsupported")){
 		std::cerr << "Warning: parameter type still not supported";
 	}
 	else {

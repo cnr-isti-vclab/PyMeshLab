@@ -22,18 +22,6 @@ private:
 	float val;
 };
 
-class InvalidPercentageException : public std::exception
-{
-public:
-	InvalidPercentageException(const std::string& text) :
-		std::exception(), text(text){}
-
-	inline const char* what() const throw() {return text.data();}
-
-protected:
-	std::string text;
-};
-
 }
 
 #endif // PYMESHLAB_PERCENTAGE_H

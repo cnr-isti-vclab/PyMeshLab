@@ -45,7 +45,7 @@ const static std::array<QString, 14> saveCapabilitiesStrings = {
 	"Save Polygonal"
 };
 
-const char PYTHON_TYPE_ENUM[] = "Enum";
+const char PYTHON_TYPE_ENUM[] = "str";
 const char PYTHON_TYPE_ABSPERC[] = "Percentage";
 const char PYTHON_TYPE_DYNAMIC_FLOAT[] = "float (bounded)";
 const char PYTHON_TYPE_BOOL[] = "bool";
@@ -58,6 +58,20 @@ const char PYTHON_TYPE_SHOTF[] = "Shotf [still unsupported]";
 const char PYTHON_TYPE_COLOR[] = "Color";
 const char PYTHON_TYPE_MESH[] = "Mesh [still unsupported]";
 const char PYTHON_TYPE_FILENAME[] = "str";
+
+const char MESHLAB_TYPE_ENUM[] = "Enum";
+const char MESHLAB_TYPE_ABSPERC[] = "AbsPerc";
+const char MESHLAB_TYPE_DYNAMIC_FLOAT[] = "DynamicFloat";
+const char MESHLAB_TYPE_BOOL[] = "Bool";
+const char MESHLAB_TYPE_INT[] = "Int";
+const char MESHLAB_TYPE_FLOAT[] = "Float";
+const char MESHLAB_TYPE_STRING[] = "String";
+const char MESHLAB_TYPE_MATRIX44F[] = "Matrix44f";
+const char MESHLAB_TYPE_POINT3F[] = "Point3f";
+const char MESHLAB_TYPE_SHOTF[] = "Shotf";
+const char MESHLAB_TYPE_COLOR[] = "Color";
+const char MESHLAB_TYPE_MESH[] = "Mesh";
+const char MESHLAB_TYPE_FILENAME[] = "FileName";
 
 /**
  * @brief The CoutRedirect class

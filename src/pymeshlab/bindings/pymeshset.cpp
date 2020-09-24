@@ -5,7 +5,6 @@
 #include "docs/pymeshset_doc.h"
 #include <vcg/../wrap/io_trimesh/import_obj.h>
 #include <pybind11/eval.h>
-#include <mlexception.h>
 
 namespace py = pybind11;
 
@@ -13,8 +12,7 @@ void pymeshlab::initMeshSet(pybind11::module& m)
 {
 	py::class_<MeshSet> meshSetClass(m, "MeshSet");
 
-	auto mlexc = py::register_exception<MLException>(m, "PyMeshLabException");
-	mlexc.doc() = doc::PYEXC_MLEXC;
+	
 
 	//constructor
 	meshSetClass.def(py::init<bool>(), doc::PYMS_INIT_VERB, py::arg("verbose") = false);

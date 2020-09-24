@@ -24,7 +24,7 @@ List of Filters
 
          <i>Alpha value</i>: Compute the alpha value as percentage of the diagonal of the bbox
 
-   ``filtering : Enum = 'Alpha Complex' (or int = 0)``
+   ``filtering : str = 'Alpha Complex' (or int = 0)``
 
       Possible enum values:
 
@@ -45,7 +45,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``occmode : Enum = 'per-Vertex' (or int = 0)``
+   ``occmode : str = 'per-Vertex' (or int = 0)``
 
       Possible enum values:
 
@@ -272,7 +272,7 @@ List of Filters
 
          <i>Cell Size</i>: The size of the cell of the clustering grid. Smaller the cell finer the resulting mesh. For obtaining a very coarse mesh use larger values.
 
-   ``sampling : Enum = 'Closest to center' (or int = 1)``
+   ``sampling : str = 'Closest to center' (or int = 1)``
 
       Possible enum values:
 
@@ -465,7 +465,7 @@ List of Filters
 
          <i>MLS - Spherical parameter</i>: Control the curvature of the fitted spheres: 0 is equivalent to a pure plane fit,1 to a pure spherical fit, values between 0 and 1 gives intermediate results,while other real values might give interesting results, but take care with extremesettings !
 
-   ``curvaturetype : Enum = 'Mean' (or int = 0)``
+   ``curvaturetype : str = 'Mean' (or int = 0)``
 
       Possible enum values:
 
@@ -525,7 +525,7 @@ List of Filters
 
          <i>MLS - Max fitting iterations</i>: Max number of fitting iterations. (0 or 1 is equivalent to the standard IMLS)
 
-   ``curvaturetype : Enum = 'Mean' (or int = 0)``
+   ``curvaturetype : str = 'Mean' (or int = 0)``
 
       Possible enum values:
 
@@ -572,7 +572,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``method : Enum = 'Pseudoinverse Quadric Fitting' (or int = 3)``
+   ``method : str = 'Pseudoinverse Quadric Fitting' (or int = 3)``
 
       Possible enum values:
 
@@ -585,7 +585,7 @@ List of Filters
 
          <i>Method:</i>: Choose a method
 
-   ``curvcolormethod : Enum = 'Mean Curvature' (or int = 0)``
+   ``curvcolormethod : str = 'Mean Curvature' (or int = 0)``
 
       Possible enum values:
 
@@ -659,7 +659,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``planeaxis : Enum = 'X Axis' (or int = 0)``
+   ``planeaxis : str = 'X Axis' (or int = 0)``
 
       Possible enum values:
 
@@ -684,7 +684,7 @@ List of Filters
 
          <i>Cross plane offset</i>: Specify an offset of the cross-plane. The offset corresponds to the distance from the point specified in the plane reference parameter. By default (Cross plane offset == 0)
 
-   ``relativeto : Enum = 'Origin' (or int = 2)``
+   ``relativeto : str = 'Origin' (or int = 2)``
 
       Possible enum values:
 
@@ -848,7 +848,7 @@ List of Filters
 
          <i>Normals smoothing steps:</i>: Vertex normals are smoothed this number of times before generating craters.
 
-   ``rbf : Enum = 'f2 (Multiquadric)' (or int = 1)``
+   ``rbf : str = 'f2 (Multiquadric)' (or int = 1)``
 
       Possible enum values:
 
@@ -890,7 +890,7 @@ List of Filters
 
          <i>Elevation:</i>: Defines how much the crater rise itself from the mesh surface, giving an "impact-effect".
 
-   ``blend : Enum = 'f3 blending' (or int = 3)``
+   ``blend : str = 'f3 blending' (or int = 3)``
 
       Possible enum values:
 
@@ -1027,7 +1027,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``crosstype : Enum = 'Linear Y' (or int = 0)``
+   ``crosstype : str = 'Linear Y' (or int = 0)``
 
       Possible enum values:
 
@@ -1073,7 +1073,7 @@ List of Filters
 
          <i>Discretization points per sample interval</i>: This is the number of points between the sampling lines to which the vertices can be rounded.Increasing this can marginally increase the precision and decrease the speed of the operation.
 
-   ``operator : Enum = 'Intersection' (or int = 0)``
+   ``operator : str = 'Intersection' (or int = 0)``
 
       Possible enum values:
 
@@ -1107,7 +1107,7 @@ List of Filters
 
          <i>Angle Thr (deg)</i>: To avoid excessive flipping/swapping we consider only couple of faces with a significant diedral angle (e.g. greater than the indicated threshold). 
 
-   ``curvtype : Enum = 'mean' (or int = 0)``
+   ``curvtype : str = 'mean' (or int = 0)``
 
       Possible enum values:
 
@@ -1269,7 +1269,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``onprimitive : Enum = 'On vertices' (or int = 0)``
+   ``onprimitive : str = 'On vertices' (or int = 0)``
 
       Possible enum values:
 
@@ -1356,7 +1356,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``step : Enum = 'Store Vertex Position' (or int = 0)``
+   ``step : str = 'Store Vertex Position' (or int = 0)``
 
       Possible enum values:
 
@@ -1389,7 +1389,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``curvaturetype : Enum = 'Mean Curvature' (or int = 0)``
+   ``curvaturetype : str = 'Mean Curvature' (or int = 0)``
 
       Possible enum values:
 
@@ -1600,7 +1600,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``exportfile : Enum = 'Bundler .out' (or int = 0)``
+   ``exportfile : str = 'Bundler .out' (or int = 0)``
 
       Possible enum values:
 
@@ -1703,7 +1703,7 @@ List of Filters
 
          <i>UV parametrized</i>: The created plane has an UV parametrization
 
-   ``orientation : Enum = 'quasi-Straight Fit' (or int = 0)``
+   ``orientation : str = 'quasi-Straight Fit' (or int = 0)``
 
       Possible enum values:
 
@@ -1785,7 +1785,7 @@ List of Filters
 
          <i>Seed:</i>: By varying this seed, the terrain morphology will change.<br>Don't change the seed if you want to refine the current terrain morphology by changing the other parameters.
 
-   ``algorithm : Enum = 'Ridged multifractal terrain' (or int = 4)``
+   ``algorithm : str = 'Ridged multifractal terrain' (or int = 4)``
 
       Possible enum values:
 
@@ -1869,7 +1869,7 @@ List of Filters
 
          <i>Seed:</i>: By varying this seed, the terrain morphology will change.<br>Don't change the seed if you want to refine the current terrain morphology by changing the other parameters.
 
-   ``algorithm : Enum = 'Ridged multifractal terrain' (or int = 4)``
+   ``algorithm : str = 'Ridged multifractal terrain' (or int = 4)``
 
       Possible enum values:
 
@@ -2215,7 +2215,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``rendering_mode : Enum = 'Combined' (or int = 0)``
+   ``rendering_mode : str = 'Combined' (or int = 0)``
 
       Possible enum values:
 
@@ -2282,7 +2282,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``renderingmode : Enum = 'Combined' (or int = 0)``
+   ``renderingmode : str = 'Combined' (or int = 0)``
 
       Possible enum values:
 
@@ -2483,7 +2483,7 @@ List of Filters
 
          <i>AM Max Size</i>: Please notice that a large interval requires huge amount of memory to be allocated, in order save the intermediate results. <br>An interval of 50 should be fine.
 
-   ``stopcriteria : Enum = 'Area + Angle' (or int = 1)``
+   ``stopcriteria : str = 'Area + Angle' (or int = 1)``
 
       Possible enum values:
 
@@ -2796,12 +2796,6 @@ List of Filters
 
          <i>File Name</i>: The name of the file to load
 
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
-
 .. data:: load_obj
 
    *MeshLab filter name*: 'obj'
@@ -2818,12 +2812,6 @@ List of Filters
 
          <i>File Name</i>: The name of the file to load
 
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
-
 .. data:: load_off
 
    *MeshLab filter name*: 'off'
@@ -2839,12 +2827,6 @@ List of Filters
       .. raw:: html
 
          <i>File Name</i>: The name of the file to load
-
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
 
 .. data:: load_pdb
 
@@ -2920,12 +2902,6 @@ List of Filters
 
          <i>File Name</i>: The name of the file to load
 
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
-
 .. data:: load_pts
 
    *MeshLab filter name*: 'pts'
@@ -2957,12 +2933,6 @@ List of Filters
       .. raw:: html
 
          <i>File Name</i>: The name of the file to load
-
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
 
    ``meshindex : int = 0``
 
@@ -3021,12 +2991,6 @@ List of Filters
       .. raw:: html
 
          <i>File Name</i>: The name of the file to load
-
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
 
 .. data:: load_stl
 
@@ -3088,7 +3052,7 @@ List of Filters
 
          <i>Header Row to be skipped</i>: The number of lines that must be skipped at the beginning of the file. Generally, these files have one or more 'header' lines, before the point list
 
-   ``strformat : Enum = 'X Y Z' (or int = 0)``
+   ``strformat : str = 'X Y Z' (or int = 0)``
 
       Possible enum values:
 
@@ -3110,7 +3074,7 @@ List of Filters
 
          <i>Point format</i>: Which values are specified for each point, and in which order.
 
-   ``separator : Enum = ';' (or int = 0)``
+   ``separator : str = ';' (or int = 0)``
 
       Possible enum values:
 
@@ -3122,7 +3086,7 @@ List of Filters
 
          <i>Separator</i>: The separator between individual values in the point(s) description.
 
-   ``rgbmode : Enum = '[0-255]' (or int = 0)``
+   ``rgbmode : str = '[0-255]' (or int = 0)``
 
       Possible enum values:
 
@@ -3133,7 +3097,7 @@ List of Filters
 
          <i>Color format</i>: Colors may be specified in the [0-255] or [0.0-1.0] interval.
 
-   ``onerror : Enum = 'skip' (or int = 0)``
+   ``onerror : str = 'skip' (or int = 0)``
 
       Possible enum values:
 
@@ -3159,12 +3123,6 @@ List of Filters
       .. raw:: html
 
          <i>File Name</i>: The name of the file to load
-
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
 
 .. data:: load_wrl
 
@@ -3534,7 +3492,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``sampling : Enum = 'Vertex' (or int = 0)``
+   ``sampling : str = 'Vertex' (or int = 0)``
 
       Possible enum values:
 
@@ -3936,7 +3894,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``projectionplane : Enum = 'XY' (or int = 0)``
+   ``projectionplane : str = 'XY' (or int = 0)``
 
       Possible enum values:
 
@@ -3988,7 +3946,7 @@ List of Filters
 
          <i>Inter-Triangle border (px)</i>: Specifies how many pixels to be left between triangles in parametrization domain
 
-   ``method : Enum = 'Space-optimizing' (or int = 1)``
+   ``method : str = 'Space-optimizing' (or int = 1)``
 
       Possible enum values:
 
@@ -4071,7 +4029,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``metric : Enum = 'area/max side' (or int = 0)``
+   ``metric : str = 'area/max side' (or int = 0)``
 
       Possible enum values:
 
@@ -4506,7 +4464,7 @@ List of Filters
 
          <i>Planar threshold (deg)</i>: angle threshold for planar faces (degrees)
 
-   ``planartype : Enum = 'area/max side' (or int = 0)``
+   ``planartype : str = 'area/max side' (or int = 0)``
 
       Possible enum values:
 
@@ -4634,7 +4592,7 @@ List of Filters
 
          <i>Point Num</i>: Number of points (approximate).
 
-   ``spheregentech : Enum = 'Octahedron' (or int = 3)``
+   ``spheregentech : str = 'Octahedron' (or int = 3)``
 
       Possible enum values:
 
@@ -4958,7 +4916,7 @@ List of Filters
 
          <i>Mesh brightness</i>: must be between 0 and 2. 0 represents a completely dark mesh, 1 represents a mesh colorized with original colors, 2 represents a completely bright mesh
 
-   ``tfslist : Enum = 'Meshlab RGB' (or int = 1)``
+   ``tfslist : str = 'Meshlab RGB' (or int = 1)``
 
       Possible enum values:
 
@@ -5048,7 +5006,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``weightmode : Enum = 'Simple Average' (or int = 0)``
+   ``weightmode : str = 'Simple Average' (or int = 0)``
 
       Possible enum values:
 
@@ -5173,7 +5131,7 @@ List of Filters
 
          <i>Crease Angle</i>: Minimum angle between faces of the original to consider the shared edge as a feature to be preserved.
 
-   ``checksurfdist : bool = true``
+   ``checksurfdist : bool = false``
 
       .. raw:: html
 
@@ -5587,11 +5545,17 @@ List of Filters
 
          <i>File Name</i>: The name of the file to save
 
-   ``meshlabiostlunifyvertices : bool = true``
+   ``save_vertex_quality : bool = false``
 
       .. raw:: html
 
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
+         <i>Save Vertex Quality</i>: Save Vertex Quality
+
+   ``save_vertex_flag : bool = false``
+
+      .. raw:: html
+
+         <i>Save Vertex Flag</i>: Save Vertex Flag
 
    ``save_vertex_color : bool = false``
 
@@ -5599,31 +5563,55 @@ List of Filters
 
          <i>Save Vertex Color</i>: Save Vertex Color
 
-   ``save_vertex_normal : bool = false``
+   ``save_vertex_coord : bool = false``
+
+      .. raw:: html
+
+         <i>Save Vertex Coord</i>: Save Vertex Coord
+
+   ``save_vertex_normal : bool = true``
 
       .. raw:: html
 
          <i>Save Vertex Normal</i>: Save Vertex Normal
 
-   ``save_face_color : bool = false``
+   ``save_face_quality : bool = false``
+
+      .. raw:: html
+
+         <i>Save Face Quality</i>: Save Face Quality
+
+   ``save_face_flag : bool = false``
+
+      .. raw:: html
+
+         <i>Save Face Flag</i>: Save Face Flag
+
+   ``save_face_color : bool = true``
 
       .. raw:: html
 
          <i>Save Face Color</i>: Save Face Color
 
-   ``save_face_normal : bool = false``
+   ``save_face_normal : bool = true``
 
       .. raw:: html
 
          <i>Save Face Normal</i>: Save Face Normal
 
-   ``save_wedge_texcoord : bool = false``
+   ``save_wedge_color : bool = true``
+
+      .. raw:: html
+
+         <i>Save Wedge Color</i>: Save Wedge Color
+
+   ``save_wedge_texcoord : bool = true``
 
       .. raw:: html
 
          <i>Save Wedge TexCoord</i>: Save Wedge TexCoord
 
-   ``save_wedge_normal : bool = false``
+   ``save_wedge_normal : bool = true``
 
       .. raw:: html
 
@@ -5749,12 +5737,6 @@ List of Filters
 
          <i>File Name</i>: The name of the file to save
 
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
-
    ``save_vertex_color : bool = true``
 
       .. raw:: html
@@ -5813,12 +5795,6 @@ List of Filters
 
          <i>File Name</i>: The name of the file to save
 
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
-
    ``save_vertex_color : bool = true``
 
       .. raw:: html
@@ -5858,12 +5834,6 @@ List of Filters
       .. raw:: html
 
          <i>File Name</i>: The name of the file to save
-
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
 
    ``binary : bool = true``
 
@@ -5965,12 +5935,6 @@ List of Filters
 
          <i>File Name</i>: The name of the file to save
 
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
-
    ``binary : bool = true``
 
       .. raw:: html
@@ -6062,12 +6026,6 @@ List of Filters
       .. raw:: html
 
          <i>File Name</i>: The name of the file to save
-
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
 
    ``save_vertex_color : bool = true``
 
@@ -6333,7 +6291,7 @@ List of Filters
 
          <i>Color To Select</i>: Color that you want to be selected.
 
-   ``colorspace : Enum = 'HSV' (or int = 0)``
+   ``colorspace : str = 'HSV' (or int = 0)``
 
       Possible enum values:
 
@@ -6598,7 +6556,7 @@ List of Filters
 
    .. raw:: html
 
-      Select the <b>visible points</b> in a point cloud, as viewed from a given viewpoint.<br>It uses the Qhull library (http://www.qhull.org/ <br><br>The algorithm used (Katz, Tal and Basri 2007) determines visibility without reconstructing a surface or estimating normals.A point is considered visible if its transformed point lies on the convex hull of a trasformed points cloud from the original mesh points.</p>
+      Select the <b>visible points</b> in a point cloud, as viewed from a given viewpoint.<br>It uses the Qhull library (http://www.qhull.org/ <br><br>The algorithm used (Katz, Tal and Basri 2007) determines visibility without reconstructing a surface or estimating normals.A point is considered visible if its transformed point lies on the convex hull of a transformed points cloud from the original mesh points.</p>
 
    **Parameters:** 
 
@@ -6696,7 +6654,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``onprimitive : Enum = 'On vertices' (or int = 0)``
+   ``onprimitive : str = 'On vertices' (or int = 0)``
 
       Possible enum values:
 
@@ -7097,7 +7055,7 @@ List of Filters
 
          <i>Number of samples</i>: The desired number of samples. It can be smaller or larger than the mesh size, and according to the chosen sampling strategy it will try to adapt.
 
-   ``sampling : Enum = 'Similar Triangle' (or int = 0)``
+   ``sampling : str = 'Similar Triangle' (or int = 0)``
 
       Possible enum values:
 
@@ -7191,7 +7149,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``loopweight : Enum = 'Loop' (or int = 0)``
+   ``loopweight : str = 'Loop' (or int = 0)``
 
       Possible enum values:
 
@@ -7231,7 +7189,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``loopweight : Enum = 'Loop' (or int = 0)``
+   ``loopweight : str = 'Loop' (or int = 0)``
 
       Possible enum values:
 
@@ -7657,7 +7615,7 @@ List of Filters
 
          <i>Target Mesh</i>: The mesh whose texture will be filled according to source mesh data
 
-   ``attributeenum : Enum = 'Vertex Color' (or int = 0)``
+   ``attributeenum : str = 'Vertex Color' (or int = 0)``
 
       Possible enum values:
 
@@ -7854,7 +7812,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``rotaxis : Enum = 'X axis' (or int = 0)``
+   ``rotaxis : str = 'X axis' (or int = 0)``
 
       Possible enum values:
 
@@ -7867,7 +7825,7 @@ List of Filters
 
          <i>Rotation on:</i>: Choose a method
 
-   ``rotcenter : Enum = 'origin' (or int = 0)``
+   ``rotcenter : str = 'origin' (or int = 0)``
 
       Possible enum values:
 
@@ -7931,7 +7889,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``camera : Enum = 'Raster Camera' (or int = 0)``
+   ``camera : str = 'Raster Camera' (or int = 0)``
 
       Possible enum values:
 
@@ -7942,7 +7900,7 @@ List of Filters
 
          <i>Camera type</i>: Choose the camera to scale
 
-   ``rotaxis : Enum = 'X axis' (or int = 0)``
+   ``rotaxis : str = 'X axis' (or int = 0)``
 
       Possible enum values:
 
@@ -7955,7 +7913,7 @@ List of Filters
 
          <i>Rotation on:</i>: Choose a method
 
-   ``rotcenter : Enum = 'origin' (or int = 0)``
+   ``rotcenter : str = 'origin' (or int = 0)``
 
       Possible enum values:
 
@@ -8007,7 +7965,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``targetplane : Enum = 'XY plane' (or int = 0)``
+   ``targetplane : str = 'XY plane' (or int = 0)``
 
       Possible enum values:
 
@@ -8019,7 +7977,7 @@ List of Filters
 
          <i>Rotate to fit:</i>: Choose the plane where the selection will fit
 
-   ``rotaxis : Enum = 'any axis' (or int = 0)``
+   ``rotaxis : str = 'any axis' (or int = 0)``
 
       Possible enum values:
 
@@ -8060,7 +8018,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``camera : Enum = 'Raster Camera' (or int = 0)``
+   ``camera : str = 'Raster Camera' (or int = 0)``
 
       Possible enum values:
 
@@ -8071,7 +8029,7 @@ List of Filters
 
          <i>Camera type</i>: Choose the camera to scale
 
-   ``scalecenter : Enum = 'origin' (or int = 0)``
+   ``scalecenter : str = 'origin' (or int = 0)``
 
       Possible enum values:
 
@@ -8141,7 +8099,7 @@ List of Filters
 
          <i>Uniform Scaling</i>: If selected an uniform scaling (the same for all the three axis) is applied (the X axis value is used)
 
-   ``scalecenter : Enum = 'origin' (or int = 0)``
+   ``scalecenter : str = 'origin' (or int = 0)``
 
       Possible enum values:
 
@@ -8193,7 +8151,7 @@ List of Filters
 
          <i></i>: 
 
-   ``camera : Enum = 'Raster Camera' (or int = 0)``
+   ``camera : str = 'Raster Camera' (or int = 0)``
 
       Possible enum values:
 
@@ -8204,7 +8162,7 @@ List of Filters
 
          <i>Camera type</i>: Choose the camera to scale
 
-   ``behaviour : Enum = 'The matrix is the transformation to apply to the extrinsics' (or int = 0)``
+   ``behaviour : str = 'The matrix is the transformation to apply to the extrinsics' (or int = 0)``
 
       Possible enum values:
 
@@ -8237,7 +8195,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``camera : Enum = 'Raster Camera' (or int = 0)``
+   ``camera : str = 'Raster Camera' (or int = 0)``
 
       Possible enum values:
 
@@ -8294,7 +8252,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``traslmethod : Enum = 'XYZ translation' (or int = 0)``
+   ``traslmethod : str = 'XYZ translation' (or int = 0)``
 
       Possible enum values:
 
@@ -8377,7 +8335,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``level : Enum = 'Fewest triangles' (or int = 0)``
+   ``level : str = 'Fewest triangles' (or int = 0)``
 
       Possible enum values:
 
@@ -8603,7 +8561,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``normalmode : Enum = 'None' (or int = 0)``
+   ``normalmode : str = 'None' (or int = 0)``
 
       Possible enum values:
 
@@ -8616,7 +8574,7 @@ List of Filters
 
          <i>Normal Source:</i>: Choose a method
 
-   ``colormode : Enum = 'None' (or int = 0)``
+   ``colormode : str = 'None' (or int = 0)``
 
       Possible enum values:
 
@@ -8629,7 +8587,7 @@ List of Filters
 
          <i>Color Source:</i>: Choose a method
 
-   ``texcoordmode : Enum = 'None' (or int = 0)``
+   ``texcoordmode : str = 'None' (or int = 0)``
 
       Possible enum values:
 
@@ -8795,7 +8753,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``method : Enum = 'Lightness' (or int = 0)``
+   ``method : str = 'Lightness' (or int = 0)``
 
       Possible enum values:
 
@@ -9077,7 +9035,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``onprimitive : Enum = 'On vertices' (or int = 0)``
+   ``onprimitive : str = 'On vertices' (or int = 0)``
 
       Possible enum values:
 
@@ -9202,7 +9160,7 @@ List of Filters
 
          <i>Radius Variance</i>: The distance metric will vary along the surface between 1/x and x, linearly according to the scalar field specified by the quality.
 
-   ``colorstrategy : Enum = 'Seed Distance' (or int = 1)``
+   ``colorstrategy : str = 'Seed Distance' (or int = 1)``
 
       Possible enum values:
 
@@ -9215,7 +9173,7 @@ List of Filters
 
          <i>Color Strategy</i>: 
 
-   ``distancetype : Enum = 'Euclidean' (or int = 0)``
+   ``distancetype : str = 'Euclidean' (or int = 0)``
 
       Possible enum values:
 
@@ -9257,7 +9215,7 @@ List of Filters
 
          <i>Random seed</i>: To ensure repeatability you can specify the random seed used. If 0 the random seed is tied to the current clock.
 
-   ``relaxtype : Enum = 'Squared Distance' (or int = 1)``
+   ``relaxtype : str = 'Squared Distance' (or int = 1)``
 
       Possible enum values:
 
@@ -9321,7 +9279,7 @@ List of Filters
 
          <i>Add original surface</i>: Number of voxel per side in the volumetric representation.
 
-   ``elemtype : Enum = 'Edge' (or int = 1)``
+   ``elemtype : str = 'Edge' (or int = 1)``
 
       Possible enum values:
 
