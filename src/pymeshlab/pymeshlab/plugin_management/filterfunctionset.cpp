@@ -1,6 +1,7 @@
 #include "filterfunctionset.h"
 
 #include <QRegularExpression>
+#include <algorithm>
 
 #include "../common.h"
 
@@ -8,7 +9,7 @@ pymeshlab::FilterFunctionSet::FilterFunctionSet()
 {
 }
 
-void pymeshlab::FilterFunctionSet::popolate(const PluginManager& pm)
+void pymeshlab::FilterFunctionSet::populate(const PluginManager& pm)
 {
 	std::string samplesPath = getSamplesPath();
 
@@ -119,6 +120,9 @@ QString pymeshlab::FilterFunctionSet::toPythonName(const QString& name)
 	pythonName.replace('/', '_');
 	pythonName.replace('-', '_');
 	pythonName.remove(QRegularExpression("[().,'\":+]+"));
+	
+	if (pythonKeywords.contains(pythonName))
+		pythonName += "_";
 	return pythonName;
 }
 

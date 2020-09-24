@@ -7425,7 +7425,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``lambda : float = 0.5``
+   ``lambda_ : float = 0.5``
 
       .. raw:: html
 

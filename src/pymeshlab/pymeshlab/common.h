@@ -6,6 +6,7 @@
 #include <sstream>
 #include <array>
 #include <QString>
+#include <QStringList>
 #include <vcg/../wrap/io_trimesh/io_mask.h>
 #include <QtMessageHandler>
 
@@ -72,6 +73,16 @@ const char MESHLAB_TYPE_SHOTF[] = "Shotf";
 const char MESHLAB_TYPE_COLOR[] = "Color";
 const char MESHLAB_TYPE_MESH[] = "Mesh";
 const char MESHLAB_TYPE_FILENAME[] = "FileName";
+
+const static QStringList pythonKeywords = {
+	"False", "await", "else", "import", "pass",
+	"None", "break", "except", "in", "raise",
+	"True", "class", "finally", "is", "return",
+	"and", "continue", "for", "lambda", "try",
+	"as", "def	from", "nonlocal", "while",
+	"assert", "del", "global", "not", "with",
+	"async", "elif", "if", "or", "yield"
+};
 
 /**
  * @brief The CoutRedirect class

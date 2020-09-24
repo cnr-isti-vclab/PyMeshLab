@@ -20,7 +20,7 @@ pymeshlab::MeshSet::MeshSet(bool verbose) :
 	MeshDocument(),
 	pm(MeshLabSingletons::pluginManagerInstance(verbose))
 {
-	filterFunctionSet.popolate(pm);
+	filterFunctionSet.populate(pm);
 	setVerbosity(verbose);
 }
 

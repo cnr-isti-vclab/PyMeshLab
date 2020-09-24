@@ -10,7 +10,7 @@ class FilterFunctionSet
 {
 public:
 	FilterFunctionSet();
-	void popolate(const PluginManager& pm);
+	void populate(const PluginManager& pm);
 
 	QStringList pythonFunctionNames() const;
 
