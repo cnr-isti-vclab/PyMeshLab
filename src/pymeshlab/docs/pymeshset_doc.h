@@ -4,17 +4,10 @@
 namespace pymeshlab {
 namespace doc {
 
-//PyMeshLabException
-const char* PYEXC_MLEXC =
-		"Generic PyMeshLab exception.";
-
-//MeshSet::__init__
-const char* PYMS_INIT =
-		"Initializes a MeshSet. Default value of verbosity is false.";
-
 //MeshSet::__init__
 const char* PYMS_INIT_VERB =
-		"Initializes a MeshSet, setting the verbosity with the given value.";
+		"Initializes a MeshSet, setting the verbosity with the given value "
+		"(default is ``False``).";
 
 //MeshSet::set_verbosity
 const char* PYMS_SET_VERBOSITY_DOC =
@@ -66,6 +59,13 @@ const char* PYMS_SAVE_MESH =
 		"has no current selected mesh, if the format of the file is not known "
 		"by PyMeshLab or if there was an error while writing the file.";
 
+//MeshSet::save_mesh
+const char* PYMS_ADD_MESH =
+		"Adds a **copy** of the given mesh in the current MeshSet, with the given "
+		"name. By default, the added mesh will be set as the current mesh. "
+		"This behaviour can be changed by setting the arg ``set_as_current`` to "
+		"``False``.";
+
 //MeshSet::load_project
 const char* PYMS_LOAD_PROJECT =
 		"Loads a project from the given file name and stores it in the MeshSet.";
@@ -79,9 +79,8 @@ const char* PYMS_APPLY_FILTER =
 		"Applies the filter having the given filter name in the MeshSet. "
 		"Updates the current filter script, pushing the applied filter with the "
 		"given parameters. "
-		"See the :py:meth:`print_filter_list` function for a list of the possible "
-		"filters, and the :py:meth:`print_filter_parameter_list` function for "
-		"the list of parameters of a filter.";
+		"See the :ref:`filter_list` page to a list of all the possible filters "
+		"that can be applied using this function.";
 
 //MeshSet::load_filter_script
 const char* PYMS_LOAD_FILTER_SCRIPT =

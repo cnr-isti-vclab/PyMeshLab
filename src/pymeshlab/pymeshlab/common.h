@@ -6,8 +6,8 @@
 #include <sstream>
 #include <array>
 #include <QString>
+#include <QStringList>
 #include <vcg/../wrap/io_trimesh/io_mask.h>
-
 #include <QtMessageHandler>
 
 namespace pymeshlab {
@@ -46,7 +46,7 @@ const static std::array<QString, 14> saveCapabilitiesStrings = {
 	"Save Polygonal"
 };
 
-const char PYTHON_TYPE_ENUM[] = "int [Enum]";
+const char PYTHON_TYPE_ENUM[] = "str";
 const char PYTHON_TYPE_ABSPERC[] = "Percentage";
 const char PYTHON_TYPE_DYNAMIC_FLOAT[] = "float (bounded)";
 const char PYTHON_TYPE_BOOL[] = "bool";
@@ -59,6 +59,31 @@ const char PYTHON_TYPE_SHOTF[] = "Shotf [still unsupported]";
 const char PYTHON_TYPE_COLOR[] = "Color";
 const char PYTHON_TYPE_MESH[] = "Mesh [still unsupported]";
 const char PYTHON_TYPE_FILENAME[] = "str";
+
+const char MESHLAB_TYPE_ENUM[] = "RichEnum";
+const char MESHLAB_TYPE_ABSPERC[] = "RichAbsPerc";
+const char MESHLAB_TYPE_DYNAMIC_FLOAT[] = "RichDynamicFloat";
+const char MESHLAB_TYPE_BOOL[] = "RichBool";
+const char MESHLAB_TYPE_INT[] = "RichInt";
+const char MESHLAB_TYPE_FLOAT[] = "RichFloat";
+const char MESHLAB_TYPE_STRING[] = "RichString";
+const char MESHLAB_TYPE_MATRIX44F[] = "RichMatrix44f";
+const char MESHLAB_TYPE_POINT3F[] = "RichPoint3f";
+const char MESHLAB_TYPE_SHOTF[] = "RichShotf";
+const char MESHLAB_TYPE_COLOR[] = "RichColor";
+const char MESHLAB_TYPE_MESH[] = "RichMesh";
+const char MESHLAB_TYPE_OPENFILE[] = "RichOpenFile";
+const char MESHLAB_TYPE_SAVEFILE[] = "RichSaveFile";
+
+const static QStringList pythonKeywords = {
+	"False", "await", "else", "import", "pass",
+	"None", "break", "except", "in", "raise",
+	"True", "class", "finally", "is", "return",
+	"and", "continue", "for", "lambda", "try",
+	"as", "def	from", "nonlocal", "while",
+	"assert", "del", "global", "not", "with",
+	"async", "elif", "if", "or", "yield"
+};
 
 /**
  * @brief The CoutRedirect class
@@ -108,6 +133,7 @@ private:
 	QtMessageHandler old;
 };
 
+/** Utilities **/
 std::string getRootPath();
 std::string getPluginsPath();
 std::string getSamplesPath();

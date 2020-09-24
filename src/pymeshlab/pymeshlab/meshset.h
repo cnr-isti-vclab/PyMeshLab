@@ -31,6 +31,7 @@ public:
 
 	void loadMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());
 	void saveMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());
+	void addMesh(CMeshO& mesh, const std::string& name = "new_mesh", bool setAsCurrent = true);
 
 	void loadProject(const std::string& filename);
 	void saveProject(const std::string& filename);
@@ -64,7 +65,7 @@ private:
 			RichParameterList& rps,
 			bool ignoreFileName = false);
 
-	MeshFilterInterface* getPluginFromFilterName(
+	FilterPluginInterface* getPluginFromFilterName(
 			const QString& filterName,
 			QAction*& action) const;
 
@@ -99,15 +100,13 @@ private:
 			const std::string& filtername,
 			QString meshlabFilterName,
 			QAction* action,
-			MeshFilterInterface* filter,
+			FilterPluginInterface* filter,
 			const RichParameterList& rpl);
 
 	std::string filterRSTDocumentation(FilterFunctionSet::iterator it) const;
 	static void cleanHTML(QString& htmlString);
 
-	std::string basePath;
-	RichParameterList globalRPS;
-	PluginManager pm;
+	PluginManager& pm;
 	FilterFunctionSet filterFunctionSet;
 	FilterScript filterScript;
 

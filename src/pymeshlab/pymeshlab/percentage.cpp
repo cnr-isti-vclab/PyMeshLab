@@ -1,4 +1,5 @@
 #include "percentage.h"
+#include "exceptions.h"
 
 pymeshlab::Percentage::Percentage(float value)
 {

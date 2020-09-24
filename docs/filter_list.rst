@@ -24,7 +24,12 @@ List of Filters
 
          <i>Alpha value</i>: Compute the alpha value as percentage of the diagonal of the bbox
 
-   ``filtering : int [Enum] = 0``
+   ``filtering : str = 'Alpha Complex' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Alpha Complex'``
+         1. ``'Alpha Shape'``
 
       .. raw:: html
 
@@ -40,7 +45,12 @@ List of Filters
 
    **Parameters:** 
 
-   ``occmode : int [Enum] = 0``
+   ``occmode : str = 'per-Vertex' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'per-Vertex'``
+         1. ``'per-Face (deprecated)'``
 
       .. raw:: html
 
@@ -262,7 +272,12 @@ List of Filters
 
          <i>Cell Size</i>: The size of the cell of the clustering grid. Smaller the cell finer the resulting mesh. For obtaining a very coarse mesh use larger values.
 
-   ``sampling : int [Enum] = 1``
+   ``sampling : str = 'Closest to center' (or int = 1)``
+
+      Possible enum values:
+
+         0. ``'Average'``
+         1. ``'Closest to center'``
 
       .. raw:: html
 
@@ -450,7 +465,15 @@ List of Filters
 
          <i>MLS - Spherical parameter</i>: Control the curvature of the fitted spheres: 0 is equivalent to a pure plane fit,1 to a pure spherical fit, values between 0 and 1 gives intermediate results,while other real values might give interesting results, but take care with extremesettings !
 
-   ``curvaturetype : int [Enum] = 0``
+   ``curvaturetype : str = 'Mean' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Mean'``
+         1. ``'Gauss'``
+         2. ``'K1'``
+         3. ``'K2'``
+         4. ``'ApproxMean'``
 
       .. raw:: html
 
@@ -502,7 +525,14 @@ List of Filters
 
          <i>MLS - Max fitting iterations</i>: Max number of fitting iterations. (0 or 1 is equivalent to the standard IMLS)
 
-   ``curvaturetype : int [Enum] = 0``
+   ``curvaturetype : str = 'Mean' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Mean'``
+         1. ``'Gauss'``
+         2. ``'K1'``
+         3. ``'K2'``
 
       .. raw:: html
 
@@ -542,13 +572,30 @@ List of Filters
 
    **Parameters:** 
 
-   ``method : int [Enum] = 3``
+   ``method : str = 'Pseudoinverse Quadric Fitting' (or int = 3)``
+
+      Possible enum values:
+
+         0. ``'Taubin approximation'``
+         1. ``'Principal Component Analysis'``
+         2. ``'Normal Cycles'``
+         3. ``'Pseudoinverse Quadric Fitting'``
 
       .. raw:: html
 
          <i>Method:</i>: Choose a method
 
-   ``curvcolormethod : int [Enum] = 0``
+   ``curvcolormethod : str = 'Mean Curvature' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Mean Curvature'``
+         1. ``'Gaussian Curvature'``
+         2. ``'Min Curvature'``
+         3. ``'Max Curvature'``
+         4. ``'Shape Index'``
+         5. ``'CurvedNess'``
+         6. ``'None'``
 
       .. raw:: html
 
@@ -612,7 +659,14 @@ List of Filters
 
    **Parameters:** 
 
-   ``planeaxis : int [Enum] = 0``
+   ``planeaxis : str = 'X Axis' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'X Axis'``
+         1. ``'Y Axis'``
+         2. ``'Z Axis'``
+         3. ``'Custom Axis'``
 
       .. raw:: html
 
@@ -630,7 +684,13 @@ List of Filters
 
          <i>Cross plane offset</i>: Specify an offset of the cross-plane. The offset corresponds to the distance from the point specified in the plane reference parameter. By default (Cross plane offset == 0)
 
-   ``relativeto : int [Enum] = 2``
+   ``relativeto : str = 'Origin' (or int = 2)``
+
+      Possible enum values:
+
+         0. ``'Bounding box center'``
+         1. ``'Bounding box min'``
+         2. ``'Origin'``
 
       .. raw:: html
 
@@ -788,7 +848,13 @@ List of Filters
 
          <i>Normals smoothing steps:</i>: Vertex normals are smoothed this number of times before generating craters.
 
-   ``rbf : int [Enum] = 1``
+   ``rbf : str = 'f2 (Multiquadric)' (or int = 1)``
+
+      Possible enum values:
+
+         0. ``'f1 (Gaussian)'``
+         1. ``'f2 (Multiquadric)'``
+         2. ``'f3'``
 
       .. raw:: html
 
@@ -824,7 +890,14 @@ List of Filters
 
          <i>Elevation:</i>: Defines how much the crater rise itself from the mesh surface, giving an "impact-effect".
 
-   ``blend : int [Enum] = 3``
+   ``blend : str = 'f3 blending' (or int = 3)``
+
+      Possible enum values:
+
+         0. ``'Exponential blending'``
+         1. ``'Linear blending'``
+         2. ``'Gaussian blending'``
+         3. ``'f3 blending'``
 
       .. raw:: html
 
@@ -954,7 +1027,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``crosstype : int [Enum] = 0``
+   ``crosstype : str = 'Linear Y' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Linear Y'``
+         1. ``'Radial'``
+         2. ``'Curvature'``
 
       .. raw:: html
 
@@ -994,7 +1073,13 @@ List of Filters
 
          <i>Discretization points per sample interval</i>: This is the number of points between the sampling lines to which the vertices can be rounded.Increasing this can marginally increase the precision and decrease the speed of the operation.
 
-   ``operator : int [Enum] = 0``
+   ``operator : str = 'Intersection' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Intersection'``
+         1. ``'Union'``
+         2. ``'Difference'``
 
       .. raw:: html
 
@@ -1022,7 +1107,13 @@ List of Filters
 
          <i>Angle Thr (deg)</i>: To avoid excessive flipping/swapping we consider only couple of faces with a significant diedral angle (e.g. greater than the indicated threshold). 
 
-   ``curvtype : int [Enum] = 0``
+   ``curvtype : str = 'mean' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'mean'``
+         1. ``'norm squared'``
+         2. ``'absolute'``
 
       .. raw:: html
 
@@ -1178,7 +1269,12 @@ List of Filters
 
    **Parameters:** 
 
-   ``onprimitive : int [Enum] = 0``
+   ``onprimitive : str = 'On vertices' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'On vertices'``
+         1. ``'On Faces'``
 
       .. raw:: html
 
@@ -1260,7 +1356,12 @@ List of Filters
 
    **Parameters:** 
 
-   ``step : int [Enum] = 0``
+   ``step : str = 'Store Vertex Position' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Store Vertex Position'``
+         1. ``'Blend Vertex Position'``
 
       .. raw:: html
 
@@ -1288,7 +1389,14 @@ List of Filters
 
    **Parameters:** 
 
-   ``curvaturetype : int [Enum] = 0``
+   ``curvaturetype : str = 'Mean Curvature' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Mean Curvature'``
+         1. ``'Gaussian Curvature'``
+         2. ``'RMS Curvature'``
+         3. ``'ABS Curvature'``
 
       .. raw:: html
 
@@ -1492,7 +1600,12 @@ List of Filters
 
    **Parameters:** 
 
-   ``exportfile : int [Enum] = 0``
+   ``exportfile : str = 'Bundler .out' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Bundler .out'``
+         1. ``'Agisoft xml'``
 
       .. raw:: html
 
@@ -1590,7 +1703,15 @@ List of Filters
 
          <i>UV parametrized</i>: The created plane has an UV parametrization
 
-   ``orientation : int [Enum] = 0``
+   ``orientation : str = 'quasi-Straight Fit' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'quasi-Straight Fit'``
+         1. ``'Best Fit'``
+         2. ``'XZ Parallel'``
+         3. ``'YZ Parallel'``
+         4. ``'YX Parallel'``
 
       .. raw:: html
 
@@ -1664,7 +1785,15 @@ List of Filters
 
          <i>Seed:</i>: By varying this seed, the terrain morphology will change.<br>Don't change the seed if you want to refine the current terrain morphology by changing the other parameters.
 
-   ``algorithm : int [Enum] = 4``
+   ``algorithm : str = 'Ridged multifractal terrain' (or int = 4)``
+
+      Possible enum values:
+
+         0. ``'fBM (fractal Brownian Motion)'``
+         1. ``'Standard multifractal'``
+         2. ``'Heterogeneous multifractal'``
+         3. ``'Hybrid multifractal terrain'``
+         4. ``'Ridged multifractal terrain'``
 
       .. raw:: html
 
@@ -1740,7 +1869,15 @@ List of Filters
 
          <i>Seed:</i>: By varying this seed, the terrain morphology will change.<br>Don't change the seed if you want to refine the current terrain morphology by changing the other parameters.
 
-   ``algorithm : int [Enum] = 4``
+   ``algorithm : str = 'Ridged multifractal terrain' (or int = 4)``
+
+      Possible enum values:
+
+         0. ``'fBM (fractal Brownian Motion)'``
+         1. ``'Standard multifractal'``
+         2. ``'Heterogeneous multifractal'``
+         3. ``'Hybrid multifractal terrain'``
+         4. ``'Ridged multifractal terrain'``
 
       .. raw:: html
 
@@ -2078,7 +2215,16 @@ List of Filters
 
    **Parameters:** 
 
-   ``rendering_mode : int [Enum] = 0``
+   ``rendering_mode : str = 'Combined' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Combined'``
+         1. ``'Normal map'``
+         2. ``'Color per vertex'``
+         3. ``'Specular'``
+         4. ``'Silhouette'``
+         5. ``'Specular combined'``
 
       .. raw:: html
 
@@ -2136,7 +2282,16 @@ List of Filters
 
    **Parameters:** 
 
-   ``renderingmode : int [Enum] = 0``
+   ``renderingmode : str = 'Combined' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Combined'``
+         1. ``'Normal map'``
+         2. ``'Color per vertex'``
+         3. ``'Specular'``
+         4. ``'Silhouette'``
+         5. ``'Specular combined'``
 
       .. raw:: html
 
@@ -2328,7 +2483,14 @@ List of Filters
 
          <i>AM Max Size</i>: Please notice that a large interval requires huge amount of memory to be allocated, in order save the intermediate results. <br>An interval of 50 should be fine.
 
-   ``stopcriteria : int [Enum] = 1``
+   ``stopcriteria : str = 'Area + Angle' (or int = 1)``
+
+      Possible enum values:
+
+         0. ``'Best Heuristic'``
+         1. ``'Area + Angle'``
+         2. ``'Regularity'``
+         3. ``'L2'``
 
       .. raw:: html
 
@@ -2634,12 +2796,6 @@ List of Filters
 
          <i>File Name</i>: The name of the file to load
 
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
-
 .. data:: load_obj
 
    *MeshLab filter name*: 'obj'
@@ -2656,12 +2812,6 @@ List of Filters
 
          <i>File Name</i>: The name of the file to load
 
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
-
 .. data:: load_off
 
    *MeshLab filter name*: 'off'
@@ -2677,12 +2827,6 @@ List of Filters
       .. raw:: html
 
          <i>File Name</i>: The name of the file to load
-
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
 
 .. data:: load_pdb
 
@@ -2758,12 +2902,6 @@ List of Filters
 
          <i>File Name</i>: The name of the file to load
 
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
-
 .. data:: load_pts
 
    *MeshLab filter name*: 'pts'
@@ -2795,12 +2933,6 @@ List of Filters
       .. raw:: html
 
          <i>File Name</i>: The name of the file to load
-
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
 
    ``meshindex : int = 0``
 
@@ -2859,12 +2991,6 @@ List of Filters
       .. raw:: html
 
          <i>File Name</i>: The name of the file to load
-
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
 
 .. data:: load_stl
 
@@ -2926,25 +3052,57 @@ List of Filters
 
          <i>Header Row to be skipped</i>: The number of lines that must be skipped at the beginning of the file. Generally, these files have one or more 'header' lines, before the point list
 
-   ``strformat : int [Enum] = 0``
+   ``strformat : str = 'X Y Z' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'X Y Z'``
+         1. ``'X Y Z Reflectance'``
+         2. ``'X Y Z Reflectance R G B'``
+         3. ``'X Y Z Reflectance Nx Ny Nz'``
+         4. ``'X Y Z Reflectance R G B Nx Ny Nz'``
+         5. ``'X Y Z Reflectance Nx Ny Nz R G B'``
+         6. ``'X Y Z R G B'``
+         7. ``'X Y Z R G B Reflectance'``
+         8. ``'X Y Z R G B Reflectance Nx Ny Nz'``
+         9. ``'X Y Z R G B Nx Ny Nz Reflectance'``
+         10. ``'X Y Z Nx Ny Nz'``
+         11. ``'X Y Z Nx Ny Nz R G B Reflectance'``
+         12. ``'X Y Z Nx Ny Nz Reflectance R G B'``
 
       .. raw:: html
 
          <i>Point format</i>: Which values are specified for each point, and in which order.
 
-   ``separator : int [Enum] = 0``
+   ``separator : str = ';' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``';'``
+         1. ``','``
+         2. ``'SPACE'``
 
       .. raw:: html
 
          <i>Separator</i>: The separator between individual values in the point(s) description.
 
-   ``rgbmode : int [Enum] = 0``
+   ``rgbmode : str = '[0-255]' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'[0-255]'``
+         1. ``'[0.0-1.0]'``
 
       .. raw:: html
 
          <i>Color format</i>: Colors may be specified in the [0-255] or [0.0-1.0] interval.
 
-   ``onerror : int [Enum] = 0``
+   ``onerror : str = 'skip' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'skip'``
+         1. ``'stop'``
 
       .. raw:: html
 
@@ -2965,12 +3123,6 @@ List of Filters
       .. raw:: html
 
          <i>File Name</i>: The name of the file to load
-
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
 
 .. data:: load_wrl
 
@@ -3340,7 +3492,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``sampling : int [Enum] = 0``
+   ``sampling : str = 'Vertex' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Vertex'``
+         1. ``'Edge'``
+         2. ``'Face'``
 
       .. raw:: html
 
@@ -3736,7 +3894,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``projectionplane : int [Enum] = 0``
+   ``projectionplane : str = 'XY' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'XY'``
+         1. ``'XZ'``
+         2. ``'YZ'``
 
       .. raw:: html
 
@@ -3782,7 +3946,12 @@ List of Filters
 
          <i>Inter-Triangle border (px)</i>: Specifies how many pixels to be left between triangles in parametrization domain
 
-   ``method : int [Enum] = 1``
+   ``method : str = 'Space-optimizing' (or int = 1)``
+
+      Possible enum values:
+
+         0. ``'Basic'``
+         1. ``'Space-optimizing'``
 
       .. raw:: html
 
@@ -3860,7 +4029,18 @@ List of Filters
 
    **Parameters:** 
 
-   ``metric : int [Enum] = 0``
+   ``metric : str = 'area/max side' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'area/max side'``
+         1. ``'inradius/circumradius'``
+         2. ``'Mean ratio'``
+         3. ``'Area'``
+         4. ``'Texture Angle Distortion'``
+         5. ``'Texture Area Distortion'``
+         6. ``'Polygonal planarity (max)'``
+         7. ``'Polygonal planarity (relative)'``
 
       .. raw:: html
 
@@ -4284,7 +4464,15 @@ List of Filters
 
          <i>Planar threshold (deg)</i>: angle threshold for planar faces (degrees)
 
-   ``planartype : int [Enum] = 0``
+   ``planartype : str = 'area/max side' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'area/max side'``
+         1. ``'inradius/circumradius'``
+         2. ``'mean ratio'``
+         3. ``'delaunay'``
+         4. ``'topology'``
 
       .. raw:: html
 
@@ -4404,7 +4592,15 @@ List of Filters
 
          <i>Point Num</i>: Number of points (approximate).
 
-   ``spheregentech : int [Enum] = 3``
+   ``spheregentech : str = 'Octahedron' (or int = 3)``
+
+      Possible enum values:
+
+         0. ``'Montecarlo'``
+         1. ``'Poisson Sampling'``
+         2. ``'DiscoBall'``
+         3. ``'Octahedron'``
+         4. ``'Fibonacci'``
 
       .. raw:: html
 
@@ -4720,7 +4916,21 @@ List of Filters
 
          <i>Mesh brightness</i>: must be between 0 and 2. 0 represents a completely dark mesh, 1 represents a mesh colorized with original colors, 2 represents a completely bright mesh
 
-   ``tfslist : int [Enum] = 1``
+   ``tfslist : str = 'Meshlab RGB' (or int = 1)``
+
+      Possible enum values:
+
+         0. ``'Custom Transfer Function File'``
+         1. ``'Meshlab RGB'``
+         2. ``'RGB'``
+         3. ``'French RGB'``
+         4. ``'Red Scale'``
+         5. ``'Green Scale'``
+         6. ``'Blue Scale'``
+         7. ``'Flat'``
+         8. ``'Saw 4'``
+         9. ``'Saw 8'``
+         10. ``'Grey Scale'``
 
       .. raw:: html
 
@@ -4796,7 +5006,14 @@ List of Filters
 
    **Parameters:** 
 
-   ``weightmode : int [Enum] = 0``
+   ``weightmode : str = 'Simple Average' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Simple Average'``
+         1. ``'By Angle'``
+         2. ``'By Area'``
+         3. ``'As defined by N. Max'``
 
       .. raw:: html
 
@@ -4914,7 +5131,7 @@ List of Filters
 
          <i>Crease Angle</i>: Minimum angle between faces of the original to consider the shared edge as a feature to be preserved.
 
-   ``checksurfdist : bool = true``
+   ``checksurfdist : bool = false``
 
       .. raw:: html
 
@@ -5328,11 +5545,17 @@ List of Filters
 
          <i>File Name</i>: The name of the file to save
 
-   ``meshlabiostlunifyvertices : bool = true``
+   ``save_vertex_quality : bool = false``
 
       .. raw:: html
 
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
+         <i>Save Vertex Quality</i>: Save Vertex Quality
+
+   ``save_vertex_flag : bool = false``
+
+      .. raw:: html
+
+         <i>Save Vertex Flag</i>: Save Vertex Flag
 
    ``save_vertex_color : bool = false``
 
@@ -5340,31 +5563,55 @@ List of Filters
 
          <i>Save Vertex Color</i>: Save Vertex Color
 
-   ``save_vertex_normal : bool = false``
+   ``save_vertex_coord : bool = false``
+
+      .. raw:: html
+
+         <i>Save Vertex Coord</i>: Save Vertex Coord
+
+   ``save_vertex_normal : bool = true``
 
       .. raw:: html
 
          <i>Save Vertex Normal</i>: Save Vertex Normal
 
-   ``save_face_color : bool = false``
+   ``save_face_quality : bool = false``
+
+      .. raw:: html
+
+         <i>Save Face Quality</i>: Save Face Quality
+
+   ``save_face_flag : bool = false``
+
+      .. raw:: html
+
+         <i>Save Face Flag</i>: Save Face Flag
+
+   ``save_face_color : bool = true``
 
       .. raw:: html
 
          <i>Save Face Color</i>: Save Face Color
 
-   ``save_face_normal : bool = false``
+   ``save_face_normal : bool = true``
 
       .. raw:: html
 
          <i>Save Face Normal</i>: Save Face Normal
 
-   ``save_wedge_texcoord : bool = false``
+   ``save_wedge_color : bool = true``
+
+      .. raw:: html
+
+         <i>Save Wedge Color</i>: Save Wedge Color
+
+   ``save_wedge_texcoord : bool = true``
 
       .. raw:: html
 
          <i>Save Wedge TexCoord</i>: Save Wedge TexCoord
 
-   ``save_wedge_normal : bool = false``
+   ``save_wedge_normal : bool = true``
 
       .. raw:: html
 
@@ -5490,12 +5737,6 @@ List of Filters
 
          <i>File Name</i>: The name of the file to save
 
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
-
    ``save_vertex_color : bool = true``
 
       .. raw:: html
@@ -5554,12 +5795,6 @@ List of Filters
 
          <i>File Name</i>: The name of the file to save
 
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
-
    ``save_vertex_color : bool = true``
 
       .. raw:: html
@@ -5599,12 +5834,6 @@ List of Filters
       .. raw:: html
 
          <i>File Name</i>: The name of the file to save
-
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
 
    ``binary : bool = true``
 
@@ -5706,12 +5935,6 @@ List of Filters
 
          <i>File Name</i>: The name of the file to save
 
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
-
    ``binary : bool = true``
 
       .. raw:: html
@@ -5803,12 +6026,6 @@ List of Filters
       .. raw:: html
 
          <i>File Name</i>: The name of the file to save
-
-   ``meshlabiostlunifyvertices : bool = true``
-
-      .. raw:: html
-
-         <i>Unify Duplicated Vertices in STL files</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
 
    ``save_vertex_color : bool = true``
 
@@ -6074,7 +6291,12 @@ List of Filters
 
          <i>Color To Select</i>: Color that you want to be selected.
 
-   ``colorspace : int [Enum] = 0``
+   ``colorspace : str = 'HSV' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'HSV'``
+         1. ``'RGB'``
 
       .. raw:: html
 
@@ -6334,7 +6556,7 @@ List of Filters
 
    .. raw:: html
 
-      Select the <b>visible points</b> in a point cloud, as viewed from a given viewpoint.<br>It uses the Qhull library (http://www.qhull.org/ <br><br>The algorithm used (Katz, Tal and Basri 2007) determines visibility without reconstructing a surface or estimating normals.A point is considered visible if its transformed point lies on the convex hull of a trasformed points cloud from the original mesh points.</p>
+      Select the <b>visible points</b> in a point cloud, as viewed from a given viewpoint.<br>It uses the Qhull library (http://www.qhull.org/ <br><br>The algorithm used (Katz, Tal and Basri 2007) determines visibility without reconstructing a surface or estimating normals.A point is considered visible if its transformed point lies on the convex hull of a transformed points cloud from the original mesh points.</p>
 
    **Parameters:** 
 
@@ -6432,7 +6654,12 @@ List of Filters
 
    **Parameters:** 
 
-   ``onprimitive : int [Enum] = 0``
+   ``onprimitive : str = 'On vertices' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'On vertices'``
+         1. ``'On Faces'``
 
       .. raw:: html
 
@@ -6828,7 +7055,15 @@ List of Filters
 
          <i>Number of samples</i>: The desired number of samples. It can be smaller or larger than the mesh size, and according to the chosen sampling strategy it will try to adapt.
 
-   ``sampling : int [Enum] = 0``
+   ``sampling : str = 'Similar Triangle' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Similar Triangle'``
+         1. ``'Dual Similar Triangle'``
+         2. ``'Long Edge Subdiv'``
+         3. ``'Sample Edges'``
+         4. ``'Sample NonFaux Edges'``
 
       .. raw:: html
 
@@ -6914,7 +7149,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``loopweight : int [Enum] = 0``
+   ``loopweight : str = 'Loop' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Loop'``
+         1. ``'Enhance regularity'``
+         2. ``'Enhance continuity'``
 
       .. raw:: html
 
@@ -6948,7 +7189,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``loopweight : int [Enum] = 0``
+   ``loopweight : str = 'Loop' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Loop'``
+         1. ``'Enhance regularity'``
+         2. ``'Enhance continuity'``
 
       .. raw:: html
 
@@ -7178,7 +7425,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``lambda : float = 0.5``
+   ``lambda_ : float = 0.5``
 
       .. raw:: html
 
@@ -7368,7 +7615,14 @@ List of Filters
 
          <i>Target Mesh</i>: The mesh whose texture will be filled according to source mesh data
 
-   ``attributeenum : int [Enum] = 0``
+   ``attributeenum : str = 'Vertex Color' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Vertex Color'``
+         1. ``'Vertex Normal'``
+         2. ``'Vertex Quality'``
+         3. ``'Texture Color'``
 
       .. raw:: html
 
@@ -7558,13 +7812,26 @@ List of Filters
 
    **Parameters:** 
 
-   ``rotaxis : int [Enum] = 0``
+   ``rotaxis : str = 'X axis' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'X axis'``
+         1. ``'Y axis'``
+         2. ``'Z axis'``
+         3. ``'custom axis'``
 
       .. raw:: html
 
          <i>Rotation on:</i>: Choose a method
 
-   ``rotcenter : int [Enum] = 0``
+   ``rotcenter : str = 'origin' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'origin'``
+         1. ``'barycenter'``
+         2. ``'custom point'``
 
       .. raw:: html
 
@@ -7622,19 +7889,37 @@ List of Filters
 
    **Parameters:** 
 
-   ``camera : int [Enum] = 0``
+   ``camera : str = 'Raster Camera' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Raster Camera'``
+         1. ``'Mesh Camera'``
 
       .. raw:: html
 
          <i>Camera type</i>: Choose the camera to scale
 
-   ``rotaxis : int [Enum] = 0``
+   ``rotaxis : str = 'X axis' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'X axis'``
+         1. ``'Y axis'``
+         2. ``'Z axis'``
+         3. ``'custom axis'``
 
       .. raw:: html
 
          <i>Rotation on:</i>: Choose a method
 
-   ``rotcenter : int [Enum] = 0``
+   ``rotcenter : str = 'origin' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'origin'``
+         1. ``'camera viewpoint'``
+         2. ``'custom point'``
 
       .. raw:: html
 
@@ -7680,13 +7965,26 @@ List of Filters
 
    **Parameters:** 
 
-   ``targetplane : int [Enum] = 0``
+   ``targetplane : str = 'XY plane' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'XY plane'``
+         1. ``'YZ plane'``
+         2. ``'ZX plane'``
 
       .. raw:: html
 
          <i>Rotate to fit:</i>: Choose the plane where the selection will fit
 
-   ``rotaxis : int [Enum] = 0``
+   ``rotaxis : str = 'any axis' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'any axis'``
+         1. ``'X axis'``
+         2. ``'Y axis'``
+         3. ``'Z axis'``
 
       .. raw:: html
 
@@ -7720,13 +8018,24 @@ List of Filters
 
    **Parameters:** 
 
-   ``camera : int [Enum] = 0``
+   ``camera : str = 'Raster Camera' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Raster Camera'``
+         1. ``'Mesh Camera'``
 
       .. raw:: html
 
          <i>Camera type</i>: Choose the camera to scale
 
-   ``scalecenter : int [Enum] = 0``
+   ``scalecenter : str = 'origin' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'origin'``
+         1. ``'camera viewpoint'``
+         2. ``'custom point'``
 
       .. raw:: html
 
@@ -7790,7 +8099,13 @@ List of Filters
 
          <i>Uniform Scaling</i>: If selected an uniform scaling (the same for all the three axis) is applied (the X axis value is used)
 
-   ``scalecenter : int [Enum] = 0``
+   ``scalecenter : str = 'origin' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'origin'``
+         1. ``'barycenter'``
+         2. ``'custom point'``
 
       .. raw:: html
 
@@ -7836,13 +8151,23 @@ List of Filters
 
          <i></i>: 
 
-   ``camera : int [Enum] = 0``
+   ``camera : str = 'Raster Camera' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Raster Camera'``
+         1. ``'Mesh Camera'``
 
       .. raw:: html
 
          <i>Camera type</i>: Choose the camera to scale
 
-   ``behaviour : int [Enum] = 0``
+   ``behaviour : str = 'The matrix is the transformation to apply to the extrinsics' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'The matrix is the transformation to apply to the extrinsics'``
+         1. ``'The matrix represent the new extrinsics'``
 
       .. raw:: html
 
@@ -7870,7 +8195,12 @@ List of Filters
 
    **Parameters:** 
 
-   ``camera : int [Enum] = 0``
+   ``camera : str = 'Raster Camera' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Raster Camera'``
+         1. ``'Mesh Camera'``
 
       .. raw:: html
 
@@ -7922,7 +8252,14 @@ List of Filters
 
    **Parameters:** 
 
-   ``traslmethod : int [Enum] = 0``
+   ``traslmethod : str = 'XYZ translation' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'XYZ translation'``
+         1. ``'Center on Scene BBox'``
+         2. ``'Center on Layer BBox'``
+         3. ``'Set new Origin'``
 
       .. raw:: html
 
@@ -7998,7 +8335,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``level : int [Enum] = 0``
+   ``level : str = 'Fewest triangles' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Fewest triangles'``
+         1. ``'(in between)'``
+         2. ``'Better quad shape'``
 
       .. raw:: html
 
@@ -8218,19 +8561,39 @@ List of Filters
 
    **Parameters:** 
 
-   ``normalmode : int [Enum] = 0``
+   ``normalmode : str = 'None' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'None'``
+         1. ``'Vertex'``
+         2. ``'Wedge'``
+         3. ``'Face'``
 
       .. raw:: html
 
          <i>Normal Source:</i>: Choose a method
 
-   ``colormode : int [Enum] = 0``
+   ``colormode : str = 'None' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'None'``
+         1. ``'Vertex'``
+         2. ``'Wedge'``
+         3. ``'Face'``
 
       .. raw:: html
 
          <i>Color Source:</i>: Choose a method
 
-   ``texcoordmode : int [Enum] = 0``
+   ``texcoordmode : str = 'None' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'None'``
+         1. ``'Vertex'``
+         2. ``'Wedge'``
 
       .. raw:: html
 
@@ -8390,7 +8753,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``method : int [Enum] = 0``
+   ``method : str = 'Lightness' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Lightness'``
+         1. ``'Luminosity'``
+         2. ``'Average'``
 
       .. raw:: html
 
@@ -8666,7 +9035,12 @@ List of Filters
 
    **Parameters:** 
 
-   ``onprimitive : int [Enum] = 0``
+   ``onprimitive : str = 'On vertices' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'On vertices'``
+         1. ``'On Faces'``
 
       .. raw:: html
 
@@ -8786,13 +9160,26 @@ List of Filters
 
          <i>Radius Variance</i>: The distance metric will vary along the surface between 1/x and x, linearly according to the scalar field specified by the quality.
 
-   ``colorstrategy : int [Enum] = 1``
+   ``colorstrategy : str = 'Seed Distance' (or int = 1)``
+
+      Possible enum values:
+
+         0. ``'None'``
+         1. ``'Seed Distance'``
+         2. ``'Border Distance'``
+         3. ``'Region Area'``
 
       .. raw:: html
 
          <i>Color Strategy</i>: 
 
-   ``distancetype : int [Enum] = 0``
+   ``distancetype : str = 'Euclidean' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Euclidean'``
+         1. ``'Quality Weighted'``
+         2. ``'Anisotropic'``
 
       .. raw:: html
 
@@ -8828,7 +9215,13 @@ List of Filters
 
          <i>Random seed</i>: To ensure repeatability you can specify the random seed used. If 0 the random seed is tied to the current clock.
 
-   ``relaxtype : int [Enum] = 1``
+   ``relaxtype : str = 'Squared Distance' (or int = 1)``
+
+      Possible enum values:
+
+         0. ``'Geodesic'``
+         1. ``'Squared Distance'``
+         2. ``'Restricted'``
 
       .. raw:: html
 
@@ -8886,7 +9279,13 @@ List of Filters
 
          <i>Add original surface</i>: Number of voxel per side in the volumetric representation.
 
-   ``elemtype : int [Enum] = 1``
+   ``elemtype : str = 'Edge' (or int = 1)``
+
+      Possible enum values:
+
+         0. ``'Seed'``
+         1. ``'Edge'``
+         2. ``'Face'``
 
       .. raw:: html
 

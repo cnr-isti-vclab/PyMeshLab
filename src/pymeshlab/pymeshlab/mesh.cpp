@@ -4,7 +4,8 @@
 #include <vcg/complex/allocate.h>
 #include <vcg/../wrap/io_trimesh/import_obj.h>
 
-void loadMesh(CMeshO& m, std::string filename){
+void loadMesh(CMeshO& m, std::string filename)
+{
 	vcg::tri::io::ImporterOBJ<CMeshO>::Info oi;
 	vcg::tri::io::ImporterOBJ<CMeshO>::Open(m, filename.c_str(), oi);
 	vcg::tri::UpdateBounding<CMeshO>::Box(m);
@@ -28,6 +29,16 @@ void pymeshlab::Mesh::compact(CMeshO& mesh)
 	vcg::tri::Allocator<CMeshO>::CompactEveryVector(mesh);
 }
 
+void pymeshlab::Mesh::compactVertices(CMeshO& mesh)
+{
+	vcg::tri::Allocator<CMeshO>::CompactVertexVector(mesh);
+}
+
+void pymeshlab::Mesh::compactFaces(CMeshO& mesh)
+{
+	vcg::tri::Allocator<CMeshO>::CompactFaceVector(mesh);
+}
+
 int pymeshlab::Mesh::selectedFaceNumber(const CMeshO& mesh)
 {
 	int counter = 0;
@@ -36,6 +47,54 @@ int pymeshlab::Mesh::selectedFaceNumber(const CMeshO& mesh)
 			counter++;
 	}
 	return counter;
+}
+
+CMeshO pymeshlab::Mesh::createFromMatrices(
+		const Eigen::MatrixX3f& vertices,
+		const Eigen::MatrixX3i& faces,
+		const Eigen::MatrixX3f& vertexNormals,
+		const Eigen::MatrixX3f& faceNormals)
+{
+	CMeshO m;
+	if (vertices.rows() > 0) {
+		CMeshO::VertexIterator vi =
+				vcg::tri::Allocator<CMeshO>::AddVertices(m, vertices.rows());
+		std::vector<CMeshO::VertexPointer> ivp(vertices.rows());
+
+		bool hasVNormals = vertexNormals.rows() == vertices.rows();
+		for (unsigned int i = 0; i < vertices.rows(); ++i, ++vi) {
+			ivp[i] = &*vi;
+			vi->P() = CMeshO::CoordType(vertices(i,0), vertices(i,1), vertices(i,2));
+			if (hasVNormals) {
+				vi->N() = CMeshO::CoordType(
+							vertexNormals(i,0),
+							vertexNormals(i,1),
+							vertexNormals(i,2));
+			}
+		}
+
+		CMeshO::FaceIterator fi =
+				vcg::tri::Allocator<CMeshO>::AddFaces(m, faces.rows());
+
+		bool hasFNormals = faceNormals.rows() == faces.rows();
+		for (unsigned int i = 0; i < faces.rows(); ++i, ++fi) {
+			//TODO manage error:
+			// ivp[faces(x,y)] could not exists
+			// if faces(x,y) >= ivp.size()
+			fi->V(0)=ivp[faces(i,0)];
+			fi->V(1)=ivp[faces(i,1)];
+			fi->V(2)=ivp[faces(i,2)];
+
+			if (hasFNormals){
+				fi->N() = CMeshO::CoordType(
+							faceNormals(i,0),
+							faceNormals(i,1),
+							faceNormals(i,2));
+			}
+		}
+	}
+
+	return m;
 }
 
 bool pymeshlab::Mesh::isCompact(const CMeshO& mesh)

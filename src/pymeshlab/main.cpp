@@ -4,6 +4,8 @@
 #include "bindings/pymeshset.h"
 #include "bindings/pypercentage.h"
 
+#include "bindings/pyexceptions.h"
+
 namespace py = pybind11;
 
 PYBIND11_MODULE(meshlab, m) {
@@ -12,6 +14,8 @@ PYBIND11_MODULE(meshlab, m) {
 	pymeshlab::initMesh(m); //Mesh Class
 	pymeshlab::initMeshSet(m); //MeshDocument Class
 	pymeshlab::initPercentage(m); //Percentage Class
+	
+	pymeshlab::initExceptions(m); //Exceptions
 
 #ifdef PYMESHLAB_VERSION
 	m.attr("__version__") = PYBIND11_STRINGIFY(PYMESHLAB_VERSION);

@@ -1,5 +1,6 @@
 #include "pymeshlab/mesh.h"
 #include "pymesh.h"
+#include <pybind11/eigen.h>
 #include "docs/pymesh_doc.h"
 
 namespace py = pybind11;
@@ -13,8 +14,13 @@ void pymeshlab::initMesh(py::module& m)
 	compactnessexc.doc() = doc::PYEXC_COMPACTNESS;
 	componentexc.doc() = doc::PYEXC_COMPONENT;
 
-	//empty constructor
-	meshClass.def(py::init(), doc::PYMESH_INIT);
+	//constructor (could be empty)
+	meshClass.def(
+				py::init(&Mesh::createFromMatrices), doc::PYMESH_INIT,
+				py::arg("vertex_matrix") = Eigen::MatrixX3f(),
+				py::arg("face_matrix") = Eigen::MatrixX3i(),
+				py::arg("v_normals_matrix") = Eigen::MatrixX3f(),
+				py::arg("f_normals_matrix") = Eigen::MatrixX3f());
 
 	meshClass.def("vertex_number", &CMeshO::VN, doc::PYMESH_VN);
 	meshClass.def("face_number", &CMeshO::FN, doc::PYMESH_FN);

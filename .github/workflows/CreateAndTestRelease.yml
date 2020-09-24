@@ -42,6 +42,7 @@ jobs:
       uses: jurplel/install-qt-action@v2
       with:
         modules: xmlpatterns
+        version: '5.15.0'
     - name: Install Python ${{ matrix.pyversion }}
       uses: actions/setup-python@v2
       with:
@@ -115,7 +116,7 @@ jobs:
       uses: jurplel/install-qt-action@v2
       with:
         modules: xmlpatterns
-        version: '5.14.2'
+        version: '5.15.0'
     - name: Install Python ${{ matrix.pyversion }}
       uses: actions/setup-python@v2
       with:

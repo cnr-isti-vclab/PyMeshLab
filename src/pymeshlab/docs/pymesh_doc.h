@@ -17,7 +17,8 @@ const char* PYEXC_COMPONENT =
 
 //Mesh::__init__
 const char* PYMESH_INIT =
-		"Creates an empty Mesh.";
+		"Creates a mesh containing the data passed as input. If no "
+		"data is passed as argument, an empty mesh will be created.";
 
 //Mesh::vertex_number
 const char* PYMESH_VN =

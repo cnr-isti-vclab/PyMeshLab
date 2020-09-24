@@ -5,7 +5,6 @@
 #include "docs/pymeshset_doc.h"
 #include <vcg/../wrap/io_trimesh/import_obj.h>
 #include <pybind11/eval.h>
-#include <mlexception.h>
 
 namespace py = pybind11;
 
@@ -13,12 +12,10 @@ void pymeshlab::initMeshSet(pybind11::module& m)
 {
 	py::class_<MeshSet> meshSetClass(m, "MeshSet");
 
-	auto mlexc = py::register_exception<MLException>(m, "PyMeshLabException");
-	mlexc.doc() = doc::PYEXC_MLEXC;
+	
 
-	//empty constructor
-	meshSetClass.def(py::init(), doc::PYMS_INIT);
-	meshSetClass.def(py::init<bool>(), doc::PYMS_INIT_VERB, py::arg("verbose"));
+	//constructor
+	meshSetClass.def(py::init<bool>(), doc::PYMS_INIT_VERB, py::arg("verbose") = false);
 
 	meshSetClass.def("set_versbosity", &MeshSet::setVerbosity, doc::PYMS_SET_VERBOSITY_DOC, py::arg("verbosity"));
 	meshSetClass.def("number_meshes", &MeshSet::size, doc::PYMS_SIZE_DOC);
@@ -29,6 +26,7 @@ void pymeshlab::initMeshSet(pybind11::module& m)
 	meshSetClass.def("mesh", &MeshSet::mesh, doc::PYMS_MESH, py::arg("id"), py::return_value_policy::reference);
 	meshSetClass.def("load_mesh", &MeshSet::loadMesh, doc::PYMS_LOAD_MESH, py::arg("file_name"));
 	meshSetClass.def("save_mesh", &MeshSet::saveMesh, doc::PYMS_SAVE_MESH, py::arg("file_name"));
+	meshSetClass.def("add_mesh", &MeshSet::addMesh, doc::PYMS_ADD_MESH, py::arg("mesh"), py::arg("mesh_name") = "", py::arg("set_as_current") = true);
 	meshSetClass.def("load_project", &MeshSet::loadProject, doc::PYMS_LOAD_PROJECT, py::arg("file_name"));
 	meshSetClass.def("save_project", &MeshSet::saveProject, doc::PYMS_SAVE_PROJECT, py::arg("file_name"));
 	meshSetClass.def("apply_filter", &MeshSet::applyFilter, doc::PYMS_APPLY_FILTER, py::arg("filter_name"));

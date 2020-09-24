@@ -1,5 +1,4 @@
 #include "meshset.h"
-#include "percentage.h"
 
 #include <pybind11/numpy.h>
 #include <pybind11/eigen.h>
@@ -7,23 +6,22 @@
 #include <meshlabdocumentxml.h>
 #include <meshlabdocumentbundler.h>
 #include <wrap/io_trimesh/alnParser.h>
+
+#include "percentage.h"
+#include "exceptions.h"
 #include "common.h"
+#include "meshlabsingletons.h"
 
 namespace py = pybind11;
 
 GLLogStream* pymeshlab::MeshSet::staticLogger = nullptr;
 
 pymeshlab::MeshSet::MeshSet(bool verbose) :
-	MeshDocument(), globalRPS(), pm()
+	MeshDocument(),
+	pm(MeshLabSingletons::pluginManagerInstance(verbose))
 {
-	QDir dir(QString::fromStdString(pymeshlab::getPluginsPath()));
-	pymeshlab::QDebugRedirect* qdbr = nullptr;
-	if (!verbose)
-		qdbr = new pymeshlab::QDebugRedirect(); //redirect qdebug to null, just for this scope
-	pm.loadPlugins(globalRPS, dir);
-	filterFunctionSet.popolate(pm);
+	filterFunctionSet.populate(pm);
 	setVerbosity(verbose);
-	delete qdbr;
 }
 
 pymeshlab::MeshSet::~MeshSet()
@@ -73,7 +71,7 @@ CMeshO& pymeshlab::MeshSet::mesh(int id)
 void pymeshlab::MeshSet::printPluginList() const
 {
 	std::cout << "MeshSet class - list of loaded plugins:\n";
-	for (const MeshCommonInterface* p : pm.ownerPlug){
+	for (const PluginInterface* p : pm.ownerPlug){
 		std::cout << "\t" << p->pluginName().toStdString() << "\n";
 	}
 }
@@ -145,6 +143,12 @@ void pymeshlab::MeshSet::saveMesh(const std::string& filename, pybind11::kwargs 
 	if (mm() == nullptr)
 		throw MLException("MeshSet has no selected Mesh.");
 	saveMeshUsingPlugin(filename, nullptr, FilterFunction(), kwargs);
+}
+
+void pymeshlab::MeshSet::addMesh(CMeshO& mesh, const std::string& name, bool setAsCurrent)
+{
+	MeshModel* mm = this->addNewMesh("", QString::fromStdString(name), setAsCurrent);
+	mm->cm = mesh;
 }
 
 void pymeshlab::MeshSet::loadProject(const std::string& filename)
@@ -226,9 +230,9 @@ void pymeshlab::MeshSet::applyFilterScript()
 		QString meshlabFilterName = p.first;
 		std::string filtername = FilterFunctionSet::toPythonName(meshlabFilterName).toStdString();
 		QAction* action = nullptr;
-		MeshFilterInterface* fp = getPluginFromFilterName(meshlabFilterName, action);
+		FilterPluginInterface* fp = getPluginFromFilterName(meshlabFilterName, action);
 		RichParameterList rpl;
-		fp->initParameterSet(action, *this, rpl);
+		fp->initParameterList(action, *this, rpl);
 		updateRichParameterList(filtername, p.second, rpl);
 		applyFilterRPL(filtername, meshlabFilterName, action, fp, rpl);
 	}
@@ -252,9 +256,9 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 		//all the other plugins:
 		else {
 			QAction* action = nullptr;
-			MeshFilterInterface* fp = getPluginFromFilterName(meshlabFilterName, action);
+			FilterPluginInterface* fp = getPluginFromFilterName(meshlabFilterName, action);
 			RichParameterList rpl;
-			fp->initParameterSet(action, *this, rpl);
+			fp->initParameterList(action, *this, rpl);
 			updateRichParameterList(*it, kwargs, rpl);
 			applyFilterRPL(filtername, meshlabFilterName, action, fp, rpl);
 		}
@@ -354,9 +358,11 @@ void pymeshlab::MeshSet::updateRichParameterList(
 	}
 }
 
-MeshFilterInterface* pymeshlab::MeshSet::getPluginFromFilterName(const QString& filterName, QAction*& action) const
+FilterPluginInterface* pymeshlab::MeshSet::getPluginFromFilterName(
+		const QString& filterName, 
+		QAction*& action) const
 {
-	for (MeshFilterInterface* fp : pm.meshFilterPlug){
+	for (FilterPluginInterface* fp : pm.meshFilterPlug){
 		QList<QAction*> acts = fp->actions();
 		for (QAction* act : acts) {
 			if (filterName == fp->filterName(act)){
@@ -387,10 +393,9 @@ void pymeshlab::MeshSet::loadMeshUsingPlugin(
 			if (ff.pythonFunctionName().isEmpty()){
 				ff = *filterFunctionSet.find("load_" + extension);
 			}
-			MeshIOInterface* plugin = pm.allKnowInputFormats[extension];
-			int mask = 0; //todo: use this mask
+			IOPluginInterface* plugin = pm.allKnowInputFormats[extension];
+			int mask = 0;
 			RichParameterList rps;
-			plugin->initGlobalParameterSet(nullptr, rps);
 			plugin->initPreOpenParameter(extension, QString::fromStdString(filename), rps);
 			plugin->initOpenParameter(extension, *(this->mm()), rps);
 
@@ -422,12 +427,11 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 		if (ff.pythonFunctionName().isEmpty()){
 			ff = *filterFunctionSet.find("save_" + extension);
 		}
-		MeshIOInterface* plugin = pm.allKnowOutputFormats[extension];
+		IOPluginInterface* plugin = pm.allKnowOutputFormats[extension];
 		//int mask = 0; //todo: use this mask
 		RichParameterList rps;
 		int capability = 0, defbits = 0, capabilityMesh = 0, capabilityUser = 0;
 		plugin->GetExportMaskCapability(extension,capability,defbits);
-		plugin->initGlobalParameterSet(nullptr, rps);
 		plugin->initSaveParameter(extension, *(this->mm()), rps);
 
 		updateRichParameterList(ff, kwargs, rps, true);
@@ -504,7 +508,7 @@ void pymeshlab::MeshSet::loadALN(const QString& fileName)
 	for(ir=rmv.begin();ir!=rmv.end() && openRes;++ir) {
 		QString relativeToProj = fi.absoluteDir().absolutePath() + "/" + (*ir).filename.c_str();
 		loadMesh(relativeToProj.toStdString(), py::kwargs());
-		mm()->cm.Tr = ir->trasformation;
+		mm()->cm.Tr = ir->transformation;
 	}
 
 	//restore current dir
@@ -609,21 +613,21 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 		const FilterFunctionParameter& ffp,
 		const std::pair<py::handle, py::handle>& k)
 {
-	QString pythonType = ffp.pythonTypeString();
-	if (pythonType == PYTHON_TYPE_BOOL){
+	QString meshlabType = ffp.meshlabTypeString();
+	if (meshlabType == MESHLAB_TYPE_BOOL){
 		par.setValue(BoolValue(py::cast<bool>(k.second)));
 	}
-	else if (pythonType == PYTHON_TYPE_INT) {
+	else if (meshlabType == MESHLAB_TYPE_INT) {
 		par.setValue(IntValue(py::cast<int>(k.second)));
 	}
-	else if (pythonType == PYTHON_TYPE_FLOAT) {
+	else if (meshlabType == MESHLAB_TYPE_FLOAT) {
 		par.setValue(FloatValue(py::cast<float>(k.second)));
 	}
-	else if (pythonType == PYTHON_TYPE_STRING) {
+	else if (meshlabType == MESHLAB_TYPE_STRING) {
 		par.setValue(StringValue(
 					QString::fromStdString(py::cast<std::string>(k.second))));
 	}
-	else if (pythonType == PYTHON_TYPE_ABSPERC) {
+	else if (meshlabType == MESHLAB_TYPE_ABSPERC) {
 		RichAbsPerc& abs = dynamic_cast<RichAbsPerc&>(par);
 		float absvalue;
 		try {
@@ -638,10 +642,10 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 
 		abs.setValue(AbsPercValue(absvalue));
 	}
-	else if (pythonType == PYTHON_TYPE_COLOR) {
+	else if (meshlabType == MESHLAB_TYPE_COLOR) {
 		par.setValue(ColorValue(py::cast<QColor>(k.second)));
 	}
-	else if (pythonType == PYTHON_TYPE_DYNAMIC_FLOAT) {
+	else if (meshlabType == MESHLAB_TYPE_DYNAMIC_FLOAT) {
 		RichDynamicFloat& dyn = dynamic_cast<RichDynamicFloat&>(par);
 		float val = py::cast<float>(k.second);
 		if (val >= dyn.min && val <= dyn.max)
@@ -652,7 +656,7 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 					" out of bounds (min: " + QString::number(dyn.min) +
 					"; max: " + QString::number(dyn.max) + ").");
 	}
-	else if (pythonType == PYTHON_TYPE_POINT3F) {
+	else if (meshlabType == MESHLAB_TYPE_POINT3F) {
 		py::array_t<float> arr = py::cast<py::array_t<float>>(k.second);
 		if (arr.size() != 3){
 			throw MLException(
@@ -664,7 +668,7 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 			par.setValue(Point3fValue(p));
 		}
 	}
-	else if (pythonType == PYTHON_TYPE_MATRIX44F){
+	else if (meshlabType == MESHLAB_TYPE_MATRIX44F){
 		Eigen::Matrix4f arr = py::cast<Eigen::Matrix4f>(k.second);
 		if (arr.size() != 16){
 			throw MLException(
@@ -683,7 +687,42 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 			par.setValue(Matrix44fValue(m));
 		}
 	}
-	else if (pythonType.contains("still_unsupported")){
+	else if (meshlabType == MESHLAB_TYPE_ENUM){
+		RichEnum& en = dynamic_cast<RichEnum&>(par);
+		int value;
+		try{
+			std::string e = py::cast<std::string>(k.second);
+			value = en.enumvalues.indexOf(QString::fromStdString(e));
+			if (value == -1){
+				std::string list;
+				for (const QString& s : en.enumvalues){
+					list += "'" + s.toStdString() + "'; ";
+				}
+				std::string message =
+						"Enum '" + e + "' not found. Possible values are " + list;
+				throw InvalidEnumException(message);
+			}
+		}
+		catch(const py::cast_error& err){
+			value = py::cast<int>(k.second);
+			if (! (value>= 0 && value < en.enumvalues.size()))
+				throw InvalidEnumException(
+						"Enum " +std::to_string(value)+ " not valid. Must be a "
+						"value between 0 and " + std::to_string(en.enumvalues.size()));
+		}
+		en.setValue(EnumValue(value));
+	}
+	else if (meshlabType == MESHLAB_TYPE_OPENFILE){
+		RichOpenFile& of = dynamic_cast<RichOpenFile&>(par);
+		of.setValue(StringValue(
+					QString::fromStdString(py::cast<std::string>(k.second))));
+	}
+	else if (meshlabType == MESHLAB_TYPE_SAVEFILE){
+		RichSaveFile& sf = dynamic_cast<RichSaveFile&>(par);
+		sf.setValue(StringValue(
+					QString::fromStdString(py::cast<std::string>(k.second))));
+	}
+	else if (meshlabType.contains("still_unsupported")){
 		std::cerr << "Warning: parameter type still not supported";
 	}
 	else {
@@ -697,7 +736,7 @@ void pymeshlab::MeshSet::applyFilterRPL(
 		const std::string& filtername,
 		QString meshlabFilterName,
 		QAction* action,
-		MeshFilterInterface* fp,
+		FilterPluginInterface* fp,
 		const RichParameterList& rpl)
 {
 	try {
@@ -705,7 +744,8 @@ void pymeshlab::MeshSet::applyFilterRPL(
 		if (mm() != nullptr)
 			mm()->updateDataMask(req);
 		staticLogger = verbose ? &Log : nullptr;
-		fp->applyFilter(action, *this, rpl, &MeshSet::filterCallBack);
+		unsigned int postConditionMask;
+		fp->applyFilter(action, *this, postConditionMask, rpl, &MeshSet::filterCallBack);
 		filterCallBack(100, (filtername + " applied!").c_str());
 		if (mm() != nullptr) {
 			mm()->cm.svn = int(vcg::tri::UpdateSelection<CMeshO>::VertexCount(mm()->cm));
@@ -740,9 +780,27 @@ std::string pymeshlab::MeshSet::filterRSTDocumentation(
 
 		for (const FilterFunctionParameter& p : *it){
 
-			doc += "   ``" + p.pythonName().toStdString() + " : " +
-					p.pythonTypeString().toStdString() +
-					" = " + p.defaultValueString().toStdString() + "``\n\n";
+			if (! p.defaultValue().isEnum()){
+				doc += "   ``" + p.pythonName().toStdString() + " : " +
+						p.pythonTypeString().toStdString() +
+						" = " + p.defaultValueString().toStdString() + "``\n\n";
+			}
+			else {
+				doc += "   ``" + p.pythonName().toStdString() + " : " +
+						p.pythonTypeString().toStdString() +
+						" = " + p.defaultValueString().toStdString() +
+						" (or int = " + std::to_string(p.defaultValue().getEnum()) +
+						")``\n\n";
+				doc += "      Possible enum values:\n\n";
+
+				const RichEnum& ren = dynamic_cast<const RichEnum&>(p.richParameter());
+				unsigned int i = 0;
+				for (const QString& v : ren.enumvalues){
+					doc += "         " + std::to_string(i++) +". ``'" + v.toStdString() +
+							"'``\n";
+				}
+				doc +="\n";
+			}
 
 			doc += "      .. raw:: html\n\n";
 			QString desc = p.longDescription();
