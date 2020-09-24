@@ -47,6 +47,11 @@ QString pymeshlab::FilterFunctionParameter::pythonTypeString() const
 	return pType;
 }
 
+QString pymeshlab::FilterFunctionParameter::meshlabTypeString() const
+{
+	return parameter->stringType();
+}
+
 QString pymeshlab::FilterFunctionParameter::description() const
 {
 	if (parameter){

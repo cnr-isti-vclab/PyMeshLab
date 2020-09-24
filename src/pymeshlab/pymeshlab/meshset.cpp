@@ -613,7 +613,7 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 		const FilterFunctionParameter& ffp,
 		const std::pair<py::handle, py::handle>& k)
 {
-	QString meshlabType = ffp.defaultValue().typeName();
+	QString meshlabType = ffp.meshlabTypeString();
 	if (meshlabType == MESHLAB_TYPE_BOOL){
 		par.setValue(BoolValue(py::cast<bool>(k.second)));
 	}
@@ -711,6 +711,16 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 						"value between 0 and " + std::to_string(en.enumvalues.size()));
 		}
 		en.setValue(EnumValue(value));
+	}
+	else if (meshlabType == MESHLAB_TYPE_OPENFILE){
+		RichOpenFile& of = dynamic_cast<RichOpenFile&>(par);
+		of.setValue(StringValue(
+					QString::fromStdString(py::cast<std::string>(k.second))));
+	}
+	else if (meshlabType == MESHLAB_TYPE_SAVEFILE){
+		RichSaveFile& sf = dynamic_cast<RichSaveFile&>(par);
+		sf.setValue(StringValue(
+					QString::fromStdString(py::cast<std::string>(k.second))));
 	}
 	else if (meshlabType.contains("still_unsupported")){
 		std::cerr << "Warning: parameter type still not supported";

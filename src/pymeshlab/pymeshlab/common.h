@@ -60,19 +60,20 @@ const char PYTHON_TYPE_COLOR[] = "Color";
 const char PYTHON_TYPE_MESH[] = "Mesh [still unsupported]";
 const char PYTHON_TYPE_FILENAME[] = "str";
 
-const char MESHLAB_TYPE_ENUM[] = "Enum";
-const char MESHLAB_TYPE_ABSPERC[] = "AbsPerc";
-const char MESHLAB_TYPE_DYNAMIC_FLOAT[] = "DynamicFloat";
-const char MESHLAB_TYPE_BOOL[] = "Bool";
-const char MESHLAB_TYPE_INT[] = "Int";
-const char MESHLAB_TYPE_FLOAT[] = "Float";
-const char MESHLAB_TYPE_STRING[] = "String";
-const char MESHLAB_TYPE_MATRIX44F[] = "Matrix44f";
-const char MESHLAB_TYPE_POINT3F[] = "Point3f";
-const char MESHLAB_TYPE_SHOTF[] = "Shotf";
-const char MESHLAB_TYPE_COLOR[] = "Color";
-const char MESHLAB_TYPE_MESH[] = "Mesh";
-const char MESHLAB_TYPE_FILENAME[] = "FileName";
+const char MESHLAB_TYPE_ENUM[] = "RichEnum";
+const char MESHLAB_TYPE_ABSPERC[] = "RichAbsPerc";
+const char MESHLAB_TYPE_DYNAMIC_FLOAT[] = "RichDynamicFloat";
+const char MESHLAB_TYPE_BOOL[] = "RichBool";
+const char MESHLAB_TYPE_INT[] = "RichInt";
+const char MESHLAB_TYPE_FLOAT[] = "RichFloat";
+const char MESHLAB_TYPE_STRING[] = "RichString";
+const char MESHLAB_TYPE_MATRIX44F[] = "RichMatrix44f";
+const char MESHLAB_TYPE_POINT3F[] = "RichPoint3f";
+const char MESHLAB_TYPE_SHOTF[] = "RichShotf";
+const char MESHLAB_TYPE_COLOR[] = "RichColor";
+const char MESHLAB_TYPE_MESH[] = "RichMesh";
+const char MESHLAB_TYPE_OPENFILE[] = "RichOpenFile";
+const char MESHLAB_TYPE_SAVEFILE[] = "RichSaveFile";
 
 const static QStringList pythonKeywords = {
 	"False", "await", "else", "import", "pass",
