@@ -66,6 +66,10 @@ const char* PYMS_ADD_MESH =
 		"This behaviour can be changed by setting the arg ``set_as_current`` to "
 		"``False``.";
 
+//MeshSet::clear
+const char* PYMS_CLEAR = 
+		"Clears the meshset, deleting all its content.";
+
 //MeshSet::load_project
 const char* PYMS_LOAD_PROJECT =
 		"Loads a project from the given file name and stores it in the MeshSet.";
