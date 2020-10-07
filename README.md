@@ -1,8 +1,8 @@
 # PyMeshLab
 
-![BuildAndTestUbuntu](https://github.com/cnr-isti-vclab/PyMeshLab/workflows/BuildAndTestUbuntu/badge.svg)
-![BuildAndTestMacOS](https://github.com/cnr-isti-vclab/PyMeshLab/workflows/BuildAndTestMacOS/badge.svg)
-![BuildAndTestWindows](https://github.com/cnr-isti-vclab/PyMeshLab/workflows/BuildAndTestWindows/badge.svg)
+![Linux](https://github.com/cnr-isti-vclab/PyMeshLab/workflows/Linux/badge.svg)
+![MacOS](https://github.com/cnr-isti-vclab/PyMeshLab/workflows/MacOS/badge.svg)
+![Windows](https://github.com/cnr-isti-vclab/PyMeshLab/workflows/Windows/badge.svg)
 
 [![Documentation Status](https://readthedocs.org/projects/pymeshlab/badge/?version=latest)](https://pymeshlab.readthedocs.io/en/latest/?badge=latest)
 
@@ -35,15 +35,13 @@ ms.load_mesh('airplane.obj')
 ms.apply_filter('convex_hull')
 ms.save_mesh('convex_hull.ply')
 ```
-You can list all the available filters and theirs parameters:
-```
-ms.print_filter_list()
-ms.print_filter_parameter_list('surface_reconstruction_screened_poisson')
-```
+
 And apply filters with your parameters:
 ```
 ms.apply_filter('noisy_isosurface', resolution=128)
 ```
+
+You can find all the names and parameters of the filters in the [List of Filters](https://pymeshlab.readthedocs.io/en/latest/filter_list.html) page of the documentaiton.
 
 To run the tests:
 ```
