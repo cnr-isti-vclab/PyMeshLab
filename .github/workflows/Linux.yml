@@ -1,15 +1,15 @@
-name: BuildAndTestWindows
+name: Linux
 
-on: [push, pull_request]
+on:
+  [push, pull_request]
 
 jobs:
-  windows_build_pymeshlab:
-    name: Build PyMeshLab (Windows)
-    runs-on: windows-latest
+  unix_build_pymeshlab:
+    name: Build PyMeshLab
+    runs-on: ubuntu-16.04
     strategy:
       matrix:
         pyversion: [3.5, 3.6, 3.7, 3.8]
-
     steps:
     - uses: actions/checkout@v2
       with:
@@ -17,24 +17,9 @@ jobs:
     - name: checkout sub-submodule vcg
       run: |
         cd meshlab
-        $auth_header="$(git config --local --get http.https://github.com/.extraheader)"
+        auth_header="$(git config --local --get http.https://github.com/.extraheader)"
         git submodule sync --recursive
         git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
-    - name: Downlaod Jom
-      run: |
-        Invoke-WebRequest -Uri "http://download.qt.io/official_releases/jom/jom_1_1_3.zip" -OutFile "jom_1_1_3.zip"
-        New-Item -Name "jom" -ItemType "directory"
-        Expand-Archive -Path jom_1_1_3.zip -DestinationPath .\jom
-        echo "::add-path::$(Get-Location)\jom"
-    - name: Setup env variables
-      id: envs
-      run: |
-        echo '::set-env name=VCINSTALLDIR::C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
-        cd meshlab
-        $var=(git rev-parse --short HEAD --version) | Out-String
-        echo "::set-output name=meshlab_commit::$($var)"
-    - name: Setup MSVC
-      uses: ilammy/msvc-dev-cmd@v1
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
@@ -43,31 +28,43 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.pyversion }}
+    - name: Install Ubuntu dependencies
+      run: |
+        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev 
+    - name: Environment variables
+      id: envs
+      run: |
+        cd meshlab
+        echo  ::set-output name=meshlab_commit::$(git rev-parse --short HEAD)
     - name: Cache MeshLab Build
       id: cache-meshlab-build
       uses: actions/cache@v2
       with:
-        path: |
-          pymeshlab/lib
-          pymeshlab/Qt*.dll
+        path: pymeshlab/lib
         key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
+    - name: Install MeshLab-Ubuntu dependencies
+      if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && runner.os == 'Linux'
+      run: |
+        sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
     - name: Build MeshLab
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
-        .\install\${{ runner.os }}\build_meshlab.ps1
-    - name: Build PyMeshLab
+        sh install/${{ runner.os }}/build_meshlab.sh
+    - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
-        .\install\${{ runner.os }}\build_pymeshlab.ps1
+        export PYTHON_VERSION=${{ matrix.pyversion }}
+        sh install/${{ runner.os }}/build_pymeshlab.sh
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
         path: pymeshlab/
-
-  windows_tests:
-    name: Test PyMeshLab (Windows)
-    needs: windows_build_pymeshlab
-    runs-on: windows-latest
+  
+  
+  tests:
+    name: Test PyMeshLab
+    runs-on: ubuntu-16.04
+    needs: unix_build_pymeshlab
     strategy:
       matrix:
         pyversion: [3.5, 3.6, 3.7, 3.8]
@@ -87,4 +84,3 @@ jobs:
         pip install pytest
         pip install numpy
         pytest -s pymeshlab
-    
