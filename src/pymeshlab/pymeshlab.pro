@@ -161,4 +161,3 @@ SOURCES += \
 	pymeshlab/plugin_management/filterfunction.cpp \
 	pymeshlab/plugin_management/filterfunctionparameter.cpp \
 	pymeshlab/plugin_management/filterfunctionset.cpp
-
