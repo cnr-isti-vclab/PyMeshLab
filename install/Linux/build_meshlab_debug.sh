@@ -9,7 +9,7 @@ BUILD_PATH=$(realpath ../../build)
 mkdir $BUILD_PATH
 
 bash ../../meshlab/install/linux/linux_build_debug.sh $BUILD_PATH
-bash ../../meshlab/install/linux/linux_make_boundle.sh $BUILD_PATH/distrib
+bash ../../meshlab/install/linux/linux_make_bundle.sh $BUILD_PATH/distrib
 bash ../../meshlab/install/linux/linux_deploy.sh $BUILD_PATH/distrib
 
 cp -ar $BUILD_PATH/distrib/usr/lib $DISTRIB_PATH/
