@@ -17,7 +17,7 @@ Copy-Item -Path $BUILD_PATH\distrib\*.dll -Destination $DISTRIB_PATH\lib\
 Copy-Item -Path $BUILD_PATH\distrib\*.exp -Destination $DISTRIB_PATH\lib\
 Copy-Item -Path $BUILD_PATH\distrib\*.lib -Destination $DISTRIB_PATH\lib\
 Copy-Item -Path $BUILD_PATH\distrib\*.lib -Destination $DISTRIB_PATH\lib\
-Copy-Item -Path $BUILD_PATH\distrib\lib\win32-msvc\*.lib -Destination $DISTRIB_PATH\lib\meshlab\
+Copy-Item -Path $BUILD_PATH\distrib\lib\meshlab\*.lib -Destination $DISTRIB_PATH\lib\meshlab\
 Copy-Item -Path $BUILD_PATH\distrib\lib\meshlab-common.lib -Destination $DISTRIB_PATH\lib\
 Copy-Item -Path $BUILD_PATH\distrib\plugins\* -Destination $DISTRIB_PATH\lib\meshlab\plugins\
 Copy-Item -Path $DISTRIB_PATH\lib\Qt*.dll -Destination $DISTRIB_PATH\
