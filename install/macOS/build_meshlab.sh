@@ -14,8 +14,8 @@ BUILD_PATH=$(realpath ../../build)
 
 mkdir $BUILD_PATH
 
-bash ../../meshlab/install/macos/macos_build.sh $BUILD_PATH
-bash ../../meshlab/install/macos/macos_deploy.sh $BUILD_PATH/distrib
+bash ../../src/meshlab/install/macos/macos_build.sh $BUILD_PATH
+bash ../../src/meshlab/install/macos/macos_deploy.sh $BUILD_PATH/distrib
 
 cd $BUILD_PATH/distrib
 rm -r lib

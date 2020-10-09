@@ -9,8 +9,8 @@ cd $PSScriptRoot #move to script directory
 
 New-Item -ItemType Directory -Force -Path $BUILD_PATH
 
-..\..\meshlab\install\windows\windows_build_debug.ps1 $BUILD_PATH
-..\..\meshlab\install\windows\windows_deploy.ps1 $BUILD_PATH\distrib
+..\..\src\meshlab\install\windows\windows_build_debug.ps1 $BUILD_PATH
+..\..\src\meshlab\install\windows\windows_deploy.ps1 $BUILD_PATH\distrib
 
 New-Item -ItemType Directory -Force -Path $DISTRIB_PATH\lib\meshlab\plugins
 Copy-Item -Path $BUILD_PATH\distrib\*.dll -Destination $DISTRIB_PATH\lib\

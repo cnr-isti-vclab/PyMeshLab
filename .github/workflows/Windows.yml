@@ -16,7 +16,7 @@ jobs:
         submodules: true
     - name: checkout sub-submodule vcg
       run: |
-        cd meshlab
+        cd src\meshlab
         $auth_header="$(git config --local --get http.https://github.com/.extraheader)"
         git submodule sync --recursive
         git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
@@ -30,7 +30,7 @@ jobs:
       id: envs
       run: |
         echo '::set-env name=VCINSTALLDIR::C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
-        cd meshlab
+        cd src\meshlab
         $var=(git rev-parse --short HEAD --version) | Out-String
         echo "::set-output name=meshlab_commit::$($var)"
     - name: Setup MSVC

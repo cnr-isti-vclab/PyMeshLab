@@ -53,7 +53,7 @@ jobs:
     - name: Environment variables
       id: envs
       run: |
-        cd meshlab
+        cd src/meshlab
         echo  ::set-output name=meshlab_commit::$(git rev-parse --short=7 HEAD)
     - name: Cache MeshLab Build
       id: cache-meshlab-build
@@ -106,7 +106,7 @@ jobs:
       id: envs
       run: |
         echo '::set-env name=VCINSTALLDIR::C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
-        cd meshlab
+        cd src\meshlab
         $var=(git rev-parse --short=7 HEAD --version) | Out-String
         echo "::set-output name=meshlab_commit::$($var)"
     - name: Setup MSVC
