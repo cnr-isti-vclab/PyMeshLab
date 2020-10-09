@@ -73,19 +73,19 @@ linux {
 
 DEFINES += MESHLAB_SCALAR=float
 
-include($$PYMESHLAB_BASE_DIRECTORY/meshlab/src/find_system_libs.pri)
+include($$PYMESHLAB_SRC_DIRECTORY/meshlab/src/find_system_libs.pri)
 
 #Eigen and glew dirs
 CONFIG(system_eigen3): EIGENDIR = /usr/include/eigen3
-!CONFIG(system_eigen3):EIGENDIR = $$PYMESHLAB_BASE_DIRECTORY/meshlab/vcglib/eigenlib
-GLEWDIR = $$PYMESHLAB_BASE_DIRECTORY/meshlab/src/external/glew-2.1.0
+!CONFIG(system_eigen3):EIGENDIR = $$PYMESHLAB_SRC_DIRECTORY/meshlab/vcglib/eigenlib
+GLEWDIR = $$PYMESHLAB_SRC_DIRECTORY/meshlab/src/external/glew-2.1.0
 
 INCLUDEPATH += \
-	$$PYMESHLAB_BASE_DIRECTORY/pybind11/include/ \ #pybind11
+	$$PYMESHLAB_SRC_DIRECTORY/pybind11/include/ \ #pybind11
 	$$EIGENDIR \                                   #eigen
 	$$GLEWDIR/include/ \                           #glew
-	$$PYMESHLAB_BASE_DIRECTORY/meshlab/vcglib \    #vcg
-	$$PYMESHLAB_BASE_DIRECTORY/meshlab/src/common  #meshlab_common
+	$$PYMESHLAB_SRC_DIRECTORY/meshlab/vcglib \    #vcg
+	$$PYMESHLAB_SRC_DIRECTORY/meshlab/src/common  #meshlab_common
 
 # defining pymeshlab version
 exists($$PYMESHLAB_BASE_DIRECTORY/PYML_VERSION){
