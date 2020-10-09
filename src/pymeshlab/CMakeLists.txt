@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.9)
 project(PyMeshLab)
+set(PYMESHLAB_MODULE_NAME "meshlab")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -54,17 +55,21 @@ add_definitions(-DMESHLAB_SCALAR=float)
 set(MESHLAB_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../meshlab")
 set(MESHLAB_EXTERNAL_DIR "${MESHLAB_BASE_DIR}/src/external")
 get_filename_component(VCG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../meshlab/vcglib" ABSOLUTE)
+set(PYMESHLAB_INSTALL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../pymeshlab")
+
+#link directories
+link_directories("${PYMESHLAB_INSTALL_DIR}/lib")
 
 #pybind11
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../pybind11" pybind11)
-pybind11_add_module(pymeshlab ${SOURCES} ${HEADERS})
+pybind11_add_module(${PYMESHLAB_MODULE_NAME} ${SOURCES} ${HEADERS})
 
 #Qt
 find_package(
     Qt5
     COMPONENTS Core OpenGL Xml Qml
     REQUIRED)
-target_link_libraries(pymeshlab PRIVATE Qt5::OpenGL Qt5::OpenGL Qt5::Xml Qt5::Qml)
+target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE Qt5::OpenGL Qt5::OpenGL Qt5::Xml Qt5::Qml)
 
 #Eigen
 find_package(Eigen3)
@@ -86,8 +91,9 @@ include_directories(${VCG_DIR})
 
 #meshlab_common
 include_directories("${MESHLAB_BASE_DIR}/src/common")
+#target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE meshlab_common)
 
 
-
+install(TARGETS ${PYMESHLAB_MODULE_NAME} DESTINATION ${PYMESHLAB_INSTALL_DIR})
 
 
