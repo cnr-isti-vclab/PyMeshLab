@@ -121,6 +121,7 @@ filter_doc_generator {
 }
 
 HEADERS += \
+	bindings/pycamera.h \
 	bindings/pycolor.h \
 	bindings/pyboundingbox.h \
 	bindings/pyexceptions.h \
@@ -145,8 +146,9 @@ HEADERS += \
 	pymeshlab/plugin_management/filterfunctionset.h
 
 SOURCES += \
-	bindings/pyexceptions.cpp \
 	main.cpp \
+	bindings/pycamera.cpp \
+	bindings/pyexceptions.cpp \
 	bindings/pyboundingbox.cpp \
 	bindings/pycolor.cpp \
 	bindings/pymesh.cpp \

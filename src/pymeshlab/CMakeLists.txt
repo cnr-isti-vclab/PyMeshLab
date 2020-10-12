@@ -1,10 +1,9 @@
-cmake_minimum_required(VERSION 3.9)
-project(PyMeshLab)
-set(PYMESHLAB_MODULE_NAME "meshlab")
+set(PYMESHLAB_MODULE_NAME "pmeshlab")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 set(HEADERS
+	bindings/pycamera.h
 	bindings/pycolor.h
 	bindings/pyboundingbox.h
 	bindings/pyexceptions.h
@@ -30,10 +29,11 @@ set(HEADERS
 )
 
 set(SOURCES
-	bindings/pyexceptions.cpp
 	main.cpp
-	bindings/pyboundingbox.cpp
+	bindings/pycamera.cpp
 	bindings/pycolor.cpp
+	bindings/pyboundingbox.cpp
+	bindings/pyexceptions.cpp
 	bindings/pymesh.cpp
 	bindings/pymeshset.cpp
 	bindings/pypercentage.cpp
@@ -48,52 +48,15 @@ set(SOURCES
 	pymeshlab/plugin_management/filterfunctionset.cpp
 )
 
-#definitions
-add_definitions(-DMESHLAB_SCALAR=float)
-
-#directories
-set(MESHLAB_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../meshlab")
-set(MESHLAB_EXTERNAL_DIR "${MESHLAB_BASE_DIR}/src/external")
-get_filename_component(VCG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../meshlab/vcglib" ABSOLUTE)
-set(PYMESHLAB_INSTALL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../pymeshlab")
-
-#link directories
-link_directories("${PYMESHLAB_INSTALL_DIR}/lib")
-
 #pybind11
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../pybind11" pybind11)
+add_subdirectory("${PYBIND_BASE_DIR}" pybind11)
 pybind11_add_module(${PYMESHLAB_MODULE_NAME} ${SOURCES} ${HEADERS})
 
 #Qt
-find_package(
-    Qt5
-    COMPONENTS Core OpenGL Xml Qml
-    REQUIRED)
 target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE Qt5::OpenGL Qt5::OpenGL Qt5::Xml Qt5::Qml)
-
-#Eigen
-find_package(Eigen3)
-if (NOT EIGEN3_INCLUDE_DIR)
-	set(EIGEN_INCLUDE_DIRS  ${VCG_DIR}/eigenlib)
-endif()
-include_directories(${EIGEN_INCLUDE_DIRS})
-
-#glew
-find_package(GLEW)
-set(GLEW_DIR "${MESHLAB_EXTERNAL_DIR}/glew-2.1.0")
-if (NOT TARGET GLEW::GLEW)
-	set(GLEW_INCLUDE_DIRS  ${GLEW_DIR}/include)
-endif()
-include_directories(${GLEW_INCLUDE_DIRS})
-
-#vcg
-include_directories(${VCG_DIR})
 
 #meshlab_common
 include_directories("${MESHLAB_BASE_DIR}/src/common")
-#target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE meshlab_common)
-
-
-install(TARGETS ${PYMESHLAB_MODULE_NAME} DESTINATION ${PYMESHLAB_INSTALL_DIR})
+target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE common)
 
 
