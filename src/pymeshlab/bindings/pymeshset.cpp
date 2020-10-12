@@ -12,8 +12,6 @@ void pymeshlab::initMeshSet(pybind11::module& m)
 {
 	py::class_<MeshSet> meshSetClass(m, "MeshSet");
 
-	
-
 	//constructor
 	meshSetClass.def(py::init<bool>(), doc::PYMS_INIT_VERB, py::arg("verbose") = false);
 

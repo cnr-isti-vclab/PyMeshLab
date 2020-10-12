@@ -4,7 +4,7 @@
 PyMeshLab Exceptions
 ====================
 
-.. autoexception:: meshlab.PyMeshLabException
-.. autoexception:: meshlab.InvalidPercentageException
-.. autoexception:: meshlab.MissingCompactnessException
-.. autoexception:: meshlab.MissingComponentException
+.. autoexception:: pmeshlab.PyMeshLabException
+.. autoexception:: pmeshlab.InvalidPercentageException
+.. autoexception:: pmeshlab.MissingCompactnessException
+.. autoexception:: pmeshlab.MissingComponentException

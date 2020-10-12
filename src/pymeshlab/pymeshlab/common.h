@@ -57,7 +57,7 @@ const char PYTHON_TYPE_MATRIX44F[] = "numpy.ndarray[numpy.float32[4, 4]]";
 const char PYTHON_TYPE_POINT3F[] = "numpy.ndarray[numpy.float32[3]]";
 const char PYTHON_TYPE_SHOTF[] = "Shotf [still unsupported]";
 const char PYTHON_TYPE_COLOR[] = "Color";
-const char PYTHON_TYPE_MESH[] = "Mesh [still unsupported]";
+const char PYTHON_TYPE_MESH[] = "int";
 const char PYTHON_TYPE_FILENAME[] = "str";
 
 const char MESHLAB_TYPE_ENUM[] = "RichEnum";

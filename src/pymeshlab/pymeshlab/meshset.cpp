@@ -288,7 +288,7 @@ std::string pymeshlab::MeshSet::filtersRSTDocumentation() const
 
 	doc +=
 			"   Here are listed all the filter names that can be given as paramter "
-			"to the function :py:meth:`meshlab.MeshSet.apply_filter`.\n\n"
+			"to the function :py:meth:`pmeshlab.MeshSet.apply_filter`.\n\n"
 			"   Please note: some filter parameters depend on the mesh(es) used as "
 			"input of the filter. Default values listed here are computed on a 1x1x1 cube "
 			"(pymeshlab/tests/sample/cube.obj), and they will be computed on the input mesh "
@@ -721,6 +721,12 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 		RichSaveFile& sf = dynamic_cast<RichSaveFile&>(par);
 		sf.setValue(StringValue(
 					QString::fromStdString(py::cast<std::string>(k.second))));
+	}
+	else if (meshlabType == MESHLAB_TYPE_MESH) {
+		RichMesh& rm = dynamic_cast<RichMesh&>(par);
+		rm.meshdoc = this;
+		rm.meshindex = py::cast<int>(k.second);
+		rm.setValue(MeshValue(rm.meshdoc, rm.meshindex));
 	}
 	else if (meshlabType.contains("still_unsupported")){
 		std::cerr << "Warning: parameter type still not supported";

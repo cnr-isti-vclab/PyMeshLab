@@ -144,7 +144,8 @@ void pymeshlab::FilterFunctionParameter::printDefaultValue(std::ostream& o) cons
 		return;
 	}
 	if (parameter->value().isMesh()){
-		o << "None";
+		const RichMesh* rm = dynamic_cast<const RichMesh*>(parameter);
+		o << rm->meshindex;
 		return;
 	}
 	if (parameter->value().isFileName()){

@@ -91,7 +91,7 @@ private:
 
 	void saveMLP(const QString& fileName);
 
-	static void updateRichParameterFromKwarg(
+	void updateRichParameterFromKwarg(
 			RichParameter& par,
 			const FilterFunctionParameter& ffp,
 			const std::pair<pybind11::handle, pybind11::handle>& k);

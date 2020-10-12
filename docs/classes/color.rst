@@ -4,6 +4,6 @@
 Color
 =====
 
-.. autoclass:: meshlab.Color
+.. autoclass:: pmeshlab.Color
    :special-members:
    :members:

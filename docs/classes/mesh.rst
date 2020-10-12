@@ -4,6 +4,6 @@
 Mesh
 ====
 
-.. autoclass:: meshlab.Mesh
+.. autoclass:: pmeshlab.Mesh
    :special-members:
    :members:

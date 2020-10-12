@@ -4,7 +4,7 @@
 List of Filters
 ===============
 
-   Here are listed all the filter names that can be given as paramter to the function :py:meth:`meshlab.MeshSet.apply_filter`.
+   Here are listed all the filter names that can be given as paramter to the function :py:meth:`pmeshlab.MeshSet.apply_filter`.
 
    Please note: some filter parameters depend on the mesh(es) used as input of the filter. Default values listed here are computed on a 1x1x1 cube (pymeshlab/tests/sample/cube.obj), and they will be computed on the input mesh if they are left as default.
 
@@ -154,7 +154,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``layer : Mesh [still unsupported] = None``
+   ``layer : int = 0``
 
       .. raw:: html
 
@@ -170,7 +170,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``layer : Mesh [still unsupported] = None``
+   ``layer : int = 0``
 
       .. raw:: html
 
@@ -824,13 +824,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``target_mesh : Mesh [still unsupported] = None``
+   ``target_mesh : int = 0``
 
       .. raw:: html
 
          <i>Target mesh:</i>: The mesh on which craters will be generated.
 
-   ``samples_mesh : Mesh [still unsupported] = None``
+   ``samples_mesh : int = 0``
 
       .. raw:: html
 
@@ -1049,13 +1049,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``firstmesh : Mesh [still unsupported] = None``
+   ``firstmesh : int = 0``
 
       .. raw:: html
 
          <i>First Mesh</i>: The first operand of the CSG operation
 
-   ``secondmesh : Mesh [still unsupported] = None``
+   ``secondmesh : int = 0``
 
       .. raw:: html
 
@@ -1412,13 +1412,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``coloredmesh : Mesh [still unsupported] = None``
+   ``coloredmesh : int = 0``
 
       .. raw:: html
 
          <i>To be Colored Mesh</i>: The mesh whose surface is colored. For each vertex of this mesh we decide the color according the below parameters.
 
-   ``vertexmesh : Mesh [still unsupported] = None``
+   ``vertexmesh : int = 0``
 
       .. raw:: html
 
@@ -1452,13 +1452,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``measuremesh : Mesh [still unsupported] = None``
+   ``measuremesh : int = 0``
 
       .. raw:: html
 
          <i>Measured Mesh/PointCloud</i>: The Mesh/Pointcloud that is measured, vertex by vertex, computing distance from the REFERENCE mesh/pointcloud.
 
-   ``refmesh : Mesh [still unsupported] = None``
+   ``refmesh : int = 0``
 
       .. raw:: html
 
@@ -1997,13 +1997,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``refmesh : Mesh [still unsupported] = None``
+   ``refmesh : int = 0``
 
       .. raw:: html
 
          <i>Reference Mesh</i>: Reference point-cloud or mesh
 
-   ``targetmesh : Mesh [still unsupported] = None``
+   ``targetmesh : int = 0``
 
       .. raw:: html
 
@@ -2135,13 +2135,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``sampledmesh : Mesh [still unsupported] = None``
+   ``sampledmesh : int = 0``
 
       .. raw:: html
 
          <i>Sampled Mesh</i>: The mesh whose surface is sampled. For each sample we search the closest point on the Target Mesh.
 
-   ``targetmesh : Mesh [still unsupported] = None``
+   ``targetmesh : int = 0``
 
       .. raw:: html
 
@@ -2546,13 +2546,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``sourcemesh : Mesh [still unsupported] = None``
+   ``sourcemesh : int = 0``
 
       .. raw:: html
 
          <i>Source Mesh</i>: The mesh already having an Isoparameterization
 
-   ``targetmesh : Mesh [still unsupported] = None``
+   ``targetmesh : int = 0``
 
       .. raw:: html
 
@@ -3520,13 +3520,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``controlmesh : Mesh [still unsupported] = None``
+   ``controlmesh : int = 0``
 
       .. raw:: html
 
          <i>Point set</i>: The point set (or mesh) which defines the MLS surface.
 
-   ``proxymesh : Mesh [still unsupported] = None``
+   ``proxymesh : int = 0``
 
       .. raw:: html
 
@@ -3590,13 +3590,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``controlmesh : Mesh [still unsupported] = None``
+   ``controlmesh : int = 0``
 
       .. raw:: html
 
          <i>Point set</i>: The point set (or mesh) which defines the MLS surface.
 
-   ``proxymesh : Mesh [still unsupported] = None``
+   ``proxymesh : int = 0``
 
       .. raw:: html
 
@@ -4658,7 +4658,7 @@ List of Filters
 
          <i>Refine Existing Samples</i>: If true the vertices of the below mesh are used as starting vertices, and they will utterly refined by adding more and more points until possible. 
 
-   ``refinemesh : Mesh [still unsupported] = None``
+   ``refinemesh : int = 0``
 
       .. raw:: html
 
@@ -5131,7 +5131,7 @@ List of Filters
 
          <i>Crease Angle</i>: Minimum angle between faces of the original to consider the shared edge as a feature to be preserved.
 
-   ``checksurfdist : bool = false``
+   ``checksurfdist : bool = true``
 
       .. raw:: html
 
@@ -7575,13 +7575,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``sourcemesh : Mesh [still unsupported] = None``
+   ``sourcemesh : int = 0``
 
       .. raw:: html
 
          <i>Source Mesh</i>: The mesh with associated texture that we want to sample from
 
-   ``targetmesh : Mesh [still unsupported] = None``
+   ``targetmesh : int = 0``
 
       .. raw:: html
 
@@ -7603,13 +7603,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``sourcemesh : Mesh [still unsupported] = None``
+   ``sourcemesh : int = 0``
 
       .. raw:: html
 
          <i>Source Mesh</i>: The mesh that contains the source data that we want to transfer
 
-   ``targetmesh : Mesh [still unsupported] = None``
+   ``targetmesh : int = 0``
 
       .. raw:: html
 
@@ -8609,13 +8609,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``sourcemesh : Mesh [still unsupported] = None``
+   ``sourcemesh : int = 0``
 
       .. raw:: html
 
          <i>Source Mesh</i>: The mesh that contains the source data that we want to transfer.
 
-   ``targetmesh : Mesh [still unsupported] = None``
+   ``targetmesh : int = 0``
 
       .. raw:: html
 
@@ -8973,7 +8973,7 @@ List of Filters
 
    **Parameters:** 
 
-   ``targetmesh : Mesh [still unsupported] = None``
+   ``targetmesh : int = 0``
 
       .. raw:: html
 
@@ -9301,13 +9301,13 @@ List of Filters
 
    **Parameters:** 
 
-   ``coloredmesh : Mesh [still unsupported] = None``
+   ``coloredmesh : int = 0``
 
       .. raw:: html
 
          <i>To be Colored Mesh</i>: The mesh whose surface is colored. For each vertex of this mesh we decide the color according the below parameters.
 
-   ``vertexmesh : Mesh [still unsupported] = None``
+   ``vertexmesh : int = 0``
 
       .. raw:: html
 

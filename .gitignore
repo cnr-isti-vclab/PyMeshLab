@@ -56,7 +56,7 @@ compile_commands.json
 *_qmlcache.qrc
 
 # Debug exec:
-meshlab.cpython-38-x86_64-linux-gnu
+pmeshlab.cpython-38-x86_64-linux-gnu
 
 # MacOS meshlab appbundle
 meshlab.app

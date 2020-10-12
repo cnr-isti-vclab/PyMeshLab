@@ -4,6 +4,6 @@
 Percentage
 ==========
 
-.. autoclass:: meshlab.Percentage
+.. autoclass:: pmeshlab.Percentage
    :special-members:
    :members:

@@ -4,6 +4,6 @@
 BoundingBox
 ===========
 
-.. autoclass:: meshlab.BoundingBox
+.. autoclass:: pmeshlab.BoundingBox
    :special-members:
    :members:
