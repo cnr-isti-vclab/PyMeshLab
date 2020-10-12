@@ -1,1 +1,1 @@
-from .meshlab import *
+from .pmeshlab import *

@@ -8,7 +8,7 @@
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(meshlab, m) {
+PYBIND11_MODULE(pmeshlab, m) {
 	pymeshlab::initBoundingBox(m); //BoundingBox Class
 	pymeshlab::initColor(m); //Color Class
 	pymeshlab::initMesh(m); //Mesh Class
