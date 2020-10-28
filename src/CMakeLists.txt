@@ -2,10 +2,25 @@ cmake_minimum_required(VERSION 3.9)
 project(PyMeshLab)
 
 ### Build options
-option(BUILD_PLUGINS "Build MeshLab plugins" ON)
+option(BUILD_MESHLAB_LIBS "Build also MeshLab Libs" ON)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 #definitions
 add_definitions(-DMESHLAB_SCALAR=float)
+if(WIN32)
+	add_definitions(-DNOMINMAX)
+	if(MSVC)
+		add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
+	endif()
+endif()
+if(BUILD_STRICT AND NOT MSVC AND NOT APPLE)
+	# Make sure that our shared libraries were appropriately linked
+	set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-undefined")
+	set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--no-undefined")
+endif()
 
 #directories
 set(PYBIND_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/pybind11")
@@ -17,53 +32,60 @@ set(PYMESHLAB_INSTALL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../pymeshlab")
 
 ### Dependencies
 list(APPEND CMAKE_MODULE_PATH "${MESHLAB_BASE_DIR}/src/cmake")
+find_package(OpenGL REQUIRED)
 
 #Qt
 find_package(
-    Qt5
-    COMPONENTS Core OpenGL Xml Qml XmlPatterns
-    REQUIRED)
+	Qt5
+	COMPONENTS Core OpenGL Xml Qml XmlPatterns
+	REQUIRED)
 
 #Eigen
 find_package(Eigen3)
-if (NOT EIGEN3_INCLUDE_DIR)
-	set(EIGEN_INCLUDE_DIRS  ${VCG_DIR}/eigenlib)
-endif()
-
-#glew
 find_package(GLEW)
-set(GLEW_DIR "${EXTERNAL_DIR}/glew-2.1.0")
-if (NOT TARGET GLEW::GLEW)
-	set(GLEW_INCLUDE_DIRS  ${GLEW_DIR}/include)
-endif()
-
-#openmp
 find_package(OpenMP)
 
 ### Common includes
-#Eigen
-include_directories(${EIGEN_INCLUDE_DIRS})
-#glew
-include_directories(${GLEW_INCLUDE_DIRS})
-#vcg
-include_directories(${VCG_DIR})
+include(${MESHLAB_BASE_DIR}/src/external_common.cmake)
 
 add_subdirectory(${MESHLAB_BASE_DIR}/src/common)
 add_subdirectory(${PYMESHLAB_BASE_DIR})
 
-install(TARGETS ${PYMESHLAB_MODULE_NAME} DESTINATION ${PYMESHLAB_INSTALL_DIR})
-install(TARGETS common DESTINATION "${PYMESHLAB_INSTALL_DIR}/lib")
+MESSAGE(STATUS "CMAKE_INSTALL_PREFIX: " ${CMAKE_INSTALL_PREFIX} )
 
-if (BUILD_PLUGINS)
-	include("${MESHLAB_BASE_DIR}/src/external.cmake")
+include(GNUInstallDirs)
+if(INSTALL_TO_UNIX_LAYOUT)
+	set(MESHLAB_BIN_INSTALL_DIR ${CMAKE_INSTALL_BINDIR})
+	set(MESHLAB_LIB_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/meshlab)
+	set(MESHLAB_PLUGIN_INSTALL_DIR ${MESHLAB_LIB_INSTALL_DIR}/plugins)
+	set(MESHLAB_SHADER_INSTALL_DIR ${CMAKE_INSTALL_DATAROOTDIR}/meshlab/shaders)
+	set(MESHLAB_SAMPLE_INSTALL_DIR ${CMAKE_INSTALL_DATAROOTDIR}/meshlab)
+elseif(APPLE)
+	set(MESHLAB_BIN_INSTALL_DIR .)
+	set(MESHLAB_LIB_INSTALL_DIR meshlab.app/Contents/Frameworks)
+	set(MESHLAB_PLUGIN_INSTALL_DIR meshlab.app/Contents/PlugIns)
+	set(MESHLAB_SHADER_INSTALL_DIR meshlab.app/Contents/shaders)
+	set(MESHLAB_SAMPLE_INSTALL_DIR .)
+else()
+	set(MESHLAB_BIN_INSTALL_DIR .)
+	set(MESHLAB_LIB_INSTALL_DIR .)
+	set(MESHLAB_PLUGIN_INSTALL_DIR plugins)
+	set(MESHLAB_SHADER_INSTALL_DIR shaders)
+	set(MESHLAB_SAMPLE_INSTALL_DIR .)
+endif()
+
+set(MESHLAB_BUILD_DISTRIB_DIR ${CMAKE_CURRENT_BINARY_DIR}/distrib)
+set(MESHLAB_PLUGIN_OUTPUT_DIR ${MESHLAB_BUILD_DISTRIB_DIR}/plugins)
+
+if (BUILD_MESHLAB_LIBS)
 	#dependencies
 	find_package(Lib3ds)
 	find_package(GMP)
 	find_package(muparser)
 	find_package(OpenCTM)
 	find_package(Qhull COMPONENTS libqhull)
-	
-	
+	include(${EXTERNAL_DIR}/external.cmake)
+	include_directories(${MESHLAB_BASE_DIR}/src/common)
 	
 	set(PLUGINS
 		# IO plugins
@@ -120,3 +142,8 @@ if (BUILD_PLUGINS)
 		add_subdirectory(${PLUGIN})
 	endforeach()
 endif()
+
+
+
+install(TARGETS ${PYMESHLAB_MODULE_NAME} DESTINATION ${PYMESHLAB_INSTALL_DIR})
+install(TARGETS common DESTINATION "${PYMESHLAB_INSTALL_DIR}/lib")
