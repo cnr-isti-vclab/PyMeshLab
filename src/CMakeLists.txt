@@ -2,13 +2,42 @@ cmake_minimum_required(VERSION 3.9)
 project(PyMeshLab)
 
 ### Build options
+option(BUILD_STRICT "Strictly enforce resolution of all symbols" ON)
 option(BUILD_MESHLAB_LIBS "Build also MeshLab Libs" ON)
+
+### Dependencies
+list(APPEND CMAKE_MODULE_PATH "${MESHLAB_BASE_DIR}/src/cmake")
+
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
+find_package(
+	Qt5
+	COMPONENTS OpenGL Xml XmlPatterns Qml
+	REQUIRED)
+find_package(OpenMP)
+#find_package(GLEW)
+find_package(Eigen3)
+
+find_package(OpenGL REQUIRED)
+find_package(Lib3ds)
+find_package(GMP)
+find_package(muparser)
+find_package(OpenCTM)
+find_package(Qhull COMPONENTS libqhull)
+
+set(PYBIND_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/pybind11")
+set(PYMESHLAB_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/pymeshlab")
+set(MESHLAB_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/meshlab")
+set(EXTERNAL_DIR "${MESHLAB_BASE_DIR}/src/external")
+#set(PYMESHLAB_INSTALL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../pymeshlab")
+
+### Build settings
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-
-#definitions
 add_definitions(-DMESHLAB_SCALAR=float)
 if(WIN32)
 	add_definitions(-DNOMINMAX)
@@ -16,43 +45,22 @@ if(WIN32)
 		add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
 	endif()
 endif()
+
 if(BUILD_STRICT AND NOT MSVC AND NOT APPLE)
 	# Make sure that our shared libraries were appropriately linked
 	set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-undefined")
 	set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--no-undefined")
 endif()
 
-#directories
-set(PYBIND_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/pybind11")
-set(PYMESHLAB_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/pymeshlab")
-set(MESHLAB_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/meshlab")
-set(EXTERNAL_DIR "${MESHLAB_BASE_DIR}/src/external")
-get_filename_component(VCG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/meshlab/vcglib" ABSOLUTE)
-set(PYMESHLAB_INSTALL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../pymeshlab")
 
-### Dependencies
-list(APPEND CMAKE_MODULE_PATH "${MESHLAB_BASE_DIR}/src/cmake")
-find_package(OpenGL REQUIRED)
+### Install directories
+MESSAGE(STATUS "CMAKE_INSTALL_PREFIX: " ${CMAKE_INSTALL_PREFIX})
 
-#Qt
-find_package(
-	Qt5
-	COMPONENTS Core OpenGL Xml Qml XmlPatterns
-	REQUIRED)
-
-#Eigen
-find_package(Eigen3)
-find_package(GLEW)
-find_package(OpenMP)
-
-### Common includes
-include(${MESHLAB_BASE_DIR}/src/external_common.cmake)
-
-add_subdirectory(${MESHLAB_BASE_DIR}/src/common)
-add_subdirectory(${PYMESHLAB_BASE_DIR})
-
-MESSAGE(STATUS "CMAKE_INSTALL_PREFIX: " ${CMAKE_INSTALL_PREFIX} )
-
+if(WIN32 OR APPLE)
+	set(INSTALL_TO_UNIX_LAYOUT OFF)
+else()
+	set(INSTALL_TO_UNIX_LAYOUT ON)
+endif()
 include(GNUInstallDirs)
 if(INSTALL_TO_UNIX_LAYOUT)
 	set(MESHLAB_BIN_INSTALL_DIR ${CMAKE_INSTALL_BINDIR})
@@ -74,16 +82,21 @@ else()
 	set(MESHLAB_SAMPLE_INSTALL_DIR .)
 endif()
 
-set(MESHLAB_BUILD_DISTRIB_DIR ${CMAKE_CURRENT_BINARY_DIR}/distrib)
-set(MESHLAB_PLUGIN_OUTPUT_DIR ${MESHLAB_BUILD_DISTRIB_DIR}/plugins)
+### Install Settings
+if (NOT APPLE)
+	set(CMAKE_INSTALL_RPATH $ORIGIN/../${MESHLAB_LIB_INSTALL_DIR};$ORIGIN/../${CMAKE_INSTALL_LIBDIR})
+else()
+	SET(CMAKE_INSTALL_RPATH $ORIGIN/../Frameworks)
+endif()
+
+
+### Common includes
+include(${MESHLAB_BASE_DIR}/src/external_common.cmake)
+
+add_subdirectory(${MESHLAB_BASE_DIR}/src/common)
+add_subdirectory(${PYMESHLAB_BASE_DIR})
 
 if (BUILD_MESHLAB_LIBS)
-	#dependencies
-	find_package(Lib3ds)
-	find_package(GMP)
-	find_package(muparser)
-	find_package(OpenCTM)
-	find_package(Qhull COMPONENTS libqhull)
 	include(${EXTERNAL_DIR}/external.cmake)
 	include_directories(${MESHLAB_BASE_DIR}/src/common)
 	
