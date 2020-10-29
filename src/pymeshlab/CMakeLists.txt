@@ -1,6 +1,6 @@
 set(PYMESHLAB_MODULE_NAME "pmeshlab")
 
-#include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+set(PYBIND_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/pybind11")
 
 set(HEADERS
 	bindings/pycamera.h
@@ -50,7 +50,7 @@ set(SOURCES
 
 #pybind11
 add_subdirectory("${PYBIND_BASE_DIR}" pybind11)
-pybind11_add_module(${PYMESHLAB_MODULE_NAME} ${SOURCES} ${HEADERS})
+pybind11_add_module(${PYMESHLAB_MODULE_NAME})
 
 #Qt
 target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE Qt5::OpenGL Qt5::OpenGL Qt5::Xml Qt5::Qml)
