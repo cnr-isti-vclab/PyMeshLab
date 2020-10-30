@@ -65,5 +65,10 @@ target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE Qt5::OpenGL Qt5::OpenGL Q
 target_link_libraries(${PYMESHLAB_MODULE_NAME} PUBLIC meshlab-common external-glew)
 
 install(TARGETS ${PYMESHLAB_MODULE_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX})
+if (NOT APPLE)
+	set(CMAKE_INSTALL_RPATH $ORIGIN/lib/meshlab)
+else()
+	SET(CMAKE_INSTALL_RPATH $ORIGIN/Frameworks)
+endif()
 
 
