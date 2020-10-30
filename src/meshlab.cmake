@@ -14,15 +14,7 @@ find_package(OpenGL REQUIRED)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
-find_package(
-	Qt5
-	COMPONENTS OpenGL Xml XmlPatterns Qml
-	REQUIRED)
-find_package(OpenMP)
 
-message(STATUS "Searching for required components with bundled fallback")
-find_package(GLEW)
-find_package(Eigen3)
 
 message(STATUS "Searching for optional components")
 find_package(Lib3ds)
@@ -46,7 +38,6 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 ### Build Settings
-add_definitions(-DMESHLAB_SCALAR=float)
 if(WIN32)
 	add_definitions(-DNOMINMAX)
 	if(MSVC)

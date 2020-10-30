@@ -48,15 +48,22 @@ set(SOURCES
 	pymeshlab/plugin_management/filterfunctionset.cpp
 )
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${MESHLAB_SRC_DIR}/common)
+
 #pybind11
-add_subdirectory("${PYBIND_BASE_DIR}" pybind11)
-pybind11_add_module(${PYMESHLAB_MODULE_NAME})
+add_subdirectory(pybind11)
+pybind11_add_module(${PYMESHLAB_MODULE_NAME} ${HEADERS} ${SOURCES})
+
+#python
+target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE pybind11::embed)
 
 #Qt
-target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE Qt5::OpenGL Qt5::OpenGL Qt5::Xml Qt5::Qml)
+target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE Qt5::OpenGL Qt5::OpenGL Qt5::Xml external-glew)
 
 #meshlab_common
-include_directories("${MESHLAB_BASE_DIR}/src/common")
-target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE common)
+target_link_libraries(${PYMESHLAB_MODULE_NAME} PUBLIC meshlab-common external-glew)
+
+install(TARGETS ${PYMESHLAB_MODULE_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX})
 
 
