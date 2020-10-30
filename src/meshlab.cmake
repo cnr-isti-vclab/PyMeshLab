@@ -96,7 +96,6 @@ endif()
 ### Enter subdirectories
 
 #external
-include(${MESHLAB_SRC_DIR}/external_common.cmake)
 include(${EXTERNAL_DIR}/external.cmake)
 
 
