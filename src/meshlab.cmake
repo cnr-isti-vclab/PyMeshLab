@@ -9,12 +9,11 @@ option(BUILD_STRICT "Strictly enforce resolution of all symbols" ON)
 ### Dependencies
 list(APPEND CMAKE_MODULE_PATH "${MESHLAB_SRC_DIR}/cmake")
 message(STATUS "Searching for required components")
-find_package(OpenGL REQUIRED)
+#find_package(OpenGL REQUIRED)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
-
 
 message(STATUS "Searching for optional components")
 find_package(Lib3ds)
@@ -32,7 +31,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${MESHLAB_BUILD_DISTRIB_DIR})
 ### Build settings
 include_directories(${MESHLAB_SRC_DIR})
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+#set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 ### Settings needed for both "external" and internal code
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
@@ -73,12 +72,6 @@ include(${EXTERNAL_DIR}/external.cmake)
 
 
 add_subdirectory(${MESHLAB_SRC_DIR}/common)
-#add_subdirectory(${MESHLAB_SRC_DIR}/meshlab)
-#add_subdirectory(${MESHLAB_SRC_DIR}/meshlabserver)
-#set(CMAKE_INSTALL_RPATH)
-#if (WIN32)
-	#add_subdirectory(${MESHLAB_SRC_DIR}/use_cpu_opengl)
-#endif()
 
 ### Plugin subdirectories
 set(MESHLAB_PLUGINS
