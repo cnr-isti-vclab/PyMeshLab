@@ -30,7 +30,7 @@ jobs:
         python-version: ${{ matrix.pyversion }}
     - name: Install Ubuntu dependencies
       run: |
-        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev 
+        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev
     - name: Environment variables
       id: envs
       run: |
@@ -59,8 +59,8 @@ jobs:
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
         path: pymeshlab/
-  
-  
+
+
   tests:
     name: Test PyMeshLab
     runs-on: ubuntu-16.04

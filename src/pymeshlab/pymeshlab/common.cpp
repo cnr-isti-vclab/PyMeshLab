@@ -27,11 +27,7 @@ std::string pymeshlab::getRootPath()
 std::string pymeshlab::getPluginsPath()
 {
 	QDir dir(QString::fromStdString(getRootPath()));
-#ifndef __APPLE__
-	dir.cd("lib/meshlab/plugins");
-#else
 	dir.cd("lib/plugins");
-#endif
 	return dir.absolutePath().toStdString();
 }
 
