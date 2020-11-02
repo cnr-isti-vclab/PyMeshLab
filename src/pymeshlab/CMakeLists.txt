@@ -1,7 +1,5 @@
 set(PYMESHLAB_MODULE_NAME "pmeshlab")
 
-set(PYBIND_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/pybind11")
-
 set(HEADERS
 	bindings/pycamera.h
 	bindings/pycolor.h
@@ -61,8 +59,11 @@ target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE pybind11::embed)
 #Qt
 target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE Qt5::OpenGL Qt5::OpenGL Qt5::Xml external-glew)
 
-#meshlab_common
-target_link_libraries(${PYMESHLAB_MODULE_NAME} PUBLIC meshlab-common external-glew)
+#meshlab-common
+if (NOT BUILD_MESHLAB)
+	target_link_directories(${PYMESHLAB_MODULE_NAME} PUBLIC "${PYMESHLAB_BUILD_DISTRIB_DIR}/lib")
+endif()
+target_link_libraries(${PYMESHLAB_MODULE_NAME} PUBLIC meshlab-common)
 
 set_property(TARGET ${PYMESHLAB_MODULE_NAME} 
 	PROPERTY RUNTIME_OUTPUT_DIRECTORY ${PYMESHLAB_BUILD_DISTRIB_DIR})
@@ -73,14 +74,18 @@ set_property(TARGET ${PYMESHLAB_MODULE_NAME}
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 install(TARGETS ${PYMESHLAB_MODULE_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX})
 if (NOT APPLE)
-	set_target_properties(${PYMESHLAB_MODULE_NAME}
-		PROPERTIES INSTALL_RPATH "\$ORIGIN/lib:${INSTALL_RPATH}")
+	set_target_properties(${PYMESHLAB_MODULE_NAME} PROPERTIES 
+		INSTALL_RPATH "\$ORIGIN/lib:${INSTALL_RPATH}")
 else()
-	set_target_properties(${PYMESHLAB_MODULE_NAME}
-		PROPERTIES INSTALL_RPATH "\$ORIGIN/Frameworks:${INSTALL_RPATH}")
+	set_target_properties(${PYMESHLAB_MODULE_NAME} PROPERTIES
+		INSTALL_RPATH "\$ORIGIN/Frameworks:${INSTALL_RPATH}")
 endif()
 
 ### Copy/install other files
+if (NOT BUILD_MESHLAB)
+	install(DIRECTORY "${PYMESHLAB_BUILD_DISTRIB_DIR}/lib" DESTINATION ${CMAKE_INSTALL_PREFIX})
+endif()
+
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/../../pymeshlab/tests" DESTINATION ${PYMESHLAB_BUILD_DISTRIB_DIR})
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/../../pymeshlab/__init__.py" DESTINATION ${PYMESHLAB_BUILD_DISTRIB_DIR})
 

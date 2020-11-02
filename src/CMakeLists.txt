@@ -4,7 +4,38 @@
 cmake_minimum_required(VERSION 3.9)
 project(PyMeshLab)
 
+######
+# Option to not build meshlab-common and all the plugins
+# 
+# If the option is set to OFF, the build system will assume that
+# meshlab-common and the meshlab-plugins are built in the directory
+# ${PYMESHLAB_BUILD_DISTRIB_DIR}/lib.
+# The tree should be this:
+#
+# ${PYMESHLAB_BUILD_DISTRIB_DIR}
+#  |
+#  - lib
+#     |
+#     - libmeshlab-common.so
+#     - ... eventually other deployed libs
+#     - plugins
+#        |
+#        - libfilter_*.so
+#        - ...
+#
+# Default is ON
+# It is useful set this to OFF if you have an already built meshlab backup that
+# will speed-up the pymeshlab build!
+######
 option(BUILD_MESHLAB ON)
+
+## Required libraries:
+# - OpenGL (ToDo: remove this)
+# - Qt5 - OpenGL, Xml, XmlPatterns
+# - Glew  (with fallback) (ToDo: remove this)
+# - Eigen3 (with fallback)
+# - OpenMP (not required)
+# - Python
 
 find_package(OpenGL REQUIRED)
 find_package(
