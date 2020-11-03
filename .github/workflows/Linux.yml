@@ -71,7 +71,7 @@ jobs:
       matrix:
         pyversion: [3.5, 3.6, 3.7, 3.8]
     steps:
-    - uses: actions/checkout@v2
+    #- uses: actions/checkout@v2
     - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v2
       with:
@@ -85,4 +85,4 @@ jobs:
       run: |
         pip install pytest
         pip install numpy
-        pytest -s pymeshlab
+        pytest --pyargs pymeshlab
