@@ -45,7 +45,8 @@ jobs:
     - name: Set build meshlab option
       id: meshlab-build-option
       run: |
-        if [ ${{steps.cache-meshlab-build.outputs.cache-hit}} == 'true' ]
+        RES=${{steps.cache-meshlab-build.outputs.cache-hit}}
+        if [ $RES = 'true' ]
         then
           echo  ::set-output name=meshlab-build-option::"--no-build-meshlab"
         else
