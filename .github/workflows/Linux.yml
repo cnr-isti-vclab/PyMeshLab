@@ -49,6 +49,7 @@ jobs:
       if: steps.cache-meshlab-build.outputs.cache-hit == 'true'
       run: |
         echo  ::set-output name=meshlab-build-option::"--no-build-meshlab"
+        ls -1 src/build/lib/
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
         sh scripts/${{ runner.os }}/1_build.sh ${{steps.meshlab-build-option.outputs.meshlab-build-option}}
