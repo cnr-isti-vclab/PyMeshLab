@@ -4,7 +4,7 @@ on:
   [push, pull_request]
 
 jobs:
-  unix_build_pymeshlab:
+  linux_build_pymeshlab:
     name: Build PyMeshLab
     runs-on: ubuntu-16.04
     strategy:
@@ -30,30 +30,32 @@ jobs:
         python-version: ${{ matrix.pyversion }}
     - name: Install Ubuntu dependencies
       run: |
-        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev
+        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev libgmp-dev
     - name: Environment variables
       id: envs
       run: |
         cd src/meshlab
         echo  ::set-output name=meshlab_commit::$(git rev-parse --short HEAD)
-    - name: Cache MeshLab Build
-      id: cache-meshlab-build
-      uses: actions/cache@v2
-      with:
-        path: pymeshlab/lib
-        key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
-    - name: Install MeshLab-Ubuntu dependencies
-      if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && runner.os == 'Linux'
-      run: |
-        sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
-    - name: Build MeshLab
-      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
-      run: |
-        sh install/${{ runner.os }}/build_meshlab.sh
+#    - name: Cache MeshLab Build
+#      id: cache-meshlab-build
+#      uses: actions/cache@v2
+#      with:
+#        path: pymeshlab/lib
+#        key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
+#    - name: Install MeshLab-Ubuntu dependencies
+#      if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && runner.os == 'Linux'
+#      run: |
+#        sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
+#    - name: Build MeshLab
+#      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
+#      run: |
+#        sh install/${{ runner.os }}/build_meshlab.sh
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
-        export PYTHON_VERSION=${{ matrix.pyversion }}
-        sh install/${{ runner.os }}/build_pymeshlab.sh
+        sh scripts/${{ runner.os }}/1_build.sh
+    - name: Deploy PyMeshLab ${{ matrix.pyversion }}
+      run: |
+        sh scripts/${{ runner.os }}/2_deploy.sh
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
       with:
@@ -64,7 +66,7 @@ jobs:
   tests:
     name: Test PyMeshLab
     runs-on: ubuntu-16.04
-    needs: unix_build_pymeshlab
+    needs: linus_build_pymeshlab
     strategy:
       matrix:
         pyversion: [3.5, 3.6, 3.7, 3.8]
