@@ -68,13 +68,12 @@ jobs:
 
   tests:
     name: Test PyMeshLab
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
     needs: linux_build_pymeshlab
     strategy:
       matrix:
-        pyversion: [3.5, 3.6, 3.7, 3.8]
+        pyversion: [3.6, 3.7, 3.8]
     steps:
-    #- uses: actions/checkout@v2
     - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v2
       with:
@@ -86,7 +85,5 @@ jobs:
         python-version: ${{ matrix.pyversion }}
     - name: Run Tests ${{ matrix.pyversion }}
       run: |
-        pip install pytest
-        pip install numpy
-        ls -1 pymeshlab/
-        #pytest --pyargs pymeshlab
+        pip3 install pytest numpy
+        pytest --pyargs pymeshlab
