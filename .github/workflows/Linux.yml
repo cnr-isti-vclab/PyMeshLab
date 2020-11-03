@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-16.04
     strategy:
       matrix:
-        pyversion: [3.5, 3.6, 3.7, 3.8]
+        pyversion: [3.6, 3.7, 3.8]
     steps:
     - uses: actions/checkout@v2
       with:
@@ -57,7 +57,7 @@ jobs:
         sh scripts/${{ runner.os }}/2_deploy.sh
     - name: tests
       run: |
-        pip3 install pytest
+        pip3 install pytest numpy
         pytest --pyargs pymeshlab
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
