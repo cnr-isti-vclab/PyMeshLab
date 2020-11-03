@@ -44,14 +44,9 @@ jobs:
         key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
     - name: Set build meshlab option
       id: meshlab-build-option
+      if: steps.cache-meshlab-build.outputs.cache-hit == 'true'
       run: |
-        RES=${{steps.cache-meshlab-build.outputs.cache-hit}}
-        if [ $RES = 'true' ]
-        then
-          echo  ::set-output name=meshlab-build-option::"--no-build-meshlab"
-        else
-          echo  ::set-output name=meshlab-build-option::""
-        fi
+        echo  ::set-output name=meshlab-build-option::"--no-build-meshlab"
 #    - name: Build MeshLab
 #      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
 #      run: |
