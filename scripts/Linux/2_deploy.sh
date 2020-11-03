@@ -31,4 +31,7 @@ $LINUXDEPLOYQT_PATH/linuxdeployqt $BUNDLE_PATH/pmeshlab* \
   -executable=$BUNDLE_PATH/lib/plugins/libio_ctm.so
 
 rm $BUNDLE_PATH/AppRun
-rm -r $BUNDLE_PATH/doc
+if [ -d "$BUNDLE_PATH/doc" ]
+then
+    rm -r $BUNDLE_PATH/doc
+fi
