@@ -36,23 +36,28 @@ jobs:
       run: |
         cd src/meshlab
         echo  ::set-output name=meshlab_commit::$(git rev-parse --short HEAD)
-#    - name: Cache MeshLab Build
-#      id: cache-meshlab-build
-#      uses: actions/cache@v2
-#      with:
-#        path: pymeshlab/lib
-#        key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
-#    - name: Install MeshLab-Ubuntu dependencies
-#      if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && runner.os == 'Linux'
-#      run: |
-#        sudo apt-get install -y libgmp-dev libxkbcommon-x11-0 patchelf
+    - name: Cache MeshLab Build
+      id: cache-meshlab-build
+      uses: actions/cache@v2
+      with:
+        path: pymeshlab/lib
+        key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
+    - name: Set build meshlab option
+      id: meshlab-build-option
+      run: |
+        if [ ${{steps.cache-meshlab-build.outputs.cache-hit}} == 'true' ]
+        then
+          echo  ::set-output name=meshlab-build-option::"--no-build-meshlab"
+        else
+          echo  ::set-output name=meshlab-build-option::""
+        fi
 #    - name: Build MeshLab
 #      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
 #      run: |
 #        sh install/${{ runner.os }}/build_meshlab.sh
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
-        sh scripts/${{ runner.os }}/1_build.sh
+        sh scripts/${{ runner.os }}/1_build.sh ${{steps.meshlab-build-option.outputs.meshlab-build-option}}
     - name: Deploy PyMeshLab ${{ matrix.pyversion }}
       run: |
         sh scripts/${{ runner.os }}/2_deploy.sh
@@ -65,7 +70,7 @@ jobs:
 
   tests:
     name: Test PyMeshLab
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     needs: linux_build_pymeshlab
     strategy:
       matrix:
@@ -83,6 +88,8 @@ jobs:
         python-version: ${{ matrix.pyversion }}
     - name: Run Tests ${{ matrix.pyversion }}
       run: |
+        pip --version
+        pip3 --version
         pip install pytest
         pip install numpy
         pytest --pyargs pymeshlab
