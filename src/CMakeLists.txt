@@ -27,7 +27,7 @@ project(PyMeshLab)
 # It is useful set this to OFF if you have an already built meshlab backup that
 # will speed-up the pymeshlab build!
 ######
-option(BUILD_MESHLAB ON)
+option(BUILD_MESHLAB "Build MeshLab components before PyMeshLab" ON)
 
 ## Required libraries:
 # - OpenGL (ToDo: remove this)
