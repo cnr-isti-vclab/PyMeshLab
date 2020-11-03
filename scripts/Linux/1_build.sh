@@ -5,6 +5,7 @@ SOURCE_PATH=$SCRIPTS_PATH/../../src
 BUILD_PATH=$SOURCE_PATH/build
 INSTALL_PATH=$SOURCE_PATH/../pymeshlab
 CORES="-j4"
+BUILD_MESHLAB_OPTION=""
 
 #check parameters
 for i in "$@"
@@ -20,6 +21,10 @@ case $i in
     ;;
     -j*)
     CORES=$i
+    shift # past argument=value
+    ;;
+    --no-build-meshlab)
+    BUILD_MESHLAB_OPTION="-DBUILD_MESHLAB=OFF"
     shift # past argument=value
     ;;
     *)
@@ -44,6 +49,6 @@ BUILD_PATH=$(realpath $BUILD_PATH)
 INSTALL_PATH=$(realpath $INSTALL_PATH)
 
 cd $BUILD_PATH
-cmake -DCMAKE_BUILD_TYPE=MinSizeRel -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SOURCE_PATH
+cmake -DCMAKE_BUILD_TYPE=MinSizeRel -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SOURCE_PATH $BUILD_MESHLAB_OPTION
 make $CORES
 make install
