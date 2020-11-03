@@ -42,14 +42,13 @@ jobs:
       with:
         path: |
           pymeshlab/lib
-          src/build/lib
-        key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
+          src/build/distrib/pymeshlab/lib/
+        key: ${{ runner.os }}-meshlab_lib-${{steps.envs.outputs.meshlab_commit}}
     - name: Set build meshlab option
       id: meshlab-build-option
       if: steps.cache-meshlab-build.outputs.cache-hit == 'true'
       run: |
         echo  ::set-output name=meshlab-build-option::"--no-build-meshlab"
-        ls -1 src/build/lib/
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
         sh scripts/${{ runner.os }}/1_build.sh ${{steps.meshlab-build-option.outputs.meshlab-build-option}}
