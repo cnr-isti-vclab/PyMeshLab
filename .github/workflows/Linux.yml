@@ -40,17 +40,15 @@ jobs:
       id: cache-meshlab-build
       uses: actions/cache@v2
       with:
-        path: pymeshlab/lib
-        key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
+        path: |
+          pymeshlab/lib
+          src/build/lib
+        key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
     - name: Set build meshlab option
       id: meshlab-build-option
       if: steps.cache-meshlab-build.outputs.cache-hit == 'true'
       run: |
         echo  ::set-output name=meshlab-build-option::"--no-build-meshlab"
-#    - name: Build MeshLab
-#      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
-#      run: |
-#        sh install/${{ runner.os }}/build_meshlab.sh
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
         sh scripts/${{ runner.os }}/1_build.sh ${{steps.meshlab-build-option.outputs.meshlab-build-option}}
