@@ -55,6 +55,9 @@ compile_commands.json
 
 *_qmlcache.qrc
 
+#linuxdeployqt out files
+pymeshlab/qt.conf
+
 # Debug exec:
 pmeshlab.cpython-38-x86_64-linux-gnu
 
