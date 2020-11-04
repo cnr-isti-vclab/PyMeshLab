@@ -55,15 +55,15 @@ jobs:
     - name: Deploy PyMeshLab ${{ matrix.pyversion }}
       run: |
         sh scripts/${{ runner.os }}/2_deploy.sh
-    - name: tests
-      run: |
-        pip3 install pytest numpy
-        pytest --pyargs pymeshlab
+    #- name: tests
+    #  run: |
+    #    pip3 install pytest numpy
+    #    pytest --pyargs pymeshlab
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-        path: pymeshlab/
+        path: src/build/distrib/pymeshlab
 
 
   tests:
@@ -79,10 +79,6 @@ jobs:
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
         path: pymeshlab/
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v2
-      with:
-        modules: xmlpatterns
     - name: Install Python ${{ matrix.pyversion }}
       uses: actions/setup-python@v2
       with:

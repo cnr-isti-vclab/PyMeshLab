@@ -16,7 +16,7 @@ LINUXDEPLOYQT_PATH=$SCRIPTS_PATH/../../src/meshlab/scripts/Linux/resources
 #checking for parameters
 if [ "$#" -eq 0 ]
 then
-    BUNDLE_PATH=$SCRIPTS_PATH/../../pymeshlab
+    BUNDLE_PATH=$SCRIPTS_PATH/../../src/build/distrib/pymeshlab
 else
     BUNDLE_PATH=$(realpath $1)
 fi
