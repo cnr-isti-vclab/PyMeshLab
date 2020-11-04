@@ -23,9 +23,8 @@ fi
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BUNDLE_PATH/lib
 
-$LINUXDEPLOYQT_PATH/linuxdeployqt $BUNDLE_PATH/pmeshlab* \
+$LINUXDEPLOYQT_PATH/linuxdeployqt $BUNDLE_PATH/lib/libmeshlab-common.so \
   -bundle-non-qt-libs \
-  -executable=$BUNDLE_PATH/lib/libmeshlab-common.so \
   -executable=$BUNDLE_PATH/lib/plugins/libfilter_sketchfab.so \
   -executable=$BUNDLE_PATH/lib/plugins/libio_3ds.so \
   -executable=$BUNDLE_PATH/lib/plugins/libio_ctm.so
