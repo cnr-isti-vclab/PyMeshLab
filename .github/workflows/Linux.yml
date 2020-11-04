@@ -63,7 +63,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-        path: src/build/distrib/pymeshlab
+        path: pymeshlab
 
 
   tests:
