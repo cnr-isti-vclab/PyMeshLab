@@ -86,7 +86,7 @@ jobs:
     - name: Run Tests ${{ matrix.pyversion }}
       run: |
         pip3 install numpy
-        wget https://raw.githubusercontent.com/alemuntoni/PyMeshLab/master/scripts/simple_test.py
-        python3 simple_test.py
+        wget https://raw.githubusercontent.com/alemuntoni/PyMeshLab/master/scripts/test_convex_hull.py
+        python3 test_convex_hull.py
         #pip3 install pytest numpy
         #pytest --pyargs pymeshlab
