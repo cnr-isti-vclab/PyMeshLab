@@ -26,7 +26,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BUNDLE_PATH/lib
 ARGUMENTS=""
 for lib in $BUNDLE_PATH/lib/plugins/*.so
 do
-    ARGUMENTS="${ARGUMENTS} -executable=${BUNDLE_PATH}/lib/plugins/$lib"
+    ARGUMENTS="${ARGUMENTS} -executable=$lib"
 done
 
 $LINUXDEPLOYQT_PATH/linuxdeployqt $BUNDLE_PATH/pmeshlab* \
