@@ -89,6 +89,8 @@ jobs:
       with:
         python-version: ${{ matrix.pyversion }}
     - name: Run Tests ${{ matrix.pyversion }}
+      shell: bash
       run: |
+        ls pymeshlab
         pip install pytest numpy
         pytest --pyargs pymeshlab
