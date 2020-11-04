@@ -1,6 +1,6 @@
 import pymeshlab
 
-ms = pymeshlab.MeshSet()
+ms = pymeshlab.MeshSet(verbose=True)
 
 ms.print_status()
 

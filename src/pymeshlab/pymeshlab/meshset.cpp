@@ -70,7 +70,9 @@ CMeshO& pymeshlab::MeshSet::mesh(int id)
 
 void pymeshlab::MeshSet::printPluginList() const
 {
-	std::cout << "MeshSet class - list of loaded plugins:\n";
+	std::cout 
+			<< "MeshSet class - list of loaded plugins (" 
+			<< pm.ownerPlug.size() << "):\n";
 	for (const PluginInterface* p : pm.ownerPlug){
 		std::cout << "\t" << p->pluginName().toStdString() << "\n";
 	}
