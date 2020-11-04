@@ -5,7 +5,7 @@ on:
 
 jobs:
   linux_build_pymeshlab:
-    name: Build PyMeshLab
+    name: Build PyMeshLab (Linux)
     runs-on: ubuntu-16.04
     strategy:
       matrix:
@@ -55,10 +55,6 @@ jobs:
     - name: Deploy PyMeshLab ${{ matrix.pyversion }}
       run: |
         sh scripts/${{ runner.os }}/2_deploy.sh
-    #- name: tests
-    #  run: |
-    #    pip3 install pytest numpy
-    #    pytest --pyargs pymeshlab
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
       with:
@@ -66,8 +62,8 @@ jobs:
         path: pymeshlab
 
 
-  tests:
-    name: Test PyMeshLab
+  linux_tests:
+    name: Test PyMeshLab (Linux)
     runs-on: ubuntu-16.04
     needs: linux_build_pymeshlab
     strategy:

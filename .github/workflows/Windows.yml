@@ -1,8 +1,7 @@
 name: Windows
 
 on:
-  workflow_dispatch 
-  #[push, pull_request]
+  [push, pull_request]
 
 jobs:
   windows_build_pymeshlab:
@@ -10,7 +9,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        pyversion: [3.5, 3.6, 3.7, 3.8]
+        pyversion: [3.6, 3.7, 3.8]
 
     steps:
     - uses: actions/checkout@v2
@@ -51,15 +50,21 @@ jobs:
       with:
         path: |
           pymeshlab/lib
-          pymeshlab/Qt*.dll
-        key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
-    - name: Build MeshLab
-      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
+          src/build/distrib/pymeshlab/lib/
+        key: ${{ runner.os }}-meshlab_lib-${{steps.envs.outputs.meshlab_commit}}
+    - name: Set build meshlab option
+      id: meshlab-build-option
+      if: steps.cache-meshlab-build.outputs.cache-hit == 'true'
       run: |
-        .\install\${{ runner.os }}\build_meshlab.ps1
-    - name: Build PyMeshLab
+        echo  ::set-output name=meshlab-build-option::"--no-build-meshlab"
+    - name: Build PyMeshLab ${{ matrix.pyversion }}
+      shell: bash
       run: |
-        .\install\${{ runner.os }}\build_pymeshlab.ps1
+        sh scripts/${{ runner.os }}/1_build.sh ${{steps.meshlab-build-option.outputs.meshlab-build-option}}
+    - name: Deploy PyMeshLab ${{ matrix.pyversion }}
+      shell: bash
+      run: |
+        sh scripts/${{ runner.os }}/2_deploy.sh
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
       with:
@@ -72,9 +77,8 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        pyversion: [3.5, 3.6, 3.7, 3.8]
+        pyversion: [3.6, 3.7, 3.8]
     steps:
-    - uses: actions/checkout@v2
     - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v2
       with:
