@@ -85,7 +85,7 @@ jobs:
         python-version: ${{ matrix.pyversion }}
     - name: Run Tests ${{ matrix.pyversion }}
       run: |
-        wget https://raw.githubusercontent.com/alemuntoni/PyMeshLab/master/scritps/simple_test.py
+        wget https://raw.githubusercontent.com/alemuntoni/PyMeshLab/master/scripts/simple_test.py
         python3 simple_test.py
         #pip3 install pytest numpy
         #pytest --pyargs pymeshlab
