@@ -11,20 +11,21 @@
 # You can give as argument the path where you installed PyMeshLab.
 
 SCRIPTS_PATH="$(dirname "$(realpath "$0")")"
-LINUXDEPLOYQT_PATH=$SCRIPTS_PATH/../../pymeshlab
+LINUXDEPLOYQT_PATH=$SCRIPTS_PATH/../../src/meshlab/scripts/Linux/resources
 
 #checking for parameters
 if [ "$#" -eq 0 ]
 then
-    BUNDLE_PATH=$SCRIPTS_PATH/../../src/build/distrib/pymeshlab
+    BUNDLE_PATH=$SCRIPTS_PATH/../../pymeshlab
 else
     BUNDLE_PATH=$(realpath $1)
 fi
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BUNDLE_PATH/lib
 
-$LINUXDEPLOYQT_PATH/linuxdeployqt $BUNDLE_PATH/lib/libmeshlab-common.so \
+$LINUXDEPLOYQT_PATH/linuxdeployqt $BUNDLE_PATH/pmeshlab* \
   -bundle-non-qt-libs \
+  -executable=$BUNDLE_PATH/lib/libmeshlab-common.so
   -executable=$BUNDLE_PATH/lib/plugins/libfilter_sketchfab.so \
   -executable=$BUNDLE_PATH/lib/plugins/libio_3ds.so \
   -executable=$BUNDLE_PATH/lib/plugins/libio_ctm.so
