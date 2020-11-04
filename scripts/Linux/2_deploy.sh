@@ -23,18 +23,15 @@ fi
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BUNDLE_PATH/lib
 
+ARGUMENTS=""
+for lib in $BUNDLE_PATH/lib/plugins/*.so
+do
+    ARGUMENTS="${ARGUMENTS} -executable=${BUNDLE_PATH}/lib/plugins/$lib"
+done
+
 $LINUXDEPLOYQT_PATH/linuxdeployqt $BUNDLE_PATH/pmeshlab* \
   -bundle-non-qt-libs \
-  -executable=$BUNDLE_PATH/lib/libmeshlab-common.so \
-  -executable=$BUNDLE_PATH/lib/plugins/*.so
-#$LINUXDEPLOYQT_PATH/linuxdeployqt $BUNDLE_PATH/pmeshlab* \
-#  -bundle-non-qt-libs \
-#  -executable=$BUNDLE_PATH/lib/libmeshlab-common.so \
-#  -executable=$BUNDLE_PATH/lib/plugins/libfilter_sketchfab.so \
-#  -executable=$BUNDLE_PATH/lib/plugins/libfilter_ssynth.so \
-#  -executable=$BUNDLE_PATH/lib/plugins/libio_3ds.so \
-#  -executable=$BUNDLE_PATH/lib/plugins/libio_base.so \
-#  -executable=$BUNDLE_PATH/lib/plugins/libio_ctm.so
+  $ARGUMENTS
 
 rm $BUNDLE_PATH/AppRun
 if [ -d "$BUNDLE_PATH/doc" ]

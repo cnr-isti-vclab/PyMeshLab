@@ -14,9 +14,6 @@ def test_convex_hull():
 
     assert ms.number_meshes() == 2
 
-    # save the current selected mesh
-    ms.save_mesh(output_path + "convex_hull.obj")
-
     # get a reference to the current selected mesh
     m = ms.current_mesh()
 
