@@ -26,5 +26,5 @@ fi
 #    ARGUMENTS="${ARGUMENTS} -executable=$lib"
 #done
 
-windeployqt $BUNDLE_PATH/pmeshlab* --libdir $BUNDLE_PATH/lib
-windeployqt $BUNDLE_PATH/plugins/filter_sketchfab.dll --libdir $BUNDLE_PATH/lib
+windeployqt $BUNDLE_PATH/lib/meshlab-common.lib
+windeployqt $BUNDLE_PATH/lib/plugins/filter_sketchfab.dll --libdir $BUNDLE_PATH/lib
