@@ -1,6 +1,8 @@
 name: Windows
 
-on: [push, pull_request]
+on:
+  workflow_dispatch 
+  #[push, pull_request]
 
 jobs:
   windows_build_pymeshlab:
@@ -87,4 +89,3 @@ jobs:
         pip install pytest
         pip install numpy
         pytest -s pymeshlab
-    

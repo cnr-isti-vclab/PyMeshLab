@@ -1,7 +1,8 @@
 name: LinuxDebug
 
 on:
-  [push, pull_request]
+  workflow_dispatch
+  #[push, pull_request]
 
 jobs:
   ubuntu_build_pymeshlab_debug:
@@ -30,7 +31,7 @@ jobs:
         python-version: ${{ matrix.pyversion }}
     - name: Install dependencies
       run: |
-       sudo apt-get install -y mesa-common-dev libglu1-mesa-dev 
+       sudo apt-get install -y mesa-common-dev libglu1-mesa-dev
     - name: Environment variables
       id: envs
       run: |
@@ -56,8 +57,8 @@ jobs:
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}_debug
         path: pymeshlab/
-  
-  
+
+
   ubuntu_tests_debug:
     name: Test PyMeshLab (Ubuntu-Debug)
     needs: ubuntu_build_pymeshlab_debug
@@ -81,4 +82,3 @@ jobs:
         pip install pytest
         pip install numpy
         pytest -s pymeshlab
-    

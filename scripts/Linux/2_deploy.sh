@@ -11,7 +11,7 @@
 # You can give as argument the path where you installed PyMeshLab.
 
 SCRIPTS_PATH="$(dirname "$(realpath "$0")")"
-LINUXDEPLOYQT_PATH=$SCRIPTS_PATH/../../src/meshlab/scripts/Linux/resources
+LINUXDEPLOYQT_PATH=$SCRIPTS_PATH/../../pymeshlab
 
 #checking for parameters
 if [ "$#" -eq 0 ]

@@ -1,7 +1,8 @@
 name: MacOS
 
 on:
-  [push, pull_request]
+  workflow_dispatch
+  #[push, pull_request]
 
 jobs:
   unix_build_pymeshlab:
@@ -56,8 +57,8 @@ jobs:
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
         path: pymeshlab/
-  
-  
+
+
   tests:
     name: Test PyMeshLab
     runs-on: macos-latest
