@@ -51,7 +51,7 @@ jobs:
         path: |
           pymeshlab/lib
           src/build/distrib/pymeshlab/lib/
-        key: ${{ runner.os }}-meshlab_lib-${{steps.envs.outputs.meshlab_commit}}
+        key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
     - name: Set build meshlab option
       shell: bash
       id: meshlab-build-option

@@ -22,3 +22,7 @@ fi
 
 windeployqt $BUNDLE_PATH/pmeshlab*
 windeployqt $BUNDLE_PATH/lib/plugins/filter_sketchfab.dll --libdir $BUNDLE_PATH
+
+rm $BUNDLE_PATH/d3dcompiler*
+rm $BUNDLE_PATH/opengl32sw.dll
+rm $BUNDLE_PATH/vc_redist*
