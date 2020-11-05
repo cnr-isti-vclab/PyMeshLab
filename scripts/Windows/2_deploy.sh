@@ -20,5 +20,5 @@ else
     BUNDLE_PATH=$(realpath $1)
 fi
 
-windeployqt $BUNDLE_PATH/pmeshlab* --libdir $BUNDLE_PATH/lib
-windeployqt $BUNDLE_PATH/lib/plugins/filter_sketchfab.dll --libdir $BUNDLE_PATH/lib
+windeployqt $BUNDLE_PATH/pmeshlab*
+windeployqt $BUNDLE_PATH/lib/plugins/filter_sketchfab.dll --libdir $BUNDLE_PATH
