@@ -20,10 +20,5 @@ else
     BUNDLE_PATH=$(realpath $1)
 fi
 
-windeployqt $BUNDLE_PATH/lib/meshlab-common.lib
-#windeployqt $BUNDLE_PATH/lib/plugins/filter_sketchfab.dll --libdir $BUNDLE_PATH/lib
-
-for lib in $BUNDLE_PATH/lib/plugins/*.dll
-do
-    windeployqt $lib --libdir $BUNDLE_PATH/lib
-done
+windeployqt $BUNDLE_PATH/pmeshlab* --libdir $BUNDLE_PATH/lib
+windeployqt $BUNDLE_PATH/lib/plugins/filter_sketchfab.dll --libdir $BUNDLE_PATH/lib
