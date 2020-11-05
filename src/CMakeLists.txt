@@ -29,6 +29,10 @@ project(PyMeshLab)
 ######
 option(BUILD_MESHLAB "Build MeshLab components before PyMeshLab" ON)
 
+if (APPLE)
+	option(BUILD_DUMMY_BIN_MAC_DEPLOY "Build a dummy binary necessary to deploy pymeshlab in MacOS" OFF)
+endif()
+
 ## Required libraries:
 # - OpenGL (ToDo: remove this)
 # - Qt5 - OpenGL, Xml, XmlPatterns
