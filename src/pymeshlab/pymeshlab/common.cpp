@@ -14,8 +14,24 @@ std::string pymeshlab::getRootPath()
 {
 #ifndef PYMESHLAB_DEBUG
 	py::gil_scoped_acquire acquire;
-	py::object pyml = py::module::import("pymeshlab");
-	std::string basePath = pyml.attr("__file__").cast<std::string>();
+	py::object pyml;
+	std::string basePath;
+	try {
+		pyml = py::module::import("pymeshlab");
+		basePath = pyml.attr("__file__").cast<std::string>();
+	}
+	catch(...){
+		try {
+			pyml = py::module::import(PYMESHLAB_MODULE_NAME_STR);
+			basePath = pyml.attr("__file__").cast<std::string>();
+		} 
+		catch (...) {
+			std::string err = 
+				"Irreversible error: impossible to know the position of the pymeshlab module.";
+			std::runtime_error exc(err);
+			throw exc;
+		}
+	}
 	QDir dir(QString::fromStdString(basePath));
 	dir.cdUp();
 #else
