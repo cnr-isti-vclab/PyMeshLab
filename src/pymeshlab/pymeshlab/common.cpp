@@ -14,7 +14,7 @@ std::string pymeshlab::getRootPath()
 {
 #ifndef PYMESHLAB_DEBUG
 	py::gil_scoped_acquire acquire;
-	py::object pyml = py::module::import("pymeshlab");
+	py::object pyml = py::module::import(PYMESHLAB_MODULE_NAME_STR);
 	std::string basePath = pyml.attr("__file__").cast<std::string>();
 	QDir dir(QString::fromStdString(basePath));
 	dir.cdUp();

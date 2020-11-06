@@ -199,6 +199,7 @@ dmypy.json
 
 #macOS
 .DS_Store
+Pymeshlab/dummybin*
 
 #idea
 .idea
