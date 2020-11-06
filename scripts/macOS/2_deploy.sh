@@ -11,7 +11,6 @@
 # You can give as argument the path where you installed PyMeshLab.
 
 SCRIPTS_PATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-LINUXDEPLOYQT_PATH=$SCRIPTS_PATH/../../src/meshlab/scripts/Linux/resources
 
 #checking for parameters
 if [ "$#" -eq 0 ]
@@ -19,4 +18,13 @@ then
     BUNDLE_PATH=$SCRIPTS_PATH/../../pymeshlab
 else
     BUNDLE_PATH=$(realpath $1)
+fi
+
+install_name_tool -change @rpath/libmeshlab-common.dylib Frameworks/libmeshlab-common.dylib $BUNDLE_PATH/dummybin.app/Contents/pmeshlab*
+
+if [ -e $QTDIR/bin/macdeployqt ]
+then
+    $QTDIR/bin/macdeployqt $BUNDLE_PATH/dummybin.app -executable=$INSTALL_PATH/$BUNDLE_PATH/dummybin.app/pmeshlab*
+else
+        macdeployqt $BUNDLE_PATH/dummybin.app -executable=$INSTALL_PATH/$BUNDLE_PATH/dummybin.app/pmeshlab*
 fi
