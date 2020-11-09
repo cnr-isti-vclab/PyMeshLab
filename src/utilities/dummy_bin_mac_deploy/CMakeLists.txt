@@ -9,6 +9,10 @@ target_link_libraries(
 	PUBLIC meshlab-common
 	)
 
+include_directories(${MESHLAB_SRC_DIR}/common)
+
+set_property(TARGET dummybin
+	PROPERTY RUNTIME_OUTPUT_DIRECTORY ${PYMESHLAB_BUILD_DISTRIB_DIR})
 
 set_target_properties(dummybin PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist)
 

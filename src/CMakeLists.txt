@@ -64,6 +64,10 @@ add_definitions(-DMESHLAB_SCALAR=float)
 set(EXTERNAL_DIR ${MESHLAB_SRC_DIR}/external)
 include(${MESHLAB_SRC_DIR}/external_common.cmake)
 
+if (APPLE AND BUILD_DUMMY_BIN_MAC_DEPLOY)
+	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/utilities/dummy_bin_mac_deploy)
+endif()
+
 if (BUILD_MESHLAB)
 	include(${CMAKE_CURRENT_SOURCE_DIR}/meshlab.cmake)
 endif()

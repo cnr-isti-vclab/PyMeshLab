@@ -61,8 +61,10 @@ pymeshlab/qt.conf
 # Debug exec:
 pmeshlab.cpython-38-x86_64-linux-gnu
 
-# MacOS meshlab appbundle
-meshlab.app
+# MacOS
+pymeshlab/Frameworks/*
+pymeshlab/PlugIns/*
+
 
 # Test saved meshes
 pymeshlab/tests/sample/test_output/*

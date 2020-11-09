@@ -1,14 +1,9 @@
 #!/bin/bash
-# This is a script shell for deploying a pymeshlab-portable folder.
-# Requires a properly built PyMeshLab (see 1_build.sh).
-#
-# This script can be run only in the oldest supported linux distro
-# due to linuxdeployqt tool choice (see https://github.com/probonopd/linuxdeployqt/issues/340).
-#
-# Without given arguments, the folder that will be deployed is pymeshlab, which
-# should be the path where PyMeshLab has been installed (default output of 1_build.sh).
-#
-# You can give as argument the path where you installed PyMeshLab.
+
+#realpath function
+realpath() {
+    [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
+}
 
 SCRIPTS_PATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
@@ -20,11 +15,23 @@ else
     BUNDLE_PATH=$(realpath $1)
 fi
 
-install_name_tool -change @rpath/libmeshlab-common.dylib Frameworks/libmeshlab-common.dylib $BUNDLE_PATH/dummybin.app/Contents/pmeshlab*
+MODULE_NAME=$(find $BUNDLE_PATH/dummybin.app/Contents  -name 'pmeshlab*')
+
+install_name_tool -change @rpath/libmeshlab-common.dylib @executable_path/../Frameworks/libmeshlab-common.dylib $BUNDLE_PATH/dummybin.app/Contents/MacOS/dummybin
+
+install_name_tool -add_rpath @loader_path/Frameworks $MODULE_NAME
+#install_name_tool -change @rpath/libmeshlab-common.dylib @loader_path/Frameworks/libmeshlab-common.dylib pymeshlab/pmeshlab*
+#install_name_tool -change @rpath/libmeshlab-common.dylib Frameworks/libmeshlab-common.dylib $BUNDLE_PATH/dummybin.app/Contents/pmeshlab*
 
 if [ -e $QTDIR/bin/macdeployqt ]
 then
-    $QTDIR/bin/macdeployqt $BUNDLE_PATH/dummybin.app -executable=$INSTALL_PATH/$BUNDLE_PATH/dummybin.app/pmeshlab*
+    $QTDIR/bin/macdeployqt $BUNDLE_PATH/dummybin.app -executable=$MODULE_NAME -executable=$BUNDLE_PATH/dummybin.app/Contents/PlugIns/libfilter_sketchfab.so
 else
-        macdeployqt $BUNDLE_PATH/dummybin.app -executable=$INSTALL_PATH/$BUNDLE_PATH/dummybin.app/pmeshlab*
+        macdeployqt $BUNDLE_PATH/dummybin.app -executable=$MODULE_NAME -executable=$BUNDLE_PATH/dummybin.app/Contents/PlugIns/libfilter_sketchfab.so
 fi
+
+rsync -a $BUNDLE_PATH/dummybin.app/Contents/Frameworks/ $BUNDLE_PATH/Frameworks/
+rsync -a $BUNDLE_PATH/dummybin.app/Contents/PlugIns/ $BUNDLE_PATH/PlugIns/
+mv $BUNDLE_PATH/dummybin.app/Contents/pmeshlab* $BUNDLE_PATH/
+rm -rf $BUNDLE_PATH/dummybin.app
+
