@@ -6,7 +6,7 @@ on:
 
 jobs:
   build_pymeshlab_debug:
-    name: Build PyMeshLab (Ubuntu-Debug)
+    name: Build PyMeshLab (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -34,7 +34,7 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.pyversion }}
-    - name: Install Ubuntu dependencies
+    - name: Install Linux dependencies
       if: runner.os == 'Linux'
       run: |
         sudo apt-get install -y mesa-common-dev libglu1-mesa-dev libgmp-dev
