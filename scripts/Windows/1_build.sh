@@ -6,6 +6,7 @@ BUILD_PATH=$SOURCE_PATH/build
 INSTALL_PATH=$SOURCE_PATH/../pymeshlab
 CORES="-j4"
 BUILD_MESHLAB_OPTION=""
+BUILD_OPTION="-DCMAKE_BUILD_TYPE=MinSizeRel"
 
 #check parameters
 for i in "$@"
@@ -25,6 +26,10 @@ case $i in
     ;;
     --no-build-meshlab)
     BUILD_MESHLAB_OPTION="-DBUILD_MESHLAB=OFF"
+    shift # past argument=value
+    ;;
+    --debug)
+    BUILD_OPTION="-DCMAKE_BUILD_TYPE=Debug"
     shift # past argument=value
     ;;
     *)
@@ -51,6 +56,6 @@ INSTALL_PATH=$(realpath $INSTALL_PATH)
 echo "BUILD_MESHLAB_OPTION: " $BUILD_MESHLAB_OPTION
 
 cd $BUILD_PATH
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=MinSizeRel -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $BUILD_MESHLAB_OPTION $SOURCE_PATH 
+cmake -G "NMake Makefiles" $BUILD_OPTION -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $BUILD_MESHLAB_OPTION $SOURCE_PATH
 jom $CORES
 nmake install

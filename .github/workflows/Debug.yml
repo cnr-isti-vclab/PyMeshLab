@@ -1,0 +1,65 @@
+name: Debug
+
+on:
+  workflow_dispatch
+  #[push, pull_request]
+
+jobs:
+  build_pymeshlab_debug:
+    name: Build PyMeshLab (Ubuntu-Debug)
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-16.04, macos-latest, windows-latest]
+        pyversion: [3.8]
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+    - name: checkout sub-submodule vcg
+      shell: bash
+      run: |
+        cd src/meshlab
+        auth_header="$(git config --local --get http.https://github.com/.extraheader)"
+        git submodule sync --recursive
+        git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+    - name: Setup MSVC
+      if: runner.os == 'Windows'
+      uses: ilammy/msvc-dev-cmd@v1
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+      with:
+        modules: xmlpatterns
+    - name: Install Python ${{ matrix.pyversion }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.pyversion }}
+    - name: Install Ubuntu dependencies
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev libgmp-dev
+    - name: Install MacOS dependencies
+      if: runner.os == 'macOS'
+      run: |
+        brew install libomp
+    - name: Install Windows dependencies
+      if: runner.os == 'Windows'
+      run: |
+        Invoke-WebRequest -Uri "http://download.qt.io/official_releases/jom/jom_1_1_3.zip" -OutFile "jom_1_1_3.zip"
+        New-Item -Name "jom" -ItemType "directory"
+        Expand-Archive -Path jom_1_1_3.zip -DestinationPath .\jom
+        echo "::add-path::$(Get-Location)\jom"
+        echo '::set-env name=VCINSTALLDIR::C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
+    - name: Build PyMeshLab ${{ matrix.pyversion }}
+      shell: bash
+      run: |
+        sh scripts/${{ runner.os }}/1_build.sh --debug
+    - name: Deploy PyMeshLab ${{ matrix.pyversion }}
+      shell: bash
+      run: |
+        sh scripts/${{ runner.os }}/2_deploy.sh
+    - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}_debug
+        path: pymeshlab
