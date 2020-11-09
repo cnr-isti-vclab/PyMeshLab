@@ -13,7 +13,7 @@ namespace py = pybind11;
 std::string pymeshlab::getRootPath()
 {
 #ifndef PYMESHLAB_DEBUG
-	py::gil_scoped_acquire acquire;
+	//py::gil_scoped_acquire acquire;
 	py::object pyml;
 	std::string basePath;
 	try {
