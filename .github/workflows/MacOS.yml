@@ -1,16 +1,15 @@
 name: MacOS
 
 on:
-  workflow_dispatch
-  #[push, pull_request]
+  [push, pull_request]
 
 jobs:
-  unix_build_pymeshlab:
-    name: Build PyMeshLab
+  macos_build_pymeshlab:
+    name: Build PyMeshLab (MacOS)
     runs-on: macos-latest
     strategy:
       matrix:
-        pyversion: [3.5, 3.6, 3.7, 3.8]
+        pyversion: [3.6, 3.7, 3.8]
     steps:
     - uses: actions/checkout@v2
       with:
@@ -29,29 +28,32 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.pyversion }}
-    - name: Environment variables
-      id: envs
-      run: |
-        cd src/meshlab
-        echo  ::set-output name=meshlab_commit::$(git rev-parse --short HEAD)
-    - name: Cache MeshLab Build
-      id: cache-meshlab-build
-      uses: actions/cache@v2
-      with:
-        path: pymeshlab/lib
-        key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
+    #- name: Environment variables
+    #  id: envs
+    #  run: |
+    #    cd src/meshlab
+    #    echo  ::set-output name=meshlab_commit::$(git rev-parse --short HEAD)
+    #- name: Cache MeshLab Build
+    #  id: cache-meshlab-build
+    #  uses: actions/cache@v2
+    #  with:
+    #    path: pymeshlab/lib
+    #    key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
     - name: Install MeshLab-MacOS dependencies
-      if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && runner.os == 'macOS'
+    #  if: steps.cache-meshlab-build.outputs.cache-hit != 'true' && runner.os == 'macOS'
       run: |
         brew install libomp
-    - name: Build MeshLab
-      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
-      run: |
-        sh install/${{ runner.os }}/build_meshlab.sh
+    #- name: Set build MeshLab option
+    #  id: meshlab-build-option
+    #  if: steps.cache-meshlab-build.outputs.cache-hit == 'true'
+    #  run: |
+    #    echo  ::set-output name=meshlab-build-option::"--no-build-meshlab"
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
-        export PYTHON_VERSION=${{ matrix.pyversion }}
-        sh install/${{ runner.os }}/build_pymeshlab.sh
+        sh scripts/${{ runner.os }}/1_build.sh #${{steps.meshlab-build-option.outputs.meshlab-build-option}}
+    - name: Deploy PyMeshLab ${{ matrix.pyversion }}
+      run: |
+        sh scripts/${{ runner.os }}/2_deploy.sh
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
       with:
@@ -62,12 +64,12 @@ jobs:
   tests:
     name: Test PyMeshLab
     runs-on: macos-latest
-    needs: unix_build_pymeshlab
+    needs: macos_build_pymeshlab
     strategy:
       matrix:
-        pyversion: [3.5, 3.6, 3.7, 3.8]
+        pyversion: [3.6, 3.7, 3.8]
     steps:
-    - uses: actions/checkout@v2
+    #- uses: actions/checkout@v2
     - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v2
       with:
@@ -79,6 +81,5 @@ jobs:
         python-version: ${{ matrix.pyversion }}
     - name: Run Tests ${{ matrix.pyversion }}
       run: |
-        pip install pytest
-        pip install numpy
+        pip install pytest numpy
         pytest -s pymeshlab

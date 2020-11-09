@@ -44,7 +44,7 @@ jobs:
           pymeshlab/lib
           src/build/distrib/pymeshlab/lib/
         key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
-    - name: Set build meshlab option
+    - name: Set build MeshLab option
       id: meshlab-build-option
       if: steps.cache-meshlab-build.outputs.cache-hit == 'true'
       run: |
