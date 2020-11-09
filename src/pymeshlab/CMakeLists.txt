@@ -54,7 +54,7 @@ add_subdirectory(pybind11)
 pybind11_add_module(${PYMESHLAB_MODULE_NAME} ${HEADERS} ${SOURCES})
 
 #python
-target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE pybind11::embed)
+#target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE pybind11::embed)
 
 #Qt
 target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE Qt5::OpenGL Qt5::Xml external-glew)
