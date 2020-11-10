@@ -6,7 +6,7 @@ import urllib.request
 import zipfile
 import shutil
 
-github_repo = 'alemuntoni/PyMeshLab'
+github_repo = 'cnr-isti-vclab/PyMeshLab'
 base_repo = 'https://github.com/' + github_repo
 
 # read the contents of README file
