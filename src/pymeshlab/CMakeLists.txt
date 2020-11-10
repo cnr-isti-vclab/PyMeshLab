@@ -51,7 +51,7 @@ include_directories(${MESHLAB_SRC_DIR}/common)
 
 #pybind11
 add_subdirectory(pybind11)
-if (NOT PYMESHLAB_DEBUG)
+if ((NOT PYMESHLAB_DEBUG) AND (NOT PYMESHLAB_UPDATE_DOC))
 	pybind11_add_module(${PYMESHLAB_MODULE_NAME} ${HEADERS} ${SOURCES})
 endif()
 
@@ -66,9 +66,17 @@ if (PYMESHLAB_DEBUG) #bin to debug pymeshlab
 			meshlab-common)
 	set_property(TARGET ${PYMESHLAB_MODULE_NAME}
 		PROPERTY RUNTIME_OUTPUT_DIRECTORY ${PYMESHLAB_BUILD_DISTRIB_DIR})
-	
 elseif(PYMESHLAB_UPDATE_DOC) #bin to update doc
-	#list(APPEND SOURCES doc_main.cpp)
+	add_definitions(-DPYMESHLAB_SRC_BASE_DIR=${CMAKE_CURRENT_SOURCE_DIR})
+	add_definitions(-DPYMESHLAB_DEBUG)
+	list(APPEND SOURCES doc_main.cpp)
+	add_executable(${PYMESHLAB_MODULE_NAME} ${SOURCES} ${HEADERS})
+	target_link_libraries(
+		${PYMESHLAB_MODULE_NAME} 
+		PUBLIC  
+			meshlab-common)
+	set_property(TARGET ${PYMESHLAB_MODULE_NAME}
+		PROPERTY RUNTIME_OUTPUT_DIRECTORY ${PYMESHLAB_BUILD_DISTRIB_DIR})
 endif()
 ##### END OTHER OPTIONS
 
