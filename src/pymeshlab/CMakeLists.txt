@@ -61,7 +61,11 @@ target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE Qt5::OpenGL Qt5::Xml exte
 
 #meshlab-common
 if (NOT BUILD_MESHLAB)
-	target_link_directories(${PYMESHLAB_MODULE_NAME} PUBLIC "${PYMESHLAB_BUILD_DISTRIB_DIR}/lib")
+	if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
+		target_link_directories(${PYMESHLAB_MODULE_NAME} PUBLIC "${PYMESHLAB_BUILD_DISTRIB_DIR}/lib")
+	else()
+		target_link_directories(${PYMESHLAB_MODULE_NAME} PUBLIC "${PYMESHLAB_BUILD_DISTRIB_DIR}/dummybin.app/Contents/Frameworks")
+	endif()
 endif()
 target_link_libraries(${PYMESHLAB_MODULE_NAME} PUBLIC meshlab-common)
 

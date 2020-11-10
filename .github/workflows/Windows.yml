@@ -26,12 +26,10 @@ jobs:
         Invoke-WebRequest -Uri "http://download.qt.io/official_releases/jom/jom_1_1_3.zip" -OutFile "jom_1_1_3.zip"
         New-Item -Name "jom" -ItemType "directory"
         Expand-Archive -Path jom_1_1_3.zip -DestinationPath .\jom
-        #echo "::add-path::$(Get-Location)\jom"
-        echo "$(Get-Location)\jom" >> GITHUB_PATH 
+        echo "$(Get-Location)\jom" >> GITHUB_PATH
     - name: Setup env variables
       id: envs
       run: |
-        #echo '::set-env name=VCINSTALLDIR::C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
         echo "name=VCINSTALLDIR::C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC" >> $GITHUB_ENV
         cd src\meshlab
         $var=(git rev-parse --short HEAD --version) | Out-String
@@ -51,9 +49,9 @@ jobs:
       uses: actions/cache@v2
       with:
         path: |
-          pymeshlab/lib
+          #pymeshlab/lib
           src/build/distrib/pymeshlab/lib/
-        key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
+        key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
     - name: Set build meshlab option
       shell: bash
       id: meshlab-build-option

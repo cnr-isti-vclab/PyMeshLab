@@ -41,9 +41,9 @@ jobs:
       uses: actions/cache@v2
       with:
         path: |
-          pymeshlab/lib
+          #pymeshlab/lib
           src/build/distrib/pymeshlab/lib/
-        key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
+        key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
     - name: Set build MeshLab option
       id: meshlab-build-option
       if: steps.cache-meshlab-build.outputs.cache-hit == 'true'
