@@ -49,7 +49,6 @@ jobs:
       uses: actions/cache@v2
       with:
         path: |
-          #pymeshlab/lib
           src/build/distrib/pymeshlab/lib/
         key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
     - name: Set build meshlab option
@@ -74,8 +73,8 @@ jobs:
 
   windows_tests:
     name: Test PyMeshLab (Windows)
-    needs: windows_build_pymeshlab
     runs-on: windows-latest
+    needs: windows_build_pymeshlab
     strategy:
       matrix:
         pyversion: [3.6, 3.7, 3.8]
@@ -92,6 +91,5 @@ jobs:
     - name: Run Tests ${{ matrix.pyversion }}
       shell: bash
       run: |
-        ls pymeshlab
         pip install pytest numpy
         pytest --pyargs pymeshlab

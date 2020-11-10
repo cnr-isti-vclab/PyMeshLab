@@ -62,8 +62,7 @@ jobs:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
         path: pymeshlab/
 
-
-  tests:
+  macos_tests:
     name: Test PyMeshLab
     runs-on: macos-latest
     needs: macos_build_pymeshlab
@@ -71,7 +70,6 @@ jobs:
       matrix:
         pyversion: [3.6, 3.7, 3.8]
     steps:
-    #- uses: actions/checkout@v2
     - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v2
       with:
@@ -83,8 +81,5 @@ jobs:
         python-version: ${{ matrix.pyversion }}
     - name: Run Tests ${{ matrix.pyversion }}
       run: |
-        ls pymeshlab/
-        echo "##########"
         pip install pytest numpy
-        echo "##########"
         pytest --pyargs pymeshlab

@@ -41,7 +41,6 @@ jobs:
       uses: actions/cache@v2
       with:
         path: |
-          #pymeshlab/lib
           src/build/distrib/pymeshlab/lib/
         key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
     - name: Set build MeshLab option
@@ -60,7 +59,6 @@ jobs:
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
         path: pymeshlab
-
 
   linux_tests:
     name: Test PyMeshLab (Linux)
