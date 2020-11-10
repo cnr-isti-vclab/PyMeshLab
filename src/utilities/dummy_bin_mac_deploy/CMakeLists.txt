@@ -4,15 +4,12 @@ set(SOURCES
 add_executable(dummybin MACOSX_BUNDLE
 	${SOURCES})
 
-target_link_libraries(
-	dummybin
-	PUBLIC 
-		meshlab-common
-		Qt5::Core
-		Qt5::OpenGL
-		Qt5::Widgets
-		Qt5::Xml
-	)
+if (NOT BUILD_MESHLAB)
+	target_link_directories(dummybin PUBLIC "${PYMESHLAB_BUILD_DISTRIB_DIR}/dummybin.app/Contents/Frameworks")
+	target_link_libraries(dummybin PUBLIC Qt5::Widgets)
+endif()
+
+target_link_libraries(dummybin PUBLIC meshlab-common)
 
 include_directories(${MESHLAB_SRC_DIR}/common)
 
