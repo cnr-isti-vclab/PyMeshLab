@@ -6,7 +6,12 @@ add_executable(dummybin MACOSX_BUNDLE
 
 target_link_libraries(
 	dummybin
-	PUBLIC meshlab-common
+	PUBLIC 
+		meshlab-common
+		Qt5::Core
+		Qt5::OpenGL
+		Qt5::Widgets
+		Qt5::Xml
 	)
 
 include_directories(${MESHLAB_SRC_DIR}/common)
