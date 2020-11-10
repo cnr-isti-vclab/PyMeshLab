@@ -29,6 +29,9 @@ project(PyMeshLab)
 ######
 option(BUILD_MESHLAB "Build MeshLab components before PyMeshLab" ON)
 
+option(PYMESHLAB_DEBUG "Debug PyMeshLab from C++, using the src/pymeshlab/debug_main.cpp source" OFF)
+option(PYMESHLAB_UPDATE_DOC "Config used to update the list of filters doc page" OFF)
+
 if (APPLE)
 	option(BUILD_DUMMY_BIN_MAC_DEPLOY "Build a dummy binary necessary to deploy pymeshlab in MacOS" OFF)
 endif()

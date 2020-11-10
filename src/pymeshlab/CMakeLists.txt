@@ -51,7 +51,26 @@ include_directories(${MESHLAB_SRC_DIR}/common)
 
 #pybind11
 add_subdirectory(pybind11)
-pybind11_add_module(${PYMESHLAB_MODULE_NAME} ${HEADERS} ${SOURCES})
+if (NOT PYMESHLAB_DEBUG)
+	pybind11_add_module(${PYMESHLAB_MODULE_NAME} ${HEADERS} ${SOURCES})
+endif()
+
+##### OTHER OPTIONS - debug or doc
+if (PYMESHLAB_DEBUG) #bin to debug pymeshlab
+	add_definitions(-DPYMESHLAB_DEBUG)
+	list(APPEND SOURCES debug_main.cpp)
+	add_executable(${PYMESHLAB_MODULE_NAME} ${SOURCES} ${HEADERS})
+	target_link_libraries(
+		${PYMESHLAB_MODULE_NAME} 
+		PUBLIC  
+			meshlab-common)
+	set_property(TARGET ${PYMESHLAB_MODULE_NAME}
+		PROPERTY RUNTIME_OUTPUT_DIRECTORY ${PYMESHLAB_BUILD_DISTRIB_DIR})
+	
+elseif(PYMESHLAB_UPDATE_DOC) #bin to update doc
+	#list(APPEND SOURCES doc_main.cpp)
+endif()
+##### END OTHER OPTIONS
 
 #python
 if (NOT WIN32 AND NOT APPLE)
