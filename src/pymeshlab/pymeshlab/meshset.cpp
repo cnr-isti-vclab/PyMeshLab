@@ -147,12 +147,19 @@ void pymeshlab::MeshSet::printFilterScript() const
 	}
 }
 
-void pymeshlab::MeshSet::loadMesh(const std::string& filename, py::kwargs kwargs)
+void pymeshlab::MeshSet::loadNewMesh(const std::string& filename, py::kwargs kwargs)
 {
 	loadMeshUsingPlugin(filename, nullptr, FilterFunction(), kwargs);
 }
 
-void pymeshlab::MeshSet::saveMesh(const std::string& filename, pybind11::kwargs kwargs)
+void pymeshlab::MeshSet::loadCurrentMesh(const std::string& filename, pybind11::kwargs kwargs)
+{
+	if (mm() == nullptr)
+		throw MLException("MeshSet has no selected Mesh.");
+	loadMeshUsingPlugin(filename, mm(), FilterFunction(), kwargs);
+}
+
+void pymeshlab::MeshSet::saveCurrentMesh(const std::string& filename, pybind11::kwargs kwargs)
 {
 	if (mm() == nullptr)
 		throw MLException("MeshSet has no selected Mesh.");
@@ -315,7 +322,8 @@ std::string pymeshlab::MeshSet::filtersRSTDocumentation() const
 			"if they are left as default.\n\n";
 
 	for (auto it = filterFunctionSet.begin(); it != filterFunctionSet.end(); ++it) {
-		doc += filterRSTDocumentation(it);
+		if (!(it->pythonFunctionName().startsWith("load")) && !(it->pythonFunctionName().startsWith("save")))
+			doc += filterRSTDocumentation(it);
 	}
 
 	return doc;
@@ -421,11 +429,15 @@ void pymeshlab::MeshSet::loadMeshUsingPlugin(
 
 			updateRichParameterList(ff, kwargs, rps, true);
 
-			if (mm == nullptr)
+			bool justCreated = false;
+			if (mm == nullptr){
 				mm = this->addNewMesh(finfo.filePath(), finfo.fileName());
+				justCreated = true;
+			}
 			bool ok = plugin->open(extension, QString::fromStdString(filename), *mm, mask, rps);
 			if (!ok) {
-				this->delMesh(this->mm());
+				if (justCreated)
+					this->delMesh(this->mm());
 				throw MLException("Unable to open file: " + QString::fromStdString(filename));
 			}
 		}
@@ -527,7 +539,7 @@ void pymeshlab::MeshSet::loadALN(const QString& fileName)
 	std::vector<RangeMap>::iterator ir;
 	for(ir=rmv.begin();ir!=rmv.end() && openRes;++ir) {
 		QString relativeToProj = fi.absoluteDir().absolutePath() + "/" + (*ir).filename.c_str();
-		loadMesh(relativeToProj.toStdString(), py::kwargs());
+		loadNewMesh(relativeToProj.toStdString(), py::kwargs());
 		mm()->cm.Tr = ir->transformation;
 	}
 

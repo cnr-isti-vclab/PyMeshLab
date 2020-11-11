@@ -2,13 +2,14 @@ import pytest
 import pymeshlab as ml
 from . import samples_common
 
+
 def test_select_faces_with_edge_longer_than():
     print('\n')
     base_path = samples_common.samples_absolute_path()
     output_path = samples_common.test_output_path()
     ms = ml.MeshSet()
 
-    ms.load_mesh(base_path + "cube.obj")
+    ms.load_new_mesh(base_path + "cube.obj")
 
     # butterfly subdivision
     ms.apply_filter('subdivision_surfaces_butterfly_subdivision')
@@ -19,5 +20,3 @@ def test_select_faces_with_edge_longer_than():
     m = ms.current_mesh()
     
     assert m.selected_face_number() == 312
-
-    

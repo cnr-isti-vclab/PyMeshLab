@@ -2,6 +2,7 @@ import pytest
 import pymeshlab as ml
 from . import samples_common
 
+
 def test_load_apply_filter_script():
     print('\n')
     base_path = samples_common.samples_absolute_path()
@@ -12,4 +13,4 @@ def test_load_apply_filter_script():
 
     ms.apply_filter_script()
 
-    ms.save_mesh(output_path + "cube_cc.ply")
+    ms.save_current_mesh(output_path + "cube_cc.ply")

@@ -22,8 +22,9 @@ void pymeshlab::initMeshSet(pybind11::module& m)
 	meshSetClass.def("current_mesh_id", &MeshSet::currentMeshId, doc::PYMS_CURRENT_MESH_ID);
 	meshSetClass.def("mesh_id_exists", &MeshSet::meshIdExists, doc::PYMS_MESH_ID_EXISTS, py::arg("id"));
 	meshSetClass.def("mesh", &MeshSet::mesh, doc::PYMS_MESH, py::arg("id"), py::return_value_policy::reference);
-	meshSetClass.def("load_mesh", &MeshSet::loadMesh, doc::PYMS_LOAD_MESH, py::arg("file_name"));
-	meshSetClass.def("save_mesh", &MeshSet::saveMesh, doc::PYMS_SAVE_MESH, py::arg("file_name"));
+	meshSetClass.def("load_new_mesh", &MeshSet::loadNewMesh, doc::PYMS_LOAD_NEW_MESH, py::arg("file_name"));
+	//meshSetClass.def("load_current_mesh", &MeshSet::loadCurrentMesh, doc::PYMS_LOAD_CURRENT_MESH, py::arg("file_name"));
+	meshSetClass.def("save_current_mesh", &MeshSet::saveCurrentMesh, doc::PYMS_SAVE_CURRENT_MESH, py::arg("file_name"));
 	meshSetClass.def("add_mesh", &MeshSet::addMesh, doc::PYMS_ADD_MESH, py::arg("mesh"), py::arg("mesh_name") = "", py::arg("set_as_current") = true);
 	meshSetClass.def("clear", &MeshSet::clear, doc::PYMS_CLEAR);
 	meshSetClass.def("load_project", &MeshSet::loadProject, doc::PYMS_LOAD_PROJECT, py::arg("file_name"));

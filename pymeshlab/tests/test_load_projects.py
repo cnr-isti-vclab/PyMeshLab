@@ -2,6 +2,7 @@ import pytest
 import pymeshlab as ml
 from . import samples_common
 
+
 def test_load_projects():
     print('\n')
 

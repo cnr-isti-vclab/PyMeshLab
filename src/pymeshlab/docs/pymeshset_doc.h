@@ -44,16 +44,24 @@ const char* PYMS_MESH =
 		"Raises a :py:exc:`PyMeshLabException` if the given ID is not found in "
 		" the MeshSet.";
 
-//MeshSet::load_mesh
-const char* PYMS_LOAD_MESH =
+//MeshSet::load_new_mesh
+const char* PYMS_LOAD_NEW_MESH =
 		"Loads the mesh in the given filename and adds the mesh in the MeshSet. "
-		"The loaded mesh becomes the current selected mesh. "
+		"The loaded mesh becomes the current selected one. "
 		"Raises a :py:exc:`PyMeshLabException` if the file is not found, if the "
 		"format of the file is not known by PyMeshLab or if there was an error "
 		"while loading the file.";
 
-//MeshSet::save_mesh
-const char* PYMS_SAVE_MESH =
+//MeshSet::load_current_mesh
+const char* PYMS_LOAD_CURRENT_MESH =
+		"Loads the mesh in the given filename and sets the mesh to current position "
+		"in the MeshSet. The loaded mesh remains the current selected one. "
+		"Raises a :py:exc:`PyMeshLabException` if the file is not found, if the "
+		"format of the file is not known by PyMeshLab or if there was an error "
+		"while loading the file.";
+
+//MeshSet::save_current_mesh
+const char* PYMS_SAVE_CURRENT_MESH =
 		"Saves the current selected mesh in the MeshSet in a file having the "
 		"given file name. Raises a :py:exc:`PyMeshLabException` if the MeshSet "
 		"has no current selected mesh, if the format of the file is not known "

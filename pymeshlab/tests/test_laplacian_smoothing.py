@@ -2,6 +2,7 @@ import pytest
 import pymeshlab as ml
 from . import samples_common
 
+
 def test_laplacian_smoothing():
     print('\n')
     output_path = samples_common.test_output_path()
@@ -11,4 +12,4 @@ def test_laplacian_smoothing():
 
     ms.apply_filter('laplacian_smooth')
 
-    ms.save_mesh(output_path + 'smoothed_noisy_isosurface.ply')
+    ms.save_current_mesh(output_path + 'smoothed_noisy_isosurface.ply')

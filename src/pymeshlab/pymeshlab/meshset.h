@@ -29,8 +29,9 @@ public:
 	void printPythonFilterParameterList(const std::string functionName) const;
 	void printFilterScript() const;
 
-	void loadMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());
-	void saveMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());
+	void loadNewMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());
+	void loadCurrentMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());
+	void saveCurrentMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());
 	void addMesh(CMeshO& mesh, const std::string& name = "new_mesh", bool setAsCurrent = true);
 
 	void loadProject(const std::string& filename);

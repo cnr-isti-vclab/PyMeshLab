@@ -9,9 +9,9 @@ def test_merge_meshes():
     output_path = samples_common.test_output_path()
     ms = ml.MeshSet()
 
-    ms.load_mesh(base_path + "bone.ply")
-    ms.load_mesh(base_path + "airplane.obj")
+    ms.load_new_mesh(base_path + "bone.ply")
+    ms.load_new_mesh(base_path + "airplane.obj")
 
     ms.apply_filter("flatten_visible_layers")
     
-    ms.save_mesh(output_path + "merged.obj")
+    ms.save_current_mesh(output_path + "merged.obj")

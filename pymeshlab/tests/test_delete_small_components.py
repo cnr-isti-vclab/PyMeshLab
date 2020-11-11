@@ -9,7 +9,7 @@ def test_delete_small_components():
     output_path = samples_common.test_output_path()
     ms = ml.MeshSet()
 
-    ms.load_mesh(base_path + "rangemaps/face000.ply")
+    ms.load_new_mesh(base_path + "rangemaps/face000.ply")
 
     assert ms.number_meshes() == 1
 
@@ -34,4 +34,4 @@ def test_delete_small_components():
 
     assert ms.current_mesh().vertex_number() == 84777
 
-    ms.save_mesh(output_path + 'face000_clean.ply')
+    ms.save_current_mesh(output_path + 'face000_clean.ply')

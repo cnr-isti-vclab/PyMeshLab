@@ -39,4 +39,4 @@ def test_import_mesh_from_array():
 
     ms = ml.MeshSet()
     ms.add_mesh(m, "cube_mesh")
-    ms.save_mesh(output_path + "saved_cube_from_array.ply")
+    ms.save_current_mesh(output_path + "saved_cube_from_array.ply")
