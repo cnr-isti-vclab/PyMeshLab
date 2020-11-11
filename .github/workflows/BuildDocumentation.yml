@@ -31,7 +31,7 @@ jobs:
     - name: PyMeshLab version
       id: version
       run: |
-        echo  ::set-output name=pyml_version::"$(cat ML_VERSION)"
+        echo  ::set-output name=pyml_version::"$(cat PYML_VERSION)"
 
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
