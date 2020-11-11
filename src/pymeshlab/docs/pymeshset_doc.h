@@ -54,8 +54,8 @@ const char* PYMS_LOAD_NEW_MESH =
 
 //MeshSet::load_current_mesh
 const char* PYMS_LOAD_CURRENT_MESH =
-		"Loads the mesh in the given filename and sets the mesh to current position "
-		"in the MeshSet. The loaded mesh remains the current selected one. "
+		"Loads the mesh in the given filename and overwrites the current "
+		"selected mesh. The loaded mesh remains the current selected one. "
 		"Raises a :py:exc:`PyMeshLabException` if the file is not found, if the "
 		"format of the file is not known by PyMeshLab or if there was an error "
 		"while loading the file.";

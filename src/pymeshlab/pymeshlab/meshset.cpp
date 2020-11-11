@@ -156,6 +156,7 @@ void pymeshlab::MeshSet::loadCurrentMesh(const std::string& filename, pybind11::
 {
 	if (mm() == nullptr)
 		throw MLException("MeshSet has no selected Mesh.");
+	mm()->Clear();
 	loadMeshUsingPlugin(filename, mm(), FilterFunction(), kwargs);
 }
 
@@ -433,6 +434,10 @@ void pymeshlab::MeshSet::loadMeshUsingPlugin(
 			if (mm == nullptr){
 				mm = this->addNewMesh(finfo.filePath(), finfo.fileName());
 				justCreated = true;
+			}
+			else {
+				mm->setFileName(finfo.filePath());
+				mm->setLabel(finfo.fileName());
 			}
 			bool ok = plugin->open(extension, QString::fromStdString(filename), *mm, mask, rps);
 			if (!ok) {
