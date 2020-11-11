@@ -9,7 +9,7 @@ PyMeshLab is a Python library that interfaces to `MeshLab`_, the popular open so
 
 .. toctree::
    :maxdepth: 1
-   
+
    about
 
 
@@ -22,6 +22,7 @@ Contents
 
    installation
    intro
+   filter_scripts
    classes
    filter_list
 

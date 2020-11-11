@@ -129,7 +129,7 @@ const char* PYMS_PRINT_FILTER_PARAMETER_LIST =
 		"default values.";
 
 //MeshSet::print_current_filter_script
-const char* PYMS_PRINT_CURRENT_FILTER_SCIRPT =
+const char* PYMS_PRINT_FILTER_SCIRPT =
 		"Prints all the filters present on the current filter script, with all "
 		"the parameters and their values.";
 }

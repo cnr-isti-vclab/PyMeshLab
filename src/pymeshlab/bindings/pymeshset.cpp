@@ -38,5 +38,5 @@ void pymeshlab::initMeshSet(pybind11::module& m)
 	meshSetClass.def("print_plugin_list", &MeshSet::printPluginList, doc::PYMS_PRINT_PLUGIN_LIST);
 	meshSetClass.def("print_filter_list", &MeshSet::printPythonFilterNamesList, doc::PYMS_PRINT_FILTER_LIST);
 	meshSetClass.def("print_filter_parameter_list", &MeshSet::printPythonFilterParameterList, doc::PYMS_PRINT_FILTER_PARAMETER_LIST, py::arg("filter_name"));
-	meshSetClass.def("print_current_filter_script", &MeshSet::printFilterScript, doc::PYMS_PRINT_CURRENT_FILTER_SCIRPT);
+	meshSetClass.def("print_filter_script", &MeshSet::printFilterScript, doc::PYMS_PRINT_FILTER_SCIRPT);
 }
