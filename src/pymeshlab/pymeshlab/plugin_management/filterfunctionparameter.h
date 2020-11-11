@@ -2,6 +2,7 @@
 #define PYMESHLAB_FILTERFUNCTIONPARAMETER_H
 
 #include <QString>
+
 class Value;
 class RichParameter;
 

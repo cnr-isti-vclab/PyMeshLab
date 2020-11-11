@@ -2,9 +2,9 @@
 
 #include <pybind11/numpy.h>
 #include <pybind11/eigen.h>
-#include <mlexception.h>
-#include <meshlabdocumentxml.h>
-#include <meshlabdocumentbundler.h>
+#include <common/mlexception.h>
+#include <common/meshlabdocumentxml.h>
+#include <common/meshlabdocumentbundler.h>
 #include <wrap/io_trimesh/alnParser.h>
 
 #include "percentage.h"

@@ -2,7 +2,6 @@
 
 #include <QRegularExpression>
 #include <algorithm>
-
 #include "../common.h"
 
 pymeshlab::FilterFunctionSet::FilterFunctionSet()

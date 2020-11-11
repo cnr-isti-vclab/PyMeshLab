@@ -1,6 +1,6 @@
 #include "meshlabsingletons.h"
 
-#include <pluginmanager.h>
+#include <common/pluginmanager.h>
 #include "common.h"
 
 RichParameterList& pymeshlab::MeshLabSingletons::globalRPLInstance()

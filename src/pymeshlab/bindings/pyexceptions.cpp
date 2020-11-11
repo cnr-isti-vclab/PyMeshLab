@@ -1,6 +1,6 @@
 #include "pyexceptions.h"
 
-#include <mlexception.h>
+#include <common/mlexception.h>
 #include "pymeshlab/exceptions.h"
 #include "docs/pyexceptions_doc.h"
 

@@ -1,7 +1,7 @@
 #ifndef PYMESHLAB_NAMEBINDER_H
 #define PYMESHLAB_NAMEBINDER_H
 
-#include <pluginmanager.h>
+#include <common/pluginmanager.h>
 #include "filterfunction.h"
 
 namespace pymeshlab {

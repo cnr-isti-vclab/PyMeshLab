@@ -2,9 +2,9 @@
 #define PYMESHLAB_MESHSET_H
 
 #include <pybind11/pybind11.h>
-#include <meshmodel.h>
-#include <filterscript.h>
-#include <pluginmanager.h>
+#include <common/meshmodel.h>
+#include <common/filterscript.h>
+#include <common/pluginmanager.h>
 #include "plugin_management/filterfunctionset.h"
 
 namespace pymeshlab {

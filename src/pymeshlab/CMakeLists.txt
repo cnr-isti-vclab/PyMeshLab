@@ -52,7 +52,7 @@ if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../../PYML_VERSION")
 endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-include_directories(${MESHLAB_SRC_DIR}/common)
+include_directories(${MESHLAB_SRC_DIR})
 
 #pybind11
 add_subdirectory(pybind11)

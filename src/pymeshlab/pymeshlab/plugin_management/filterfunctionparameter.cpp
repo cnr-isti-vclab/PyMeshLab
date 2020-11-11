@@ -1,7 +1,7 @@
 #include "filterfunctionparameter.h"
 
 #include "../common.h"
-#include "filter_parameter/rich_parameter_list.h"
+#include <common/filter_parameter/rich_parameter_list.h>
 
 pymeshlab::FilterFunctionParameter::FilterFunctionParameter(const QString& pName,
 		const RichParameter& parameter) :

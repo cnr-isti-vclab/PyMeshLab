@@ -1,6 +1,6 @@
 #include "pyboundingbox.h"
 
-#include <meshmodel.h>
+#include <common/meshmodel.h>
 #include "docs/pyboundingbox_doc.h"
 
 namespace py = pybind11;
