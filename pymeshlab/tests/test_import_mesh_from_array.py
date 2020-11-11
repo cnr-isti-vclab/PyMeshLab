@@ -1,4 +1,3 @@
-import pytest
 import pymeshlab as ml
 from . import samples_common
 import numpy
