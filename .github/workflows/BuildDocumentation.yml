@@ -52,9 +52,16 @@ jobs:
         path: src/build/distrib/pymeshlab/lib/
         key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
     # not building meshlab -- we need to hit always cache
+    - name: Fail if cache not hit
+      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
+      run: |
+        exit 1
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
         sh scripts/${{ runner.os }}/1_build.sh --no-build-meshlab
+    - name: Deploy PyMeshLab ${{ matrix.pyversion }}
+      run: |
+        sh scripts/${{ runner.os }}/2_deploy.sh
     - name: Modify README.md
       run: |
         printf "# Do not use this branch\nThis branch is even with the master branch, except for the PyMeshLab module that is needed to build the documentation.\n" > README.md
