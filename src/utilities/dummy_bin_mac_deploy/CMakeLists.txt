@@ -13,6 +13,14 @@ target_link_libraries(dummybin PUBLIC meshlab-common)
 
 include_directories(${MESHLAB_SRC_DIR}/common)
 
+set_target_properties(dummybin
+	PROPERTIES
+		INSTALL_RPATH_USE_LINK_PATH TRUE)
+add_custom_command(
+	TARGET dummybin
+	POST_BUILD COMMAND
+	${CMAKE_INSTALL_NAME_TOOL} -add_rpath "@loader_path/Frameworks" $<TARGET_FILE:dummybin>)
+
 set_property(TARGET dummybin
 	PROPERTY RUNTIME_OUTPUT_DIRECTORY ${PYMESHLAB_BUILD_DISTRIB_DIR})
 

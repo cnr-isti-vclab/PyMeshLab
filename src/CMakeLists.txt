@@ -4,6 +4,11 @@
 cmake_minimum_required(VERSION 3.9)
 project(PyMeshLab)
 
+IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+  SET(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/../pymeshlab" 
+	  CACHE PATH "default pymeshlab install directory" FORCE)
+ENDIF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+
 ######
 # Option to not build meshlab-common and all the plugins
 # 

@@ -17,9 +17,9 @@ fi
 
 MODULE_NAME=$(find $BUNDLE_PATH/dummybin.app/Contents  -name 'pmeshlab*')
 
-install_name_tool -change @rpath/libmeshlab-common.dylib @executable_path/../Frameworks/libmeshlab-common.dylib $BUNDLE_PATH/dummybin.app/Contents/MacOS/dummybin
+#install_name_tool -change @rpath/libmeshlab-common.dylib @executable_path/../Frameworks/libmeshlab-common.dylib $BUNDLE_PATH/dummybin.app/Contents/MacOS/dummybin
 
-install_name_tool -add_rpath @loader_path/Frameworks $MODULE_NAME
+#install_name_tool -add_rpath @loader_path/Frameworks $MODULE_NAME
 #install_name_tool -change @rpath/libmeshlab-common.dylib @loader_path/Frameworks/libmeshlab-common.dylib pymeshlab/pmeshlab*
 #install_name_tool -change @rpath/libmeshlab-common.dylib Frameworks/libmeshlab-common.dylib $BUNDLE_PATH/dummybin.app/Contents/pmeshlab*
 
@@ -34,4 +34,3 @@ rsync -a $BUNDLE_PATH/dummybin.app/Contents/Frameworks/ $BUNDLE_PATH/Frameworks/
 rsync -a $BUNDLE_PATH/dummybin.app/Contents/PlugIns/ $BUNDLE_PATH/PlugIns/
 mv $BUNDLE_PATH/dummybin.app/Contents/pmeshlab* $BUNDLE_PATH/
 rm -rf $BUNDLE_PATH/dummybin.app
-
