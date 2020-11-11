@@ -144,6 +144,8 @@ std::string getRootPath();
 std::string getPluginsPath();
 std::string getSamplesPath();
 
+void printVersion();
+
 }
 
 #endif // PYMESHLAB_PYMESHLABCOMMON_H

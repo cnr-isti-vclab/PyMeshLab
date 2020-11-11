@@ -17,9 +17,11 @@ PYBIND11_MODULE(PYMESHLAB_MODULE_NAME, m) {
 	pymeshlab::initPercentage(m); //Percentage Class
 	
 	pymeshlab::initExceptions(m); //Exceptions
+	
+	m.def("print_pymeshlab_version", &pymeshlab::printVersion);
 
 #ifdef PYMESHLAB_VERSION
-	m.attr("__version__") = PYBIND11_STRINGIFY(PYMESHLAB_VERSION);
+	m.attr("__version__") = PYMESHLAB_STRINGIFY(PYMESHLAB_VERSION);
 #else
 	m.attr("__version__") = "dev";
 #endif

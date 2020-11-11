@@ -46,6 +46,11 @@ set(SOURCES
 	pymeshlab/plugin_management/filterfunctionset.cpp
 )
 
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../../PYML_VERSION")
+	file(READ "${CMAKE_CURRENT_SOURCE_DIR}/../../PYML_VERSION" PYMESHLAB_VERSION)
+	add_definitions(-DPYMESHLAB_VERSION=${PYMESHLAB_VERSION})
+endif()
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${MESHLAB_SRC_DIR}/common)
 

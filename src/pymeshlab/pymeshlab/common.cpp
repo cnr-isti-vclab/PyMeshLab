@@ -2,6 +2,7 @@
 
 #include <pybind11/pybind11.h>
 #include <QDir>
+#include <common/mlapplication.h>
 
 /** Ridirects **/
 
@@ -55,4 +56,17 @@ std::string pymeshlab::getSamplesPath()
 {
 	std::string rootPath = getRootPath();
 	return rootPath + "/tests/sample/";
+}
+
+void pymeshlab::printVersion()
+{
+	std::string pymsversion;
+#ifdef PYMESHLAB_VERSION
+	pymsversion = PYMESHLAB_STRINGIFY(PYMESHLAB_VERSION);
+#else
+	pymsversion = "DEV";
+#endif
+	
+	std::cout << "PyMeshLab " << pymsversion << " based on MeshLab " << 
+		MeshLabApplication::appVer().toStdString() << "\n";
 }
