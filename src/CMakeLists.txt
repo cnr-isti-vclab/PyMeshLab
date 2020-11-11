@@ -29,9 +29,22 @@ project(PyMeshLab)
 ######
 option(BUILD_MESHLAB "Build MeshLab components before PyMeshLab" ON)
 
-option(PYMESHLAB_DEBUG "Debug PyMeshLab from C++, using the src/pymeshlab/debug_main.cpp source" OFF)
-option(PYMESHLAB_UPDATE_DOC "Config used to update the list of filters doc page" OFF)
+#####
+# Developing options:
+# - option to debug (call all the functions from c++ instead of python) -> debug_main.cpp
+# - option to update automatically the list of filters doc page -> doc_main.cpp
+#####
+option(BUILD_PYMESHLAB_DEBUG "Debug PyMeshLab from C++, using the src/pymeshlab/debug_main.cpp source" OFF)
+option(BUILD_PYMESHLAB_UPDATE_DOC "Config used to update the list of filters doc page" OFF)
 
+#####
+# Option used on macos to deploy pymeshlab.
+# Since macdeployqt needs an appbundle, this option puts the pymeshlab library
+# everything required to run it in an appbundle, creating also a dubby binary
+# needed by macdeployqt to deploy the Qt libraries.
+# The script scripts/macOS/2_deploy.sh will then take care to transform the
+# deployed appbundle in a proper pymeshlab python module.
+#####
 if (APPLE)
 	option(BUILD_DUMMY_BIN_MAC_DEPLOY "Build a dummy binary necessary to deploy pymeshlab in MacOS" OFF)
 endif()
