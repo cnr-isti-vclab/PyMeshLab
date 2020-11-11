@@ -87,4 +87,5 @@ jobs:
       with:
         branch: docs
         force: true
+        tags: true
         github_token: ${{ secrets.GITHUB_TOKEN }}
