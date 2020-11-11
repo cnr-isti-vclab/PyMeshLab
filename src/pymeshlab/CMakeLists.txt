@@ -119,7 +119,6 @@ else()
 endif()
 
 ### Install directories
-set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 if (BUILD_DUMMY_BIN_MAC_DEPLOY)
 	install(TARGETS ${PYMESHLAB_MODULE_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/dummybin.app/Contents)
 else()
@@ -130,8 +129,13 @@ if (NOT APPLE)
 	set_target_properties(${PYMESHLAB_MODULE_NAME} PROPERTIES 
 		INSTALL_RPATH "\$ORIGIN/lib:${INSTALL_RPATH}")
 else()
-	set_target_properties(${PYMESHLAB_MODULE_NAME} PROPERTIES
-		INSTALL_RPATH "\$ORIGIN/Frameworks:${INSTALL_RPATH}")
+	set_target_properties(${PYMESHLAB_MODULE_NAME}
+		PROPERTIES
+			INSTALL_RPATH_USE_LINK_PATH TRUE)
+	add_custom_command(
+		TARGET ${PYMESHLAB_MODULE_NAME}
+		POST_BUILD COMMAND
+		${CMAKE_INSTALL_NAME_TOOL} -add_rpath "@loader_path/Frameworks" $<TARGET_FILE:${PYMESHLAB_MODULE_NAME}>)
 endif()
 
 ### Copy/install other files
