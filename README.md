@@ -31,9 +31,9 @@ python
 ```
 You can load, save meshes and apply MeshLab filters:
 ```
-ms.load_mesh('airplane.obj')
+ms.load_new_mesh('airplane.obj')
 ms.apply_filter('convex_hull')
-ms.save_mesh('convex_hull.ply')
+ms.save_current_mesh('convex_hull.ply')
 ```
 
 And apply filters with your parameters:
@@ -56,7 +56,7 @@ See the [`src`](src/README.md) folder that contains the instructions to build Py
 ## License
 
  The PyMeshlab source is released under the [GPL License](LICENSE).
- 
+
 ## Copyright
 
 ```
