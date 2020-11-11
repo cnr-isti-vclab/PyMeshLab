@@ -10,6 +10,12 @@
 #include <vcg/../wrap/io_trimesh/io_mask.h>
 #include <QtMessageHandler>
 
+#define PYMESHLAB_STRINGIFY(a) PYM_STR_TMP(a)
+#define PYM_STR_TMP(a) #a
+
+#define PYMESHLAB_MODULE_NAME pmeshlab
+#define PYMESHLAB_MODULE_NAME_STR PYMESHLAB_STRINGIFY(PYMESHLAB_MODULE_NAME)
+
 namespace pymeshlab {
 
 const static std::array<int, 14> capabilitiesBits= {

@@ -1,10 +1,7 @@
-cmake_minimum_required(VERSION 3.9)
-project(PyMeshLab)
-set(PYMESHLAB_MODULE_NAME "meshlab")
-
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+set(PYMESHLAB_MODULE_NAME "pmeshlab")
 
 set(HEADERS
+	bindings/pycamera.h
 	bindings/pycolor.h
 	bindings/pyboundingbox.h
 	bindings/pyexceptions.h
@@ -30,10 +27,11 @@ set(HEADERS
 )
 
 set(SOURCES
-	bindings/pyexceptions.cpp
 	main.cpp
-	bindings/pyboundingbox.cpp
+	bindings/pycamera.cpp
 	bindings/pycolor.cpp
+	bindings/pyboundingbox.cpp
+	bindings/pyexceptions.cpp
 	bindings/pymesh.cpp
 	bindings/pymeshset.cpp
 	bindings/pypercentage.cpp
@@ -48,52 +46,112 @@ set(SOURCES
 	pymeshlab/plugin_management/filterfunctionset.cpp
 )
 
-#definitions
-add_definitions(-DMESHLAB_SCALAR=float)
-
-#directories
-set(MESHLAB_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../meshlab")
-set(MESHLAB_EXTERNAL_DIR "${MESHLAB_BASE_DIR}/src/external")
-get_filename_component(VCG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../meshlab/vcglib" ABSOLUTE)
-set(PYMESHLAB_INSTALL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../pymeshlab")
-
-#link directories
-link_directories("${PYMESHLAB_INSTALL_DIR}/lib")
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${MESHLAB_SRC_DIR}/common)
 
 #pybind11
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../pybind11" pybind11)
-pybind11_add_module(${PYMESHLAB_MODULE_NAME} ${SOURCES} ${HEADERS})
+add_subdirectory(pybind11)
+if ((NOT BUILD_PYMESHLAB_DEBUG) AND (NOT BUILD_PYMESHLAB_UPDATE_DOC))
+	pybind11_add_module(${PYMESHLAB_MODULE_NAME} ${HEADERS} ${SOURCES})
+endif()
+
+##### OTHER OPTIONS - debug or doc
+if (BUILD_PYMESHLAB_DEBUG) #bin to debug pymeshlab
+	add_definitions(-DPYMESHLAB_DEBUG)
+	list(APPEND SOURCES debug_main.cpp)
+	add_executable(${PYMESHLAB_MODULE_NAME} ${SOURCES} ${HEADERS})
+	target_link_libraries(
+		${PYMESHLAB_MODULE_NAME} 
+		PUBLIC  
+			meshlab-common)
+	set_property(TARGET ${PYMESHLAB_MODULE_NAME}
+		PROPERTY RUNTIME_OUTPUT_DIRECTORY ${PYMESHLAB_BUILD_DISTRIB_DIR})
+elseif(BUILD_PYMESHLAB_UPDATE_DOC) #bin to update doc
+	add_definitions(-DPYMESHLAB_SRC_BASE_DIR=${CMAKE_CURRENT_SOURCE_DIR})
+	add_definitions(-DPYMESHLAB_DEBUG)
+	list(APPEND SOURCES doc_main.cpp)
+	add_executable(${PYMESHLAB_MODULE_NAME} ${SOURCES} ${HEADERS})
+	target_link_libraries(
+		${PYMESHLAB_MODULE_NAME} 
+		PUBLIC  
+			meshlab-common)
+	set_property(TARGET ${PYMESHLAB_MODULE_NAME}
+		PROPERTY RUNTIME_OUTPUT_DIRECTORY ${PYMESHLAB_BUILD_DISTRIB_DIR})
+endif()
+##### END OTHER OPTIONS
+
+#python
+if (NOT WIN32 AND NOT APPLE)
+	target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE pybind11::embed)
+endif()
 
 #Qt
-find_package(
-    Qt5
-    COMPONENTS Core OpenGL Xml Qml
-    REQUIRED)
-target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE Qt5::OpenGL Qt5::OpenGL Qt5::Xml Qt5::Qml)
+target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE Qt5::OpenGL Qt5::Xml external-glew)
 
-#Eigen
-find_package(Eigen3)
-if (NOT EIGEN3_INCLUDE_DIR)
-	set(EIGEN_INCLUDE_DIRS  ${VCG_DIR}/eigenlib)
+#meshlab-common
+if (NOT BUILD_MESHLAB)
+	if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
+		target_link_directories(${PYMESHLAB_MODULE_NAME} PUBLIC "${PYMESHLAB_BUILD_DISTRIB_DIR}/lib")
+	else()
+		target_link_directories(${PYMESHLAB_MODULE_NAME} PUBLIC "${PYMESHLAB_BUILD_DISTRIB_DIR}/dummybin.app/Contents/Frameworks")
+	endif()
 endif()
-include_directories(${EIGEN_INCLUDE_DIRS})
+target_link_libraries(${PYMESHLAB_MODULE_NAME} PUBLIC meshlab-common)
 
-#glew
-find_package(GLEW)
-set(GLEW_DIR "${MESHLAB_EXTERNAL_DIR}/glew-2.1.0")
-if (NOT TARGET GLEW::GLEW)
-	set(GLEW_INCLUDE_DIRS  ${GLEW_DIR}/include)
+### Build directories
+if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
+	#set_property(TARGET ${PYMESHLAB_MODULE_NAME} 
+	#	PROPERTY RUNTIME_OUTPUT_DIRECTORY ${PYMESHLAB_BUILD_DISTRIB_DIR})
+	set_property(TARGET ${PYMESHLAB_MODULE_NAME} 
+		PROPERTY LIBRARY_OUTPUT_DIRECTORY ${PYMESHLAB_BUILD_DISTRIB_DIR})
+else()
+	set_property(TARGET ${PYMESHLAB_MODULE_NAME} 
+		PROPERTY LIBRARY_OUTPUT_DIRECTORY ${PYMESHLAB_BUILD_DISTRIB_DIR}/dummybin.app/Contents)
 endif()
-include_directories(${GLEW_INCLUDE_DIRS})
 
-#vcg
-include_directories(${VCG_DIR})
+#copy files on build
+if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
+	file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/../../pymeshlab/tests" DESTINATION ${PYMESHLAB_BUILD_DISTRIB_DIR})
+	file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/../../pymeshlab/__init__.py" DESTINATION ${PYMESHLAB_BUILD_DISTRIB_DIR})
+else()
+	file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/../../pymeshlab/tests" DESTINATION ${PYMESHLAB_BUILD_DISTRIB_DIR}/dummybin.app/Contents)
+	file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/../../pymeshlab/__init__.py" DESTINATION ${PYMESHLAB_BUILD_DISTRIB_DIR}/dummybin.app/Contents)
+endif()
 
-#meshlab_common
-include_directories("${MESHLAB_BASE_DIR}/src/common")
-#target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE meshlab_common)
+### Install directories
+if (BUILD_DUMMY_BIN_MAC_DEPLOY)
+	install(TARGETS ${PYMESHLAB_MODULE_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/dummybin.app/Contents)
+else()
+	install(TARGETS ${PYMESHLAB_MODULE_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX})
+endif()
 
+if (NOT APPLE)
+	set_target_properties(${PYMESHLAB_MODULE_NAME} PROPERTIES 
+		INSTALL_RPATH "\$ORIGIN/lib:${INSTALL_RPATH}")
+else()
+	set_target_properties(${PYMESHLAB_MODULE_NAME}
+		PROPERTIES
+			INSTALL_RPATH_USE_LINK_PATH TRUE)
+	add_custom_command(
+		TARGET ${PYMESHLAB_MODULE_NAME}
+		POST_BUILD COMMAND
+		${CMAKE_INSTALL_NAME_TOOL} -add_rpath "@loader_path/Frameworks" $<TARGET_FILE:${PYMESHLAB_MODULE_NAME}>)
+endif()
 
-install(TARGETS ${PYMESHLAB_MODULE_NAME} DESTINATION ${PYMESHLAB_INSTALL_DIR})
+### Copy/install other files
+if (NOT BUILD_MESHLAB)
+	if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
+		install(DIRECTORY "${PYMESHLAB_BUILD_DISTRIB_DIR}/lib" DESTINATION ${CMAKE_INSTALL_PREFIX})
+	else()
+		install(DIRECTORY "${PYMESHLAB_BUILD_DISTRIB_DIR}/dummybin.app/Contents/Frameworks" DESTINATION ${CMAKE_INSTALL_PREFIX}/dummybin.app/Contents/Frameworks)
+		install(DIRECTORY "${PYMESHLAB_BUILD_DISTRIB_DIR}/dummybin.app/Contents/PlugIns" DESTINATION ${CMAKE_INSTALL_PREFIX}/dummybin.app/Contents/PlugIns)
+	endif()
+endif()
 
-
+if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
+	install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../../pymeshlab/tests" DESTINATION ${CMAKE_INSTALL_PREFIX})
+	install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/../../pymeshlab/__init__.py" DESTINATION ${CMAKE_INSTALL_PREFIX})
+else()
+	install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../../pymeshlab/tests" DESTINATION ${CMAKE_INSTALL_PREFIX}/dummybin.app/Contents)
+	install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/../../pymeshlab/__init__.py" DESTINATION ${CMAKE_INSTALL_PREFIX}/dummybin.app/Contents)
+endif()

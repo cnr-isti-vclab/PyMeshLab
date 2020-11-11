@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "pymeshlab/meshset.h"
+#include "pymeshlab/common.h"
 
 int main(int , char *[])
 {
@@ -8,7 +9,9 @@ int main(int , char *[])
 
 	std::string doc = ms.filtersRSTDocumentation();
 
-	QFile f("../docs/filter_list.rst");
+	QString baseDir(PYMESHLAB_STRINGIFY(PYMESHLAB_SRC_BASE_DIR));
+		
+	QFile f(baseDir + "/../../docs/filter_list.rst");
 
 	if (!f.open(QIODevice::WriteOnly)) {
 		std::cerr << "Could not open docs/filter_list.rst file.\n";

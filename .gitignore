@@ -55,11 +55,16 @@ compile_commands.json
 
 *_qmlcache.qrc
 
+#linuxdeployqt out files
+pymeshlab/qt.conf
+
 # Debug exec:
 pmeshlab.cpython-38-x86_64-linux-gnu
 
-# MacOS meshlab appbundle
-meshlab.app
+# MacOS
+pymeshlab/Frameworks/*
+pymeshlab/PlugIns/*
+
 
 # Test saved meshes
 pymeshlab/tests/sample/test_output/*
@@ -196,6 +201,7 @@ dmypy.json
 
 #macOS
 .DS_Store
+Pymeshlab/dummybin*
 
 #idea
 .idea

@@ -70,12 +70,17 @@ CMeshO& pymeshlab::MeshSet::mesh(int id)
 
 void pymeshlab::MeshSet::printPluginList() const
 {
-	std::cout << "MeshSet class - list of loaded plugins:\n";
+	std::cout 
+			<< "MeshSet class - list of loaded plugins (" 
+			<< pm.ownerPlug.size() << "):\n";
 	for (const PluginInterface* p : pm.ownerPlug){
 		std::cout << "\t" << p->pluginName().toStdString() << "\n";
 	}
 }
 
+/**
+ * @brief lists all the filters that can be called using the "apply_filter" function
+ */
 void pymeshlab::MeshSet::printPythonFilterNamesList() const
 {
 	QStringList list = filterFunctionSet.pythonFunctionNames();
@@ -85,6 +90,11 @@ void pymeshlab::MeshSet::printPythonFilterNamesList() const
 	}
 }
 
+/**
+ * @brief given the function names, lists all its parameters that can be 
+ * passed to the "apply_filter" function
+ * @param functionName
+ */
 void pymeshlab::MeshSet::printPythonFilterParameterList(const std::string functionName) const
 {
 	FilterFunctionSet::iterator it = filterFunctionSet.find(QString::fromStdString(functionName));
@@ -114,6 +124,10 @@ void pymeshlab::MeshSet::printPythonFilterParameterList(const std::string functi
 	}
 }
 
+/**
+ * @brief prints all the filters (with their parameters) that have been applied on the current 
+ * MeshSet. 
+ */
 void pymeshlab::MeshSet::printFilterScript() const
 {
 	std::cout << "Filter Script Size : " << filterScript.size() << "\n\n";
@@ -145,6 +159,12 @@ void pymeshlab::MeshSet::saveMesh(const std::string& filename, pybind11::kwargs 
 	saveMeshUsingPlugin(filename, nullptr, FilterFunction(), kwargs);
 }
 
+/**
+ * @brief adds the reference of the given mesh to the MeshSet.
+ * @param mesh
+ * @param name
+ * @param setAsCurrent: default value: true
+ */
 void pymeshlab::MeshSet::addMesh(CMeshO& mesh, const std::string& name, bool setAsCurrent)
 {
 	MeshModel* mm = this->addNewMesh("", QString::fromStdString(name), setAsCurrent);

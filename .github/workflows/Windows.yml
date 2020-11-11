@@ -1,6 +1,7 @@
 name: Windows
 
-on: [push, pull_request]
+on:
+  [push, pull_request]
 
 jobs:
   windows_build_pymeshlab:
@@ -8,7 +9,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        pyversion: [3.5, 3.6, 3.7, 3.8]
+        pyversion: [3.6, 3.7, 3.8]
 
     steps:
     - uses: actions/checkout@v2
@@ -25,11 +26,11 @@ jobs:
         Invoke-WebRequest -Uri "http://download.qt.io/official_releases/jom/jom_1_1_3.zip" -OutFile "jom_1_1_3.zip"
         New-Item -Name "jom" -ItemType "directory"
         Expand-Archive -Path jom_1_1_3.zip -DestinationPath .\jom
-        echo "::add-path::$(Get-Location)\jom"
+        echo "$(Get-Location)\jom" >> GITHUB_PATH
     - name: Setup env variables
       id: envs
       run: |
-        echo '::set-env name=VCINSTALLDIR::C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
+        echo "name=VCINSTALLDIR::C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC" >> $GITHUB_ENV
         cd src\meshlab
         $var=(git rev-parse --short HEAD --version) | Out-String
         echo "::set-output name=meshlab_commit::$($var)"
@@ -48,16 +49,22 @@ jobs:
       uses: actions/cache@v2
       with:
         path: |
-          pymeshlab/lib
-          pymeshlab/Qt*.dll
-        key: ${{ runner.os }}-meshlab-${{steps.envs.outputs.meshlab_commit}}
-    - name: Build MeshLab
-      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
+          src/build/distrib/pymeshlab/lib/
+        key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
+    - name: Set build meshlab option
+      shell: bash
+      id: meshlab-build-option
+      if: steps.cache-meshlab-build.outputs.cache-hit == 'true'
       run: |
-        .\install\${{ runner.os }}\build_meshlab.ps1
-    - name: Build PyMeshLab
+        echo  ::set-output name=meshlab-build-option::"--no-build-meshlab"
+    - name: Build PyMeshLab ${{ matrix.pyversion }}
+      shell: bash
       run: |
-        .\install\${{ runner.os }}\build_pymeshlab.ps1
+        sh scripts/${{ runner.os }}/1_build.sh ${{steps.meshlab-build-option.outputs.meshlab-build-option}}
+    - name: Deploy PyMeshLab ${{ matrix.pyversion }}
+      shell: bash
+      run: |
+        sh scripts/${{ runner.os }}/2_deploy.sh
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
       with:
@@ -66,13 +73,12 @@ jobs:
 
   windows_tests:
     name: Test PyMeshLab (Windows)
-    needs: windows_build_pymeshlab
     runs-on: windows-latest
+    needs: windows_build_pymeshlab
     strategy:
       matrix:
-        pyversion: [3.5, 3.6, 3.7, 3.8]
+        pyversion: [3.6, 3.7, 3.8]
     steps:
-    - uses: actions/checkout@v2
     - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v2
       with:
@@ -83,8 +89,7 @@ jobs:
       with:
         python-version: ${{ matrix.pyversion }}
     - name: Run Tests ${{ matrix.pyversion }}
+      shell: bash
       run: |
-        pip install pytest
-        pip install numpy
-        pytest -s pymeshlab
-    
+        pip install pytest numpy
+        pytest --pyargs pymeshlab

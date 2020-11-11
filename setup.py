@@ -6,6 +6,9 @@ import urllib.request
 import zipfile
 import shutil
 
+github_repo = 'cnr-isti-vclab/PyMeshLab'
+base_repo = 'https://github.com/' + github_repo
+
 # read the contents of README file
 from os import path
 this_directory = path.abspath(path.dirname(__file__))
@@ -29,7 +32,7 @@ if sys.version_info[0] < 3 or (sys.version_info[0] == 3 and sys.version_info[1] 
 
 pythonversion = str(sys.version_info[0]) + '.' + str(sys.version_info[1])
 
-base_repo = 'https://github.com/cnr-isti-vclab/PyMeshLab'
+
 baseurl = base_repo + '/releases/download/v' + pymeshlabversion + '/'
 filename = 'PyMeshLab_' + osused + '_python' + pythonversion + '.zip'
 url = baseurl + filename
@@ -54,7 +57,7 @@ setup(
     description='A Python interface to MeshLab',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/cnr-isti-vclab/PyMeshLab',
+    url=base_repo,
     author='Alessandro Muntoni, Paolo Cignoni',
     author_email='alessandro.muntoni@isti.cnr.it',
     license='GPL3',

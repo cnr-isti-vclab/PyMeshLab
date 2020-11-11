@@ -1,6 +1,6 @@
-[submodule "pybind11"]
-	path = src/pybind11
-	url = ../../pybind/pybind11.git
 [submodule "meshlab"]
 	path = src/meshlab
 	url = ../../cnr-isti-vclab/meshlab
+[submodule "src/pymeshlab/pybind11"]
+	path = src/pymeshlab/pybind11
+	url = ../../pybind/pybind11.git

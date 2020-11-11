@@ -5,10 +5,11 @@
 #include "bindings/pypercentage.h"
 
 #include "bindings/pyexceptions.h"
+#include "pymeshlab/common.h"
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(pmeshlab, m) {
+PYBIND11_MODULE(PYMESHLAB_MODULE_NAME, m) {
 	pymeshlab::initBoundingBox(m); //BoundingBox Class
 	pymeshlab::initColor(m); //Color Class
 	pymeshlab::initMesh(m); //Mesh Class
