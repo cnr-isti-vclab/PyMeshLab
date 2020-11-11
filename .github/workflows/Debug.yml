@@ -6,7 +6,7 @@ on:
 
 jobs:
   build_pymeshlab_debug:
-    name: Build PyMeshLab (${{ runner.os }})
+    name: Build PyMeshLab
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:

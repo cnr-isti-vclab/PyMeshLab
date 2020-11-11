@@ -26,7 +26,7 @@ jobs:
 
   #first, we build PyMeshLab
   build_pymeshlab:
-    name: Build PyMeshLab (${{ runner.os }})
+    name: Build PyMeshLab
     runs-on: ${{ matrix.os }}
     needs: update_version
     strategy:
