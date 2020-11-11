@@ -27,8 +27,10 @@ if osused == 'Darwin':
 if osused != 'Linux' and osused != 'Windows' and osused != 'macOS':
     raise Exception("Operative System not supported")
 
-if sys.version_info[0] < 3 or (sys.version_info[0] == 3 and sys.version_info[1] < 5):
-    raise Exception("Must be using Python >= 3.5")
+if sys.version_info[0] < 3 or (sys.version_info[0] == 3 and sys.version_info[1] < 6):
+    raise Exception("Must be using Python >= 3.6")
+if sys.version_info[0] > 3 or (sys.version_info[0] == 3 and sys.version_info[1] > 8):
+    raise Exception("Sorry, this Python version is still not supported!")
 
 pythonversion = str(sys.version_info[0]) + '.' + str(sys.version_info[1])
 
