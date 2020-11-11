@@ -1,4 +1,4 @@
-##Build and Deploy PyMeshLab scripts
+## Build and Deploy PyMeshLab scripts
 
 This directory contains a set of scripts for automatically build and deploy pymeshlab.
 Before using them, be sure to install on your system:
@@ -48,5 +48,5 @@ The `2_deploy.sh` script can be run only on the "oldest supported linux distro",
 #### MacOS
 The build script for MacOS will generate an appbundle called "dummybin.app" (the cmake option `BUILD_DUMMY_BIN_MAC_DEPLOY` is set to `ON`). This is necessary to deploy PyMeshLab, since the tool `macdeployqt` just works with appbundles. The deploy script will then move all the required files outside the `dummybin.app` package, and then delete it.
 
-####Windows
+#### Windows
 Windows scripts are **bash scripts**. Be sure to run them in a linux subsystem.
