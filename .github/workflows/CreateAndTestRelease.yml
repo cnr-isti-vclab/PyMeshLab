@@ -39,6 +39,7 @@ jobs:
         ref: master
         submodules: true
     - name: checkout sub-submodule vcg
+      shell: bash
       run: |
         cd src/meshlab
         auth_header="$(git config --local --get http.https://github.com/.extraheader)"
