@@ -312,12 +312,14 @@ std::string pymeshlab::MeshSet::filtersRSTDocumentation() const
 {
 	std::string doc;
 
-	doc += ".. _filter_list:\n\n===============\nList of Filters\n===============\n\n";
+	doc += ".. _filter_list:\n\nList of Filters\n===============\n\n";
 
+	/// apply_filter parameters
 	doc +=
-			"   Here are listed all the filter names that can be given as paramter "
+			"apply_filter parameters\n-----------------------\n\n"
+			"Here are listed all the filter names that can be given as paramter "
 			"to the function :py:meth:`pmeshlab.MeshSet.apply_filter`.\n\n"
-			"   Please note: some filter parameters depend on the mesh(es) used as "
+			"Please note: some filter parameters depend on the mesh(es) used as "
 			"input of the filter. Default values listed here are computed on a 1x1x1 cube "
 			"(pymeshlab/tests/sample/cube.obj), and they will be computed on the input mesh "
 			"if they are left as default.\n\n";
@@ -325,6 +327,32 @@ std::string pymeshlab::MeshSet::filtersRSTDocumentation() const
 	for (auto it = filterFunctionSet.begin(); it != filterFunctionSet.end(); ++it) {
 		if (!(it->pythonFunctionName().startsWith("load")) && !(it->pythonFunctionName().startsWith("save")))
 			doc += filterRSTDocumentation(it);
+	}
+
+	//load parameters
+	doc += 
+			"load parameters\n---------------\n\n"
+			"Here are listed all the file formats that can be loaded using"
+			"the functions :py:meth:`pmeshlab.MeshSet.load_new_mesh` and "
+			":py:meth:`pmeshlab.MeshSet.load_current_mesh`, with all the possible "
+			"parameters that can be accepted by these functions.\n\n";
+
+	for (auto it = filterFunctionSet.begin(); it != filterFunctionSet.end(); ++it) {
+		if (it->pythonFunctionName().startsWith("load"))
+			doc += filterRSTDocumentation(it, true);
+	}
+
+	//save parameters
+	doc += 
+			"save parameters\n---------------\n\n"
+			"Here are listed all the file formats that can be saved using"
+			"the function :py:meth:`pmeshlab.MeshSet.save_current_mesh`, "
+			"with all the possible parameters that can be accepted by these "
+			"functions.\n\n";
+
+	for (auto it = filterFunctionSet.begin(); it != filterFunctionSet.end(); ++it) {
+		if (it->pythonFunctionName().startsWith("save"))
+			doc += filterRSTDocumentation(it, true);
 	}
 
 	return doc;
@@ -806,12 +834,19 @@ void pymeshlab::MeshSet::applyFilterRPL(
 }
 
 std::string pymeshlab::MeshSet::filterRSTDocumentation(
-		FilterFunctionSet::iterator it) const
+		FilterFunctionSet::iterator it,
+		bool loadSave) const
 {
 	std::string doc;
 
-	doc += ".. data:: " + it->pythonFunctionName().toStdString() + "\n\n";
-	doc += "   *MeshLab filter name*: '" + it->meshlabFunctionName().toStdString() + "'\n\n";
+	doc += ".. data:: ";
+	if (!loadSave) {
+		doc += it->pythonFunctionName().toStdString() + "\n\n";
+		doc += "   *MeshLab filter name*: '" + it->meshlabFunctionName().toStdString() + "'\n\n";
+	}
+	else {
+		doc += it->meshlabFunctionName().toStdString() + "\n   :noindex:\n\n";
+	}
 	doc += "   .. raw:: html\n\n";
 	QString desc = it->description();
 	cleanHTML(desc);

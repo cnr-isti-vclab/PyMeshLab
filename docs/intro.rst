@@ -16,9 +16,9 @@ You can load, save meshes and apply MeshLab filters:
 
 .. code-block:: python
 
-   ms.load_mesh('airplane.obj')
+   ms.load_new_mesh('airplane.obj')
    ms.apply_filter('convex_hull')
-   ms.save_mesh('convex_hull.ply')
+   ms.save_current_mesh('convex_hull.ply')
 
 You can list all the available filters and theirs parameters:
 
@@ -39,5 +39,3 @@ To run the tests:
 
    pip3 install pytest
    pytest --pyargs pymeshlab
-
-

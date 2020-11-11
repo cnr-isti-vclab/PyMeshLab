@@ -104,7 +104,7 @@ private:
 			FilterPluginInterface* filter,
 			const RichParameterList& rpl);
 
-	std::string filterRSTDocumentation(FilterFunctionSet::iterator it) const;
+	std::string filterRSTDocumentation(FilterFunctionSet::iterator it, bool loadSave = false) const;
 	static void cleanHTML(QString& htmlString);
 
 	PluginManager& pm;
