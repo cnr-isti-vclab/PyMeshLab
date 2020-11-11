@@ -51,32 +51,7 @@ pytest --pyargs pymeshlab
 
 ## Build PyMeshLab
 
-Clone this repository with the `--recursive` flag, needed to clone also MeshLab and pybind11 repositories:
-
-```
-git clone --recursive https://github.com/cnr-isti-vclab/PyMeshLab.git
-```
-PyMeshLab requires Qt >= 5.9, Python >= 3.5, and a properly MeshLab build. We suggest to use the `install/[platform]/build_meshlab.[sh/ps1]` script that takes care to build, deploy and then copy all MeshLab files inside the `pymeshlab/lib` directory. For example, on Linux:
-
-```
-sh install/linux/build_meshlab.sh
-```
-or Windows:
-```
-.\install\windows\build_meshlab.ps1
-```
-Then, you can build PyMeshLab:
-```
-sh install/linux/build_pymeshlab.sh
-```
-or Windows:
-```
-.\install\windows\build_pymeshlab.ps1
-```
-these script will place the meshlab module inside the `pymeshlab` folder of this repository.
-
-For more details, please take a look at the [Github Actions Workflows](https://github.com/cnr-isti-vclab/PyMeshLab/tree/master/.github/workflows) that build and run tests automatically in all the platforms.
-...
+See the [`src`](src/README.md) folder that contains the instructions to build PyMeshLab.
 
 ## License
 

@@ -17,12 +17,6 @@ fi
 
 MODULE_NAME=$(find $BUNDLE_PATH/dummybin.app/Contents  -name 'pmeshlab*')
 
-#install_name_tool -change @rpath/libmeshlab-common.dylib @executable_path/../Frameworks/libmeshlab-common.dylib $BUNDLE_PATH/dummybin.app/Contents/MacOS/dummybin
-
-#install_name_tool -add_rpath @loader_path/Frameworks $MODULE_NAME
-#install_name_tool -change @rpath/libmeshlab-common.dylib @loader_path/Frameworks/libmeshlab-common.dylib pymeshlab/pmeshlab*
-#install_name_tool -change @rpath/libmeshlab-common.dylib Frameworks/libmeshlab-common.dylib $BUNDLE_PATH/dummybin.app/Contents/pmeshlab*
-
 if [ -e $QTDIR/bin/macdeployqt ]
 then
     $QTDIR/bin/macdeployqt $BUNDLE_PATH/dummybin.app -executable=$MODULE_NAME -executable=$BUNDLE_PATH/dummybin.app/Contents/PlugIns/libfilter_sketchfab.so
