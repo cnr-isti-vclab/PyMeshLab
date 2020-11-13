@@ -11,8 +11,7 @@ def test_load_meshes():
 
     print(ms.number_meshes())
 
-    # use apply_filter to test load mesh
-    ms.apply_filter("load_obj", file_name=(base_path + "airplane.obj"))
+    ms.load_new_mesh(base_path + "airplane.obj")
 
     print(ms.number_meshes())
 

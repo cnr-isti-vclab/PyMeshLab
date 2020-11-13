@@ -86,7 +86,8 @@ void pymeshlab::MeshSet::printPythonFilterNamesList() const
 	QStringList list = filterFunctionSet.pythonFunctionNames();
 	std::cout << "MeshSet class - list of filter names:\n";
 	for (const QString& fname : list){
-		std::cout << "\t" << fname.toStdString() << "\n";
+		if (!fname.startsWith("load_") && !fname.startsWith("save_"))
+			std::cout << "\t" << fname.toStdString() << "\n";
 	}
 }
 
@@ -97,16 +98,16 @@ void pymeshlab::MeshSet::printPythonFilterNamesList() const
  */
 void pymeshlab::MeshSet::printPythonFilterParameterList(const std::string functionName) const
 {
-	FilterFunctionSet::iterator it = filterFunctionSet.find(QString::fromStdString(functionName));
-	if (it == filterFunctionSet.end()){
+	if (pythonFilterNameExists(functionName)){
 		std::cout << "Filter " << functionName << " not found.\n";
 	}
 	else {
+		FilterFunctionSet::iterator it = filterFunctionSet.find(QString::fromStdString(functionName));
 		std::cout <<
-					 "Please note: some parameters depend on the mesh(es) used as input of the \n"
-					 "filter. Default values listed here are computed on a 1x1x1 cube \n"
-					 "(pymeshlab/tests/sample/cube.obj), and they will be computed on the input mesh\n"
-					 "if they are left as default.\n";
+					"Please note: some parameters depend on the mesh(es) used as input of the \n"
+					"filter. Default values listed here are computed on a 1x1x1 cube \n"
+					"(pymeshlab/tests/sample/cube.obj), and they will be computed on the input mesh\n"
+					"if they are left as default.\n";
 
 		std::cout << functionName <<" filter - list of parameter names:\n";
 		const FilterFunction& ff = *it;
@@ -269,27 +270,17 @@ void pymeshlab::MeshSet::applyFilterScript()
 void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kwargs kwargs)
 {
 	FilterFunctionSet::iterator it = filterFunctionSet.find(QString::fromStdString(filtername));
-	if (it != filterFunctionSet.end()) {
+	if (it != filterFunctionSet.end() && 
+			!(QString::fromStdString(filtername).startsWith("load_") && 
+			!(QString::fromStdString(filtername).startsWith("save_")))) {
 		QString meshlabFilterName = it->meshlabFunctionName();
-		//case of load mesh:
-		if (QString::fromStdString(filtername).startsWith("load_")){
-			std::string filename = py::str(kwargs["file_name"]);
-			loadMeshUsingPlugin(filename, nullptr, *it, kwargs);
-		}
-		//case of save mesh:
-		else if (QString::fromStdString(filtername).startsWith("save_")){
-			std::string filename = py::str(kwargs["file_name"]);
-			saveMeshUsingPlugin(filename, nullptr, *it, kwargs);
-		}
-		//all the other plugins:
-		else {
-			QAction* action = nullptr;
-			FilterPluginInterface* fp = getPluginFromFilterName(meshlabFilterName, action);
-			RichParameterList rpl;
-			fp->initParameterList(action, *this, rpl);
-			updateRichParameterList(*it, kwargs, rpl);
-			applyFilterRPL(filtername, meshlabFilterName, action, fp, rpl);
-		}
+		
+		QAction* action = nullptr;
+		FilterPluginInterface* fp = getPluginFromFilterName(meshlabFilterName, action);
+		RichParameterList rpl;
+		fp->initParameterList(action, *this, rpl);
+		updateRichParameterList(*it, kwargs, rpl);
+		applyFilterRPL(filtername, meshlabFilterName, action, fp, rpl);
 	}
 	else {
 		throw MLException(
@@ -356,6 +347,16 @@ std::string pymeshlab::MeshSet::filtersRSTDocumentation() const
 	}
 
 	return doc;
+}
+
+bool pymeshlab::MeshSet::pythonFilterNameExists(const std::string& filtername) const
+{
+	FilterFunctionSet::iterator it = filterFunctionSet.find(QString::fromStdString(filtername));
+	if (it != filterFunctionSet.end() && 
+			!(QString::fromStdString(filtername).startsWith("load_") && 
+			!(QString::fromStdString(filtername).startsWith("save_"))))
+		return true;
+	return false;
 }
 
 bool pymeshlab::MeshSet::filterCallBack(const int pos, const char * str)

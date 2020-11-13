@@ -52,6 +52,8 @@ public:
 	std::string filtersRSTDocumentation() const;
 private:
 	static GLLogStream* staticLogger;
+	
+	bool pythonFilterNameExists(const std::string& filtername) const;
 
 	static bool filterCallBack(const int pos, const char* str);
 
