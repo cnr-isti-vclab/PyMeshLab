@@ -817,15 +817,22 @@ void pymeshlab::MeshSet::applyFilterRPL(
 			mm()->updateDataMask(req);
 		staticLogger = verbose ? &Log : nullptr;
 		unsigned int postConditionMask;
-		fp->applyFilter(action, *this, postConditionMask, rpl, &MeshSet::filterCallBack);
-		filterCallBack(100, (filtername + " applied!").c_str());
-		if (mm() != nullptr) {
-			mm()->cm.svn = int(vcg::tri::UpdateSelection<CMeshO>::VertexCount(mm()->cm));
-			mm()->cm.sfn = int(vcg::tri::UpdateSelection<CMeshO>::FaceCount(mm()->cm));
+		//std::map<std::string, QVariant> outputValues;
+		bool res = fp->applyFilter(action, *this, postConditionMask, rpl, &MeshSet::filterCallBack);
+		if (res){
+			filterCallBack(100, (filtername + " applied!").c_str());
+			if (mm() != nullptr) {
+				mm()->cm.svn = int(vcg::tri::UpdateSelection<CMeshO>::VertexCount(mm()->cm));
+				mm()->cm.sfn = int(vcg::tri::UpdateSelection<CMeshO>::FaceCount(mm()->cm));
+			}
+			FilterNameParameterValuesPair pair;
+			pair.first = meshlabFilterName; pair.second = rpl;
+			filterScript.append(pair);
 		}
-		FilterNameParameterValuesPair pair;
-		pair.first = meshlabFilterName; pair.second = rpl;
-		filterScript.append(pair);
+		else {
+			throw MLException(
+						"Failed to apply filter: " + QString::fromStdString(filtername) + "\n");
+		}
 	}
 	catch(const std::exception& e) {
 		throw MLException(
