@@ -42,7 +42,7 @@ public:
 	void clearFilterScript();
 	void applyFilterScript();
 
-	void applyFilter(
+	pybind11::dict applyFilter(
 			const std::string& filtername,
 			pybind11::kwargs kwargs = pybind11::kwargs());
 
@@ -99,7 +99,7 @@ private:
 			const FilterFunctionParameter& ffp,
 			const std::pair<pybind11::handle, pybind11::handle>& k);
 
-	void applyFilterRPL(
+	pybind11::dict applyFilterRPL(
 			const std::string& filtername,
 			QString meshlabFilterName,
 			QAction* action,

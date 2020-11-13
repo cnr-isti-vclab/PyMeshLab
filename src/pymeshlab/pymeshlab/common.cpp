@@ -1,6 +1,6 @@
+#include <pybind11/pybind11.h> //needs to be included before anything else...
 #include "common.h"
 
-#include <pybind11/pybind11.h>
 #include <QDir>
 #include <common/mlapplication.h>
 
@@ -69,4 +69,29 @@ void pymeshlab::printVersion()
 	
 	std::cout << "PyMeshLab " << pymsversion << " based on MeshLab " << 
 		MeshLabApplication::appVer().toStdString() << "\n";
+}
+
+pybind11::dict pymeshlab::toPyDict(const std::map<std::string, QVariant>& qVariantMap)
+{
+	pybind11::dict outDict;
+	for (const auto& p : qVariantMap){
+		if (std::string(p.second.typeName()) == "int"){
+			outDict[p.first.c_str()] = p.second.toInt();
+		}
+		else if (std::string(p.second.typeName()) == "double"){
+			outDict[p.first.c_str()] = p.second.toDouble();
+		}
+		else if (std::string(p.second.typeName()) == "float"){
+			outDict[p.first.c_str()] = p.second.toFloat();
+		}
+		else if (std::string(p.second.typeName()) == "bool"){
+			outDict[p.first.c_str()] = p.second.toBool();
+		}
+		else {
+			std::cerr << "Warning: type " << p.second.typeName() 
+				<< " still not supported for py::dict conversion\n"
+				<< "Please open an issue on GitHub about this."; 
+		}
+	}
+	return outDict;
 }

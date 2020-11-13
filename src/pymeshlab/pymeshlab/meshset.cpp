@@ -267,8 +267,9 @@ void pymeshlab::MeshSet::applyFilterScript()
 	}
 }
 
-void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kwargs kwargs)
+pybind11::dict pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kwargs kwargs)
 {
+	py::dict outputValues;
 	FilterFunctionSet::iterator it = filterFunctionSet.find(QString::fromStdString(filtername));
 	if (it != filterFunctionSet.end() && 
 			!(QString::fromStdString(filtername).startsWith("load_") && 
@@ -280,13 +281,14 @@ void pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kw
 		RichParameterList rpl;
 		fp->initParameterList(action, *this, rpl);
 		updateRichParameterList(*it, kwargs, rpl);
-		applyFilterRPL(filtername, meshlabFilterName, action, fp, rpl);
+		outputValues = applyFilterRPL(filtername, meshlabFilterName, action, fp, rpl);
 	}
 	else {
 		throw MLException(
 					"Failed to apply filter: " + QString::fromStdString(filtername) + "\n" +
 					"Filter does not exists. Take a look at MeshSet.print_filter_list function.");
 	}
+	return outputValues;
 }
 
 void pymeshlab::MeshSet::printStatus() const
@@ -804,21 +806,26 @@ void pymeshlab::MeshSet::updateRichParameterFromKwarg(
 	}
 }
 
-void pymeshlab::MeshSet::applyFilterRPL(
+py::dict pymeshlab::MeshSet::applyFilterRPL(
 		const std::string& filtername,
 		QString meshlabFilterName,
 		QAction* action,
 		FilterPluginInterface* fp,
 		const RichParameterList& rpl)
 {
+	py::dict outputDict;
+	QDebugRedirect* qdbr = nullptr;
+	if (!verbose)
+		qdbr = new QDebugRedirect();
 	try {
 		int req=fp->getRequirements(action);
 		if (mm() != nullptr)
 			mm()->updateDataMask(req);
+		
 		staticLogger = verbose ? &Log : nullptr;
 		unsigned int postConditionMask;
-		//std::map<std::string, QVariant> outputValues;
-		bool res = fp->applyFilter(action, *this, postConditionMask, rpl, &MeshSet::filterCallBack);
+		std::map<std::string, QVariant> outputValues;
+		bool res = fp->applyFilter(action, *this, outputValues, postConditionMask, rpl, &MeshSet::filterCallBack);
 		if (res){
 			filterCallBack(100, (filtername + " applied!").c_str());
 			if (mm() != nullptr) {
@@ -828,6 +835,7 @@ void pymeshlab::MeshSet::applyFilterRPL(
 			FilterNameParameterValuesPair pair;
 			pair.first = meshlabFilterName; pair.second = rpl;
 			filterScript.append(pair);
+			outputDict = toPyDict(outputValues);
 		}
 		else {
 			throw MLException(
@@ -839,6 +847,8 @@ void pymeshlab::MeshSet::applyFilterRPL(
 					"Failed to apply filter: " + QString::fromStdString(filtername) + "\n" +
 					"Details: " + e.what());
 	}
+	delete qdbr;
+	return outputDict;
 }
 
 std::string pymeshlab::MeshSet::filterRSTDocumentation(

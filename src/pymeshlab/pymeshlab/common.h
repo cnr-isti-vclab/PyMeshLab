@@ -7,6 +7,7 @@
 #include <array>
 #include <QString>
 #include <QStringList>
+#include <QVariant>
 #include <vcg/../wrap/io_trimesh/io_mask.h>
 #include <QtMessageHandler>
 
@@ -15,6 +16,10 @@
 
 #define PYMESHLAB_MODULE_NAME pmeshlab
 #define PYMESHLAB_MODULE_NAME_STR PYMESHLAB_STRINGIFY(PYMESHLAB_MODULE_NAME)
+
+namespace pybind11 {
+class dict;
+}
 
 namespace pymeshlab {
 
@@ -145,6 +150,8 @@ std::string getPluginsPath();
 std::string getSamplesPath();
 
 void printVersion();
+
+pybind11::dict toPyDict(const std::map<std::string, QVariant>& qVariantMap);
 
 }
 
