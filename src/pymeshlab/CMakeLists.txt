@@ -15,15 +15,17 @@ set(HEADERS
 	docs/pymeshset_doc.h
 	docs/pypercentage_doc.h
 	pymeshlab/color.h
-	pymeshlab/common.h
 	pymeshlab/exceptions.h
 	pymeshlab/mesh.h
-	pymeshlab/meshlabsingletons.h
 	pymeshlab/meshset.h
 	pymeshlab/percentage.h
 	pymeshlab/plugin_management/filterfunction.h
 	pymeshlab/plugin_management/filterfunctionparameter.h
 	pymeshlab/plugin_management/filterfunctionset.h
+	pymeshlab/helpers/common.h
+	pymeshlab/helpers/meshlab_singletons.h
+	pymeshlab/helpers/meshset_helper.h
+	pymeshlab/helpers/verbosity_manager.h
 )
 
 set(SOURCES
@@ -36,14 +38,16 @@ set(SOURCES
 	bindings/pymeshset.cpp
 	bindings/pypercentage.cpp
 	pymeshlab/color.cpp
-	pymeshlab/common.cpp
 	pymeshlab/mesh.cpp
-	pymeshlab/meshlabsingletons.cpp
 	pymeshlab/meshset.cpp
 	pymeshlab/percentage.cpp
 	pymeshlab/plugin_management/filterfunction.cpp
 	pymeshlab/plugin_management/filterfunctionparameter.cpp
 	pymeshlab/plugin_management/filterfunctionset.cpp
+	pymeshlab/helpers/common.cpp
+	pymeshlab/helpers/meshlab_singletons.cpp
+	pymeshlab/helpers/meshset_helper.cpp
+	pymeshlab/helpers/verbosity_manager.cpp
 )
 
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../../PYML_VERSION")

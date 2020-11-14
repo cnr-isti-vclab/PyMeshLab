@@ -6,6 +6,7 @@
 #include <common/filterscript.h>
 #include <common/pluginmanager.h>
 #include "plugin_management/filterfunctionset.h"
+#include "helpers/verbosity_manager.h"
 
 namespace pymeshlab {
 
@@ -50,23 +51,8 @@ public:
 
 	/** Member functions not binded on Python **/
 	std::string filtersRSTDocumentation() const;
-private:
-	static GLLogStream* staticLogger;
-	
+private:	
 	bool pythonFilterNameExists(const std::string& filtername) const;
-
-	static bool filterCallBack(const int pos, const char* str);
-
-	void updateRichParameterList(
-			const std::string& filtername,
-			const RichParameterList& base,
-			RichParameterList& toUpdate);
-
-	void updateRichParameterList(
-			const FilterFunction& f,
-			const pybind11::kwargs& kwargs,
-			RichParameterList& rps,
-			bool ignoreFileName = false);
 
 	FilterPluginInterface* getPluginFromFilterName(
 			const QString& filterName,
@@ -94,11 +80,6 @@ private:
 
 	void saveMLP(const QString& fileName);
 
-	void updateRichParameterFromKwarg(
-			RichParameter& par,
-			const FilterFunctionParameter& ffp,
-			const std::pair<pybind11::handle, pybind11::handle>& k);
-
 	pybind11::dict applyFilterRPL(
 			const std::string& filtername,
 			QString meshlabFilterName,
@@ -106,14 +87,13 @@ private:
 			FilterPluginInterface* filter,
 			const RichParameterList& rpl);
 
-	std::string filterRSTDocumentation(FilterFunctionSet::iterator it, bool loadSave = false) const;
-	static void cleanHTML(QString& htmlString);
-
 	PluginManager& pm;
 	FilterFunctionSet filterFunctionSet;
 	FilterScript filterScript;
 
 	bool verbose;
+	VerbosityManager verbosityManager;
+	
 };
 
 }

@@ -1,4 +1,4 @@
-#include "meshlabsingletons.h"
+#include "meshlab_singletons.h"
 
 #include <common/pluginmanager.h>
 #include "common.h"

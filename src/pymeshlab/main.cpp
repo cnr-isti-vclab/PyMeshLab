@@ -5,7 +5,7 @@
 #include "bindings/pypercentage.h"
 
 #include "bindings/pyexceptions.h"
-#include "pymeshlab/common.h"
+#include "pymeshlab/helpers/common.h"
 
 namespace py = pybind11;
 

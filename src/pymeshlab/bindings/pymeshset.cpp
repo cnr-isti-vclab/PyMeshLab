@@ -1,6 +1,6 @@
 #include "pymeshset.h"
 
-#include "pymeshlab/common.h"
+#include "pymeshlab/helpers/common.h"
 #include "pymeshlab/meshset.h"
 #include "docs/pymeshset_doc.h"
 #include <vcg/../wrap/io_trimesh/import_obj.h>
