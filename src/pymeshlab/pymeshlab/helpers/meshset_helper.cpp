@@ -273,6 +273,9 @@ void loadMeshUsingPlugin(
 					md.delMesh(md.mm());
 				throw MLException("Unable to open file: " + QString::fromStdString(filename));
 			}
+			else {
+				vcg::tri::UpdateBounding<CMeshO>::Box(mm->cm);
+			}
 		}
 		else {
 			throw MLException("Unknown format for load: " + extension);
@@ -325,6 +328,9 @@ void loadMeshUsingPlugin(
 				if (justCreated)
 					md.delMesh(md.mm());
 				throw MLException("Unable to open file: " + QString::fromStdString(filename));
+			}
+			else {
+				vcg::tri::UpdateBounding<CMeshO>::Box(mm->cm);
 			}
 		}
 		else {
