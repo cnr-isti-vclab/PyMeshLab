@@ -3,9 +3,7 @@
 #include <pybind11/numpy.h>
 #include <pybind11/eigen.h>
 #include <common/mlexception.h>
-#include <common/meshlabdocumentxml.h>
-#include <common/meshlabdocumentbundler.h>
-#include <wrap/io_trimesh/alnParser.h>
+
 
 #include "percentage.h"
 #include "exceptions.h"
@@ -199,19 +197,19 @@ void pymeshlab::MeshSet::loadProject(const std::string& filename)
 	setDocLabel(fileName);
 
 	if (QString(fi.suffix()).toLower() == "aln") {
-		loadALN(fileName);
+		meshsethelper::loadALN(fileName, *this, filterFunctionSet);
 	}
 
 	if (QString(fi.suffix()).toLower() == "mlp" || QString(fi.suffix()).toLower() == "mlb") {
-		loadMLP(fileName);
+		meshsethelper::loadMLP(fileName, *this, filterFunctionSet);
 	}
 
 	if (QString(fi.suffix()).toLower() == "out"){
-		loadBundler(fileName);
+		meshsethelper::loadBundler(fileName, *this);
 	}
 
 	if (QString(fi.suffix()).toLower() == "nvm"){
-		loadNVM(fileName);
+		meshsethelper::loadNVM(fileName, *this);
 	}
 }
 
@@ -228,7 +226,7 @@ void pymeshlab::MeshSet::saveProject(const std::string& filename)
 	}
 
 	if (QString(fi.suffix()).toLower() == "mlp" || QString(fi.suffix()).toLower() == "mlb") {
-		saveMLP(fileName);
+		meshsethelper::saveMLP(fileName, *this, filterFunctionSet);
 	}
 }
 
@@ -308,125 +306,6 @@ void pymeshlab::MeshSet::printStatus() const
 std::string pymeshlab::MeshSet::filtersRSTDocumentation() const
 {
 	return meshsethelper::RSTDocumentationFromFilterFunctionSet(filterFunctionSet);
-}
-
-void pymeshlab::MeshSet::loadALN(const QString& fileName)
-{
-	QFileInfo fi(fileName);
-	QString absfilename = fi.absolutePath() + "/" + fi.fileName();
-	QDir currentDir = QDir::current();
-	// this change of dir is needed for subsequent textures/materials loading
-	QDir::setCurrent(fi.absoluteDir().absolutePath());
-
-	std::vector<RangeMap> rmv;
-	int retVal = ALNParser::ParseALN(rmv, qUtf8Printable(absfilename));
-	if(retVal != ALNParser::NoError) {
-		throw MLException("Error: Unable to open ALN file: " + absfilename);
-	}
-
-	bool openRes=true;
-	std::vector<RangeMap>::iterator ir;
-	for(ir=rmv.begin();ir!=rmv.end() && openRes;++ir) {
-		QString relativeToProj = fi.absoluteDir().absolutePath() + "/" + (*ir).filename.c_str();
-		loadNewMesh(relativeToProj.toStdString(), py::kwargs());
-		mm()->cm.Tr = ir->transformation;
-	}
-
-	//restore current dir
-	QDir::setCurrent(currentDir.absolutePath());
-}
-
-void pymeshlab::MeshSet::loadMLP(const QString& fileName)
-{
-	QFileInfo fi(fileName);
-	QString absfilename = fi.absolutePath() + "/" + fi.fileName();
-	QDir currentDir = QDir::current();
-	// this change of dir is needed for subsequent textures/materials loading
-	QDir::setCurrent(fi.absolutePath());
-
-	std::map<int, MLRenderingData> rendOpt;
-	int startingIndex = meshList.size();
-	if (!MeshDocumentFromXML(*this, absfilename, (QString(fi.suffix()).toLower() == "mlb"), rendOpt)) {
-		throw MLException("Error:  Unable to open MeshLab Project file: " + absfilename);
-	}
-	for (int i=startingIndex; i<meshList.size(); i++) {
-		QString fullPath = meshList[i]->fullName();
-		Matrix44m trm = meshList[i]->cm.Tr;
-		meshsethelper::loadMeshUsingPlugin(fullPath.toStdString(), meshList[i], pybind11::kwargs(), *this, filterFunctionSet);
-		mm()->cm.Tr = trm;
-	}
-
-	//restore current dir
-	QDir::setCurrent(currentDir.absolutePath());
-}
-
-void pymeshlab::MeshSet::loadBundler(const QString& fileName)
-{
-	QFileInfo fi(fileName);
-	QString cameras_filename = fi.absolutePath() + "/" + fi.fileName();
-	QString image_list_filename = fi.absolutePath() + "/list.txt";
-	QString model_filename;
-
-	QDir currentDir = QDir::current();
-	// this change of dir is needed for subsequent textures/materials loading
-	QDir::setCurrent(fi.absolutePath());
-
-	if(!MeshDocumentFromBundler(*this, cameras_filename, image_list_filename, model_filename)){
-		throw MLException("Error:  Unable to open OUTs file: " + cameras_filename);
-	}
-
-	//restore current dir
-	QDir::setCurrent(currentDir.absolutePath());
-}
-
-void pymeshlab::MeshSet::loadNVM(const QString& fileName)
-{
-	QFileInfo fi(fileName);
-	QString cameras_filename = fi.absolutePath() + "/" + fi.fileName();
-	QString image_list_filename = fi.absolutePath() + "/list.txt";
-	QString model_filename;
-
-	QDir currentDir = QDir::current();
-	// this change of dir is needed for subsequent textures/materials loading
-	QDir::setCurrent(fi.absolutePath());
-
-	if(!MeshDocumentFromNvm(*this, cameras_filename, model_filename)){
-		throw MLException("Error:  Unable to open NVMs file: " + cameras_filename);
-	}
-
-	//restore current dir
-	QDir::setCurrent(currentDir.absolutePath());
-}
-
-void pymeshlab::MeshSet::saveMLP(const QString& fileName)
-{
-	QFileInfo fi(fileName);
-	QString outdir = fi.absolutePath();
-	QString absfilename = outdir + "/" + fi.fileName();
-	QDir currentDir = QDir::current();
-	// this change of dir is needed for subsequent textures/materials loading
-	QDir::setCurrent(fi.absolutePath());
-
-	for(MeshModel* m : meshList) {
-		if (m != NULL) {
-			QString label = m->label().remove(" ");
-			int p = label.lastIndexOf('.');
-			if (p > 0)
-				label = label.left(p);
-			QString outfilename = outdir + "/" + label.remove(" ") + ".ply";
-			m->setFileName(outfilename);
-			QFileInfo of(outfilename);
-			m->setLabel(of.fileName());
-			meshsethelper::saveMeshUsingPlugin(outfilename.toStdString(), m, py::kwargs(), *this, filterFunctionSet);
-		}
-	}
-
-	bool ok = MeshDocumentToXMLFile(*this, fileName, false, false, fi.suffix().toLower() == "mlb");
-	if (!ok){
-		throw MLException("Error:  Unable to save MeshLab Project file: " + absfilename);
-	}
-	//restore current dir
-	QDir::setCurrent(currentDir.absolutePath());
 }
 
 

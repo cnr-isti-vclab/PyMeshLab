@@ -51,13 +51,6 @@ public:
 	/** Member functions not binded on Python **/
 	std::string filtersRSTDocumentation() const;
 private:
-	void loadALN(const QString& fileName);
-	void loadMLP(const QString& fileName);
-	void loadBundler(const QString& fileName);
-	void loadNVM(const QString& fileName);
-
-	void saveMLP(const QString& fileName);
-
 	PluginManager& pm;
 	FilterFunctionSet filterFunctionSet;
 	FilterScript filterScript;
