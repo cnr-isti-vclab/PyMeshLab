@@ -7,6 +7,7 @@
 
 class RichParameterList;
 class MeshDocument;
+class MeshModel;
 class FilterPluginInterface;
 class FilterScript;
 
@@ -20,7 +21,7 @@ namespace pymeshlab {
 class FilterFunction;
 class FilterFunctionSet;
 
-namespace meshSetHelper {
+namespace meshsethelper {
 
 /** RichParameterList Management **/
 
@@ -29,7 +30,7 @@ void updateRichParameterList(
 		const RichParameterList& base,
 		RichParameterList& toUpdate);
 
-void updateRichParameterList(
+void updateRichParameterListFromKwargs(
 		const FilterFunction& f,
 		const pybind11::kwargs& kwargs,
 		MeshDocument* md,
@@ -44,6 +45,22 @@ FilterPluginInterface* pluginFromFilterName(
 
 bool pythonFilterNameExists(
 		const std::string& filtername, 
+		const FilterFunctionSet& filterFunctionSet);
+
+/** Load/Save Mesh **/
+
+void loadMeshUsingPlugin(
+		const std::string& filename,
+		MeshModel* mm,
+		pybind11::kwargs kwargs, 
+		MeshDocument& md, 
+		const FilterFunctionSet& filterFunctionSet);
+
+void saveMeshUsingPlugin(
+		const std::string& filename,
+		MeshModel* mm,
+		pybind11::kwargs kwargs,
+		MeshDocument& md,
 		const FilterFunctionSet& filterFunctionSet);
 
 /** Apply Filter **/

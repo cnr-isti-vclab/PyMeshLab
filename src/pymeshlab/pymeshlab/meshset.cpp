@@ -98,7 +98,7 @@ void pymeshlab::MeshSet::printPythonFilterNamesList() const
  */
 void pymeshlab::MeshSet::printPythonFilterParameterList(const std::string functionName) const
 {
-	if (meshSetHelper::pythonFilterNameExists(functionName, filterFunctionSet)){
+	if (meshsethelper::pythonFilterNameExists(functionName, filterFunctionSet)){
 		std::cout << "Filter " << functionName << " not found.\n";
 	}
 	else {
@@ -150,7 +150,7 @@ void pymeshlab::MeshSet::printFilterScript() const
 
 void pymeshlab::MeshSet::loadNewMesh(const std::string& filename, py::kwargs kwargs)
 {
-	loadMeshUsingPlugin(filename, nullptr, kwargs);
+	meshsethelper::loadMeshUsingPlugin(filename, nullptr, kwargs, *this, filterFunctionSet);
 }
 
 void pymeshlab::MeshSet::loadCurrentMesh(const std::string& filename, pybind11::kwargs kwargs)
@@ -158,14 +158,14 @@ void pymeshlab::MeshSet::loadCurrentMesh(const std::string& filename, pybind11::
 	if (mm() == nullptr)
 		throw MLException("MeshSet has no selected Mesh.");
 	mm()->Clear();
-	loadMeshUsingPlugin(filename, mm(), kwargs);
+	meshsethelper::loadMeshUsingPlugin(filename, mm(), kwargs, *this, filterFunctionSet);
 }
 
 void pymeshlab::MeshSet::saveCurrentMesh(const std::string& filename, pybind11::kwargs kwargs)
 {
 	if (mm() == nullptr)
 		throw MLException("MeshSet has no selected Mesh.");
-	saveMeshUsingPlugin(filename, mm(), kwargs);
+	meshsethelper::saveMeshUsingPlugin(filename, mm(), kwargs, *this, filterFunctionSet);
 }
 
 /**
@@ -259,11 +259,11 @@ void pymeshlab::MeshSet::applyFilterScript()
 		QString meshlabFilterName = p.first;
 		std::string filtername = FilterFunctionSet::toPythonName(meshlabFilterName).toStdString();
 		QAction* action = nullptr;
-		FilterPluginInterface* fp = meshSetHelper::pluginFromFilterName(meshlabFilterName, action);
+		FilterPluginInterface* fp = meshsethelper::pluginFromFilterName(meshlabFilterName, action);
 		RichParameterList rpl;
 		fp->initParameterList(action, *this, rpl);
-		meshSetHelper::updateRichParameterList(filtername, p.second, rpl);
-		meshSetHelper::applyFilterRPL(
+		meshsethelper::updateRichParameterList(filtername, p.second, rpl);
+		meshsethelper::applyFilterRPL(
 				filtername, meshlabFilterName, action, fp, rpl,
 				verbose, filterScript, false, *this);
 	}
@@ -279,11 +279,11 @@ pybind11::dict pymeshlab::MeshSet::applyFilter(const std::string& filtername, py
 		QString meshlabFilterName = it->meshlabFunctionName();
 		
 		QAction* action = nullptr;
-		FilterPluginInterface* fp = meshSetHelper::pluginFromFilterName(meshlabFilterName, action);
+		FilterPluginInterface* fp = meshsethelper::pluginFromFilterName(meshlabFilterName, action);
 		RichParameterList rpl;
 		fp->initParameterList(action, *this, rpl);
-		meshSetHelper::updateRichParameterList(*it, kwargs, this, rpl);
-		outputValues = meshSetHelper::applyFilterRPL(
+		meshsethelper::updateRichParameterListFromKwargs(*it, kwargs, this, rpl);
+		outputValues = meshsethelper::applyFilterRPL(
 				filtername, meshlabFilterName, action, fp, rpl,
 				verbose, filterScript, true, *this);
 	}
@@ -307,121 +307,7 @@ void pymeshlab::MeshSet::printStatus() const
 
 std::string pymeshlab::MeshSet::filtersRSTDocumentation() const
 {
-	return meshSetHelper::RSTDocumentationFromFilterFunctionSet(filterFunctionSet);
-}
-
-void pymeshlab::MeshSet::loadMeshUsingPlugin(
-		const std::string& filename,
-		MeshModel* mm,
-		pybind11::kwargs kwargs)
-{
-	QFileInfo finfo(QString::fromStdString(filename));
-	QString extension = finfo.suffix().toLower();
-
-	if (!finfo.exists()){
-		throw MLException("File does not exists: " + QString::fromStdString(filename));
-	}
-	else {
-		if (pm.allKnowInputFormats.contains(extension)){
-			FilterFunction ff = *filterFunctionSet.find("load_" + extension);
-			IOPluginInterface* plugin = pm.allKnowInputFormats[extension];
-			int mask = 0;
-			RichParameterList rps;
-			plugin->initPreOpenParameter(extension, QString::fromStdString(filename), rps);
-			plugin->initOpenParameter(extension, *(this->mm()), rps);
-
-			meshSetHelper::updateRichParameterList(ff, kwargs, this, rps, true);
-
-			bool justCreated = false;
-			if (mm == nullptr){
-				mm = this->addNewMesh(finfo.filePath(), finfo.fileName());
-				justCreated = true;
-			}
-			else {
-				mm->setFileName(finfo.filePath());
-				mm->setLabel(finfo.fileName());
-			}
-			bool ok = plugin->open(extension, QString::fromStdString(filename), *mm, mask, rps);
-			if (!ok) {
-				if (justCreated)
-					this->delMesh(this->mm());
-				throw MLException("Unable to open file: " + QString::fromStdString(filename));
-			}
-		}
-		else {
-			throw MLException("Unknown format for load: " + extension);
-		}
-	}
-}
-
-void pymeshlab::MeshSet::saveMeshUsingPlugin(
-		const std::string& filename,
-		MeshModel* mm,
-		pybind11::kwargs kwargs)
-{
-	if (mm == nullptr)
-		throw MLException("Input model is nullptr. This should never happen.\nPlease open an issue on GitHub!");
-	QFileInfo finfo(QString::fromStdString(filename));
-	QString extension = finfo.suffix().toLower();
-	if (pm.allKnowOutputFormats.contains(extension)){
-		FilterFunction ff = *filterFunctionSet.find("save_" + extension);
-		IOPluginInterface* plugin = pm.allKnowOutputFormats[extension];
-		//int mask = 0; //todo: use this mask
-		RichParameterList rps;
-		int capability = 0, defbits = 0, capabilityMesh = 0, capabilityUser = 0;
-		plugin->GetExportMaskCapability(extension,capability,defbits);
-		plugin->initSaveParameter(extension, *(this->mm()), rps);
-
-		meshSetHelper::updateRichParameterList(ff, kwargs, this, rps, true);
-
-		capabilityMesh = currentMeshIOCapabilityMask(mm);
-		capabilityUser = capabilityMaskFromKwargs(kwargs, capability & capabilityMesh);
-
-		bool ok = plugin->save(
-					extension, QString::fromStdString(filename), *mm,
-					capabilityUser, rps);
-		if (!ok){
-			throw MLException("Unable to save file: " + QString::fromStdString(filename));
-		}
-	}
-	else {
-		throw MLException("Unknown format for save: " + extension);
-	}
-}
-
-int pymeshlab::MeshSet::currentMeshIOCapabilityMask(const MeshModel* mm) const
-{
-	int capability = 0;
-	for (int bit : capabilitiesBits){
-		if (mm->hasDataMask(MeshModel::io2mm(bit)))
-			capability |= bit;
-	}
-
-	return capability;
-}
-
-int pymeshlab::MeshSet::capabilityMaskFromKwargs(pybind11::kwargs kwargs, int startingMask) const
-{
-	std::array<QString, 14> params;
-	for (unsigned int i = 0; i < saveCapabilitiesStrings.size(); ++i)
-		params[i] = FilterFunctionSet::toPythonName(saveCapabilitiesStrings[i]);
-
-	int capability = startingMask;
-	for (std::pair<py::handle, py::handle> p : kwargs){
-		std::string par = py::cast<std::string>(p.first);
-		auto it = std::find(params.begin(), params.end(), QString::fromStdString(par));
-		if (it != params.end()) {
-			//get the value p.second and set the right mask to capability
-			unsigned int i = it - params.begin();
-			bool value = py::cast<bool>(p.second);
-			if (value)
-				capability &= capabilitiesBits[i];
-			else
-				capability &= ~capabilitiesBits[i];
-		}
-	}
-
-	return capability;
+	return meshsethelper::RSTDocumentationFromFilterFunctionSet(filterFunctionSet);
 }
 
 void pymeshlab::MeshSet::loadALN(const QString& fileName)
@@ -466,7 +352,7 @@ void pymeshlab::MeshSet::loadMLP(const QString& fileName)
 	for (int i=startingIndex; i<meshList.size(); i++) {
 		QString fullPath = meshList[i]->fullName();
 		Matrix44m trm = meshList[i]->cm.Tr;
-		loadMeshUsingPlugin(fullPath.toStdString(), meshList[i]);
+		meshsethelper::loadMeshUsingPlugin(fullPath.toStdString(), meshList[i], pybind11::kwargs(), *this, filterFunctionSet);
 		mm()->cm.Tr = trm;
 	}
 
@@ -531,7 +417,7 @@ void pymeshlab::MeshSet::saveMLP(const QString& fileName)
 			m->setFileName(outfilename);
 			QFileInfo of(outfilename);
 			m->setLabel(of.fileName());
-			saveMeshUsingPlugin(outfilename.toStdString(), m);
+			meshsethelper::saveMeshUsingPlugin(outfilename.toStdString(), m, py::kwargs(), *this, filterFunctionSet);
 		}
 	}
 

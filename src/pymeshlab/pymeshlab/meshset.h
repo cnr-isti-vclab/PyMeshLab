@@ -51,19 +51,6 @@ public:
 	/** Member functions not binded on Python **/
 	std::string filtersRSTDocumentation() const;
 private:
-	void loadMeshUsingPlugin(
-			const std::string& filename,
-			MeshModel* mm = nullptr,
-			pybind11::kwargs kwargs = pybind11::kwargs());
-
-	void saveMeshUsingPlugin(
-			const std::string& filename,
-			MeshModel* mm = nullptr,
-			pybind11::kwargs kwargs = pybind11::kwargs());
-
-	int currentMeshIOCapabilityMask(const MeshModel* mm) const;
-	int capabilityMaskFromKwargs(pybind11::kwargs kwargs, int startingMask) const;
-
 	void loadALN(const QString& fileName);
 	void loadMLP(const QString& fileName);
 	void loadBundler(const QString& fileName);

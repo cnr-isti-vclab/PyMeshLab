@@ -16,7 +16,7 @@
 namespace py = pybind11;
 
 namespace pymeshlab {
-namespace meshSetHelper {
+namespace meshsethelper {
 
 /** RichParameterList Management **/
 
@@ -168,7 +168,7 @@ void updateRichParameterFromKwarg(
 	}
 }
 
-void updateRichParameterList(
+void updateRichParameterListFromKwargs(
 		const FilterFunction& f,
 		const pybind11::kwargs& kwargs,
 		MeshDocument* md,
@@ -231,6 +231,133 @@ bool pythonFilterNameExists(
 	return false;
 }
 
+/** Load/Save Mesh **/
+
+void loadMeshUsingPlugin(
+		const std::string& filename, 
+		MeshModel* mm, 
+		pybind11::kwargs kwargs,
+		MeshDocument& md,
+		const FilterFunctionSet& filterFunctionSet)
+{
+	QFileInfo finfo(QString::fromStdString(filename));
+	QString extension = finfo.suffix().toLower();
+
+	if (!finfo.exists()){
+		throw MLException("File does not exists: " + QString::fromStdString(filename));
+	}
+	else {
+		PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
+		if (pm.allKnowInputFormats.contains(extension)){
+			auto it = filterFunctionSet.find("load_" + extension);
+			if (it == filterFunctionSet.end()){
+				throw MLException("Unknown format to load in MeshSet. This should never happen.\nPlease open an issue on GitHub!");
+			}
+			FilterFunction ff = *it;
+			IOPluginInterface* plugin = pm.allKnowInputFormats[extension];
+			
+			bool justCreated = false;
+			if (mm == nullptr){
+				mm = md.addNewMesh(finfo.filePath(), finfo.fileName());
+				justCreated = true;
+			}
+			else {
+				mm->setFileName(finfo.filePath());
+				mm->setLabel(finfo.fileName());
+			}
+			
+			RichParameterList rps;
+			plugin->initPreOpenParameter(extension, QString::fromStdString(filename), rps);
+			plugin->initOpenParameter(extension, *mm, rps);
+
+			meshsethelper::updateRichParameterListFromKwargs(ff, kwargs, &md, rps, true);
+
+			int mask = 0;
+			bool ok = plugin->open(extension, QString::fromStdString(filename), *mm, mask, rps);
+			if (!ok) {
+				if (justCreated)
+					md.delMesh(md.mm());
+				throw MLException("Unable to open file: " + QString::fromStdString(filename));
+			}
+		}
+		else {
+			throw MLException("Unknown format for load: " + extension);
+		}
+	}
+}
+
+int currentMeshIOCapabilityMask(const MeshModel* mm)
+{
+	int capability = 0;
+	for (int bit : capabilitiesBits){
+		if (mm->hasDataMask(MeshModel::io2mm(bit)))
+			capability |= bit;
+	}
+
+	return capability;
+}
+
+int capabilityMaskFromKwargs(pybind11::kwargs kwargs, int startingMask)
+{
+	std::array<QString, 14> params;
+	for (unsigned int i = 0; i < saveCapabilitiesStrings.size(); ++i)
+		params[i] = FilterFunctionSet::toPythonName(saveCapabilitiesStrings[i]);
+
+	int capability = startingMask;
+	for (std::pair<py::handle, py::handle> p : kwargs){
+		std::string par = py::cast<std::string>(p.first);
+		auto it = std::find(params.begin(), params.end(), QString::fromStdString(par));
+		if (it != params.end()) {
+			//get the value p.second and set the right mask to capability
+			unsigned int i = it - params.begin();
+			bool value = py::cast<bool>(p.second);
+			if (value)
+				capability &= capabilitiesBits[i];
+			else
+				capability &= ~capabilitiesBits[i];
+		}
+	}
+
+	return capability;
+}
+
+void saveMeshUsingPlugin(
+		const std::string& filename,
+		MeshModel* mm,
+		pybind11::kwargs kwargs,
+		MeshDocument& md,
+		const FilterFunctionSet& filterFunctionSet)
+{
+	if (mm == nullptr)
+		throw MLException("Input model is nullptr. This should never happen.\nPlease open an issue on GitHub!");
+	QFileInfo finfo(QString::fromStdString(filename));
+	QString extension = finfo.suffix().toLower();
+	PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
+	if (pm.allKnowOutputFormats.contains(extension)){
+		FilterFunction ff = *filterFunctionSet.find("save_" + extension);
+		IOPluginInterface* plugin = pm.allKnowOutputFormats[extension];
+		//int mask = 0; //todo: use this mask
+		RichParameterList rps;
+		int capability = 0, defbits = 0, capabilityMesh = 0, capabilityUser = 0;
+		plugin->GetExportMaskCapability(extension,capability,defbits);
+		plugin->initSaveParameter(extension, *mm, rps);
+
+		meshsethelper::updateRichParameterListFromKwargs(ff, kwargs, &md, rps, true);
+
+		capabilityMesh = currentMeshIOCapabilityMask(mm);
+		capabilityUser = capabilityMaskFromKwargs(kwargs, capability & capabilityMesh);
+
+		bool ok = plugin->save(
+					extension, QString::fromStdString(filename), *mm,
+					capabilityUser, rps);
+		if (!ok){
+			throw MLException("Unable to save file: " + QString::fromStdString(filename));
+		}
+	}
+	else {
+		throw MLException("Unknown format for save: " + extension);
+	}
+}
 
 /** Apply Filter **/
 
@@ -312,7 +439,7 @@ std::string filterRSTDocumentation(
 	}
 	doc += "   .. raw:: html\n\n";
 	QString desc = it->description();
-	meshSetHelper::endLineHTMLSubstitution(desc);
+	meshsethelper::endLineHTMLSubstitution(desc);
 	doc += "      " + desc.toStdString() + "</p>\n\n";
 
 	if (it->parametersNumber() > 0) {
@@ -345,7 +472,7 @@ std::string filterRSTDocumentation(
 
 			doc += "      .. raw:: html\n\n";
 			QString desc = p.longDescription();
-			meshSetHelper::endLineHTMLSubstitution(desc);
+			meshsethelper::endLineHTMLSubstitution(desc);
 			doc += "         <i>" + p.description().toStdString() + "</i>: " +
 					desc.toStdString() + "\n\n";
 		}
