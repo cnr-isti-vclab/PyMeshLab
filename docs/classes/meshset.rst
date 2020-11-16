@@ -5,12 +5,15 @@ MeshSet
 =======
 
 The MeshSet class represents a container that allows to collect a set of Meshes,
-where every Mesh corresponds to a layer of MeshLab.
-From this class, you can apply all the filters of meshlab
+where every Mesh corresponds to a layer of MeshLab. Every mesh has an unique ID
+that identifies it inside the MeshSet.
+From the MeshSet class, you can apply all the filters of MeshLab
 by calling the :py:meth:`pmeshlab.MeshSet.apply_filter` method.
 
-In every non-empty MeshSet, there is a selected mesh, that
+In every non-empty MeshSet, there is a current mesh, that
 can be accessed using the method :py:meth:`pmeshlab.MeshSet.current_mesh`.
+Sometimes, filters change the current mesh when applied, setting it to their output.
+The behaviour is always the same of MeshLab.
 
 .. autoclass:: pmeshlab.MeshSet
    :special-members:
