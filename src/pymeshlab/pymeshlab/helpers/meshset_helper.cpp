@@ -7,6 +7,7 @@
 #include <common/mlexception.h>
 
 #include "common.h"
+#include "meshlab_singletons.h"
 #include "verbosity_manager.h"
 #include "../plugin_management/filterfunctionset.h"
 #include "../percentage.h"
@@ -15,7 +16,7 @@
 namespace py = pybind11;
 
 namespace pymeshlab {
-namespace meshset_helper {
+namespace meshSetHelper {
 
 /** RichParameterList Management **/
 
@@ -197,6 +198,40 @@ void updateRichParameterList(
 	}
 }
 
+/** Filter name management **/
+
+FilterPluginInterface* pluginFromFilterName(
+		const QString& filterName, 
+		QAction*& action)
+{
+	PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
+	for (FilterPluginInterface* fp : pm.meshFilterPlug){
+		QList<QAction*> acts = fp->actions();
+		for (QAction* act : acts) {
+			if (filterName == fp->filterName(act)){
+				action = act;
+				return fp;
+			}
+		}
+	}
+	assert(0);
+	//todo: manage python exception
+	return nullptr;
+}
+
+bool pythonFilterNameExists(
+		const std::string& filtername,
+		const FilterFunctionSet& filterFunctionSet)
+{
+	FilterFunctionSet::iterator it = filterFunctionSet.find(QString::fromStdString(filtername));
+	if (it != filterFunctionSet.end() && 
+			!(QString::fromStdString(filtername).startsWith("load_") && 
+			!(QString::fromStdString(filtername).startsWith("save_"))))
+		return true;
+	return false;
+}
+
+
 /** Apply Filter **/
 
 
@@ -277,7 +312,7 @@ std::string filterRSTDocumentation(
 	}
 	doc += "   .. raw:: html\n\n";
 	QString desc = it->description();
-	meshset_helper::endLineHTMLSubstitution(desc);
+	meshSetHelper::endLineHTMLSubstitution(desc);
 	doc += "      " + desc.toStdString() + "</p>\n\n";
 
 	if (it->parametersNumber() > 0) {
@@ -310,7 +345,7 @@ std::string filterRSTDocumentation(
 
 			doc += "      .. raw:: html\n\n";
 			QString desc = p.longDescription();
-			meshset_helper::endLineHTMLSubstitution(desc);
+			meshSetHelper::endLineHTMLSubstitution(desc);
 			doc += "         <i>" + p.description().toStdString() + "</i>: " +
 					desc.toStdString() + "\n\n";
 		}

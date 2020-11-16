@@ -98,7 +98,7 @@ void pymeshlab::MeshSet::printPythonFilterNamesList() const
  */
 void pymeshlab::MeshSet::printPythonFilterParameterList(const std::string functionName) const
 {
-	if (pythonFilterNameExists(functionName)){
+	if (meshSetHelper::pythonFilterNameExists(functionName, filterFunctionSet)){
 		std::cout << "Filter " << functionName << " not found.\n";
 	}
 	else {
@@ -150,7 +150,7 @@ void pymeshlab::MeshSet::printFilterScript() const
 
 void pymeshlab::MeshSet::loadNewMesh(const std::string& filename, py::kwargs kwargs)
 {
-	loadMeshUsingPlugin(filename, nullptr, FilterFunction(), kwargs);
+	loadMeshUsingPlugin(filename, nullptr, kwargs);
 }
 
 void pymeshlab::MeshSet::loadCurrentMesh(const std::string& filename, pybind11::kwargs kwargs)
@@ -158,14 +158,14 @@ void pymeshlab::MeshSet::loadCurrentMesh(const std::string& filename, pybind11::
 	if (mm() == nullptr)
 		throw MLException("MeshSet has no selected Mesh.");
 	mm()->Clear();
-	loadMeshUsingPlugin(filename, mm(), FilterFunction(), kwargs);
+	loadMeshUsingPlugin(filename, mm(), kwargs);
 }
 
 void pymeshlab::MeshSet::saveCurrentMesh(const std::string& filename, pybind11::kwargs kwargs)
 {
 	if (mm() == nullptr)
 		throw MLException("MeshSet has no selected Mesh.");
-	saveMeshUsingPlugin(filename, nullptr, FilterFunction(), kwargs);
+	saveMeshUsingPlugin(filename, mm(), kwargs);
 }
 
 /**
@@ -259,11 +259,11 @@ void pymeshlab::MeshSet::applyFilterScript()
 		QString meshlabFilterName = p.first;
 		std::string filtername = FilterFunctionSet::toPythonName(meshlabFilterName).toStdString();
 		QAction* action = nullptr;
-		FilterPluginInterface* fp = getPluginFromFilterName(meshlabFilterName, action);
+		FilterPluginInterface* fp = meshSetHelper::pluginFromFilterName(meshlabFilterName, action);
 		RichParameterList rpl;
 		fp->initParameterList(action, *this, rpl);
-		meshset_helper::updateRichParameterList(filtername, p.second, rpl);
-		meshset_helper::applyFilterRPL(
+		meshSetHelper::updateRichParameterList(filtername, p.second, rpl);
+		meshSetHelper::applyFilterRPL(
 				filtername, meshlabFilterName, action, fp, rpl,
 				verbose, filterScript, false, *this);
 	}
@@ -279,11 +279,11 @@ pybind11::dict pymeshlab::MeshSet::applyFilter(const std::string& filtername, py
 		QString meshlabFilterName = it->meshlabFunctionName();
 		
 		QAction* action = nullptr;
-		FilterPluginInterface* fp = getPluginFromFilterName(meshlabFilterName, action);
+		FilterPluginInterface* fp = meshSetHelper::pluginFromFilterName(meshlabFilterName, action);
 		RichParameterList rpl;
 		fp->initParameterList(action, *this, rpl);
-		meshset_helper::updateRichParameterList(*it, kwargs, this, rpl);
-		outputValues = meshset_helper::applyFilterRPL(
+		meshSetHelper::updateRichParameterList(*it, kwargs, this, rpl);
+		outputValues = meshSetHelper::applyFilterRPL(
 				filtername, meshlabFilterName, action, fp, rpl,
 				verbose, filterScript, true, *this);
 	}
@@ -307,41 +307,12 @@ void pymeshlab::MeshSet::printStatus() const
 
 std::string pymeshlab::MeshSet::filtersRSTDocumentation() const
 {
-	return meshset_helper::RSTDocumentationFromFilterFunctionSet(filterFunctionSet);
-}
-
-bool pymeshlab::MeshSet::pythonFilterNameExists(const std::string& filtername) const
-{
-	FilterFunctionSet::iterator it = filterFunctionSet.find(QString::fromStdString(filtername));
-	if (it != filterFunctionSet.end() && 
-			!(QString::fromStdString(filtername).startsWith("load_") && 
-			!(QString::fromStdString(filtername).startsWith("save_"))))
-		return true;
-	return false;
-}
-
-FilterPluginInterface* pymeshlab::MeshSet::getPluginFromFilterName(
-		const QString& filterName, 
-		QAction*& action) const
-{
-	for (FilterPluginInterface* fp : pm.meshFilterPlug){
-		QList<QAction*> acts = fp->actions();
-		for (QAction* act : acts) {
-			if (filterName == fp->filterName(act)){
-				action = act;
-				return fp;
-			}
-		}
-	}
-	assert(0);
-	//todo: manage python exception
-	return nullptr;
+	return meshSetHelper::RSTDocumentationFromFilterFunctionSet(filterFunctionSet);
 }
 
 void pymeshlab::MeshSet::loadMeshUsingPlugin(
 		const std::string& filename,
 		MeshModel* mm,
-		FilterFunction ff,
 		pybind11::kwargs kwargs)
 {
 	QFileInfo finfo(QString::fromStdString(filename));
@@ -352,16 +323,14 @@ void pymeshlab::MeshSet::loadMeshUsingPlugin(
 	}
 	else {
 		if (pm.allKnowInputFormats.contains(extension)){
-			if (ff.pythonFunctionName().isEmpty()){
-				ff = *filterFunctionSet.find("load_" + extension);
-			}
+			FilterFunction ff = *filterFunctionSet.find("load_" + extension);
 			IOPluginInterface* plugin = pm.allKnowInputFormats[extension];
 			int mask = 0;
 			RichParameterList rps;
 			plugin->initPreOpenParameter(extension, QString::fromStdString(filename), rps);
 			plugin->initOpenParameter(extension, *(this->mm()), rps);
 
-			meshset_helper::updateRichParameterList(ff, kwargs, this, rps, true);
+			meshSetHelper::updateRichParameterList(ff, kwargs, this, rps, true);
 
 			bool justCreated = false;
 			if (mm == nullptr){
@@ -388,15 +357,14 @@ void pymeshlab::MeshSet::loadMeshUsingPlugin(
 void pymeshlab::MeshSet::saveMeshUsingPlugin(
 		const std::string& filename,
 		MeshModel* mm,
-		pymeshlab::FilterFunction ff,
 		pybind11::kwargs kwargs)
 {
+	if (mm == nullptr)
+		throw MLException("Input model is nullptr. This should never happen.\nPlease open an issue on GitHub!");
 	QFileInfo finfo(QString::fromStdString(filename));
 	QString extension = finfo.suffix().toLower();
 	if (pm.allKnowOutputFormats.contains(extension)){
-		if (ff.pythonFunctionName().isEmpty()){
-			ff = *filterFunctionSet.find("save_" + extension);
-		}
+		FilterFunction ff = *filterFunctionSet.find("save_" + extension);
 		IOPluginInterface* plugin = pm.allKnowOutputFormats[extension];
 		//int mask = 0; //todo: use this mask
 		RichParameterList rps;
@@ -404,10 +372,7 @@ void pymeshlab::MeshSet::saveMeshUsingPlugin(
 		plugin->GetExportMaskCapability(extension,capability,defbits);
 		plugin->initSaveParameter(extension, *(this->mm()), rps);
 
-		meshset_helper::updateRichParameterList(ff, kwargs, this, rps, true);
-
-		if (mm == nullptr)
-			mm = this->mm();
+		meshSetHelper::updateRichParameterList(ff, kwargs, this, rps, true);
 
 		capabilityMesh = currentMeshIOCapabilityMask(mm);
 		capabilityUser = capabilityMaskFromKwargs(kwargs, capability & capabilityMesh);

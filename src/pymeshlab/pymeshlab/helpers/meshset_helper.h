@@ -20,7 +20,7 @@ namespace pymeshlab {
 class FilterFunction;
 class FilterFunctionSet;
 
-namespace meshset_helper {
+namespace meshSetHelper {
 
 /** RichParameterList Management **/
 
@@ -35,6 +35,16 @@ void updateRichParameterList(
 		MeshDocument* md,
 		RichParameterList& rps,
 		bool ignoreFileName = false);
+
+/** Filter name management **/
+
+FilterPluginInterface* pluginFromFilterName(
+		const QString& filterName,
+		QAction*& action);
+
+bool pythonFilterNameExists(
+		const std::string& filtername, 
+		const FilterFunctionSet& filterFunctionSet);
 
 /** Apply Filter **/
 

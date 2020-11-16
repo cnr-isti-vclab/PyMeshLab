@@ -50,23 +50,15 @@ public:
 
 	/** Member functions not binded on Python **/
 	std::string filtersRSTDocumentation() const;
-private:	
-	bool pythonFilterNameExists(const std::string& filtername) const;
-
-	FilterPluginInterface* getPluginFromFilterName(
-			const QString& filterName,
-			QAction*& action) const;
-
+private:
 	void loadMeshUsingPlugin(
 			const std::string& filename,
 			MeshModel* mm = nullptr,
-			FilterFunction ff = FilterFunction(),
 			pybind11::kwargs kwargs = pybind11::kwargs());
 
 	void saveMeshUsingPlugin(
 			const std::string& filename,
 			MeshModel* mm = nullptr,
-			FilterFunction ff = FilterFunction(),
 			pybind11::kwargs kwargs = pybind11::kwargs());
 
 	int currentMeshIOCapabilityMask(const MeshModel* mm) const;
