@@ -8718,7 +8718,13 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>File Name</i>: The name of the file to save
 
-   ``save_vertex_normal : bool = true``
+   ``save_vertex_coord : bool = true``
+
+      .. raw:: html
+
+         <i>Save Vertex Coord</i>: Save Vertex Coord
+
+   ``save_vertex_normal : bool = false``
 
       .. raw:: html
 
@@ -8730,23 +8736,11 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>Save Face Quality</i>: Save Face Quality
 
-   ``save_face_flag : bool = true``
-
-      .. raw:: html
-
-         <i>Save Face Flag</i>: Save Face Flag
-
    ``save_face_color : bool = true``
 
       .. raw:: html
 
          <i>Save Face Color</i>: Save Face Color
-
-   ``save_wedge_color : bool = false``
-
-      .. raw:: html
-
-         <i>Save Wedge Color</i>: Save Wedge Color
 
    ``save_wedge_texcoord : bool = true``
 

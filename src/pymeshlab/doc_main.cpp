@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "pymeshlab/meshset.h"
-#include "pymeshlab/common.h"
+#include "pymeshlab/helpers/common.h"
 
 int main(int , char *[])
 {
