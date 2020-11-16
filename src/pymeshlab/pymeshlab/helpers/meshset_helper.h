@@ -8,6 +8,7 @@
 class RichParameterList;
 class MeshDocument;
 class FilterPluginInterface;
+class FilterScript;
 
 namespace pybind11 {
 class kwargs;
@@ -37,14 +38,15 @@ void updateRichParameterList(
 
 /** Apply Filter **/
 
-//pybind11::dict applyFilterRPL(
-//		const std::string& filtername,
-//		const QString& meshlabFilterName,
-//		QAction* action,
-//		FilterPluginInterface* fp,
-//		const RichParameterList& rpl,
-//		bool verbose
-//		);
+pybind11::dict applyFilterRPL(const std::string& filtername,
+		const QString& meshlabFilterName,
+		QAction* action,
+		FilterPluginInterface* fp,
+		const RichParameterList& rpl,
+		bool verbose,
+		FilterScript& filterScript,
+		bool updateFilterScript,
+		MeshDocument& md);
 
 /** RST Documentation **/
 

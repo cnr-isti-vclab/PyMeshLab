@@ -263,7 +263,9 @@ void pymeshlab::MeshSet::applyFilterScript()
 		RichParameterList rpl;
 		fp->initParameterList(action, *this, rpl);
 		meshset_helper::updateRichParameterList(filtername, p.second, rpl);
-		applyFilterRPL(filtername, meshlabFilterName, action, fp, rpl);
+		meshset_helper::applyFilterRPL(
+				filtername, meshlabFilterName, action, fp, rpl,
+				verbose, filterScript, false, *this);
 	}
 }
 
@@ -281,7 +283,9 @@ pybind11::dict pymeshlab::MeshSet::applyFilter(const std::string& filtername, py
 		RichParameterList rpl;
 		fp->initParameterList(action, *this, rpl);
 		meshset_helper::updateRichParameterList(*it, kwargs, this, rpl);
-		outputValues = applyFilterRPL(filtername, meshlabFilterName, action, fp, rpl);
+		outputValues = meshset_helper::applyFilterRPL(
+				filtername, meshlabFilterName, action, fp, rpl,
+				verbose, filterScript, true, *this);
 	}
 	else {
 		throw MLException(
@@ -572,54 +576,6 @@ void pymeshlab::MeshSet::saveMLP(const QString& fileName)
 	}
 	//restore current dir
 	QDir::setCurrent(currentDir.absolutePath());
-}
-
-py::dict pymeshlab::MeshSet::applyFilterRPL(
-		const std::string& filtername,
-		QString meshlabFilterName,
-		QAction* action,
-		FilterPluginInterface* fp,
-		const RichParameterList& rpl)
-{
-	py::dict outputDict;
-	if (!verbose){
-		VerbosityManager::disableVersbosity();
-		VerbosityManager::staticLogger = nullptr;
-	}
-	else {
-		VerbosityManager::staticLogger = &Log;
-	}
-	try {
-		int req=fp->getRequirements(action);
-		if (mm() != nullptr)
-			mm()->updateDataMask(req);
-		
-		unsigned int postConditionMask;
-		std::map<std::string, QVariant> outputValues;
-		bool res = fp->applyFilter(action, *this, outputValues, postConditionMask, rpl, &VerbosityManager::filterCallBack);
-		if (res){
-			VerbosityManager::filterCallBack(100, (filtername + " applied!").c_str());
-			if (mm() != nullptr) {
-				mm()->cm.svn = int(vcg::tri::UpdateSelection<CMeshO>::VertexCount(mm()->cm));
-				mm()->cm.sfn = int(vcg::tri::UpdateSelection<CMeshO>::FaceCount(mm()->cm));
-			}
-			FilterNameParameterValuesPair pair;
-			pair.first = meshlabFilterName; pair.second = rpl;
-			filterScript.append(pair);
-			outputDict = toPyDict(outputValues);
-		}
-		else {
-			throw MLException(
-						"Failed to apply filter: " + QString::fromStdString(filtername) + "\n");
-		}
-	}
-	catch(const std::exception& e) {
-		throw MLException(
-					"Failed to apply filter: " + QString::fromStdString(filtername) + "\n" +
-					"Details: " + e.what());
-	}
-	VerbosityManager::enableVerbosity();
-	return outputDict;
 }
 
 

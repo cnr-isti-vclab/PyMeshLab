@@ -7,6 +7,7 @@
 #include <common/mlexception.h>
 
 #include "common.h"
+#include "verbosity_manager.h"
 #include "../plugin_management/filterfunctionset.h"
 #include "../percentage.h"
 #include "../exceptions.h"
@@ -196,6 +197,62 @@ void updateRichParameterList(
 	}
 }
 
+/** Apply Filter **/
+
+
+pybind11::dict applyFilterRPL(
+		const std::string& filtername, 
+		const QString& meshlabFilterName, 
+		QAction* action, 
+		FilterPluginInterface* fp, 
+		const RichParameterList& rpl, 
+		bool verbose, 
+		FilterScript& filterScript,
+		bool updateFilterScript,
+		MeshDocument& md)
+{
+	py::dict outputDict;
+	if (!verbose){
+		VerbosityManager::disableVersbosity();
+		VerbosityManager::staticLogger = nullptr;
+	}
+	else {
+		VerbosityManager::staticLogger = &md.Log;
+	}
+	try {
+		int req=fp->getRequirements(action);
+		if (md.mm() != nullptr)
+			md.mm()->updateDataMask(req);
+		
+		unsigned int postConditionMask;
+		std::map<std::string, QVariant> outputValues;
+		bool res = fp->applyFilter(action, md, outputValues, postConditionMask, rpl, &VerbosityManager::filterCallBack);
+		if (res){
+			VerbosityManager::filterCallBack(100, (filtername + " applied!").c_str());
+			if (md.mm() != nullptr) {
+				md.mm()->cm.svn = int(vcg::tri::UpdateSelection<CMeshO>::VertexCount(md.mm()->cm));
+				md.mm()->cm.sfn = int(vcg::tri::UpdateSelection<CMeshO>::FaceCount(md.mm()->cm));
+			}
+			if (updateFilterScript) {
+				FilterNameParameterValuesPair pair;
+				pair.first = meshlabFilterName; pair.second = rpl;
+				filterScript.append(pair);
+			}
+			outputDict = toPyDict(outputValues);
+		}
+		else {
+			throw MLException(
+						"Failed to apply filter: " + QString::fromStdString(filtername) + "\n");
+		}
+	}
+	catch(const std::exception& e) {
+		throw MLException(
+					"Failed to apply filter: " + QString::fromStdString(filtername) + "\n" +
+					"Details: " + e.what());
+	}
+	VerbosityManager::enableVerbosity();
+	return outputDict;
+}
 
 /** RST documentation **/
 

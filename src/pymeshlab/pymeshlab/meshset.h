@@ -79,13 +79,6 @@ private:
 
 	void saveMLP(const QString& fileName);
 
-	pybind11::dict applyFilterRPL(
-			const std::string& filtername,
-			QString meshlabFilterName,
-			QAction* action,
-			FilterPluginInterface* filter,
-			const RichParameterList& rpl);
-
 	PluginManager& pm;
 	FilterFunctionSet filterFunctionSet;
 	FilterScript filterScript;
