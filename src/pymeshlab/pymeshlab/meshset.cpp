@@ -197,11 +197,11 @@ void pymeshlab::MeshSet::loadProject(const std::string& filename)
 	setDocLabel(fileName);
 
 	if (QString(fi.suffix()).toLower() == "aln") {
-		meshsethelper::loadALN(fileName, *this, filterFunctionSet);
+		meshsethelper::loadALN(fileName, *this);
 	}
 
 	if (QString(fi.suffix()).toLower() == "mlp" || QString(fi.suffix()).toLower() == "mlb") {
-		meshsethelper::loadMLP(fileName, *this, filterFunctionSet);
+		meshsethelper::loadMLP(fileName, *this);
 	}
 
 	if (QString(fi.suffix()).toLower() == "out"){
@@ -226,7 +226,7 @@ void pymeshlab::MeshSet::saveProject(const std::string& filename)
 	}
 
 	if (QString(fi.suffix()).toLower() == "mlp" || QString(fi.suffix()).toLower() == "mlb") {
-		meshsethelper::saveMLP(fileName, *this, filterFunctionSet);
+		meshsethelper::saveMLP(fileName, *this);
 	}
 }
 

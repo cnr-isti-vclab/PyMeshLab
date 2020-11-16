@@ -52,9 +52,18 @@ bool pythonFilterNameExists(
 void loadMeshUsingPlugin(
 		const std::string& filename,
 		MeshModel* mm,
+		MeshDocument& md);
+
+void loadMeshUsingPlugin(
+		const std::string& filename,
+		MeshModel* mm,
 		pybind11::kwargs kwargs, 
 		MeshDocument& md, 
 		const FilterFunctionSet& filterFunctionSet);
+
+void saveMeshUsingPlugin(
+		const std::string& filename,
+		MeshModel* mm);
 
 void saveMeshUsingPlugin(
 		const std::string& filename,
@@ -67,13 +76,11 @@ void saveMeshUsingPlugin(
 
 void loadALN(
 		const QString& fileName, 
-		MeshDocument& md, 
-		const FilterFunctionSet& filterFunctionSet);
+		MeshDocument& md);
 
 void loadMLP(
 		const QString& fileName,
-		MeshDocument& md, 
-		const FilterFunctionSet& filterFunctionSet);
+		MeshDocument& md);
 
 void loadBundler(
 		const QString& fileName,
@@ -85,8 +92,7 @@ void loadNVM(
 
 void saveMLP(
 		const QString& fileName,
-		MeshDocument& md, 
-		const FilterFunctionSet& filterFunctionSet);
+		MeshDocument& md);
 
 /** Apply Filter **/
 

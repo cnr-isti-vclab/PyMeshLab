@@ -237,6 +237,50 @@ bool pythonFilterNameExists(
 /** Load/Save Mesh **/
 
 void loadMeshUsingPlugin(
+		const std::string& filename,
+		MeshModel* mm,
+		MeshDocument& md)
+{
+	QFileInfo finfo(QString::fromStdString(filename));
+	QString extension = finfo.suffix().toLower();
+
+	if (!finfo.exists()){
+		throw MLException("File does not exists: " + QString::fromStdString(filename));
+	}
+	else {
+		PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
+		if (pm.allKnowInputFormats.contains(extension)){
+			IOPluginInterface* plugin = pm.allKnowInputFormats[extension];
+			
+			bool justCreated = false;
+			if (mm == nullptr){
+				mm = md.addNewMesh(finfo.filePath(), finfo.fileName());
+				justCreated = true;
+			}
+			else {
+				mm->setFileName(finfo.filePath());
+				mm->setLabel(finfo.fileName());
+			}
+			
+			RichParameterList rps;
+			plugin->initPreOpenParameter(extension, QString::fromStdString(filename), rps);
+			plugin->initOpenParameter(extension, *mm, rps);
+
+			int mask = 0;
+			bool ok = plugin->open(extension, QString::fromStdString(filename), *mm, mask, rps);
+			if (!ok) {
+				if (justCreated)
+					md.delMesh(md.mm());
+				throw MLException("Unable to open file: " + QString::fromStdString(filename));
+			}
+		}
+		else {
+			throw MLException("Unknown format for load: " + extension);
+		}
+	}
+}
+
+void loadMeshUsingPlugin(
 		const std::string& filename, 
 		MeshModel* mm, 
 		pybind11::kwargs kwargs,
@@ -326,6 +370,37 @@ int capabilityMaskFromKwargs(pybind11::kwargs kwargs, int startingMask)
 
 void saveMeshUsingPlugin(
 		const std::string& filename,
+		MeshModel* mm)
+{
+	if (mm == nullptr)
+		throw MLException("Input model is nullptr. This should never happen.\nPlease open an issue on GitHub!");
+	QFileInfo finfo(QString::fromStdString(filename));
+	QString extension = finfo.suffix().toLower();
+	PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
+	if (pm.allKnowOutputFormats.contains(extension)){
+		IOPluginInterface* plugin = pm.allKnowOutputFormats[extension];
+		//int mask = 0; //todo: use this mask
+		RichParameterList rps;
+		int capability = 0, defbits = 0, capabilityMesh = 0, capabilityUser = 0;
+		plugin->GetExportMaskCapability(extension,capability,defbits);
+		plugin->initSaveParameter(extension, *mm, rps);
+
+		capabilityMesh = currentMeshIOCapabilityMask(mm);
+
+		bool ok = plugin->save(
+					extension, QString::fromStdString(filename), *mm,
+					capabilityUser, rps);
+		if (!ok){
+			throw MLException("Unable to save file: " + QString::fromStdString(filename));
+		}
+	}
+	else {
+		throw MLException("Unknown format for save: " + extension);
+	}
+}
+
+void saveMeshUsingPlugin(
+		const std::string& filename,
 		MeshModel* mm,
 		pybind11::kwargs kwargs,
 		MeshDocument& md,
@@ -366,8 +441,7 @@ void saveMeshUsingPlugin(
 
 void loadALN(
 		const QString& fileName,
-		MeshDocument& md,
-		const FilterFunctionSet& filterFunctionSet)
+		MeshDocument& md)
 {
 	QFileInfo fi(fileName);
 	QString absfilename = fi.absolutePath() + "/" + fi.fileName();
@@ -385,7 +459,7 @@ void loadALN(
 	std::vector<RangeMap>::iterator ir;
 	for(ir=rmv.begin();ir!=rmv.end() && openRes;++ir) {
 		QString relativeToProj = fi.absoluteDir().absolutePath() + "/" + (*ir).filename.c_str();
-		loadMeshUsingPlugin(relativeToProj.toStdString(), nullptr, py::kwargs(), md, filterFunctionSet);
+		loadMeshUsingPlugin(relativeToProj.toStdString(), nullptr, md);
 		md.mm()->cm.Tr = ir->transformation;
 	}
 
@@ -395,8 +469,7 @@ void loadALN(
 
 void loadMLP(
 		const QString& fileName,
-		MeshDocument& md, 
-		const FilterFunctionSet& filterFunctionSet)
+		MeshDocument& md)
 {
 	QFileInfo fi(fileName);
 	QString absfilename = fi.absolutePath() + "/" + fi.fileName();
@@ -412,7 +485,7 @@ void loadMLP(
 	for (int i=startingIndex; i<md.meshList.size(); i++) {
 		QString fullPath = md.meshList[i]->fullName();
 		Matrix44m trm = md.meshList[i]->cm.Tr;
-		meshsethelper::loadMeshUsingPlugin(fullPath.toStdString(), md.meshList[i], pybind11::kwargs(), md, filterFunctionSet);
+		meshsethelper::loadMeshUsingPlugin(fullPath.toStdString(), md.meshList[i], md);
 		md.mm()->cm.Tr = trm;
 	}
 
@@ -464,8 +537,7 @@ void loadNVM(
 
 void saveMLP(
 		const QString& fileName,
-		MeshDocument& md, 
-		const FilterFunctionSet& filterFunctionSet)
+		MeshDocument& md)
 {
 	QFileInfo fi(fileName);
 	QString outdir = fi.absolutePath();
@@ -484,7 +556,7 @@ void saveMLP(
 			m->setFileName(outfilename);
 			QFileInfo of(outfilename);
 			m->setLabel(of.fileName());
-			meshsethelper::saveMeshUsingPlugin(outfilename.toStdString(), m, py::kwargs(), md, filterFunctionSet);
+			meshsethelper::saveMeshUsingPlugin(outfilename.toStdString(), m);
 		}
 	}
 
