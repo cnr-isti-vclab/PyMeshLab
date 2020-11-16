@@ -172,7 +172,7 @@ void pymeshlab::MeshSet::saveCurrentMesh(const std::string& filename, pybind11::
  * @param name
  * @param setAsCurrent: default value: true
  */
-void pymeshlab::MeshSet::addMesh(CMeshO& mesh, const std::string& name, bool setAsCurrent)
+void pymeshlab::MeshSet::addMesh(const CMeshO& mesh, const std::string& name, bool setAsCurrent)
 {
 	MeshModel* mm = this->addNewMesh("", QString::fromStdString(name), setAsCurrent);
 	mm->cm = mesh;
