@@ -1,6 +1,6 @@
+#include <pybind11/pybind11.h> //needs to be included before anything else
 #include "meshset_helper.h"
 
-#include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
 #include <pybind11/eigen.h>
 #include <common/filter_parameter/rich_parameter_list.h>

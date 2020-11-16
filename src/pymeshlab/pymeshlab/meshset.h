@@ -6,7 +6,6 @@
 #include <common/filterscript.h>
 #include <common/pluginmanager.h>
 #include "plugin_management/filterfunctionset.h"
-#include "helpers/verbosity_manager.h"
 
 namespace pymeshlab {
 
@@ -92,8 +91,6 @@ private:
 	FilterScript filterScript;
 
 	bool verbose;
-	VerbosityManager verbosityManager;
-	
 };
 
 }

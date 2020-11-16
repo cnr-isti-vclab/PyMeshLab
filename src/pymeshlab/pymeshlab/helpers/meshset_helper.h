@@ -2,12 +2,16 @@
 #define PYMESHLAB_MESHSET_HELPER_H
 
 #include <string>
+#include <QString>
+#include <QAction>
 
 class RichParameterList;
 class MeshDocument;
+class FilterPluginInterface;
 
 namespace pybind11 {
 class kwargs;
+class dict;
 }
 
 namespace pymeshlab {
@@ -30,6 +34,17 @@ void updateRichParameterList(
 		MeshDocument* md,
 		RichParameterList& rps,
 		bool ignoreFileName = false);
+
+/** Apply Filter **/
+
+//pybind11::dict applyFilterRPL(
+//		const std::string& filtername,
+//		const QString& meshlabFilterName,
+//		QAction* action,
+//		FilterPluginInterface* fp,
+//		const RichParameterList& rpl,
+//		bool verbose
+//		);
 
 /** RST Documentation **/
 

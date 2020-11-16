@@ -6,11 +6,11 @@
 namespace pymeshlab {
 
 GLLogStream* VerbosityManager::staticLogger = nullptr;
+CoutRedirect* VerbosityManager::coutRed = nullptr;
+CerrRedirect* VerbosityManager::cerrRed = nullptr;
+QDebugRedirect* VerbosityManager::qdebRed = nullptr;
 
-VerbosityManager::VerbosityManager() :
-	coutRed(nullptr),
-	cerrRed(nullptr),
-	qdebRed(nullptr)
+VerbosityManager::VerbosityManager()
 {
 }
 

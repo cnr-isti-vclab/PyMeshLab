@@ -12,18 +12,16 @@ class QDebugRedirect;
 class VerbosityManager
 {
 public:
-	VerbosityManager();
-	
-	void disableVersbosity();
-	void enableVerbosity();
+	static void disableVersbosity();
+	static void enableVerbosity();
 	
 	static bool filterCallBack(const int pos, const char* str);
 	static GLLogStream* staticLogger;
 private:
-	
-	CoutRedirect* coutRed;
-	CerrRedirect* cerrRed;
-	QDebugRedirect* qdebRed;
+	VerbosityManager();
+	static CoutRedirect* coutRed;
+	static CerrRedirect* cerrRed;
+	static QDebugRedirect* qdebRed;
 };
 
 } //namespace pymeshlab

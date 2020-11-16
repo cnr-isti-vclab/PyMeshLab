@@ -12,6 +12,7 @@
 #include "helpers/common.h"
 #include "helpers/meshlab_singletons.h"
 #include "helpers/meshset_helper.h"
+#include "helpers/verbosity_manager.h"
 
 namespace py = pybind11;
 
@@ -582,11 +583,11 @@ py::dict pymeshlab::MeshSet::applyFilterRPL(
 {
 	py::dict outputDict;
 	if (!verbose){
-		verbosityManager.disableVersbosity();
-		verbosityManager.staticLogger = nullptr;
+		VerbosityManager::disableVersbosity();
+		VerbosityManager::staticLogger = nullptr;
 	}
 	else {
-		verbosityManager.staticLogger = &Log;
+		VerbosityManager::staticLogger = &Log;
 	}
 	try {
 		int req=fp->getRequirements(action);
@@ -617,7 +618,7 @@ py::dict pymeshlab::MeshSet::applyFilterRPL(
 					"Failed to apply filter: " + QString::fromStdString(filtername) + "\n" +
 					"Details: " + e.what());
 	}
-	verbosityManager.enableVerbosity();
+	VerbosityManager::enableVerbosity();
 	return outputDict;
 }
 
