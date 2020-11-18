@@ -102,15 +102,15 @@ void updateRichParameterFromKwarg(
 		}
 	}
 	else if (meshlabType == MESHLAB_TYPE_MATRIX44F){
-		Eigen::Matrix4f arr = py::cast<Eigen::Matrix4f>(k.second);
+		Eigen::Matrix4d arr = py::cast<Eigen::Matrix4d>(k.second);
 		if (arr.size() != 16){
 			throw MLException(
 					"Parameter " + ffp.pythonName() + ": invalid array. Expected a "
 					"numpy float32 array of 4x4 elements.");
 		}
 		else {
-			vcg::Matrix44f m;
-			float* v = m.V();
+			Matrix44m m;
+			MESHLAB_SCALAR* v = m.V();
 			int k = 0;
 			for (int i = 0; i < 4; i++){
 				for (int j = 0; j < 4; j++) {

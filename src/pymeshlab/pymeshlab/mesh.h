@@ -35,7 +35,7 @@ public:
 	static Eigen::VectorXf vertexQualityMatrix(const CMeshO& mesh);
 	static Eigen::VectorXf faceQualityMatrix(const CMeshO& mesh);
 
-	static Eigen::MatrixXf vertexTexCoordMatrix(const CMeshO& mesh);
+	static Eigen::MatrixXd vertexTexCoordMatrix(const CMeshO& mesh);
 	static Eigen::MatrixXi faceFaceAdjacency(const CMeshO& mesh);
 
 private:

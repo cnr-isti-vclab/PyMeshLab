@@ -80,7 +80,8 @@ set(PYMESHLAB_BUILD_DISTRIB_DIR ${CMAKE_CURRENT_BINARY_DIR}/distrib/pymeshlab)
 
 set(MESHLAB_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/meshlab/src")
 
-add_definitions(-DMESHLAB_SCALAR=float)
+add_definitions(-DMESHLAB_SCALAR=double)
+set(BUILD_WITH_DOUBLE_SCALAR ON)
 
 set(EXTERNAL_DIR ${MESHLAB_SRC_DIR}/external)
 include(${MESHLAB_SRC_DIR}/external_common.cmake)
