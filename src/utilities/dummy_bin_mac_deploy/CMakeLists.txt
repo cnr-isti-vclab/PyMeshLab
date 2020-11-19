@@ -1,6 +1,8 @@
 set(SOURCES
 	main.cpp)
 
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.11" CACHE STRING "Minimum OS X deployment version" FORCE)
+
 add_executable(dummybin MACOSX_BUNDLE
 	${SOURCES})
 
