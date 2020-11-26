@@ -1,7 +1,7 @@
 #ifndef PYMESHLAB_MESH_H
 #define PYMESHLAB_MESH_H
 
-#include <common/ml_mesh_type.h>
+#include <common/ml_document/cmesh.h>
 #include <pybind11/eigen.h>
 #include <Eigen/Core>
 

@@ -28,7 +28,7 @@ private:
 	void addFunction(const FilterFunction& f);
 	void deleteFunction(const FilterFunction& f);
 	void updateSaveParameters(
-			IOPluginInterface* plugin,
+			IOMeshPluginInterface* plugin,
 			const QString& outputFormat,
 			FilterFunction& f);
 	std::set<FilterFunction> functionSet;

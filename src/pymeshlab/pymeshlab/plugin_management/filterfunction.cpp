@@ -1,7 +1,7 @@
 #include "filterfunction.h"
 
 #include <QStringList>
-#include <common/filter_parameter/rich_parameter.h>
+#include <common/parameters/rich_parameter.h>
 
 pymeshlab::FilterFunction::FilterFunction()
 {

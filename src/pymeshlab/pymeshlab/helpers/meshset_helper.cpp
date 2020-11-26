@@ -3,7 +3,7 @@
 
 #include <pybind11/numpy.h>
 #include <pybind11/eigen.h>
-#include <common/filter_parameter/rich_parameter_list.h>
+#include <common/parameters/rich_parameter_list.h>
 #include <common/mlexception.h>
 #include <common/meshlabdocumentxml.h>
 #include <common/meshlabdocumentbundler.h>
@@ -250,7 +250,7 @@ void loadMeshUsingPlugin(
 	else {
 		PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
 		if (pm.allKnowInputFormats.contains(extension)){
-			IOPluginInterface* plugin = pm.allKnowInputFormats[extension];
+			IOMeshPluginInterface* plugin = pm.allKnowInputFormats[extension];
 			
 			bool justCreated = false;
 			if (mm == nullptr){
@@ -304,7 +304,7 @@ void loadMeshUsingPlugin(
 				throw MLException("Unknown format to load in MeshSet. This should never happen.\nPlease open an issue on GitHub!");
 			}
 			FilterFunction ff = *it;
-			IOPluginInterface* plugin = pm.allKnowInputFormats[extension];
+			IOMeshPluginInterface* plugin = pm.allKnowInputFormats[extension];
 			
 			bool justCreated = false;
 			if (mm == nullptr){
@@ -384,7 +384,7 @@ void saveMeshUsingPlugin(
 	QString extension = finfo.suffix().toLower();
 	PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
 	if (pm.allKnowOutputFormats.contains(extension)){
-		IOPluginInterface* plugin = pm.allKnowOutputFormats[extension];
+		IOMeshPluginInterface* plugin = pm.allKnowOutputFormats[extension];
 		//int mask = 0; //todo: use this mask
 		RichParameterList rps;
 		int capability = 0, defbits = 0, capabilityMesh = 0, capabilityUser = 0;
@@ -419,7 +419,7 @@ void saveMeshUsingPlugin(
 	PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
 	if (pm.allKnowOutputFormats.contains(extension)){
 		FilterFunction ff = *filterFunctionSet.find("save_" + extension);
-		IOPluginInterface* plugin = pm.allKnowOutputFormats[extension];
+		IOMeshPluginInterface* plugin = pm.allKnowOutputFormats[extension];
 		//int mask = 0; //todo: use this mask
 		RichParameterList rps;
 		int capability = 0, defbits = 0, capabilityMesh = 0, capabilityUser = 0;

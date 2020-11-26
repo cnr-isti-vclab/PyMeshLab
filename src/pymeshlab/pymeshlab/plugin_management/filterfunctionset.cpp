@@ -24,7 +24,7 @@ void pymeshlab::FilterFunctionSet::populate(const PluginManager& pm)
 		QString originalFilterName = inputFormat;
 		QString pythonFilterName = "load_" + inputFormat.toLower();
 		FilterFunction f(pythonFilterName, originalFilterName, "Load " + inputFormat + " format.");
-		IOPluginInterface* plugin = pm.allKnowInputFormats[inputFormat];
+		IOMeshPluginInterface* plugin = pm.allKnowInputFormats[inputFormat];
 		RichParameterList rps;
 		plugin->initPreOpenParameter(inputFormat, dummyMesh, rps);
 		plugin->initOpenParameter(inputFormat, *dummyMeshDocument.mm(), rps);
@@ -49,7 +49,7 @@ void pymeshlab::FilterFunctionSet::populate(const PluginManager& pm)
 		QString originalFilterName = outputFormat;
 		QString pythonFilterName = "save_" + outputFormat.toLower();
 		FilterFunction f(pythonFilterName, originalFilterName, "Save " + outputFormat + " format.");
-		IOPluginInterface* plugin = pm.allKnowOutputFormats[outputFormat];
+		IOMeshPluginInterface* plugin = pm.allKnowOutputFormats[outputFormat];
 		RichParameterList rps;
 		plugin->initSaveParameter(outputFormat, *dummyMeshDocument.mm(), rps);
 
@@ -135,7 +135,7 @@ void pymeshlab::FilterFunctionSet::deleteFunction(const pymeshlab::FilterFunctio
 	functionSet.erase(f);
 }
 
-void pymeshlab::FilterFunctionSet::updateSaveParameters(IOPluginInterface* plugin,
+void pymeshlab::FilterFunctionSet::updateSaveParameters(IOMeshPluginInterface* plugin,
 		const QString& outputFormat,
 		pymeshlab::FilterFunction& f)
 {
