@@ -20,11 +20,11 @@ void pymeshlab::FilterFunctionSet::populate(const PluginManager& pm)
 	mask |= vcg::tri::io::Mask::IOM_FACEQUALITY;
 	dummyMeshDocument.mm()->Enable(mask);
 
-	for (auto inputFormat : pm.allKnowInputFormats.keys()){
+	for (auto inputFormat : pm.allKnowInputMeshFormats.keys()){
 		QString originalFilterName = inputFormat;
 		QString pythonFilterName = "load_" + inputFormat.toLower();
 		FilterFunction f(pythonFilterName, originalFilterName, "Load " + inputFormat + " format.");
-		IOMeshPluginInterface* plugin = pm.allKnowInputFormats[inputFormat];
+		IOMeshPluginInterface* plugin = pm.allKnowInputMeshFormats[inputFormat];
 		RichParameterList rps;
 		plugin->initPreOpenParameter(inputFormat, dummyMesh, rps);
 		plugin->initOpenParameter(inputFormat, *dummyMeshDocument.mm(), rps);

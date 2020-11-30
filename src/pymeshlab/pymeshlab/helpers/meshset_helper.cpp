@@ -249,8 +249,8 @@ void loadMeshUsingPlugin(
 	}
 	else {
 		PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
-		if (pm.allKnowInputFormats.contains(extension)){
-			IOMeshPluginInterface* plugin = pm.allKnowInputFormats[extension];
+		if (pm.allKnowInputMeshFormats.contains(extension)){
+			IOMeshPluginInterface* plugin = pm.allKnowInputMeshFormats[extension];
 			
 			bool justCreated = false;
 			if (mm == nullptr){
@@ -298,13 +298,13 @@ void loadMeshUsingPlugin(
 	}
 	else {
 		PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
-		if (pm.allKnowInputFormats.contains(extension)){
+		if (pm.allKnowInputMeshFormats.contains(extension)){
 			auto it = filterFunctionSet.find("load_" + extension);
 			if (it == filterFunctionSet.end()){
 				throw MLException("Unknown format to load in MeshSet. This should never happen.\nPlease open an issue on GitHub!");
 			}
 			FilterFunction ff = *it;
-			IOMeshPluginInterface* plugin = pm.allKnowInputFormats[extension];
+			IOMeshPluginInterface* plugin = pm.allKnowInputMeshFormats[extension];
 			
 			bool justCreated = false;
 			if (mm == nullptr){
@@ -337,6 +337,12 @@ void loadMeshUsingPlugin(
 			throw MLException("Unknown format for load: " + extension);
 		}
 	}
+}
+
+void loadRasterUsingPlugin(
+		const std::string& filename, 
+		RasterModel* rm)
+{
 }
 
 int currentMeshIOCapabilityMask(const MeshModel* mm)
@@ -745,8 +751,6 @@ std::string RSTDocumentationFromFilterFunctionSet(const FilterFunctionSet& filte
 
 	return doc;
 }
-
-
 
 }
 }

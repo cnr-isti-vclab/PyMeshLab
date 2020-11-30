@@ -8,6 +8,7 @@
 class RichParameterList;
 class MeshDocument;
 class MeshModel;
+class RasterModel;
 class FilterPluginInterface;
 class FilterScript;
 
@@ -60,6 +61,10 @@ void loadMeshUsingPlugin(
 		pybind11::kwargs kwargs, 
 		MeshDocument& md, 
 		const FilterFunctionSet& filterFunctionSet);
+
+void loadRasterUsingPlugin(
+		const std::string& filename,
+		RasterModel* rm);
 
 void saveMeshUsingPlugin(
 		const std::string& filename,

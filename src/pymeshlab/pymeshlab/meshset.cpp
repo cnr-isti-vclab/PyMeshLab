@@ -30,11 +30,11 @@ void pymeshlab::MeshSet::setVerbosity(bool verbose)
 {
 	this->verbose = verbose;
 	if (verbose){
-		for (auto p : pm.ownerPlug)
+		for (auto p : pm.pluginIterator())
 			p->setLog(&Log);
 	}
 	else {
-		for (auto p : pm.ownerPlug)
+		for (auto p : pm.pluginIterator())
 			p->setLog(nullptr);
 	}
 }
@@ -70,8 +70,8 @@ void pymeshlab::MeshSet::printPluginList() const
 {
 	std::cout 
 			<< "MeshSet class - list of loaded plugins (" 
-			<< pm.ownerPlug.size() << "):\n";
-	for (const PluginInterface* p : pm.ownerPlug){
+			<< pm.size() << "):\n";
+	for (const PluginInterface* p : pm.pluginIterator()){
 		std::cout << "\t" << p->pluginName().toStdString() << "\n";
 	}
 }
