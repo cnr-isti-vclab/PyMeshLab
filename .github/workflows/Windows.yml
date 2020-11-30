@@ -38,8 +38,6 @@ jobs:
       uses: ilammy/msvc-dev-cmd@v1
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
-      with:
-        modules: xmlpatterns
     - name: Install Python ${{ matrix.pyversion }}
       uses: actions/setup-python@v2
       with:

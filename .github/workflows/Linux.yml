@@ -20,10 +20,14 @@ jobs:
         auth_header="$(git config --local --get http.https://github.com/.extraheader)"
         git submodule sync --recursive
         git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+    - name: Update pip
+      run: |
+        pip3 install --upgrade pip
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
-        modules: xmlpatterns
+        aqtversion: '==0.9.5'
+        py7zrversion: '==0.10.1'
     - name: Install Python ${{ matrix.pyversion }}
       uses: actions/setup-python@v2
       with:

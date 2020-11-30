@@ -48,10 +48,19 @@ jobs:
     - name: Setup MSVC
       if: runner.os == 'Windows'
       uses: ilammy/msvc-dev-cmd@v1
-    - name: Install Qt
+    - name: Update pip (Ubuntu-16.0)
+      if: matrix.os == 'ubuntu-16.04'
+      run: |
+           pip3 install --upgrade pip
+    - name: Install Qt (Ubuntu 16.04)
+      if: matrix.os == 'ubuntu-16.04'
       uses: jurplel/install-qt-action@v2
       with:
-        modules: xmlpatterns
+        aqtversion: '==0.9.5'
+        py7zrversion: '==0.10.1'
+    - name: Install Qt
+      if: matrix.os != 'ubuntu-16.04'
+      uses: jurplel/install-qt-action@v2
     - name: Install Python ${{ matrix.pyversion }}
       uses: actions/setup-python@v2
       with:
