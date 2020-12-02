@@ -33,14 +33,8 @@ jobs:
       run: |
         echo  ::set-output name=pyml_version::"$(cat PYML_VERSION)"
 
-    - name: Update pip
-      run: |
-        pip3 install --upgrade pip
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
-      with:
-        aqtversion: '==0.9.5'
-        py7zrversion: '==0.10.1'
     - name: Install Python ${{ matrix.pyversion }}
       uses: actions/setup-python@v2
       with:
