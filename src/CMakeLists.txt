@@ -56,7 +56,7 @@ endif()
 
 ## Required libraries:
 # - OpenGL (ToDo: remove this)
-# - Qt5 - OpenGL, Xml, XmlPatterns
+# - Qt5 - OpenGL, Xml
 # - Glew  (with fallback) (ToDo: remove this)
 # - Eigen3 (with fallback)
 # - OpenMP (not required)
@@ -65,7 +65,7 @@ endif()
 find_package(OpenGL REQUIRED)
 find_package(
 	Qt5
-	COMPONENTS OpenGL Xml XmlPatterns
+	COMPONENTS OpenGL Xml
 	REQUIRED)
 
 message(STATUS "Searching for required components with bundled fallback")
@@ -73,6 +73,7 @@ message(STATUS "Searching for required components with bundled fallback")
 find_package(GLEW)
 find_package(Eigen3)
 find_package(OpenMP)
+find_package(Qt5Qml)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
@@ -84,7 +85,21 @@ add_definitions(-DMESHLAB_SCALAR=double)
 set(BUILD_WITH_DOUBLE_SCALAR ON)
 
 set(EXTERNAL_DIR ${MESHLAB_SRC_DIR}/external)
-include(${MESHLAB_SRC_DIR}/external_common.cmake)
+
+# VCGLib -- required
+if(NOT VCGDIR)
+	get_filename_component(VCGDIR "${MESHLAB_SRC_DIR}/vcglib" ABSOLUTE)
+	if(NOT EXISTS ${VCGDIR})
+		set(VCGDIR NOTFOUND)
+	endif()
+endif()
+set(VCGDIR "${VCGDIR}")
+
+if(NOT VCGDIR)
+	message(FATAL_ERROR "VCGLib not found. Please clone recursively the MeshLab repo.")
+endif()
+
+include(${EXTERNAL_DIR}/external_common.cmake)
 
 if (APPLE AND BUILD_DUMMY_BIN_MAC_DEPLOY)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/utilities/dummy_bin_mac_deploy)

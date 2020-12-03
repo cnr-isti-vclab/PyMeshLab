@@ -1,3 +1,7 @@
+# Copyright 2019, 2020, Collabora, Ltd.
+# Copyright 2019, 2020, Visual Computing Lab, ISTI - Italian National Research Council
+# SPDX-License-Identifier: BSL-1.0
+
 # Prefer GLVND
 if(POLICY CMP0072)
 	cmake_policy(SET CMP0072 NEW)
@@ -21,6 +25,7 @@ find_package(GMP)
 find_package(muparser)
 find_package(OpenCTM)
 find_package(Qhull COMPONENTS libqhull)
+find_package(Qt5Qml)
 
 ### Build directories
 if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
@@ -79,7 +84,7 @@ endif()
 ### Enter subdirectories
 
 #external
-include(${EXTERNAL_DIR}/external.cmake)
+add_subdirectory(${EXTERNAL_DIR})
 
 add_subdirectory(${MESHLAB_SRC_DIR}/common)
 
