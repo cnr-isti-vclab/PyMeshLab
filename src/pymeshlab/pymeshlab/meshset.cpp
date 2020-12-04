@@ -178,6 +178,11 @@ void pymeshlab::MeshSet::addMesh(const CMeshO& mesh, const std::string& name, bo
 	mm->cm = mesh;
 }
 
+void pymeshlab::MeshSet::loadNewRaster(const std::string& filename)
+{
+	meshsethelper::loadRasterUsingPlugin(filename, nullptr, *this);
+}
+
 void pymeshlab::MeshSet::loadProject(const std::string& filename)
 {
 	QString fileName = QString::fromStdString(filename);

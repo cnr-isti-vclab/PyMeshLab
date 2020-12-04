@@ -33,6 +33,8 @@ public:
 	void loadCurrentMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());
 	void saveCurrentMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());
 	void addMesh(const CMeshO& mesh, const std::string& name = "new_mesh", bool setAsCurrent = true);
+	
+	void loadNewRaster(const std::string& filename);
 
 	void loadProject(const std::string& filename);
 	void saveProject(const std::string& filename);

@@ -71,6 +71,22 @@ void pymeshlab::FilterFunctionSet::populate(const PluginManager& pm)
 
 		functionSet.insert(f);
 	}
+	
+	for (auto inputRasterFormat : pm.allKnownInputRasterFormats.keys()){
+		QString originalFilterName = inputRasterFormat;
+		QString pythonFilterName = "loadr_" + inputRasterFormat.toLower();
+		FilterFunction f(pythonFilterName, originalFilterName, "Load " + inputRasterFormat + " format.");
+
+		//filename parameter
+		QString pythonParameterName = "file_name";
+		QString sv = "file_name." + inputRasterFormat;
+		QStringList sl(inputRasterFormat);
+		RichOpenFile of("fileName", sv, sl, "File Name", "The name of the file to load");
+		FilterFunctionParameter par(pythonParameterName, of);
+		f.addParameter(par);
+
+		functionSet.insert(f);
+	}
 
 	for (FilterPluginInterface* fp : pm.meshFilterPlug){
 		QList<QAction*> acts = fp->actions();

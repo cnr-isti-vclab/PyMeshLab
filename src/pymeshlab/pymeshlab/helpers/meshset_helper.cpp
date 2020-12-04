@@ -341,8 +341,40 @@ void loadMeshUsingPlugin(
 
 void loadRasterUsingPlugin(
 		const std::string& filename, 
-		RasterModel* rm)
+		RasterModel* rm,
+		MeshDocument& md)
 {
+	QFileInfo finfo(QString::fromStdString(filename));
+	QString extension = finfo.suffix().toLower();
+
+	if (!finfo.exists()){
+		throw MLException("File does not exists: " + QString::fromStdString(filename));
+	}
+	else {
+		PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
+		if (pm.allKnownInputRasterFormats.contains(extension)){
+			IORasterPluginInterface* plugin = pm.allKnownInputRasterFormats[extension];
+			
+			bool justCreated = false;
+			if (rm == nullptr){
+				rm = md.addNewRaster();
+				justCreated = true;
+			}
+			else {
+				rm->setLabel(finfo.fileName());
+			}
+			
+			bool ok = plugin->open(extension, QString::fromStdString(filename), *rm);
+			if (!ok) {
+				if (justCreated)
+					md.delRaster(md.rm());
+				throw MLException("Unable to open file: " + QString::fromStdString(filename));
+			}
+		}
+		else {
+			throw MLException("Unknown format for load: " + extension);
+		}
+	}
 }
 
 int currentMeshIOCapabilityMask(const MeshModel* mm)

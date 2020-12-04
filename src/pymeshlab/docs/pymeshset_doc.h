@@ -15,9 +15,13 @@ const char* PYMS_SET_VERBOSITY_DOC =
 		" the logs that usually are printed in the bottom left of MeshLab, "
 		"will be printed when filters are applied.";
 
-//MeshSet::size
-const char* PYMS_SIZE_DOC =
+//MeshSet::number_meshes
+const char* PYMS_NUMBER_MESHES_DOC =
 		"Returns the number of meshes contained in the MeshSet.";
+
+//MeshSet::number_rasters
+const char* PYMS_NUMBER_RASTERS_DOC =
+		"Returns the number of rasters contained in the MeshSet.";
 
 //MeshSet::set_current_mesh
 const char* PYMS_SET_CURRENT_MESH =
@@ -66,6 +70,14 @@ const char* PYMS_SAVE_CURRENT_MESH =
 		"given file name. Raises a :py:exc:`PyMeshLabException` if the MeshSet "
 		"has no current selected mesh, if the format of the file is not known "
 		"by PyMeshLab or if there was an error while writing the file.";
+
+//MeshSet::load_new_raster
+const char* PYMS_LOAD_NEW_RASTER =
+		"Loads the raster in the given filename and adds the raster in the MeshSet. "
+		"The loaded raster becomes the current selected one. "
+		"Raises a :py:exc:`PyMeshLabException` if the file is not found, if the "
+		"format of the file is not known by PyMeshLab or if there was an error "
+		"while loading the file.";
 
 //MeshSet::save_mesh
 const char* PYMS_ADD_MESH =
