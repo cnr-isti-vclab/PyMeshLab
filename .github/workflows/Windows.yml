@@ -42,19 +42,19 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.pyversion }}
-    #- name: Cache MeshLab Build
-    #  id: cache-meshlab-build
-    #  uses: actions/cache@v2
-    #  with:
-    #    path: |
-    #      src/build/distrib/pymeshlab/lib/
-    #    key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
-    #- name: Set build meshlab option
-    #  shell: bash
-    #  id: meshlab-build-option
-    #  if: steps.cache-meshlab-build.outputs.cache-hit == 'true'
-    #  run: |
-    #    echo  ::set-output name=meshlab-build-option::"--no-build-meshlab"
+    - name: Cache MeshLab Build
+      id: cache-meshlab-build
+      uses: actions/cache@v2
+      with:
+        path: |
+          src/build/distrib/pymeshlab/lib/
+        key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
+    - name: Set build meshlab option
+      shell: bash
+      id: meshlab-build-option
+      if: steps.cache-meshlab-build.outputs.cache-hit == 'true'
+      run: |
+        echo  ::set-output name=meshlab-build-option::"--no-build-meshlab"
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       shell: bash
       run: |

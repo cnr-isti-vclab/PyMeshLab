@@ -83,9 +83,6 @@ endif()
 
 ### Enter subdirectories
 
-#external
-add_subdirectory(${EXTERNAL_DIR})
-
 add_subdirectory(${MESHLAB_SRC_DIR}/common)
 
 ### Plugin subdirectories
@@ -103,7 +100,7 @@ set(MESHLAB_PLUGINS
 	meshlabplugins/io_txt
 	meshlabplugins/io_u3d
 	meshlabplugins/io_x3d
-	
+
 	# IORaster plugins
 	meshlabplugins/ioraster_base
 

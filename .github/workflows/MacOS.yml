@@ -31,23 +31,23 @@ jobs:
       run: |
         cd src/meshlab
         echo  ::set-output name=meshlab_commit::$(git rev-parse --short HEAD)
-    #- name: Cache MeshLab Build
-    #  id: cache-meshlab-build
-    #  uses: actions/cache@v2
-    #  with:
-    #    path: |
-    #      src/build/distrib/pymeshlab/dummybin.app/Contents/Frameworks
-    #      src/build/distrib/pymeshlab/dummybin.app/Contents/PlugIns
-    #    key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
+    - name: Cache MeshLab Build
+      id: cache-meshlab-build
+      uses: actions/cache@v2
+      with:
+        path: |
+          src/build/distrib/pymeshlab/dummybin.app/Contents/Frameworks
+          src/build/distrib/pymeshlab/dummybin.app/Contents/PlugIns
+        key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
     - name: Install MeshLab-MacOS dependencies
-    #  if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
+      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       run: |
         brew install libomp
-    #- name: Set build MeshLab option
-    #  id: meshlab-build-option
-    #  if: steps.cache-meshlab-build.outputs.cache-hit == 'true'
-    #  run: |
-    #    echo  ::set-output name=meshlab-build-option::"--no-build-meshlab"
+    - name: Set build MeshLab option
+      id: meshlab-build-option
+      if: steps.cache-meshlab-build.outputs.cache-hit == 'true'
+      run: |
+        echo  ::set-output name=meshlab-build-option::"--no-build-meshlab"
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
         sh scripts/${{ runner.os }}/1_build.sh ${{steps.meshlab-build-option.outputs.meshlab-build-option}}

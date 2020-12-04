@@ -99,7 +99,10 @@ if(NOT VCGDIR)
 	message(FATAL_ERROR "VCGLib not found. Please clone recursively the MeshLab repo.")
 endif()
 
+#external
 include(${EXTERNAL_DIR}/external_common.cmake)
+add_subdirectory(${EXTERNAL_DIR})
+
 
 if (APPLE AND BUILD_DUMMY_BIN_MAC_DEPLOY)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/utilities/dummy_bin_mac_deploy)

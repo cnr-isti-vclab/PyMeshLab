@@ -97,6 +97,11 @@ endif()
 #Qt
 target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE Qt5::OpenGL Qt5::Xml external-glew)
 
+#vcg
+if (NOT BUILD_MESHLAB)
+	target_include_directories(${PYMESHLAB_MODULE_NAME} PUBLIC ${VCGDIR} ${EIGEN_INCLUDE_DIRS})
+endif()
+
 #meshlab-common
 if (NOT BUILD_MESHLAB)
 	if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
