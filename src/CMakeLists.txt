@@ -75,6 +75,11 @@ find_package(Eigen3)
 find_package(OpenMP)
 find_package(Qt5Qml)
 
+### Build settings
+set(CMAKE_C_STANDARD 99)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.11" CACHE STRING "Minimum OS X deployment version" FORCE)
+
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 set(PYMESHLAB_BUILD_DISTRIB_DIR ${CMAKE_CURRENT_BINARY_DIR}/distrib/pymeshlab)
