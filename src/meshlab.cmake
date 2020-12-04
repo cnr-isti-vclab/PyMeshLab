@@ -11,7 +11,6 @@ endif()
 option(BUILD_STRICT "Strictly enforce resolution of all symbols" ON)
 
 ### Dependencies
-list(APPEND CMAKE_MODULE_PATH "${MESHLAB_SRC_DIR}/cmake")
 message(STATUS "Searching for required components")
 #find_package(OpenGL REQUIRED)
 
