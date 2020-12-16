@@ -79,6 +79,17 @@ int pymeshlab::numberPlugins()
 	return pm.size();
 }
 
+void pymeshlab::printPluginList()
+{
+	PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
+	std::cout
+			<< "PyMeshLab - List of loaded plugins ("
+			<< pm.size() << "):\n";
+	for (const PluginInterface* p : pm.pluginIterator()){
+		std::cout << "\t" << p->pluginName().toStdString() << "\n";
+	}
+}
+
 pybind11::dict pymeshlab::toPyDict(const std::map<std::string, QVariant>& qVariantMap)
 {
 	pybind11::dict outDict;

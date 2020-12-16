@@ -20,6 +20,7 @@ PYBIND11_MODULE(PYMESHLAB_MODULE_NAME, m) {
 	
 	m.def("print_pymeshlab_version", &pymeshlab::printVersion);
 	m.def("number_plugins", &pymeshlab::numberPlugins);
+	m.def("print_plugin_list", &pymeshlab::printPluginList);
 
 #ifdef PYMESHLAB_VERSION
 	m.attr("__version__") = PYMESHLAB_STRINGIFY(PYMESHLAB_VERSION);

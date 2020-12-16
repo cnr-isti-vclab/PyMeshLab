@@ -153,6 +153,8 @@ void printVersion();
 
 int numberPlugins();
 
+void printPluginList();
+
 pybind11::dict toPyDict(const std::map<std::string, QVariant>& qVariantMap);
 
 }
