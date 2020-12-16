@@ -19,6 +19,7 @@ PYBIND11_MODULE(PYMESHLAB_MODULE_NAME, m) {
 	pymeshlab::initExceptions(m); //Exceptions
 	
 	m.def("print_pymeshlab_version", &pymeshlab::printVersion);
+	m.def("number_plugins", &pymeshlab::numberPlugins);
 
 #ifdef PYMESHLAB_VERSION
 	m.attr("__version__") = PYMESHLAB_STRINGIFY(PYMESHLAB_VERSION);

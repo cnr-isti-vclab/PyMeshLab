@@ -1,8 +1,10 @@
 #include <pybind11/pybind11.h> //needs to be included before anything else...
 #include "common.h"
+#include "meshlab_singletons.h"
 
 #include <QDir>
 #include <common/mlapplication.h>
+#include <common/pluginmanager.h>
 
 /** Ridirects **/
 
@@ -69,6 +71,12 @@ void pymeshlab::printVersion()
 	
 	std::cout << "PyMeshLab " << pymsversion << " based on MeshLab " << 
 		MeshLabApplication::appVer().toStdString() << "\n";
+}
+
+int pymeshlab::numberPlugins()
+{
+	PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
+	return pm.size();
 }
 
 pybind11::dict pymeshlab::toPyDict(const std::map<std::string, QVariant>& qVariantMap)

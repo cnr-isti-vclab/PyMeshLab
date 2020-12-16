@@ -151,6 +151,8 @@ std::string getSamplesPath();
 
 void printVersion();
 
+int numberPlugins();
+
 pybind11::dict toPyDict(const std::map<std::string, QVariant>& qVariantMap);
 
 }
