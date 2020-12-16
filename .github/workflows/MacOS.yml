@@ -39,8 +39,7 @@ jobs:
           src/build/distrib/pymeshlab/dummybin.app/Contents/Frameworks
           src/build/distrib/pymeshlab/dummybin.app/Contents/PlugIns
         key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
-    - name: Install MeshLab-MacOS dependencies
-      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
+    - name: Install MacOS dependencies
       run: |
         brew install libomp
     - name: Set build MeshLab option
