@@ -18,7 +18,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Calculate the <b>Alpha Shape</b> of the mesh(Edelsbrunner and P.Mucke 1994) with Qhull library (http://www.qhull.org/). <br><br>From a given finite point set in the space it computes 'the shape' of the set.The Alpha Shape is the boundary of the alpha complex, that is a subcomplex of the Delaunay triangulation of the given point set.<br>For a given value of 'alpha', the alpha complex includes all the simplices in the Delaunay triangulation which have an empty circumsphere with radius equal or smaller than 'alpha'.<br>The filter inserts the minimum value of alpha (the circumradius of the triangle) in attribute Quality foreach face.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``alpha : Percentage = 1%``
 
@@ -45,7 +45,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Compute ambient occlusions values; it takes a number of well distributed view direction and for point of the surface it computes how many time it is visible from these directions. This value is saved into quality and automatically mapped into a gray shade. The average direction is saved into an attribute named 'BentNormal'</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``occmode : str = 'per-Vertex' (or int = 0)``
 
@@ -62,7 +62,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Directional Bias [0..1]</i>: The balance between a uniform and a directionally biased set of lighting direction<br>: - 0 means light came only uniformly from any direction<br> - 1 means that all the light cames from the specified cone of directions <br> - other values mix the two set of lighting directions 
+         <i>Directional Bias [0..1]</i>: The balance between a uniform and a directionally biased set of lighting direction<br>: - 0 means light came only uniformly from any direction<br> - 1 means that all the light cames from the specified cone of directions <br> - other values mix the two set of lighting directions
 
    ``reqviews : int = 128``
 
@@ -102,7 +102,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Create an Annulus e.g. a flat region bounded by two concentric circles, or a holed disk.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``internalradius : float = 0.5``
 
@@ -120,7 +120,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Sides</i>: Number of the sides of the poligonal approximation of the annulus 
+         <i>Sides</i>: Number of the sides of the poligonal approximation of the annulus
 
 .. data:: box_cube
 
@@ -130,7 +130,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Create a Box, Cube, Hexahedron. You can specify the side length.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``size : float = 1``
 
@@ -154,7 +154,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Change the current layer to a chosen one</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``layer : int = 0``
 
@@ -170,7 +170,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Make layer(s) visible/invisible. Useful for scripting.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``layer : int = 0``
 
@@ -198,7 +198,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Clamp vertex quality values to a given range according to specific values or to percentiles</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``minval : float = 3.40282e+38``
 
@@ -232,7 +232,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Close holes smaller than a given threshold</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``maxholesize : int = 30``
 
@@ -266,7 +266,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Create a new layer populated with a subsampling of the vertices of the current mesh; the subsampling is driven by a simple one-per-gridded cell strategy.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``threshold : Percentage = 1%``
 
@@ -299,7 +299,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Adds to the color the requested amount of bits of noise. Bits of noise are added independently for each RGB channel.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``noisebits : int = 1``
 
@@ -329,7 +329,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Color faces depending on their quality field (manually equalized).</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``minval : float = 3.40282e+38``
 
@@ -363,7 +363,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Store in the quality field the geodesic distance from a given point on the mesh surface and color the mesh accordingly.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``startpoint : numpy.ndarray[numpy.float32[3]] = [1, 1, 1]``
 
@@ -385,7 +385,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Store in the quality field the geodesic distance from the selected points on the mesh surface and color the mesh accordingly.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``maxdistance : Percentage = 50%``
 
@@ -401,7 +401,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Color vertices depending on their quality field (manually equalized).</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``minval : float = 3.40282e+38``
 
@@ -435,7 +435,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Colorize the vertices of a mesh or point set using the curvature of the underlying surface.<br><br>This is the <i>algebraic point set surfaces</i> (APSS) variant which is based on the local fitting of algebraic spheres. It requires points equipped with oriented normals. <br>For all the details about APSS see: <br> Guennebaud and Gross, 'Algebraic Point Set Surfaces', Siggraph 2007, and<br>Guennebaud et al., 'Dynamic Sampling and Rendering of APSS', Eurographics 2008</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``selectiononly : bool = false``
 
@@ -489,7 +489,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Colorize the vertices of a mesh or point set using the curvature of the underlying surface.<br><br>This is the Robust Implicit MLS (RIMLS) variant which is an extension of Implicit MLS preserving sharp features using non linear regression. For more details see: <br>Oztireli, Guennebaud and Gross, 'Feature Preserving Point Set Surfaces based on Non-Linear Kernel Regression' Eurographics 2009.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``selectiononly : bool = false``
 
@@ -572,7 +572,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Compute the principal directions of curvature with several algorithms</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``method : str = 'Pseudoinverse Quadric Fitting' (or int = 3)``
 
@@ -625,7 +625,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Compute the normals of the vertices of a mesh without exploiting the triangle connectivity, useful for dataset with no faces</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``k : int = 10``
 
@@ -659,7 +659,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Compute the polyline representing a planar section (a slice) of a mesh; if the resulting polyline is closed the result is filled and also a triangular mesh representing the section is saved</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``planeaxis : str = 'X Axis' (or int = 0)``
 
@@ -734,7 +734,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Boolean function using muparser lib to perform faces selection over current mesh.<br><br>It's possible to use parenthesis <b>()</b>, and predefined operators:<br><b>&&</b> (logic and), <b>||</b> (logic or), <b>&lt;</b>, <b>&lt;=</b>, <b>></b>, <b>>=</b>, <b>!=</b> (not equal), <b>==</b> (equal), <b>_?_:_</b> (c/c++ ternary operator)<br><br>It's possible to use the following per-face variables, or variables associated to the three vertex of every face:<br><b>x0,y0,z0</b> for the first vertex position, <b>x1,y1,z1</b> for the second vertex position, <b>x2,y2,z2</b> for the third vertex position, <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> for vertex normals, <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> for vertex colors, <b>q0,q1,q2</b> for vertex quality, <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> for per-wedge texture coords, <b>ti</b> for face texture index, <b>vsel0,vsel1,vsel2</b> for vertex selection (1 yes, 0 no) <b>fr,fg,fb,fa</b> for face color, <b>fq</b> for face quality, <b>fnx,fny,fnz</b> for face normal, <b>fsel</b> face selection (1 yes, 0 no).<br></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``condselect : str = '(fi == 0)'``
 
@@ -750,7 +750,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Boolean function using muparser lib to perform vertex selection over current mesh.<br><br>It's possible to use parenthesis <b>()</b>, and predefined operators:<br><b>&&</b> (logic and), <b>||</b> (logic or), <b>&lt;</b>, <b>&lt;=</b>, <b>></b>, <b>>=</b>, <b>!=</b> (not equal), <b>==</b> (equal), <b>_?_:_</b> (c/c++ ternary operator)<br><br>It's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``condselect : str = '(q < 0)'``
 
@@ -766,7 +766,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Create a Cone</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``r0 : float = 1``
 
@@ -824,7 +824,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Generates craters onto a mesh using radial functions.<br />There must be at least two layers to apply this filter:<br /><ul>    <li>the layer that contains the target mesh; we assume that this mesh is sufficiently refined;</li>    <li>the layer that contains the samples which represent the central points of craters.</li></ul>There are three radial functions available to generate craters, two of which are Gaussian and Multiquadric, and the third is a variant of multiquadric. Blending functions are also provided to blend the crater elevation towards the mesh surface. If you want the preview to work, be sure to select the target mesh layer before launching the filter. You can select this layer by clicking on it in the layer dialog.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``target_mesh : int = 0``
 
@@ -951,7 +951,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       </p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``edgecylflag : bool = true``
 
@@ -1027,7 +1027,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       </p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``crosstype : str = 'Linear Y' (or int = 0)``
 
@@ -1039,7 +1039,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Cross Type</i>: 
+         <i>Cross Type</i>:
 
 .. data:: csg_operation
 
@@ -1049,7 +1049,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Constructive Solid Geometry operation filter.<br>For more details see: <br><i>C. Rocchini, P. Cignoni, F. Ganovelli, C. Montani, P. Pingi and R.Scopigno, </i><br><b>'Marching Intersections: an Efficient Resampling Algorithm for Surface Management'</b><br>In Proceedings of Shape Modeling International (SMI) 2001</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``firstmesh : int = 0``
 
@@ -1095,7 +1095,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Mesh optimization by edge flipping, to improve local mesh curvature</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``selection : bool = false``
 
@@ -1107,7 +1107,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Angle Thr (deg)</i>: To avoid excessive flipping/swapping we consider only couple of faces with a significant diedral angle (e.g. greater than the indicated threshold). 
+         <i>Angle Thr (deg)</i>: To avoid excessive flipping/swapping we consider only couple of faces with a significant diedral angle (e.g. greater than the indicated threshold).
 
    ``curvtype : str = 'mean' (or int = 0)``
 
@@ -1129,7 +1129,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Cut the mesh along crease edges, duplicating the vertices as necessary. Crease (or sharp) edges are defined according to the variation of normal of the adjacent faces.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``angledeg : float = 90``
 
@@ -1145,7 +1145,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Add a new Per-Face attribute to current mesh.<br>You can specify custom name and a function to generate attribute's value<br>It's possible to use per-face variables in the expression:<br>It's possible to use the following per-face variables, or variables associated to the three vertex of every face:<br><b>x0,y0,z0</b> for the first vertex position, <b>x1,y1,z1</b> for the second vertex position, <b>x2,y2,z2</b> for the third vertex position, <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> for vertex normals, <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> for vertex colors, <b>q0,q1,q2</b> for vertex quality, <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> for per-wedge texture coords, <b>ti</b> for face texture index, <b>vsel0,vsel1,vsel2</b> for vertex selection (1 yes, 0 no) <b>fr,fg,fb,fa</b> for face color, <b>fq</b> for face quality, <b>fnx,fny,fnz</b> for face normal, <b>fsel</b> face selection (1 yes, 0 no).<br><font color="#FF0000">The attribute name specified below can be used in other filter function</font></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``name : str = 'Radiosity'``
 
@@ -1167,7 +1167,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Add a new Per-Vertex scalar attribute to current mesh and fill it with the defined function.<br>The name specified below can be used in other filter functionIt's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``name : str = 'Radiosity'``
 
@@ -1197,7 +1197,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Delete ALL faces, turning the mesh into a pointcloud. May be applied also to all visible layers.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``alllayers : bool = false``
 
@@ -1269,7 +1269,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Calculate the depth complexity of the mesh, that is: the maximum number of layers that a ray can hit while traversing the mesh. To have a correct value, you should specify and high value in the peeling iteration parameter. You can read the result in the MeshLab log window. <b>If warnings are not present, you have the exact value, otherwise try increasing the peeling iteration parameter. After having calculated the correct value,you can ignore further warnings that you may get using that value.</b>. </p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``onprimitive : str = 'On vertices' (or int = 0)``
 
@@ -1280,7 +1280,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Metric:</i>: Choose whether to trace rays from faces or from vertices. 
+         <i>Metric:</i>: Choose whether to trace rays from faces or from vertices.
 
    ``numberrays : int = 128``
 
@@ -1314,7 +1314,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       A laplacian smooth that is constrained to move vertices only in one given direction (usually the viewer direction).</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``stepsmoothnum : int = 3``
 
@@ -1356,7 +1356,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Store and Blend the current geometry with the result of another previous smoothing processing step. This is useful to limit the influence of any smoothing algorithm along the viewing direction. This is useful to cope with the biased distribution of measuring error in many scanning devices, because TOF scanners usually have very good <i>x,y</i>accuracy but suffer of greater depth errors.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``step : str = 'Store Vertex Position' (or int = 0)``
 
@@ -1389,7 +1389,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Colorize according to various discrete curvature computed as described in:<br>'<i>Discrete Differential-Geometry Operators for Triangulated 2-Manifolds</i>' <br>M. Meyer, M. Desbrun, P. Schroder, A. H. Barr</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``curvaturetype : str = 'Mean Curvature' (or int = 0)``
 
@@ -1402,7 +1402,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Type:</i>: Choose the curvature value that you want transferred onto the scalar Quality.Mean (H) and Gaussian (K) curvature are computed according the technique described in the Desbrun et al. paper.<br>Absolute curvature is defined as |H|+|K| and RMS curvature as sqrt(4* H^2 - 2K) as explained in <br><i>Improved curvature estimationfor watershed segmentation of 3-dimensional meshes </i> by S. Pulla, A. Razdan, G. Farin. 
+         <i>Type:</i>: Choose the curvature value that you want transferred onto the scalar Quality.Mean (H) and Gaussian (K) curvature are computed according the technique described in the Desbrun et al. paper.<br>Absolute curvature is defined as |H|+|K| and RMS curvature as sqrt(4* H^2 - 2K) as explained in <br><i>Improved curvature estimationfor watershed segmentation of 3-dimensional meshes </i> by S. Pulla, A. Razdan, G. Farin.
 
 .. data:: disk_vertex_coloring
 
@@ -1412,7 +1412,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Given a Mesh <b>M</b> and a Pointset <b>P</b>, The filter project each vertex of P over M and color M according to the Euclidean distance from these projected points. Projection and coloring are done on a per vertex basis.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``coloredmesh : int = 0``
 
@@ -1430,7 +1430,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Radius</i>: the radius of the spheres centered in the VertexMesh seeds 
+         <i>Radius</i>: the radius of the spheres centered in the VertexMesh seeds
 
    ``sampleradius : bool = false``
 
@@ -1452,7 +1452,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Compute the signed/unsigned (per vertex) distance between a mesh/pointcloud and a reference mesh/pointcloud. Distance is stored in vertex quality.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``measuremesh : int = 0``
 
@@ -1502,7 +1502,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Simulate dust accumulation over the mesh generating a cloud of points lying on the current mesh</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``dust_dir : numpy.ndarray[numpy.float32[3]] = [0, 1, 0]``
 
@@ -1542,7 +1542,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       The filter equalizes the colors histogram. It is a kind of automatic regulation of contrast; the colors histogram is expanded to fit all the range of colors.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``rch : bool = true``
 
@@ -1584,7 +1584,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Estimate the local point spacing (aka radius) around each vertex using a basic estimate of the local density.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``nbneighbors : int = 16``
 
@@ -1600,7 +1600,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Export active cameras to file, in the .out or Agisoft .xml formats</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``exportfile : str = 'Bundler .out' (or int = 0)``
 
@@ -1627,7 +1627,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Upload the current layer on Sketchfab. It requires that you have an account and that you set your private API token in the preferences of MeshLab.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``sketchfabkeycode : str = '00000000'``
 
@@ -1685,7 +1685,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Create a quad on the plane fitting the selection</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``extent : float = 1``
 
@@ -1727,7 +1727,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Flatten all or only the visible layers into a single new mesh. <br> Transformations are preserved. Existing layers can be optionally deleted</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``mergevisible : bool = true``
 
@@ -1761,7 +1761,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Generates a fractal terrain perturbation with five different algorithms.<br />Some good parameter values to start with are:<br /><table align="center">    <tr style="border:1px solid black">        <td> - </td>        <td align="center"> Seed </td>        <td align="center"> Octaves </td>        <td align="center"> Lacunarity </td>        <td align="center"> Fractal increment </td>        <td align="center"> Offset </td>        <td align="center"> Gain </td>    </tr>    <tr>        <td>fBM</td>        <td align="center">1</td>        <td align="center">10</td>        <td align="center">2</td>        <td align="center">1.2</td>        <td align="center">-</td>        <td align="center">-</td>    </tr>    <tr>        <td>Standard multifractal</td>        <td align="center">1</td>        <td align="center">8</td>        <td align="center">2</td>        <td align="center">0.9</td>        <td align="center">0.9</td>        <td align="center">-</td>    </tr>    <tr>        <td>Heterogeneous multifractal</td>        <td align="center">1</td>        <td align="center">8</td>        <td align="center">3</td>        <td align="center">0.9</td>        <td align="center">0.4</td>        <td align="center">-</td>    </tr>    <tr>        <td>Hybrid multifractal</td>        <td align="center">1</td>        <td align="center">8</td>        <td align="center">4</td>        <td align="center">0.1</td>        <td align="center">0.3</td>        <td align="center">-</td>    </tr>    <tr>        <td>Ridged multifractal</td>        <td align="center">2</td>        <td align="center">8</td>        <td align="center">4</td>        <td align="center">0.5</td>        <td align="center">0.9</td>        <td align="center">2</td>    </tr></table><br /><br />Detailed algorithms descriptions can be found in:<br /><i>Ebert, D.S., Musgrave, F.K., Peachey, D., Perlin, K., and Worley, S.</i><br /><b>Texturing and Modeling: A Procedural Approach</b><br />Morgan Kaufmann Publishers Inc., San Francisco, CA, USA, 2002.<br><br /><br />Hint: search a good compromise between offset and height factor parameter.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``maxheight : Percentage = 4%``
 
@@ -1845,7 +1845,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Generates a fractal terrain perturbation with five different algorithms.<br />Some good parameter values to start with are:<br /><table align="center">    <tr style="border:1px solid black">        <td> - </td>        <td align="center"> Seed </td>        <td align="center"> Octaves </td>        <td align="center"> Lacunarity </td>        <td align="center"> Fractal increment </td>        <td align="center"> Offset </td>        <td align="center"> Gain </td>    </tr>    <tr>        <td>fBM</td>        <td align="center">1</td>        <td align="center">10</td>        <td align="center">2</td>        <td align="center">1.2</td>        <td align="center">-</td>        <td align="center">-</td>    </tr>    <tr>        <td>Standard multifractal</td>        <td align="center">1</td>        <td align="center">8</td>        <td align="center">2</td>        <td align="center">0.9</td>        <td align="center">0.9</td>        <td align="center">-</td>    </tr>    <tr>        <td>Heterogeneous multifractal</td>        <td align="center">1</td>        <td align="center">8</td>        <td align="center">3</td>        <td align="center">0.9</td>        <td align="center">0.4</td>        <td align="center">-</td>    </tr>    <tr>        <td>Hybrid multifractal</td>        <td align="center">1</td>        <td align="center">8</td>        <td align="center">4</td>        <td align="center">0.1</td>        <td align="center">0.3</td>        <td align="center">-</td>    </tr>    <tr>        <td>Ridged multifractal</td>        <td align="center">2</td>        <td align="center">8</td>        <td align="center">4</td>        <td align="center">0.5</td>        <td align="center">0.9</td>        <td align="center">2</td>    </tr></table><br /><br />Detailed algorithms descriptions can be found in:<br /><i>Ebert, D.S., Musgrave, F.K., Peachey, D., Perlin, K., and Worley, S.</i><br /><b>Texturing and Modeling: A Procedural Approach</b><br />Morgan Kaufmann Publishers Inc., San Francisco, CA, USA, 2002.<br></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``steps : int = 8``
 
@@ -1929,7 +1929,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Generates a scalar harmonic field over the mesh. Input scalar values must be assigned to two vertices as Dirichlet boundary conditions. Applying the filter, a discrete Laplace operator generates the harmonic field values for all the mesh vertices, which are stored in the <a href='https://stackoverflow.com/questions/58610746'>quality per vertex attribute</a> of the mesh.<br>For more details see:<b>Dynamic Harmonic Fields for Surface Processing</b> by <i>Kai Xua, Hao Zhang, Daniel Cohen-Or, Yueshan Xionga</i>. Computers & Graphics, 2009 <br><a href='https://doi.org/10.1016/j.cag.2009.03.022'>doi:10.1016/j.cag.2009.03.022</a></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``point1 : numpy.ndarray[numpy.float32[3]] = [1, 1, 1]``
 
@@ -1969,7 +1969,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Unwrap the geometry of current mesh along a clylindrical equatorial projection. The cylindrical projection axis is centered on the origin and directed along the vertical <b>Y</b> axis.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``startangle : float = 0``
 
@@ -1997,7 +1997,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Compute the rigid transformation aligning two 3d objects.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``refmesh : int = 0``
 
@@ -2061,7 +2061,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Small useless filter added only to show how to work with a gl render context inside a filter.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``imagebackgroundcolor : Color = [50; 50; 50; 255]``
 
@@ -2095,7 +2095,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Generate a new 2D Grid mesh with number of vertices on X and Y axis specified by user with absolute length/height.<br>It's possible to center Grid on origin.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``numvertx : int = 10``
 
@@ -2135,7 +2135,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Compute the Hausdorff Distance between two layers, sampling one of the two and finding for each sample the closest point over the other mesh.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``sampledmesh : int = 0``
 
@@ -2215,7 +2215,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Register an image on a 3D model using Mutual Information. This filter is an implementation of Corsini et al. 'Image-to-geometry registration: a mutual information method exploiting illumination-related geometric properties', 2009, <a href="http://vcg.isti.cnr.it/Publications/2009/CDPS09/" target="_blank">Get link</a></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``rendering_mode : str = 'Combined' (or int = 0)``
 
@@ -2282,7 +2282,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Calculate a global refinement of image registration, in order to obtain a better alignment of fine detail. It will refine only the shots associated to the active rasters, the non-active ones will be used but not refined. This filter is an implementation of Dellepiane et al. 'Global refinement of image-to-geometry registration for color projection', 2013, and it was used in Corsini et al 'Fully Automatic Registration of Image Sets on Approximate Geometry', 2013. Please cite!</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``renderingmode : str = 'Combined' (or int = 0)``
 
@@ -2337,7 +2337,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Generate a new mesh that corresponds to the 0 valued isosurface defined by the scalar field generated by the given expression</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``voxelsize : float = 0.05``
 
@@ -2395,7 +2395,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Import cameras for active rasters from .out or Agisoft .xml formats</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``importfile : str = ''``
 
@@ -2411,7 +2411,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Invert faces orientation, flipping the normals of the mesh. <br>If requested, it tries to guess the right orientation; mainly it decide to flip all the faces if the minimum/maximum vertices have not outward point normals for a few directions.<br>Works well for single component watertight objects.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``forceflip : bool = true``
 
@@ -2433,7 +2433,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Invert the current set of selected faces/vertices.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``invfaces : bool = false``
 
@@ -2455,7 +2455,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       The filter build a new mesh with a standard atlased per wedge texture. The atlas is simply done by exploiting the low distortion, coarse, regular, mesh of the abstract domain<br>For more details see: <br><b>N. Pietroni, M. Tarini and P. Cignoni</b>, <br><a href="http://vcg.isti.cnr.it/Publications/2010/PTC10/">'Almost isometric mesh parameterization through abstract domains'</a> <br>IEEE Transaction of Visualization and Computer Graphics, 2010</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``bordersize : float (bounded) = 0.1 [min: 0.01; max: 0.5]``
 
@@ -2471,7 +2471,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       The filter builds the abstract domain mesh representing the Isoparameterization of a watertight two-manifold triangular mesh. <br>This abstract mesh can be used to uniformly remesh the input mesh, or to build a atlased texture parametrization. Abstract Mesh can be also loaded and saved. <br>In short this filter build a very coarse almost regular triangulation such that original mesh can be reprojected from this abstract mesh with minimal distortion.<br>For more details see: <br><b>N. Pietroni, M. Tarini and P. Cignoni</b>, <br><a href="http://vcg.isti.cnr.it/Publications/2010/PTC10/">'Almost isometric mesh parameterization through abstract domains'</a> <br>IEEE Transaction of Visualization and Computer Graphics, 2010</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``targetabstractminfacenum : int = 150``
 
@@ -2530,7 +2530,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Uniform Remeshing based on Isoparameterization, each triangle of the domain is recursively subdivided. <br>For more details see: <br><b>N. Pietroni, M. Tarini and P. Cignoni</b>, <br><a href="http://vcg.isti.cnr.it/Publications/2010/PTC10/">'Almost isometric mesh parameterization through abstract domains'</a> <br>IEEE Transaction of Visualization and Computer Graphics, 2010</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``samplingrate : int = 10``
 
@@ -2546,7 +2546,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Transfer the Isoparametrization between two meshes, the two meshes must be reasonably similar and well aligned. It is useful to transfer back an isoparam onto the original mesh after having computed it on a dummy, clean watertight model.<br>For more details see: <br><b>N. Pietroni, M. Tarini and P. Cignoni</b>, <br><a href="http://vcg.isti.cnr.it/Publications/2010/PTC10/">'Almost isometric mesh parameterization through abstract domains'</a> <br>IEEE Transaction of Visualization and Computer Graphics, 2010</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``sourcemesh : int = 0``
 
@@ -2568,7 +2568,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Laplacian smooth. Average each vertex position with weighted positions of neighbour vertices.<br><b>Laplacian Mesh Processing</b> by <i>Olga Sorkine</i>. EUROGRAPHICS 2005<br><a href='http://dx.doi.org/10.2312/egst.20051044'>doi:10.2312/egst.20051044</a></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``stepsmoothnum : int = 3``
 
@@ -2602,7 +2602,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Laplacian smooth with limited surface modification: move each vertex in the average position of neighbors vertices, only if the new position still (almost) lies on original surface</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``selection : bool = false``
 
@@ -2630,7 +2630,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Extract the iso-surface (as a mesh) of a MLS surface defined by the current point set (or mesh)using the marching cubes algorithm. The coarse extraction is followed by an accurate projectionstep onto the MLS, and an extra zero removal procedure.<br><br>This is the <i>algebraic point set surfaces</i> (APSS) variant which is based on the local fitting of algebraic spheres. It requires points equipped with oriented normals. <br>For all the details about APSS see: <br> Guennebaud and Gross, 'Algebraic Point Set Surfaces', Siggraph 2007, and<br>Guennebaud et al., 'Dynamic Sampling and Rendering of APSS', Eurographics 2008</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``filterscale : float = 2``
 
@@ -2676,7 +2676,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Extract the iso-surface (as a mesh) of a MLS surface defined by the current point set (or mesh)using the marching cubes algorithm. The coarse extraction is followed by an accurate projectionstep onto the MLS, and an extra zero removal procedure.<br><br>This is the Robust Implicit MLS (RIMLS) variant which is an extension of Implicit MLS preserving sharp features using non linear regression. For more details see: <br>Oztireli, Guennebaud and Gross, 'Feature Preserving Point Set Surfaces based on Non-Linear Kernel Regression' Eurographics 2009.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``filterscale : float = 2``
 
@@ -2722,7 +2722,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Freeze the current transformation matrix into the coordinates of the vertices of the mesh (and set this matrix to the identity). In other words it applies in a definetive way the current matrix to the vertex coordinates.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``alllayers : bool = false``
 
@@ -2738,7 +2738,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Invert the current transformation matrix. The current transformation is reversed, becoming its opposite.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``freeze : bool = true``
 
@@ -2760,7 +2760,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Set the current transformation matrix to the Identity. </p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``alllayers : bool = false``
 
@@ -2776,13 +2776,13 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Set the current transformation matrix by filling it, or copying from another layer.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``transformmatrix : numpy.ndarray[numpy.float32[4, 4]] = [[1, 0, 0, 0],[0, 1, 0, 0],[0, 0, 1, 0],[0, 0, 0, 1]]``
 
       .. raw:: html
 
-         <i></i>: 
+         <i></i>:
 
    ``compose : bool = false``
 
@@ -2810,7 +2810,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Set the current transformation matrix starting from parameters: [XYZ] translation, [XYZ] Euler angles rotation and [XYZ] scaling.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``translationx : float = 0``
 
@@ -2892,13 +2892,13 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Merge together all the vertices that are nearer than the specified threshold. Like a unify duplicated vertices but with some tolerance.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``threshold : Percentage = 1%``
 
       .. raw:: html
 
-         <i>Merging distance</i>: All the vertices that closer than this threshold are merged together. Use very small values, default values is 1/10000 of bounding box diagonal. 
+         <i>Merging distance</i>: All the vertices that closer than this threshold are merged together. Use very small values, default values is 1/10000 of bounding box diagonal.
 
 .. data:: merge_wedge_texture_coord
 
@@ -2908,13 +2908,13 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Merge together per-wedge texture coords that are very close. Used to correct apparent texture seams that can arise from numerical approximations when saving in ascii formats.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``mergethr : float = 0.0001``
 
       .. raw:: html
 
-         <i>Merging Threshold</i>: All the per-wedge texture coords that are on the same vertex and are distant less then the given threshold are merged together. It can be used to remove the fake texture seams that arise from error. Distance is in texture space (the default, 1e-4, corresponds to one texel on a 10kx10x texture) 
+         <i>Merging Threshold</i>: All the per-wedge texture coords that are on the same vertex and are distant less then the given threshold are merged together. It can be used to remove the fake texture seams that arise from error. Distance is in texture space (the default, 1e-4, corresponds to one texel on a 10kx10x texture)
 
 .. data:: mesh_element_sampling
 
@@ -2924,7 +2924,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Create a new layer populated with a point sampling of the current mesh; at most one sample for each element of the mesh is created. Samples are taking in a uniform way, one for each element (vertex/edge/face); all the elements have the same probability of being chosen.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``sampling : str = 'Vertex' (or int = 0)``
 
@@ -2952,7 +2952,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Project a mesh (or a point set) onto the MLS surface defined by itself or another point set.<br><br>This is the <i>algebraic point set surfaces</i> (APSS) variant which is based on the local fitting of algebraic spheres. It requires points equipped with oriented normals. <br>For all the details about APSS see: <br> Guennebaud and Gross, 'Algebraic Point Set Surfaces', Siggraph 2007, and<br>Guennebaud et al., 'Dynamic Sampling and Rendering of APSS', Eurographics 2008</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``controlmesh : int = 0``
 
@@ -3022,7 +3022,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Project a mesh (or a point set) onto the MLS surface defined by itself or another point set.<br><br>This is the Robust Implicit MLS (RIMLS) variant which is an extension of Implicit MLS preserving sharp features using non linear regression. For more details see: <br>Oztireli, Guennebaud and Gross, 'Feature Preserving Point Set Surfaces based on Non-Linear Kernel Regression' Eurographics 2009.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``controlmesh : int = 0``
 
@@ -3092,7 +3092,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Create a new layer populated with a point sampling of the current mesh; samples are generated in a randomly uniform way, or with a distribution biased by the per-vertex quality values of the mesh.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``samplenum : int = 0``
 
@@ -3138,7 +3138,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Selected faces are moved (or duplicated) in a new layer. Warning! per-vertex and per-face user defined attributes will not be transferred.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``deleteoriginal : bool = true``
 
@@ -3154,7 +3154,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Selected vertices are moved (or duplicated) in a new layer. Warning! per-vertex user defined attributes will not be transferred.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``deleteoriginal : bool = true``
 
@@ -3170,7 +3170,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Create a isosurface perturbed by a noisy isosurface.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``resolution : int = 64``
 
@@ -3210,7 +3210,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       The mesh is parameterized and textured by creating some patches that correspond to projection of portions of surfaces onto the set of registered rasters.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``texturesize : int = 1024``
 
@@ -3280,7 +3280,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       The mesh is parameterized by creating some patches that correspond to projection of portions of surfaces onto the set of registered rasters.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``usedistanceweight : bool = true``
 
@@ -3326,7 +3326,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Builds a trivial flat-plane parametrization.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``projectionplane : str = 'XY' (or int = 0)``
 
@@ -3360,7 +3360,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Builds a trivial triangle-by-triangle parametrization. <br> Two methods are provided, the first maps maps all triangles into equal sized triangles, while the second one adapt the size of the triangles in texture space to their original size.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``sidedim : int = 0``
 
@@ -3399,7 +3399,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Build an atlased parametrization based on a geodesic voronoi partitioning of the surface and parametrizing each region using Harmonic Mapping. For the  parametrization of the disk like voronoi regions the used method is: <br><b>Ulrich Pinkall, Konrad Polthier</b><br>											<i>Computing Discrete Minimal Surfaces and Their Conjugates</i> <br>											Experimental Mathematics, Vol 2 (1), 1993<br> .</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``regionnum : int = 10``
 
@@ -3421,7 +3421,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Color function using muparser lib to generate new RGBA color for every face<br>Red, Green, Blue and Alpha channels may be defined specifying a function in their respective fields.<br>It's possible to use the following per-face variables, or variables associated to the three vertex of every face:<br><b>x0,y0,z0</b> for the first vertex position, <b>x1,y1,z1</b> for the second vertex position, <b>x2,y2,z2</b> for the third vertex position, <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> for vertex normals, <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> for vertex colors, <b>q0,q1,q2</b> for vertex quality, <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> for per-wedge texture coords, <b>ti</b> for face texture index, <b>vsel0,vsel1,vsel2</b> for vertex selection (1 yes, 0 no) <b>fr,fg,fb,fa</b> for face color, <b>fq</b> for face quality, <b>fnx,fny,fnz</b> for face normal, <b>fsel</b> face selection (1 yes, 0 no).<br></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``r : str = '255'``
 
@@ -3461,7 +3461,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Compute a quality and colorize faces depending on triangle shape:<ol><li>area/max side of triangle<li>ratio inradius/circumradius (radii of incircle and circumcircle)<li>Mean ratio of triangle = area/(a*a + b*b + c*c)<li>Area<li>Texture Angle Distortion. Difference between angle in 3D space and texture space<li>Texture Area Distortion. Difference between area in 3D space and texture space<li>Polygonal Planarity (max distance to support plane)<li>Polygonal Planarity (relative distance to support plane)</ol></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``metric : str = 'area/max side' (or int = 0)``
 
@@ -3488,7 +3488,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Quality function using muparser to generate new Quality for every face<br>Insert three function each one for quality of the three vertex of a face<br>It's possible to use the following per-face variables, or variables associated to the three vertex of every face:<br><b>x0,y0,z0</b> for the first vertex position, <b>x1,y1,z1</b> for the second vertex position, <b>x2,y2,z2</b> for the third vertex position, <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> for vertex normals, <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> for vertex colors, <b>q0,q1,q2</b> for vertex quality, <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> for per-wedge texture coords, <b>ti</b> for face texture index, <b>vsel0,vsel1,vsel2</b> for vertex selection (1 yes, 0 no) <b>fr,fg,fb,fa</b> for face color, <b>fq</b> for face quality, <b>fnx,fny,fnz</b> for face normal, <b>fsel</b> face selection (1 yes, 0 no).<br></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``q : str = 'x0+y0+z0'``
 
@@ -3522,7 +3522,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Compute an histogram of the values of the per-face quality.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``histmin : float = 3.40282e+38``
 
@@ -3564,7 +3564,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Color function using muparser lib to generate new RGBA color for every vertex<br>Red, Green, Blue and Alpha channels may be defined specifying a function in their respective fields.<br>It's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``x : str = '255'``
 
@@ -3604,7 +3604,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Geometric function using muparser lib to generate new Coord<br>You can change x,y,z for every vertex according to the function specified.<br>It's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``x : str = 'x'``
 
@@ -3638,7 +3638,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Normal function using muparser to generate new Normal for every vertex<br>It's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``x : str = '-nx'``
 
@@ -3672,7 +3672,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Quality function using muparser to generate new Quality for every vertex<br>It's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``q : str = 'vi'``
 
@@ -3706,7 +3706,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Compute an histogram of the values of the per-vertex quality. It can be useful to evaluate the distribution of the quality value over the surface. It can be discrete (e.g. based on vertex count or area weighted).</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``histmin : float = 3.40282e+38``
 
@@ -3748,7 +3748,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Texture function using muparser to generate new texture coords for every vertex<br>It's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``u : str = 'x'``
 
@@ -3776,7 +3776,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Texture function using muparser to generate new per wedge tex coords for every face<br>Insert six functions each u v for each one of the three vertex of a face<br>It's possible to use the following per-face variables, or variables associated to the three vertex of every face:<br><b>x0,y0,z0</b> for the first vertex position, <b>x1,y1,z1</b> for the second vertex position, <b>x2,y2,z2</b> for the third vertex position, <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> for vertex normals, <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> for vertex colors, <b>q0,q1,q2</b> for vertex quality, <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> for per-wedge texture coords, <b>ti</b> for face texture index, <b>vsel0,vsel1,vsel2</b> for vertex selection (1 yes, 0 no) <b>fr,fg,fb,fa</b> for face color, <b>fq</b> for face quality, <b>fnx,fny,fnz</b> for face normal, <b>fsel</b> face selection (1 yes, 0 no).<br></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``u0 : str = 'x0'``
 
@@ -3828,7 +3828,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Paints the mesh using PerlinColor function. The color assigned to vertices depends on their position in the space; it means that near vertices will be painted with similar colors.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``color1 : Color = [0; 0; 0; 255]``
 
@@ -3868,7 +3868,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Assigns a random color to each visible mesh layer in the document. Colors change every time the filter is executed, but are always chosen so that they differ as much as possible.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``seed : int = 0``
 
@@ -3884,7 +3884,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Mesh optimization by edge flipping, to improve local triangle quality</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``selection : bool = false``
 
@@ -3926,7 +3926,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Create a new layer populated with a simplified version of the current point cloud.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``samplenum : int = 1000``
 
@@ -3944,7 +3944,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Best Sample Heuristic</i>: If true it will use a simple heuristic for choosing the samples. At a small cost (it can slow a bit the process) it usually improve the maximality of the generated sampling. 
+         <i>Best Sample Heuristic</i>: If true it will use a simple heuristic for choosing the samples. At a small cost (it can slow a bit the process) it usually improve the maximality of the generated sampling.
 
    ``bestsamplepool : int = 10``
 
@@ -3966,7 +3966,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Simulate the movement of a points cloud over a mesh</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``gravity_dir : numpy.ndarray[numpy.float32[3]] = [0, -1, 0]``
 
@@ -4018,7 +4018,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Create a spherical point cloud, it can be random or regularly distributed.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``pointnum : int = 100``
 
@@ -4038,7 +4038,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Generation Technique:</i>: Generation Technique:<b>Montecarlo</b>: The points are randomly generated with an uniform distribution.<br><b>Poisson Disk</b>: The points are to follow a poisson disk distribution.<br><b>Disco Ball</b> Dave Rusin's disco ball algorithm for the regular placement of points on a sphere is used. <br><b>Recursive Octahedron</b> Points are generated on the vertex of a recursively subdivided octahedron <br><b>Fibonacci</b> . 
+         <i>Generation Technique:</i>: Generation Technique:<b>Montecarlo</b>: The points are randomly generated with an uniform distribution.<br><b>Poisson Disk</b>: The points are to follow a poisson disk distribution.<br><b>Disco Ball</b> Dave Rusin's disco ball algorithm for the regular placement of points on a sphere is used. <br><b>Recursive Octahedron</b> Points are generated on the vertex of a recursively subdivided octahedron <br><b>Fibonacci</b> .
 
 .. data:: poisson_disk_sampling
 
@@ -4048,7 +4048,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Create a new layer populated with a point sampling of the current mesh;samples are generated according to a Poisson-disk distribution, using the algorithm described in:<br><b>'Efficient and Flexible Sampling with Blue Noise Properties of Triangular Meshes'</b><br> Massimiliano Corsini, Paolo Cignoni, Roberto Scopigno<br>IEEE TVCG 2012</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``samplenum : int = 1000``
 
@@ -4090,19 +4090,19 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Refine Existing Samples</i>: If true the vertices of the below mesh are used as starting vertices, and they will utterly refined by adding more and more points until possible. 
+         <i>Refine Existing Samples</i>: If true the vertices of the below mesh are used as starting vertices, and they will utterly refined by adding more and more points until possible.
 
    ``refinemesh : int = 0``
 
       .. raw:: html
 
-         <i>Samples to be refined</i>: Used only if the above option is checked. 
+         <i>Samples to be refined</i>: Used only if the above option is checked.
 
    ``bestsampleflag : bool = true``
 
       .. raw:: html
 
-         <i>Best Sample Heuristic</i>: If true it will use a simple heuristic for choosing the samples. At a small cost (it can slow a bit the process) it usually improve the maximality of the generated sampling. 
+         <i>Best Sample Heuristic</i>: If true it will use a simple heuristic for choosing the samples. At a small cost (it can slow a bit the process) it usually improve the maximality of the generated sampling.
 
    ``bestsamplepool : int = 10``
 
@@ -4130,7 +4130,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Color information from all the active rasters is perspective-projected on the current mesh using basic weighting</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``deptheta : float = 0.5``
 
@@ -4188,7 +4188,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Color information from all the active rasters is perspective-projected on the current mesh, filling the texture, using basic weighting</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``textname : str = 'cube_color.png'``
 
@@ -4258,7 +4258,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Color information from the current raster is perspective-projected on the current mesh</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``usedepth : bool = true``
 
@@ -4292,7 +4292,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Compute a quality value representing the number of images into which each face of the active mesh is visible.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``normalizequality : bool = false``
 
@@ -4308,7 +4308,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Compute a quality value representing the number of images into which each vertex of the active mesh is visible.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``normalizequality : bool = false``
 
@@ -4324,7 +4324,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       The filter maps quality levels into colors using a colorband built from a transfer function (may be loaded from an external file) and colorizes the mesh vertices. The minimum, medium and maximum quality values can be set by user to obtain a custom quality range for mapping</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``minqualityval : float = 3.40282e+38``
 
@@ -4400,7 +4400,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Move the vertices of the mesh of a random quantity.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``updatenormals : bool = true``
 
@@ -4438,7 +4438,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Recompute vertex normals according to four different schemes:<br>1) Simple (no weights) average of normals of the incident faces <br>2) Area weighted average of normals of the incident faces <br>3) Angle weighted sum of normals of the incident faces according to the article <b>[1]</b>. Probably this is the best all-purpose choice. It could slightly bias the result for degenerate, fat triangles.<br>4) Weighted sum of normals of the incident faces, as defined by article <b>[2]</b>. The weight for each wedge is the cross product of the two edges over the product of the square of the two edge lengths.According to the original article it is perfect only for spherical surface, but it should perform well also in practice.<br>[1]: <b>Computing Vertex Normals from Polygonal Facet</b> by <i>G Thurmer and CA Wuthrich</i>, JGT volume3, num 1. 1998<br><a href='https://doi.org/10.1080/10867651.1998.10487487'>doi:10.1080/10867651.1998.10487487</a><br>[2]: <b>Weights for Computing Vertex Normals from Facet Normals</b> by <i>Nelson Max</i>, JGT vol4, num 2. 1999<br><a href='https://doi.org/10.1080/10867651.1999.10487501'>doi:10.1080/10867651.1999.10487501</a></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``weightmode : str = 'Simple Average' (or int = 0)``
 
@@ -4451,7 +4451,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Weighting Mode:</i>: 
+         <i>Weighting Mode:</i>:
 
 .. data:: re_orient_all_faces_coherentely
 
@@ -4477,7 +4477,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Refine current mesh with user defined parameters.<br>Specify a Boolean Function needed to select which edges will be cut for refinement purpose.<br>Each edge is identified with first and second vertex.<br>Arguments accepted are first and second vertex attributes:<br><br>It's possible to use parenthesis <b>()</b>, and predefined operators:<br><b>&&</b> (logic and), <b>||</b> (logic or), <b>&lt;</b>, <b>&lt;=</b>, <b>></b>, <b>>=</b>, <b>!=</b> (not equal), <b>==</b> (equal), <b>_?_:_</b> (c/c++ ternary operator)<br><br>It's possible to use the following per-face variables, or variables associated to the three vertex of every face:<br><b>x0,y0,z0</b> for the first vertex position, <b>x1,y1,z1</b> for the second vertex position, <b>x2,y2,z2</b> for the third vertex position, <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> for vertex normals, <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> for vertex colors, <b>q0,q1,q2</b> for vertex quality, <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> for per-wedge texture coords, <b>ti</b> for face texture index, <b>vsel0,vsel1,vsel2</b> for vertex selection (1 yes, 0 no) <b>fr,fg,fb,fa</b> for face color, <b>fq</b> for face quality, <b>fnx,fny,fnz</b> for face normal, <b>fsel</b> face selection (1 yes, 0 no).<br></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``condselect : str = '(q0 >= 0 && q1 >= 0)'``
 
@@ -4511,7 +4511,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       The bbox is recursively partitioned in a octree style, center of bbox are considered, when the center is nearer to the surface than a given thr it is projected on it. It works also for building offsetted samples.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``cellsize : Percentage = 2%``
 
@@ -4533,7 +4533,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Perform a explicit remeshing of a triangular mesh, by repeatedly applying edge flip, collapse, relax and refine to improve aspect ratio (triangle quality) and topological regularity.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``iterations : int = 3``
 
@@ -4639,7 +4639,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Delete isolated connected components whose diameter is smaller than the specified constant</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``mincomponentdiag : Percentage = 10%``
 
@@ -4661,7 +4661,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Delete isolated connected components composed by a limited number of triangles</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``mincomponentsize : int = 25``
 
@@ -4683,7 +4683,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Delete t-vertices from the mesh by collapsing the shortest of the incident edges</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``threshold : float = 40``
 
@@ -4705,7 +4705,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Delete t-vertices by flipping the opposite edge on the degenerate face if the triangulation quality improves</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``threshold : float = 40``
 
@@ -4735,13 +4735,13 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Delete all the vertices with a quality lower smaller than the specified constant</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``maxqualitythr : Percentage = -nan%``
 
       .. raw:: html
 
-         <i>Delete all vertices with quality under:</i>: 
+         <i>Delete all vertices with quality under:</i>:
 
 .. data:: remove_zero_area_faces
 
@@ -4759,7 +4759,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Explicitly change the label shown for a given mesh</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``newname : str = 'cube'``
 
@@ -4775,7 +4775,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Explicitly change the label shown for a given raster</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``newname : str = ''``
 
@@ -4807,7 +4807,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Split non Manifold vertices until it becomes 2-Manifold.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``vertdispratio : float = 0``
 
@@ -4823,7 +4823,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Saturate vertex quality, so that for each vertex the gradient of the quality is lower than the given threshold value (in absolute value)<br>The saturation is done in a conservative way (quality is always decreased and never increased)</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``gradientthr : float = 1``
 
@@ -4845,7 +4845,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Scale Dependent Laplacian Smoothing, extended version of Laplacian Smoothing based on the Fujiwara extended umbrella operator.<br><b>Implicit Fairing of Irregular Meshes using Diffusion and Curvature Flow</b> by <i>Desbrun, Meyer, Schroeder and Barr</i>. SIGGRAPH 1999<br><a href='https://doi.org/10.1145/311535.311576'>doi:10.1145/311535.311576</a></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``stepsmoothnum : int = 3``
 
@@ -4857,7 +4857,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>delta</i>: 
+         <i>delta</i>:
 
    ``selected : bool = false``
 
@@ -4873,7 +4873,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Select all the faces/vertices of the current mesh.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``allfaces : bool = true``
 
@@ -4903,7 +4903,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Select all the faces/vertices with within the specified face quality range.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``minq : float (bounded) = 1.70141e+38 [min: 3.40282e+38; max: -3.40282e+38]``
 
@@ -4931,7 +4931,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Select all the faces/vertices within the specified vertex quality range.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``minq : float (bounded) = 1.70141e+38 [min: 3.40282e+38; max: -3.40282e+38]``
 
@@ -4967,7 +4967,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       It select the crease edges of a mesh according to edge dihedral angle.<br>Angle between face normal is considered signed according to convexity/concavity.Convex angles are positive and concave are negative.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``angledegneg : float = -45``
 
@@ -4989,7 +4989,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Select part of the mesh based on its color.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``color : Color = [0; 0; 0; 255]``
 
@@ -5040,7 +5040,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Select faces according to the angle between their normal and the view direction. It is used in range map processing to select and delete steep faces parallel to viewdirection.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``anglelimit : float (bounded) = 75 [min: 0; max: 180]``
 
@@ -5068,7 +5068,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Select faces from selected vertices.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``inclusive : bool = true``
 
@@ -5084,7 +5084,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Select all triangles having an edge with length greater or equal than a given threshold.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``threshold : float (bounded) = 0.0173205 [min: 0; max: 1.73205]``
 
@@ -5100,7 +5100,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Select the folded faces created by the Quadric Edge Collapse decimation. The face is selected if the angle between the face normal and the normal of the best fitting plane of the neighbor vertices is above the selected threshold.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``anglethreshold : float (bounded) = 160 [min: 90; max: 180]``
 
@@ -5132,7 +5132,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Clear the current set of selected faces/vertices.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``allfaces : bool = true``
 
@@ -5154,7 +5154,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Select the vertex classified as outlier using Local Outlier Propabilty measure described in:<br> <b>'LoOP: Local Outlier Probabilities'</b> Kriegel et al.<br>CIKM 2009</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``propthreshold : float (bounded) = 0.8 [min: 0; max: 1]``
 
@@ -5176,7 +5176,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Select faces with 'problems', like normal inverted w.r.t the surrounding areas, or extremely elongated</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``usear : bool = true``
 
@@ -5218,7 +5218,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Select the small disconnected components of a mesh.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``nbfaceratio : float = 0.1``
 
@@ -5230,7 +5230,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Select only non closed components</i>: 
+         <i>Select only non closed components</i>:
 
 .. data:: select_vertex_texture_seams
 
@@ -5248,7 +5248,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Select vertices from selected faces.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``inclusive : bool = true``
 
@@ -5264,7 +5264,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Select the <b>visible points</b> in a point cloud, as viewed from a given viewpoint.<br>It uses the Qhull library (http://www.qhull.org/ <br><br>The algorithm used (Katz, Tal and Basri 2007) determines visibility without reconstructing a surface or estimating normals.A point is considered visible if its transformed point lies on the convex hull of a transformed points cloud from the original mesh points.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``radiusthreshold : float (bounded) = 0 [min: 0; max: 7]``
 
@@ -5304,7 +5304,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       This filter allows one to set a shot for the current mesh</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``shot : Shotf [still unsupported] = None``
 
@@ -5320,7 +5320,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       This filter allows one to set a shot for the current mesh</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``shot : Shotf [still unsupported] = None``
 
@@ -5336,7 +5336,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Set a texture associated with current mesh parametrization.<br>If the texture provided exists, then it will be simply associated to the current mesh; else a dummy texture will be created and saved in the same directory of the mesh if exists, or in the default system picture directory.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``textname : str = 'cube.png'``
 
@@ -5358,7 +5358,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Calculate the SDF (<b>shape diameter function</b>) on the mesh, you can visualize the result colorizing the mesh. The SDF is a scalar function on the mesh surface and represents the neighborhood diameter of the object at each point. Given a point on the mesh surface,several rays are sent inside a cone, centered around the point's inward-normal, to the other side of the mesh. The result is a weighted sum of all rays lengths. For further details, see the reference paper:<br><b>Shapira Shamir Cohen-Or,<br>Consistent Mesh Partitioning and Skeletonisation using the shaper diamter function, Visual Comput. J. (2008)</b> </p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``onprimitive : str = 'On vertices' (or int = 0)``
 
@@ -5369,7 +5369,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Metric:</i>: Choose whether to trace rays from faces or from vertices. 
+         <i>Metric:</i>: Choose whether to trace rays from faces or from vertices.
 
    ``numberrays : int = 128``
 
@@ -5405,13 +5405,13 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Remove false intersections</i>: For eachray we check the normal at the point of intersection,and ignore intersections where the normal at the intersectionpoints is in the same direction as the point-of-origin(the same direction is defined as an angle difference lessthan 90) 
+         <i>Remove false intersections</i>: For eachray we check the normal at the point of intersection,and ignore intersections where the normal at the intersectionpoints is in the same direction as the point-of-origin(the same direction is defined as an angle difference lessthan 90)
 
    ``removeoutliers : bool = false``
 
       .. raw:: html
 
-         <i>Remove outliers</i>: The outliers removal is made on the fly with a supersampling of the depth buffer. For each ray that we trace, we take multiple depth values near the point of intersection and we output only the median of these values. Some mesh can benefit from this additional calculation. 
+         <i>Remove outliers</i>: The outliers removal is made on the fly with a supersampling of the depth buffer. For each ray that we trace, we take multiple depth values near the point of intersection and we output only the median of these values. Some mesh can benefit from this additional calculation.
 
 .. data:: simplification_clustering_decimation
 
@@ -5421,7 +5421,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Collapse vertices by creating a three dimensional grid enveloping the mesh and discretizes them based on the cells of this grid</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``threshold : Percentage = 1%``
 
@@ -5451,7 +5451,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Simplify a mesh using a Quadric based Edge Collapse Strategy; better than clustering but slower</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``targetfacenum : int = 0``
 
@@ -5481,7 +5481,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Boundary Preserving Weight</i>: The importance of the boundary during simplification. Default (1.0) means that the boundary has the same importance of the rest. Values greater than 1.0 raise boundary importance and has the effect of removing less vertices on the border. Admitted range of values (0,+inf). 
+         <i>Boundary Preserving Weight</i>: The importance of the boundary during simplification. Default (1.0) means that the boundary has the same importance of the rest. Values greater than 1.0 raise boundary importance and has the effect of removing less vertices on the border. Admitted range of values (0,+inf).
 
    ``preservenormal : bool = false``
 
@@ -5499,7 +5499,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Optimal position of simplified vertices</i>: Each collapsed vertex is placed in the position minimizing the quadric error.<br> It can fail (creating bad spikes) in case of very flat areas. <br>If disabled edges are collapsed onto one of the two original vertices and the final mesh is composed by a subset of the original vertices. 
+         <i>Optimal position of simplified vertices</i>: Each collapsed vertex is placed in the position minimizing the quadric error.<br> It can fail (creating bad spikes) in case of very flat areas. <br>If disabled edges are collapsed onto one of the two original vertices and the final mesh is composed by a subset of the original vertices.
 
    ``planarquadric : bool = false``
 
@@ -5539,13 +5539,13 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Simplify a textured mesh using a Quadric based Edge Collapse Strategy preserving UV parametrization; better than clustering but slower</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``targetfacenum : int = 0``
 
       .. raw:: html
 
-         <i>Target number of faces</i>: 
+         <i>Target number of faces</i>:
 
    ``targetperc : float = 0``
 
@@ -5575,13 +5575,13 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Boundary Preserving Weight</i>: The importance of the boundary during simplification. Default (1.0) means that the boundary has the same importance of the rest. Values greater than 1.0 raise boundary importance and has the effect of removing less vertices on the border. Admitted range of values (0,+inf). 
+         <i>Boundary Preserving Weight</i>: The importance of the boundary during simplification. Default (1.0) means that the boundary has the same importance of the rest. Values greater than 1.0 raise boundary importance and has the effect of removing less vertices on the border. Admitted range of values (0,+inf).
 
    ``optimalplacement : bool = true``
 
       .. raw:: html
 
-         <i>Optimal position of simplified vertices</i>: Each collapsed vertex is placed in the position minimizing the quadric error.<br> It can fail (creating bad spikes) in case of very flat areas. <br>If disabled edges are collapsed onto one of the two original vertices and the final mesh is composed by a subset of the original vertices. 
+         <i>Optimal position of simplified vertices</i>: Each collapsed vertex is placed in the position minimizing the quadric error.<br> It can fail (creating bad spikes) in case of very flat areas. <br>If disabled edges are collapsed onto one of the two original vertices and the final mesh is composed by a subset of the original vertices.
 
    ``preservenormal : bool = false``
 
@@ -5617,7 +5617,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Laplacian Smooth Face Color</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``iteration : int = 1``
 
@@ -5633,7 +5633,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Laplacian Smooth Vertex Color</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``iteration : int = 1``
 
@@ -5657,7 +5657,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Smooth the normals of the vertices of a mesh without exploiting the triangle connectivity, useful for dataset with no faces</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``k : int = 10``
 
@@ -5679,7 +5679,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Try to snap together adjacent borders that are slightly mismatched.<br>This situation can happen on badly triangulated adjacent patches defined by high order surfaces.<br>For each border vertex the filter snap it onto the closest boundary edge only if it is closest of <i>edge_length*threshold</i>. When vertex is snapped the corresponding face is split and a new vertex is created.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``edgedistratio : float = 0.01``
 
@@ -5701,7 +5701,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Create a Sphere, whose topology is obtained as regular subdivision of an icosahedron.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``radius : float = 1``
 
@@ -5723,7 +5723,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Create a Sphere Cap, or spherical dome, subtended by a cone of given angle</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``angle : float = 60``
 
@@ -5753,7 +5753,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Create a new layer populated with a point sampling of the current mesh; to generate multiple samples inside a triangle each triangle is subdivided according to various <i>stratified</i> strategies. Distribution is often biased by triangle shape.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``samplenum : int = 100000``
 
@@ -5789,13 +5789,13 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Structure Synth mesh creation based on Eisen Script.<br> For further instruction visit http://structuresynth.sourceforge.net/reference.php</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``grammar : str = 'set maxdepth 40 R1 R2 rule R1 { { x 1 rz 6 ry 6 s 0.99 } R1 { s 2 } sphere } rule R2 {{ x -1 rz 6 ry 6 s 0.99 } R2 { s 2 } sphere} '``
 
       .. raw:: html
 
-         <i>Eisen Script grammar</i>: Write a grammar according to Eisen Script specification and using the primitives box, sphere, mesh, dot and triangle 
+         <i>Eisen Script grammar</i>: Write a grammar according to Eisen Script specification and using the primitives box, sphere, mesh, dot and triangle
 
    ``seed : int = 1``
 
@@ -5807,7 +5807,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>set maximum resolution of sphere primitives, it must be included between 1 and 4</i>: increasing the resolution of the spheres will improve the quality of the mesh 
+         <i>set maximum resolution of sphere primitives, it must be included between 1 and 4</i>: increasing the resolution of the spheres will improve the quality of the mesh
 
 .. data:: subdivision_surfaces_butterfly_subdivision
 
@@ -5817,7 +5817,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Apply Butterfly Subdivision Surface algorithm. It is an interpolated refinement method, defined on arbitrary triangular meshes. The scheme is known to be C1 but not C2 on regular meshes<br></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``iterations : int = 3``
 
@@ -5853,7 +5853,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Apply Loop's Subdivision Surface algorithm. It is an approximant refinement method and it works for every triangle and has rules for extraordinary vertices.<br></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``loopweight : str = 'Loop' (or int = 0)``
 
@@ -5893,7 +5893,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Apply LS3 Subdivision Surface algorithm using Loop's weights. This refinement method take normals into account. <br>See:<i>Boye', S. Guennebaud, G. & Schlick, C.</i> <br><b>Least squares subdivision surfaces</b><br>Computer Graphics Forum, 2010.<br/><br/>Alternatives weighting schemes are based on the paper: <i>Barthe, L. & Kobbelt, L.</i><br><b>Subdivision scheme tuning around extraordinary vertices</b><br>Computer Aided Geometric Design, 2004, 21, 561-583.<br/>The current implementation of these schemes don't handle vertices of valence > 12</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``loopweight : str = 'Loop' (or int = 0)``
 
@@ -5933,7 +5933,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Apply a plain subdivision scheme where every edge is split on its midpoint. Useful to uniformly refine a mesh substituting each triangle with four smaller triangles.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``iterations : int = 3``
 
@@ -5961,7 +5961,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Given a point cloud with normals it reconstructs a surface using the <b>Ball Pivoting Algorithm</b>.Starting with a seed triangle, the BPA algorithm  pivots a ball of the given radius around the already formed edgesuntil it touches another point, forming another triangle. The process continues until all reachable edges have been tried.This surface reconstruction algorithm uses the existing points without creating new ones. Works better with uniformly sampled point clouds. If needed first perform a poisson disk subsampling of the point cloud. <br>Bernardini F., Mittleman J., Rushmeier H., Silva C., Taubin G.<br><b>The ball-pivoting algorithm for surface reconstruction.</b><br>IEEE TVCG 1999</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``ballradius : Percentage = 0%``
 
@@ -5995,7 +5995,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       This surface reconstruction algorithm creates watertight surfaces from oriented point sets.<br>The filter uses the original code of Michael Kazhdan and Matthew Bolitho implementing the algorithm described in the following paper:<br><i>Michael Kazhdan, Hugues Hoppe</i>,<br><b>"Screened Poisson surface reconstruction"</b><br></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``visiblelayer : bool = false``
 
@@ -6065,7 +6065,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       The surface reconstrction algorithm that have been used for a long time inside the ISTI-Visual Computer Lab.It is mostly a variant of the Curless et al. e.g. a volumetric approach with some original weighting schemes,a different expansion rule, and another approach to hole filling through volume dilation/relaxations.<br>The filter is applied to <b>ALL</b> the visible layers. In practice, all the meshes/point clouds that are currently <i>visible</i> are used to build the volumetric distance field.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``voxsize : Percentage = 1%``
 
@@ -6083,7 +6083,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Geodesic Weighting</i>: The influence of each range map is weighted with its geodesic distance from the borders. In this way when two (or more ) range maps overlaps their contribution blends smoothly hiding possible misalignments. 
+         <i>Geodesic Weighting</i>: The influence of each range map is weighted with its geodesic distance from the borders. In this way when two (or more ) range maps overlaps their contribution blends smoothly hiding possible misalignments.
 
    ``openresult : bool = true``
 
@@ -6129,7 +6129,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       The &lambda;-&mu; Taubin smoothing, combines two steps of low-pass filtering for each iteration. Based on the article:<br><b>A signal processing approach to fair surface design</b> by <i>Gabriel Taubin</i>, SIGGRAPH 1995<br><a href='https://doi.org/10.1145/218380.218473'>doi:10.1145/218380.218473</a></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``lambda_ : float = 0.5``
 
@@ -6171,7 +6171,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Create a new layer with a point sampling of the current mesh, a sample for each texel of the mesh is generated</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``texturew : int = 512``
 
@@ -6205,7 +6205,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Create a Torus</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``hradius : float = 3``
 
@@ -6247,7 +6247,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Mesh to Face color transfer</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``allvisiblemesh : bool = false``
 
@@ -6279,7 +6279,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Generates Vertex Color values picking color from a texture (same mesh or another mesh).</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``sourcemesh : int = 0``
 
@@ -6307,7 +6307,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Transfer texture color, vertex color or normal from one mesh the texture of another mesh. This may be useful to restore detail lost in simplification, or resample a texture in a different parametrization.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``sourcemesh : int = 0``
 
@@ -6384,7 +6384,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Fills the specified texture using per-vertex color data of the mesh.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``textname : str = 'cube_tex.png'``
 
@@ -6430,7 +6430,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Generate a matrix transformation that rotates the mesh aligning it to its principal axis of inertia.If the mesh is watertight the Itertia tensor is computed assuming the interior of the mesh has a uniform density.In case of an open mesh or a point clouds the inerta tensor is computed assuming each vertex is a constant puntual mass.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``pointsflag : bool = true``
 
@@ -6458,7 +6458,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Generate a matrix transformation that flips each one of the axis or swaps a couple of axis. The listed transformations are applied in that order. This kind of transformation cannot be applied to set of Raster!</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``flipx : bool = false``
 
@@ -6516,7 +6516,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Generate a matrix transformation that rotates the mesh. The mesh can be rotated around one of the axis or a given axis and w.r.t. to the origin or the baricenter, or a given point.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``rotaxis : str = 'X axis' (or int = 0)``
 
@@ -6593,7 +6593,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Rotate the camera, or all the cameras of the project. The selected raster is the reference if viewpoint rotation is selected.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``camera : str = 'Raster Camera' (or int = 0)``
 
@@ -6669,7 +6669,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Generate a matrix transformation that rotates the mesh so that the selection fits one of the main planes XY YZ ZX. May also translate such that the selection centroid rest on the origin. It reports on the log the average error of the fitting (in mesh units).</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``targetplane : str = 'XY plane' (or int = 0)``
 
@@ -6722,7 +6722,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Scale the camera, or all the cameras of the project. The selected raster is the reference if viewpoint scaling is selected.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``camera : str = 'Raster Camera' (or int = 0)``
 
@@ -6779,7 +6779,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Generate a matrix transformation that scale the mesh. The mesh can be also automatically scaled to a unit side box. </p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``axisx : float = 1``
 
@@ -6849,13 +6849,13 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Transform the camera extrinsics, or all the cameras of the project.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``transformmatrix : numpy.ndarray[numpy.float32[4, 4]] = [[1, 0, 0, 0],[0, 1, 0, 0],[0, 0, 1, 0],[0, 0, 0, 1]]``
 
       .. raw:: html
 
-         <i></i>: 
+         <i></i>:
 
    ``camera : str = 'Raster Camera' (or int = 0)``
 
@@ -6899,7 +6899,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Translate the camera, or all the cameras of the project.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``camera : str = 'Raster Camera' (or int = 0)``
 
@@ -6956,7 +6956,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Generate a matrix transformation that translate the mesh. The mesh can be translated around one of the axis or a given axis and w.r.t. to the origin or the baricenter, or a given point.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``traslmethod : str = 'XYZ translation' (or int = 0)``
 
@@ -7039,7 +7039,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Convert a tri-mesh into a quad-dominant mesh by pairing suitable triangles.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``level : str = 'Fewest triangles' (or int = 0)``
 
@@ -7061,7 +7061,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Two Steps Smoothing, a feature preserving/enhancing fairing filter based on two stages:<ol><li>Normal Smoothing, where similar normals are averaged together.<li>Vertex reposition, where vertices are moved to fit on the new normals.</ol><b>A Comparison of Mesh Smoothing Methods</b> by <i>A. Belyaev and Y. Ohtake</i>. Proc. Israel-Korea Bi-National Conf. Geometric Modeling and Computer Graphics, pp. 83-87, 2003.<br><a href='https://www.researchgate.net/publication/47861030_A_comparison_of_mesh_smoothing_methods'>publication</a></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``stepsmoothnum : int = 3``
 
@@ -7101,7 +7101,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Create a new mesh that is a resampled version of the current one.<br>The resampling is done by building a uniform volumetric representation where each voxel contains the signed distance from the original surface. The resampled surface is reconstructed using the <b>marching cube</b> algorithm over this volume.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``cellsize : Percentage = 2%``
 
@@ -7147,7 +7147,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Apply Unsharp filter to the vertex color, putting in more evidence color variations.<br>See <a href='https://en.wikipedia.org/wiki/Unsharp_masking'>Unsharp Masking</a></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``weight : float = 0.3``
 
@@ -7175,7 +7175,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Apply Unsharp filter to geometric shape, putting in more evidence ridges and valleys variations.<br><a href='https://en.wikipedia.org/wiki/Unsharp_masking'>Unsharp Masking</a></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``weight : float = 0.3``
 
@@ -7203,7 +7203,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Unsharp mask filtering of the normals per face, putting in more evidence normal variations.<br><b>A simple normal enhancement technique for interactive non-photorealistic renderings</b> by <i>Cignoni, Scopigno and Tarini</i>, Comput Graph, 29 (1) (2005)<br><a href='https://doi.org/10.1016/j.cag.2004.11.012'>doi:10.1016/j.cag.2004.11.012</a></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``recalc : bool = false``
 
@@ -7237,7 +7237,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Apply Unsharp filter to values of <a href='https://stackoverflow.com/questions/58610746'>quality per vertex</a>.<br>See <a href='https://en.wikipedia.org/wiki/Unsharp_masking'>Unsharp Masking</a></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``weight : float = 0.3``
 
@@ -7265,7 +7265,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Make all selected vertex attributes connectivity-independent:<br/>vertices are duplicated whenever two or more selected wedge or face attributes do not match.<br/>This is particularly useful for GPU-friendly mesh layout, where a single index must be used to access all required vertex attributes.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``normalmode : str = 'None' (or int = 0)``
 
@@ -7313,7 +7313,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Transfer the chosen per-vertex attributes from one layer to another. Useful to transfer attributes to different representations of a same object.<br>For each vertex of the target mesh the closest point (not vertex!) on the source mesh is computed, and the requested interpolated attributes from that source point are copied into the target vertex.<br>The algorithm assumes that the two meshes are reasonably similar and aligned.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``sourcemesh : int = 0``
 
@@ -7383,7 +7383,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Change the color the vertices of the mesh adjusting brightness, contrast and gamma.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``brightness : float (bounded) = 0 [min: -255; max: 255]``
 
@@ -7417,7 +7417,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Allows the application of a color to the mesh. In spite of the Fill operation, the color is blended with the mesh according to a given intensity.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``hue : float (bounded) = 0 [min: 0; max: 360]``
 
@@ -7457,7 +7457,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       The filter desaturates the colors of the mesh. This provides a simple way to convert a mesh in gray tones. The user can choose the desaturation method to apply; they are based on Lightness, Luminosity and Average.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``method : str = 'Lightness' (or int = 0)``
 
@@ -7485,7 +7485,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Fills the color of the vertices of the mesh with a color chosen by the user.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``color1 : Color = [0; 0; 0; 255]``
 
@@ -7507,7 +7507,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Inverts the colors of the vertices of the mesh.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``onselected : bool = false``
 
@@ -7523,55 +7523,55 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       The filter allows adjustment of color levels. It is a custom way to map an interval of color into another one. The user can set the input minimum and maximum levels, gamma and the output minimum and maximum levels (many tools call them respectively input black point, white point, gray point, output black point and white point).</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``gamma : float (bounded) = 1 [min: 0.1; max: 5]``
 
       .. raw:: html
 
-         <i>Gamma:</i>: 
+         <i>Gamma:</i>:
 
    ``in_min : float (bounded) = 0 [min: 0; max: 255]``
 
       .. raw:: html
 
-         <i>Min input level:</i>: 
+         <i>Min input level:</i>:
 
    ``in_max : float (bounded) = 255 [min: 0; max: 255]``
 
       .. raw:: html
 
-         <i>Max input level:</i>: 
+         <i>Max input level:</i>:
 
    ``out_min : float (bounded) = 0 [min: 0; max: 255]``
 
       .. raw:: html
 
-         <i>Min output level:</i>: 
+         <i>Min output level:</i>:
 
    ``out_max : float (bounded) = 255 [min: 0; max: 255]``
 
       .. raw:: html
 
-         <i>Max output level:</i>: 
+         <i>Max output level:</i>:
 
    ``rch : bool = true``
 
       .. raw:: html
 
-         <i>Red Channel:</i>: 
+         <i>Red Channel:</i>:
 
    ``gch : bool = true``
 
       .. raw:: html
 
-         <i>Green Channel:</i>: 
+         <i>Green Channel:</i>:
 
    ``bch : bool = true``
 
       .. raw:: html
 
-         <i>Blue Channel:</i>: 
+         <i>Blue Channel:</i>:
 
    ``onselected : bool = false``
 
@@ -7593,7 +7593,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Randomly add a small amount of a random base color to the mesh</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``basecolor : Color = [0; 0; 0; 255]``
 
@@ -7621,7 +7621,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Colors the vertices of the mesh using two colors according to a lightness threshold (on the original color).</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``color1 : Color = [0; 0; 0; 255]``
 
@@ -7655,7 +7655,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       The filter provides a standard white balance transformation. It is done correcting the RGB channels with a factor such that, the brighter color in the mesh, that is supposed to be white, becomes really white.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``color : Color = [255; 255; 255; 255]``
 
@@ -7677,7 +7677,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Morph deformation of current mesh towards a target mesh with the same number of vertices and same vertex ordering. Each vertex of the source mesh is linearly interpolated towards the corresponding vertex on the target mesh using the formula:<p align='center'>result<sub><big>i</big></sub> = (1-&lambda;)*source<sub><big>i</big></sub> + &lambda;*target<sub><big>i</big></sub></p><b>Three-dimensional metamorphosis: a survey</b><br>by <i>F. Lazarus and A. Verroust</i>, Visual Computer, 1998<br><a href='https://doi.org/10.1007/s003710050149'>doi:10.1007/s003710050149</a></p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``targetmesh : int = 0``
 
@@ -7699,7 +7699,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Compute vertex quality using the camera definition, according to viewing angle or distance</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``depth : bool = true``
 
@@ -7739,7 +7739,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Calculates obscurance coefficients for the mesh. Obscurance is introduced to avoid the disadvantages of both classical ambient term and ambient occlusion. In ambient occlusion, totally occluded parts of the mesh are black. Instead obscurance, despite still based on a perfectly diffuse light coming from everywhere, accounts for multiple bounces of indirect illumination by means of a function of both the openness of a point and the distance to his occluder (if any). Obscurance is inversely proportional to the number of ray casted from the point that hit an occluder and proportional to the distance a ray travels before hitting the occluder. You can control how much the distance factor influences the final result with the obscurance exponenent (see help below). Obscurance is a value in the range [0,1]. For further details see the reference paper:<br><b>Iones Krupkin Sbert Zhukov <br> Fast, Realistic Lighting for Video Games <br>IEEECG&A 2003</b> </p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``onprimitive : str = 'On vertices' (or int = 0)``
 
@@ -7750,7 +7750,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Metric:</i>: Choose whether to trace rays from faces or from vertices. 
+         <i>Metric:</i>: Choose whether to trace rays from faces or from vertices.
 
    ``numberrays : int = 128``
 
@@ -7796,7 +7796,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Compute a volumetric sampling over a watertight mesh.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``samplesurfradius : Percentage = 0.2%``
 
@@ -7830,7 +7830,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Compute a <b>Voronoi filtering</b> (Amenta and Bern 1998) with Qhull library (http://www.qhull.org/). <br><br>The algorithm calculates a triangulation of the input point cloud without requiring vertex normals.It uses a subset of the Voronoi vertices to remove triangles from the Delaunay triangulation. <br>After computing the Voronoi diagram, foreach sample point it chooses the two farthest opposite Voronoi vertices.Then computes a Delaunay triangulation of the sample points and the selected Voronoi vertices, and keep only those triangles in witch all three vertices are sample points.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``threshold : float (bounded) = 10 [min: 0; max: 2000]``
 
@@ -7846,7 +7846,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Compute a sampling over a mesh and perform a Lloyd relaxation.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``iternum : int = 10``
 
@@ -7877,7 +7877,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Color Strategy</i>: 
+         <i>Color Strategy</i>:
 
    ``distancetype : str = 'Euclidean' (or int = 0)``
 
@@ -7889,13 +7889,13 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Distance Type</i>: 
+         <i>Distance Type</i>:
 
    ``preprocessflag : bool = false``
 
       .. raw:: html
 
-         <i>Preprocessing</i>: 
+         <i>Preprocessing</i>:
 
    ``refinefactor : int = 10``
 
@@ -7941,7 +7941,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Compute a volumetric sampling over a watertight mesh.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``samplesurfradius : Percentage = 1%``
 
@@ -7995,7 +7995,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       .. raw:: html
 
-         <i>Voronoi Element</i>: 
+         <i>Voronoi Element</i>:
 
 .. data:: voronoi_vertex_coloring
 
@@ -8005,7 +8005,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
       Given a Mesh <b>M</b> and a Pointset <b>P</b>, The filter project each vertex of P over M and color M according to the geodesic distance from these projected points. Projection and coloring are done on a per vertex basis.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``coloredmesh : int = 0``
 
@@ -8037,7 +8037,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load 3ds format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.3ds'``
 
@@ -8052,7 +8052,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load apts format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.apts'``
 
@@ -8067,7 +8067,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load asc format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.asc'``
 
@@ -8094,7 +8094,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load bre format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.bre'``
 
@@ -8121,7 +8121,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load ctm format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.ctm'``
 
@@ -8136,7 +8136,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load dae format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.dae'``
 
@@ -8151,7 +8151,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load es format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.es'``
 
@@ -8175,7 +8175,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       .. raw:: html
 
-         <i>set maximum resolution of sphere primitives, it must be included between 1 and 4</i>: increasing the resolution of the spheres will improve the quality of the mesh 
+         <i>set maximum resolution of sphere primitives, it must be included between 1 and 4</i>: increasing the resolution of the spheres will improve the quality of the mesh
 
    ``maxobj : int = 0``
 
@@ -8190,7 +8190,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load fbx format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.fbx'``
 
@@ -8205,7 +8205,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load obj format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.obj'``
 
@@ -8220,7 +8220,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load off format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.off'``
 
@@ -8235,7 +8235,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load pdb format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.pdb'``
 
@@ -8292,7 +8292,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load ply format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.ply'``
 
@@ -8307,7 +8307,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load pts format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.pts'``
 
@@ -8322,7 +8322,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load ptx format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.ptx'``
 
@@ -8379,7 +8379,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load qobj format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.qobj'``
 
@@ -8394,7 +8394,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load stl format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.stl'``
 
@@ -8415,7 +8415,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load tri format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.tri'``
 
@@ -8430,7 +8430,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load txt format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.txt'``
 
@@ -8507,7 +8507,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load vmi format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.vmi'``
 
@@ -8522,7 +8522,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load wrl format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.wrl'``
 
@@ -8537,7 +8537,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load x3d format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.x3d'``
 
@@ -8552,7 +8552,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load x3dv format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.x3dv'``
 
@@ -8567,7 +8567,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       Load xyz format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.xyz'``
 
@@ -8587,7 +8587,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
       Save 3ds format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.3ds'``
 
@@ -8626,7 +8626,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
       Save ctm format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.ctm'``
 
@@ -8665,7 +8665,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
       Save dae format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.dae'``
 
@@ -8710,7 +8710,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
       Save dxf format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.dxf'``
 
@@ -8725,7 +8725,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
       Save idtf format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.idtf'``
 
@@ -8794,7 +8794,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
       Save json format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.json'``
 
@@ -8827,7 +8827,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
       Save obj format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.obj'``
 
@@ -8884,7 +8884,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
       Save off format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.off'``
 
@@ -8923,7 +8923,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
       Save ply format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.ply'``
 
@@ -9022,7 +9022,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
       Save stl format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.stl'``
 
@@ -9055,7 +9055,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
       Save u3d format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.u3d'``
 
@@ -9112,7 +9112,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
       Save wrl format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.wrl'``
 
@@ -9145,7 +9145,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
       Save x3d format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.x3d'``
 
@@ -9208,7 +9208,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
       Save xyz format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.xyz'``
 
@@ -9223,7 +9223,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
          <i>Save Vertex Normal</i>: Save Vertex Normal
 
 load raster parameters
----------------
+----------------------
 
 Here are listed all the raster file formats that can be loaded usingthe functions :py:meth:`pmeshlab.MeshSet.load_new_raster`.
 
@@ -9234,7 +9234,7 @@ Here are listed all the raster file formats that can be loaded usingthe function
 
       Load jpeg format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.jpeg'``
 
@@ -9249,7 +9249,7 @@ Here are listed all the raster file formats that can be loaded usingthe function
 
       Load jpg format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.jpg'``
 
@@ -9264,7 +9264,7 @@ Here are listed all the raster file formats that can be loaded usingthe function
 
       Load png format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.png'``
 
@@ -9279,11 +9279,10 @@ Here are listed all the raster file formats that can be loaded usingthe function
 
       Load xpm format.</p>
 
-   **Parameters:** 
+   **Parameters:**
 
    ``file_name : str = 'file_name.xpm'``
 
       .. raw:: html
 
          <i>File Name</i>: The name of the file to load
-

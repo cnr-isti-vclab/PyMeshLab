@@ -13,10 +13,18 @@ PyMeshLab Classes
    classes/meshset
    classes/percentage
 
+Module Members
+--------------
+
+.. toctree::
+   :maxdepth: 1
+
+   classes/pmeshlab
+
 Exceptions
 ----------
 
 .. toctree::
    :maxdepth: 1
-   
+
    classes/exceptions

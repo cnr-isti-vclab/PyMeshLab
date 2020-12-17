@@ -824,7 +824,7 @@ std::string RSTDocumentationFromFilterFunctionSet(const FilterFunctionSet& filte
 	//load raster parameters
 	
 	doc +=
-			"load raster parameters\n---------------\n\n"
+			"load raster parameters\n----------------------\n\n"
 			"Here are listed all the raster file formats that can be loaded using"
 			"the functions :py:meth:`pmeshlab.MeshSet.load_new_raster`.\n\n";
 	
