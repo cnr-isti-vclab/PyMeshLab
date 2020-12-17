@@ -462,17 +462,15 @@ void saveMeshUsingPlugin(
 	PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
 	if (pm.allKnowOutputFormats.contains(extension)){
 		IOMeshPluginInterface* plugin = pm.allKnowOutputFormats[extension];
-		//int mask = 0; //todo: use this mask
 		RichParameterList rps;
-		int capability = 0, defbits = 0, capabilityMesh = 0, capabilityUser = 0;
-		plugin->GetExportMaskCapability(extension,capability,defbits);
+		int capability = 0, defbits = 0, capabilityMesh;
+		plugin->GetExportMaskCapability(extension, capability, defbits);
 		plugin->initSaveParameter(extension, *mm, rps);
 
 		capabilityMesh = currentMeshIOCapabilityMask(mm);
-
 		bool ok = plugin->save(
 					extension, QString::fromStdString(filename), *mm,
-					capabilityUser, rps);
+					capabilityMesh & defbits, rps);
 		if (!ok){
 			throw MLException("Unable to save file: " + QString::fromStdString(filename));
 		}
@@ -506,7 +504,7 @@ void saveMeshUsingPlugin(
 		meshsethelper::updateRichParameterListFromKwargs(ff, kwargs, &md, rps, true);
 
 		capabilityMesh = currentMeshIOCapabilityMask(mm);
-		capabilityUser = capabilityMaskFromKwargs(kwargs, capability & capabilityMesh);
+		capabilityUser = capabilityMaskFromKwargs(kwargs, defbits & capabilityMesh);
 
 		bool ok = plugin->save(
 					extension, QString::fromStdString(filename), *mm,
@@ -791,7 +789,9 @@ std::string RSTDocumentationFromFilterFunctionSet(const FilterFunctionSet& filte
 			"if they are left as default.\n\n";
 
 	for (auto it = filterFunctionSet.begin(); it != filterFunctionSet.end(); ++it) {
-		if (!(it->pythonFunctionName().startsWith("load")) && !(it->pythonFunctionName().startsWith("save")))
+		if (!(it->pythonFunctionName().startsWith("load_")) && 
+				!(it->pythonFunctionName().startsWith("save_")) &&
+				!(it->pythonFunctionName().startsWith("loadr_")))
 			doc += filterRSTDocumentation(it, false);
 	}
 
@@ -804,7 +804,7 @@ std::string RSTDocumentationFromFilterFunctionSet(const FilterFunctionSet& filte
 			"parameters that can be accepted by these functions.\n\n";
 
 	for (auto it = filterFunctionSet.begin(); it != filterFunctionSet.end(); ++it) {
-		if (it->pythonFunctionName().startsWith("load"))
+		if (it->pythonFunctionName().startsWith("load_"))
 			doc += filterRSTDocumentation(it, true);
 	}
 
@@ -817,7 +817,19 @@ std::string RSTDocumentationFromFilterFunctionSet(const FilterFunctionSet& filte
 			"functions.\n\n";
 
 	for (auto it = filterFunctionSet.begin(); it != filterFunctionSet.end(); ++it) {
-		if (it->pythonFunctionName().startsWith("save"))
+		if (it->pythonFunctionName().startsWith("save_"))
+			doc += filterRSTDocumentation(it, true);
+	}
+	
+	//load raster parameters
+	
+	doc +=
+			"load raster parameters\n---------------\n\n"
+			"Here are listed all the raster file formats that can be loaded using"
+			"the functions :py:meth:`pmeshlab.MeshSet.load_new_raster`.\n\n";
+	
+	for (auto it = filterFunctionSet.begin(); it != filterFunctionSet.end(); ++it) {
+		if (it->pythonFunctionName().startsWith("loadr_"))
 			doc += filterRSTDocumentation(it, true);
 	}
 

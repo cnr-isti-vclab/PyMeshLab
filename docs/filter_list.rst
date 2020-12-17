@@ -433,7 +433,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
    .. raw:: html
 
-      Colorize the vertices of a mesh or point set using the curfvature of the underlying surface.<br><br>This is the <i>algebraic point set surfaces</i> (APSS) variant which is based on the local fitting of algebraic spheres. It requires points equipped with oriented normals. <br>For all the details about APSS see: <br> Guennebaud and Gross, 'Algebraic Point Set Surfaces', Siggraph 2007, and<br>Guennebaud et al., 'Dynamic Sampling and Rendering of APSS', Eurographics 2008</p>
+      Colorize the vertices of a mesh or point set using the curvature of the underlying surface.<br><br>This is the <i>algebraic point set surfaces</i> (APSS) variant which is based on the local fitting of algebraic spheres. It requires points equipped with oriented normals. <br>For all the details about APSS see: <br> Guennebaud and Gross, 'Algebraic Point Set Surfaces', Siggraph 2007, and<br>Guennebaud et al., 'Dynamic Sampling and Rendering of APSS', Eurographics 2008</p>
 
    **Parameters:** 
 
@@ -487,7 +487,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
    .. raw:: html
 
-      Colorize the vertices of a mesh or point set using the curfvature of the underlying surface.<br><br>This is the Robust Implicit MLS (RIMLS) variant which is an extension of Implicit MLS preserving sharp features using non linear regression. For more details see: <br>Oztireli, Guennebaud and Gross, 'Feature Preserving Point Set Surfaces based on Non-Linear Kernel Regression' Eurographics 2009.</p>
+      Colorize the vertices of a mesh or point set using the curvature of the underlying surface.<br><br>This is the Robust Implicit MLS (RIMLS) variant which is an extension of Implicit MLS preserving sharp features using non linear regression. For more details see: <br>Oztireli, Guennebaud and Gross, 'Feature Preserving Point Set Surfaces based on Non-Linear Kernel Regression' Eurographics 2009.</p>
 
    **Parameters:** 
 
@@ -3397,7 +3397,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
    .. raw:: html
 
-      Build an atlased parametrization based on a geodesic voronoi partitioning of the surface and parametrizing each region using Harmonic Mapping. For the  parametrization of the disk like voronoi regions the used method is: <br><b>Ulrich Pinkall, Konrad Polthier</b><br>                                            <i>Computing Discrete Minimal Surfaces and Their Conjugates</i> <br>                                            Experimental Mathematics, Vol 2 (1), 1993<br> .</p>
+      Build an atlased parametrization based on a geodesic voronoi partitioning of the surface and parametrizing each region using Harmonic Mapping. For the  parametrization of the disk like voronoi regions the used method is: <br><b>Ulrich Pinkall, Konrad Polthier</b><br>											<i>Computing Discrete Minimal Surfaces and Their Conjugates</i> <br>											Experimental Mathematics, Vol 2 (1), 1993<br> .</p>
 
    **Parameters:** 
 
@@ -4737,7 +4737,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
    **Parameters:** 
 
-   ``maxqualitythr : Percentage = 0%``
+   ``maxqualitythr : Percentage = -nan%``
 
       .. raw:: html
 
@@ -5334,7 +5334,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
    .. raw:: html
 
-      Set a texture associated with current mesh parametrization.<br>If the texture provided exists it will be simply associated to the current mesh else a dummy texture will be created and saved in the same directory.</p>
+      Set a texture associated with current mesh parametrization.<br>If the texture provided exists, then it will be simply associated to the current mesh; else a dummy texture will be created and saved in the same directory of the mesh if exists, or in the default system picture directory.</p>
 
    **Parameters:** 
 
@@ -5993,7 +5993,7 @@ Please note: some filter parameters depend on the mesh(es) used as input of the 
 
    .. raw:: html
 
-      This surface reconstruction algorithm creates watertight surfaces from oriented point sets.<br>The filter uses the original code of Michael Kazhdan and Matthew Bolitho implementing the algorithm described in the following paper:<br><i>Michael Kazhdan, Hugues Hoppe</i>,<br><b>"Screened Poisson surface reconstruction"</b><br>ACM Trans. Graphics, 32(3), 2013<br><br><b>WARNING:</b> this filter saves intermediate cache files in the "working" folder (last folder used when loading/saving). Be sure you are not working in a READ-ONLY location.<br></p>
+      This surface reconstruction algorithm creates watertight surfaces from oriented point sets.<br>The filter uses the original code of Michael Kazhdan and Matthew Bolitho implementing the algorithm described in the following paper:<br><i>Michael Kazhdan, Hugues Hoppe</i>,<br><b>"Screened Poisson surface reconstruction"</b><br></p>
 
    **Parameters:** 
 
@@ -8718,42 +8718,6 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>File Name</i>: The name of the file to save
 
-   ``save_vertex_coord : bool = true``
-
-      .. raw:: html
-
-         <i>Save Vertex Coord</i>: Save Vertex Coord
-
-   ``save_vertex_normal : bool = false``
-
-      .. raw:: html
-
-         <i>Save Vertex Normal</i>: Save Vertex Normal
-
-   ``save_face_quality : bool = false``
-
-      .. raw:: html
-
-         <i>Save Face Quality</i>: Save Face Quality
-
-   ``save_face_color : bool = true``
-
-      .. raw:: html
-
-         <i>Save Face Color</i>: Save Face Color
-
-   ``save_wedge_texcoord : bool = true``
-
-      .. raw:: html
-
-         <i>Save Wedge TexCoord</i>: Save Wedge TexCoord
-
-   ``save_wedge_normal : bool = true``
-
-      .. raw:: html
-
-         <i>Save Wedge Normal</i>: Save Wedge Normal
-
 .. data:: idtf
    :noindex:
 
@@ -9207,31 +9171,31 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>Save Vertex Normal</i>: Save Vertex Normal
 
-   ``save_face_color : bool = true``
+   ``save_face_color : bool = false``
 
       .. raw:: html
 
          <i>Save Face Color</i>: Save Face Color
 
-   ``save_face_normal : bool = true``
+   ``save_face_normal : bool = false``
 
       .. raw:: html
 
          <i>Save Face Normal</i>: Save Face Normal
 
-   ``save_wedge_color : bool = true``
+   ``save_wedge_color : bool = false``
 
       .. raw:: html
 
          <i>Save Wedge Color</i>: Save Wedge Color
 
-   ``save_wedge_texcoord : bool = true``
+   ``save_wedge_texcoord : bool = false``
 
       .. raw:: html
 
          <i>Save Wedge TexCoord</i>: Save Wedge TexCoord
 
-   ``save_wedge_normal : bool = true``
+   ``save_wedge_normal : bool = false``
 
       .. raw:: html
 
@@ -9257,4 +9221,69 @@ Here are listed all the file formats that can be saved usingthe function :py:met
       .. raw:: html
 
          <i>Save Vertex Normal</i>: Save Vertex Normal
+
+load raster parameters
+---------------
+
+Here are listed all the raster file formats that can be loaded usingthe functions :py:meth:`pmeshlab.MeshSet.load_new_raster`.
+
+.. data:: jpeg
+   :noindex:
+
+   .. raw:: html
+
+      Load jpeg format.</p>
+
+   **Parameters:** 
+
+   ``file_name : str = 'file_name.jpeg'``
+
+      .. raw:: html
+
+         <i>File Name</i>: The name of the file to load
+
+.. data:: jpg
+   :noindex:
+
+   .. raw:: html
+
+      Load jpg format.</p>
+
+   **Parameters:** 
+
+   ``file_name : str = 'file_name.jpg'``
+
+      .. raw:: html
+
+         <i>File Name</i>: The name of the file to load
+
+.. data:: png
+   :noindex:
+
+   .. raw:: html
+
+      Load png format.</p>
+
+   **Parameters:** 
+
+   ``file_name : str = 'file_name.png'``
+
+      .. raw:: html
+
+         <i>File Name</i>: The name of the file to load
+
+.. data:: xpm
+   :noindex:
+
+   .. raw:: html
+
+      Load xpm format.</p>
+
+   **Parameters:** 
+
+   ``file_name : str = 'file_name.xpm'``
+
+      .. raw:: html
+
+         <i>File Name</i>: The name of the file to load
 
