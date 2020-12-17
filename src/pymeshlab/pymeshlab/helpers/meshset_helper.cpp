@@ -236,6 +236,45 @@ bool pythonFilterNameExists(
 
 /** Load/Save Mesh **/
 
+void afterLoadOperations(MeshModel& m, int mask)
+{
+	// In case of polygonal meshes the normal should be updated accordingly
+	if( mask & vcg::tri::io::Mask::IOM_BITPOLYGONAL)
+	{
+		m.updateDataMask(MeshModel::MM_POLYGONAL); // just to be sure. Hopefully it should be done in the plugin...
+		int degNum = vcg::tri::Clean<CMeshO>::RemoveDegenerateFace(m.cm);
+		if(degNum)
+			std::cerr << "Warning: mesh contains " << degNum << " degenerate faces. Removed them.";
+		m.updateDataMask(MeshModel::MM_FACEFACETOPO);
+		vcg::tri::UpdateNormal<CMeshO>::PerBitQuadFaceNormalized(m.cm);
+		vcg::tri::UpdateNormal<CMeshO>::PerVertexFromCurrentFaceNormal(m.cm);
+	} // standard case
+	else
+	{
+		vcg::tri::UpdateNormal<CMeshO>::PerFaceNormalized(m.cm);
+		if(!( mask & vcg::tri::io::Mask::IOM_VERTNORMAL) )
+			vcg::tri::UpdateNormal<CMeshO>::PerVertexAngleWeighted(m.cm);
+	}
+	
+	vcg::tri::UpdateBounding<CMeshO>::Box(m.cm);					// updates bounding box
+	if(m.cm.fn==0 && m.cm.en==0) {
+		if(mask & vcg::tri::io::Mask::IOM_VERTNORMAL)
+			m.updateDataMask(MeshModel::MM_VERTNORMAL);
+	}
+	
+	if(m.cm.fn==0 && m.cm.en>0) {
+		if (mask & vcg::tri::io::Mask::IOM_VERTNORMAL)
+			m.updateDataMask(MeshModel::MM_VERTNORMAL);
+	}
+	
+	int delVertNum = vcg::tri::Clean<CMeshO>::RemoveDegenerateVertex(m.cm);
+	int delFaceNum = vcg::tri::Clean<CMeshO>::RemoveDegenerateFace(m.cm);
+	vcg::tri::Allocator<CMeshO>::CompactEveryVector(m.cm);
+	if(delVertNum>0 || delFaceNum>0 )
+		std::cerr << "Warning: mesh contains " << delVertNum << " vertices with NAN coords and "
+				<< delFaceNum << " degenerated faces. Corrected.";
+}
+
 void loadMeshUsingPlugin(
 		const std::string& filename,
 		MeshModel* mm,
@@ -274,7 +313,7 @@ void loadMeshUsingPlugin(
 				throw MLException("Unable to open file: " + QString::fromStdString(filename));
 			}
 			else {
-				vcg::tri::UpdateBounding<CMeshO>::Box(mm->cm);
+				afterLoadOperations(*mm, mask);
 			}
 		}
 		else {
@@ -330,7 +369,7 @@ void loadMeshUsingPlugin(
 				throw MLException("Unable to open file: " + QString::fromStdString(filename));
 			}
 			else {
-				vcg::tri::UpdateBounding<CMeshO>::Box(mm->cm);
+				afterLoadOperations(*mm, mask);
 			}
 		}
 		else {
@@ -638,7 +677,9 @@ pybind11::dict applyFilterRPL(
 		if (md.mm() != nullptr)
 			md.mm()->updateDataMask(req);
 		
-		unsigned int postConditionMask;
+		md.meshDocStateData().clear();
+		md.meshDocStateData().create(md);
+		unsigned int postConditionMask = MeshModel::MM_UNKNOWN;
 		std::map<std::string, QVariant> outputValues;
 		bool res = fp->applyFilter(action, md, outputValues, postConditionMask, rpl, &VerbosityManager::filterCallBack);
 		if (res){
@@ -655,8 +696,7 @@ pybind11::dict applyFilterRPL(
 			outputDict = toPyDict(outputValues);
 		}
 		else {
-			throw MLException(
-						"Failed to apply filter: " + QString::fromStdString(filtername) + "\n");
+			throw MLException(fp->errorMsg());
 		}
 	}
 	catch(const std::exception& e) {
