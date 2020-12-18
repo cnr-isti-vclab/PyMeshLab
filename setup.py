@@ -53,9 +53,19 @@ with zipfile.ZipFile(filename, 'r') as zip_ref:
 
 os.remove(this_directory + '/' + filename)
 
+try:
+    from wheel.bdist_wheel import bdist_wheel as _bdist_wheel
+    class bdist_wheel(_bdist_wheel):
+        def finalize_options(self):
+            _bdist_wheel.finalize_options(self)
+            self.root_is_pure = False
+except ImportError:
+    bdist_wheel = None
+
 setup(
     name='pymeshlab',
     version=pymeshlabversion,
+    cmdclass={'bdist_wheel': bdist_wheel},
     description='A Python interface to MeshLab',
     long_description=long_description,
     long_description_content_type='text/markdown',
