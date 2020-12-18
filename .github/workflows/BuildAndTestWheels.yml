@@ -21,6 +21,7 @@ jobs:
       - name: Build Wheel
         shell: bash
         run: |
+          pip install wheel
           pip wheel . -w wheels/
       - name: Upload wheel ${{ matrix.os }} python ${{ matrix.pyversion }}
         uses: actions/upload-artifact@v2
