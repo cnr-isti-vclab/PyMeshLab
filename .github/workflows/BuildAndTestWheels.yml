@@ -1,0 +1,27 @@
+name: BuildAndTestWheels
+
+on:
+  workflow_dispatch
+
+build_wheel:
+  name: Build Wheel
+  runs-on: ${{ matrix.os }}
+  strategy:
+    matrix:
+      os: [ubuntu-16.04, macos-latest, windows-latest]
+      pyversion: [3.6, 3.7, 3.8, 3.9]
+  steps:
+    - name: Install Python ${{ matrix.pyversion }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.pyversion }}
+    - uses: actions/checkout@v2
+    - name: Build Wheel
+      shell: bash
+      run: |
+        pip wheel . -w wheels/
+    - name: Upload wheel ${{ matrix.os }} python ${{ matrix.pyversion }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: pymeshlab_whl_${{ runner.os }}_python${{ matrix.pyversion }}
+        path: wheels/pymeshlab*.whl
