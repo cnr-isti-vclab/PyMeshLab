@@ -60,13 +60,14 @@ try:
             _bdist_wheel.finalize_options(self)
             self.root_is_pure = False
         def get_tag(self):
+            a, b, c = super().get_tag()
             if platform.system() == 'Windows':
                 platform_tag = 'win_amd64'
             elif platform.system() == 'Linux':
                 platform_tag = 'manylinux1_x86_64'
             elif platform.system() == 'Darwin':
                 platform_tag = 'macosx_10_11_x86_64'
-            return 'py2.py3', 'none', platform_tag
+            return a, b, platform_tag
 except ImportError:
     bdist_wheel = None
 
