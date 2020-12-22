@@ -39,6 +39,16 @@ void pymeshlab::Mesh::compactFaces(CMeshO& mesh)
 	vcg::tri::Allocator<CMeshO>::CompactFaceVector(mesh);
 }
 
+int pymeshlab::Mesh::selectedVertexNumber(const CMeshO& mesh)
+{
+	int counter = 0;
+	for (int i = 0; i < mesh.VN(); i++){
+		if (!mesh.vert[i].IsD() && mesh.vert[i].IsS())
+			counter++;
+	}
+	return counter;
+}
+
 int pymeshlab::Mesh::selectedFaceNumber(const CMeshO& mesh)
 {
 	int counter = 0;

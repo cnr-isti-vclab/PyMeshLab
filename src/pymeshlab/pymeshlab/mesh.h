@@ -26,6 +26,7 @@ public:
 	static void compactVertices(CMeshO& mesh);
 	static void compactFaces(CMeshO& mesh);
 
+	static int selectedVertexNumber(const CMeshO& mesh);
 	static int selectedFaceNumber(const CMeshO& mesh);
 
 	static Eigen::MatrixXd vertexMatrix(const CMeshO& mesh);

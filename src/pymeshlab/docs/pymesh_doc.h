@@ -40,6 +40,10 @@ const char* PYMESH_IS_COMPACT =
 const char* PYMESH_BB =
 		"Returns the bounding box of the mesh.";
 
+//Mesh::selected_vertex_number
+const char* PYMESH_SEL_VN =
+		"Returns the number of selected vertices of the mesh.";
+
 //Mesh::selected_face_number
 const char* PYMESH_SEL_FN =
 		"Returns the number of selected faces of the mesh.";
