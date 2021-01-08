@@ -3,12 +3,32 @@
 List of Filters
 ===============
 
-apply_filter parameters
------------------------
-
 Here are listed all the filter names that can be given as paramter to the function :py:meth:`pmeshlab.MeshSet.apply_filter`.
 
-Please note: some filter parameters depend on the mesh(es) used as input of the filter. Default values listed here are computed on a 1x1x1 cube (pymeshlab/tests/sample/cube.obj), and they will be computed on the input mesh if they are left as default.
+Each filter accepts a list of parameters, that can be semantically classified as follows:
+
+   * `Boolean`: a classic ``bool`` value;
+   * `Integer`: a classic ``int`` value;
+   * `String`: a classic ``str`` value;
+   * `Float`: a classic ``float`` value;
+   * `Bounded Float`: a classic ``float`` that is expected to be bounded between a ``min`` and a ``max`` value; an out-of-bounds value will raise an exception;
+   * `Percentage`: represents a parameter that is relative to some other measure, specified in the documentation of the filter. This parameter can be of two different types:
+
+     * :py:class:`pmeshlab.Percentage` (recommended): the parameter will be treated as relative percentage value; see the documentation of the :py:class:`pmeshlab.Percentage` for further info;
+     * ``float`` (not recommended): the parameter will be treated as absolute value;
+
+   * `Enum`: represents a parameter that can accept just one of a limited set of possible values. These values type can be ``int`` or ``str``; see the documentation of the specific filter for further info;
+   * `Color`: represents a color, and the parameter can be of type  :py:class:`pmeshlab.Color`; see the documentation of the  :py:class:`pmeshlab.Color` for further info;
+   * `3D Point (or 3D Vector)`: represents a 3D point or vector, and the parameter can be of type ``numpy.ndarray[numpy.float64[3]]`` (a numpy array containing three floats);
+   * `4x4 Matrix`: represents a 4x4 Matrix of floats, and the parameter can be of type ``numpy.ndarray[numpy.float64[4, 4]]`` (a 4x4 numpy array of floats);
+   * `Mesh`: represents a parameter that links to one of the meshes contained in the MeshSet on which the filter is applied. This parameter is of type ``int``, which indicates the ``id`` of the mesh in the MeshSet;
+   * `File Name`: a classic ``str`` that represents the path of a file that is going to be saved or loaded by the filter. The string is expected to have at least an extension on its final characters; see the documentation of the specific filter for further info;
+   * `Camera`: *still not supported*;
+
+**Please note**: some filter parameters depend on the mesh(es) used as input of the filter. Default values listed here are computed on a 1x1x1 cube (pymeshlab/tests/sample/cube.obj), but their value will be computed on the input mesh if they are left as default.
+
+apply_filter parameters
+-----------------------
 
 .. data:: alpha_complex_shape
 
