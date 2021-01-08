@@ -5,6 +5,7 @@
 ![Windows](https://github.com/cnr-isti-vclab/PyMeshLab/workflows/Windows/badge.svg)
 
 [![Documentation Status](https://readthedocs.org/projects/pymeshlab/badge/?version=latest)](https://pymeshlab.readthedocs.io/en/latest/?badge=latest)
+[![Downloads](https://pepy.tech/badge/pymeshlab)](https://pepy.tech/project/pymeshlab)
 
 PyMeshLab is a Python library that interfaces to [MeshLab](https://github.com/cnr-isti-vclab/meshlab), the popular open source application for editing and processing large 3D triangle meshes. Python bindings are generated using [pybind11](https://github.com/pybind/pybind11).
 

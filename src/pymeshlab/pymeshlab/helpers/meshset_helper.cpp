@@ -778,16 +778,37 @@ std::string RSTDocumentationFromFilterFunctionSet(const FilterFunctionSet& filte
 
 	doc += ".. _filter_list:\n\nList of Filters\n===============\n\n";
 
-	/// apply_filter parameters
 	doc +=
-			"apply_filter parameters\n-----------------------\n\n"
 			"Here are listed all the filter names that can be given as paramter "
 			"to the function :py:meth:`pmeshlab.MeshSet.apply_filter`.\n\n"
-			"Please note: some filter parameters depend on the mesh(es) used as "
+			
+			"Each filter accepts a list of parameters, that can be semantically classified as follows:\n\n"
+			
+			"   * `Boolean`: a classic ``bool`` value;\n"
+			"   * `Integer`: a classic ``int`` value;\n"
+			"   * `String`: a classic ``str`` value;\n"
+			"   * `Float`: a classic ``float`` value;\n"
+			"   * `Bounded Float`: a classic ``float`` that is expected to be bounded between a ``min`` and a ``max`` value; an out-of-bounds value will raise an exception;\n"
+			"   * `Percentage`: represents a parameter that is relative to some other measure, specified in the documentation of the filter. This parameter can be of two different types: \n\n"
+			
+			"      * :py:class:`pmeshlab.Percentage` (recommended): the parameter will be treated as relative percentage value; see the documentation of the :py:class:`pmeshlab.Percentage` for further info;\n"
+			"      * ``float`` (not recommended): the parameter will be treated as absolute value;\n\n"
+			
+			"   * `Enum`: represents a parameter that can accept just one of a limited set of possible values. These values type can be ``int`` or ``str``; see the documentation of the specific filter for further info;\n"
+			"   * `Color`: represents a color, and the parameter can be of type  :py:class:`pmeshlab.Color`; see the documentation of the  :py:class:`pmeshlab.Color` for further info;\n"
+			"   * `3D Point (or 3D Vector)`: represents a 3D point or vector, and the parameter can be of type ``numpy.ndarray[numpy.float64[3]]`` (a numpy array containing three floats);\n"
+			"   * `4x4 Matrix`: represents a 4x4 Matrix of floats, and the parameter can be of type ``numpy.ndarray[numpy.float64[4, 4]]`` (a 4x4 numpy array of floats);\n"
+			"   * `Mesh`: represents a parameter that links to one of the meshes contained in the MeshSet on which the filter is applied. This parameter is of type ``int``, which indicates the ``id`` of the mesh in the MeshSet;\n"
+			"   * `File Name`: a classic ``str`` that represents the path of a file that is going to be saved or loaded by the filter. The string is expected to have at least an extension on its final characters; see the documentation of the specific filter for further info;\n"
+			"   * `Camera`: *still not supported*;\n\n"
+			
+			"**Please note**: some filter parameters depend on the mesh(es) used as "
 			"input of the filter. Default values listed here are computed on a 1x1x1 cube "
-			"(pymeshlab/tests/sample/cube.obj), and they will be computed on the input mesh "
-			"if they are left as default.\n\n";
+			"(pymeshlab/tests/sample/cube.obj), but theit value will be computed on the input mesh "
+			"if they are left as default.\n\n"
+			"apply_filter parameters\n-----------------------\n\n";
 
+	/// apply_filter parameters
 	for (auto it = filterFunctionSet.begin(); it != filterFunctionSet.end(); ++it) {
 		if (!(it->pythonFunctionName().startsWith("load_")) && 
 				!(it->pythonFunctionName().startsWith("save_")) &&
