@@ -4,7 +4,6 @@
 #include <pybind11/eigen.h>
 #include <common/mlexception.h>
 
-
 #include "percentage.h"
 #include "exceptions.h"
 #include "helpers/common.h"

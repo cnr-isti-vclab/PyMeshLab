@@ -9,15 +9,19 @@
 
 namespace py = pybind11;
 
+//creation of a python module
 PYBIND11_MODULE(PYMESHLAB_MODULE_NAME, m) {
+	//bindings of all the classes in the module
 	pymeshlab::initBoundingBox(m); //BoundingBox Class
 	pymeshlab::initColor(m); //Color Class
 	pymeshlab::initMesh(m); //Mesh Class
 	pymeshlab::initMeshSet(m); //MeshDocument Class
 	pymeshlab::initPercentage(m); //Percentage Class
 	
+	//binding the exceptions
 	pymeshlab::initExceptions(m); //Exceptions
 	
+	//binding some other functions
 	m.def("print_pymeshlab_version", &pymeshlab::printVersion);
 	m.def("number_plugins", &pymeshlab::numberPlugins);
 	m.def("print_plugin_list", &pymeshlab::printPluginList);

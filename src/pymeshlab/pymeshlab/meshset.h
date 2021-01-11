@@ -9,6 +9,20 @@
 
 namespace pymeshlab {
 
+/**
+ * @brief The MeshSet class
+ * 
+ * The MeshSet class is a container or Meshes and Rasters that represents a
+ * "MeshLab session". It inherits from the class MeshDocument, and implements
+ * a set of member functions that can be directly binded in python.
+ * 
+ * In addition to the members of the MeshDocument, the MeshSet contains:
+ * - a reference to a PluginManager, which is managed within a singleton;
+ * - a filterFunctionSet, an object containing all the bindings beteen
+ *   meshlab filter names (with their parameters) and their relative python names;
+ * - a filterScript, equivalent of the filter script of meshlab, that stores 
+ *   the history of applied filters in the meshset.
+ */
 class MeshSet : public MeshDocument
 {
 public:

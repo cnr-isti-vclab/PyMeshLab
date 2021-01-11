@@ -1,5 +1,12 @@
 ## Build PyMeshLab
 
+### Source code
+
+The source code of pymeshlab is contained inside the `src/pymeshlab` directory. To see how it is organized, see the contained [README.md](src/pymeshlab/README.md).
+Inside the src directory there are also two directories:
+- `meshlab`: contains the subrepository of MeshLab;
+- `utilities`: contains some utilities necessary to deploy pymeshlab on specific platforms.
+
 ### Requirements
 
 To be built, PyMeshLab requires a C++11 compiler (gcc, clang and MSVC are supported), CMake >= 3.9, Python >= 3.6 and Qt >= 5.12.
@@ -35,6 +42,14 @@ nmake install
 
 By default, PyMeshLab will be installed inside the `pymeshlab` directory of the repo.
 Therefore, after installed, you can just cd to the root of this repository and then `import pymeshlab` from a python shell.
+
+### Build options
+
+By default, the scripts listed above will build a pymeshlab python module.
+There are two additional options in the CMake configuration:
+
+- `BUILD_PYMESHLAB_DEBUG` (default: `OFF`): if set to `ON`, pymeshlab will be built in debug mode, and instead of building `pymeshlab/main.cpp`, the file `pymeshlab/debug_main.cpp` will be built . This file contains a `main` function set to call pymeshlab functions under C++ and therefore allows to debug pymeshlab under a full C++ environment;
+- `BUILD_PYMESHLAB_UPDATE_DOC` (default: `OFF`): if set to `ON`, pymeshlab will be built but with `pymeshlab/doc_main.cpp` instead of `pymeshlab/main.cpp`. This build system will generate an executable that will automatically update the file `docs/filter_list.rst`, containing the documentation of the pymeshlab filter.
 
 ## Deploy PyMeshLab
 
