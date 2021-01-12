@@ -82,7 +82,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Directional Bias [0..1]</i>: The balance between a uniform and a directionally biased set of lighting direction<br>: - 0 means light came only uniformly from any direction<br> - 1 means that all the light cames from the specified cone of directions <br> - other values mix the two set of lighting directions
+         <i>Directional Bias [0..1]</i>: The balance between a uniform and a directionally biased set of lighting direction<br>: - 0 means light came only uniformly from any direction<br> - 1 means that all the light cames from the specified cone of directions <br> - other values mix the two set of lighting directions 
 
    ``reqviews : int = 128``
 
@@ -90,7 +90,7 @@ apply_filter parameters
 
          <i>Requested views</i>: Number of different views uniformly placed around the mesh. More views means better accuracy at the cost of increased calculation time
 
-   ``conedir : numpy.ndarray[numpy.float32[3]] = [0, 1, 0]``
+   ``conedir : numpy.ndarray[numpy.float64[3]] = [0, 1, 0]``
 
       .. raw:: html
 
@@ -140,7 +140,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Sides</i>: Number of the sides of the poligonal approximation of the annulus
+         <i>Sides</i>: Number of the sides of the poligonal approximation of the annulus 
 
 .. data:: box_cube
 
@@ -220,13 +220,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``minval : float = 3.40282e+38``
+   ``minval : float = inf``
 
       .. raw:: html
 
          <i>Min</i>: The value that will be mapped with the lower end of the scale (blue)
 
-   ``maxval : float = -3.40282e+38``
+   ``maxval : float = -inf``
 
       .. raw:: html
 
@@ -351,13 +351,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``minval : float = 3.40282e+38``
+   ``minval : float = inf``
 
       .. raw:: html
 
          <i>Min</i>: The value that will be mapped with the lower end of the scale (blue)
 
-   ``maxval : float = -3.40282e+38``
+   ``maxval : float = -inf``
 
       .. raw:: html
 
@@ -385,7 +385,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``startpoint : numpy.ndarray[numpy.float32[3]] = [1, 1, 1]``
+   ``startpoint : numpy.ndarray[numpy.float64[3]] = [1, 1, 1]``
 
       .. raw:: html
 
@@ -423,13 +423,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``minval : float = 3.40282e+38``
+   ``minval : float = inf``
 
       .. raw:: html
 
          <i>Min</i>: The value that will be mapped with the lower end of the scale (blue)
 
-   ``maxval : float = -3.40282e+38``
+   ``maxval : float = -inf``
 
       .. raw:: html
 
@@ -665,7 +665,7 @@ apply_filter parameters
 
          <i>Flip normals w.r.t. viewpoint</i>: If the 'viewpoint' (i.e. scanner position) is known, it can be used to disambiguate normals orientation, so that all the normals will be oriented in the same direction.
 
-   ``viewpos : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
+   ``viewpos : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -694,7 +694,7 @@ apply_filter parameters
 
          <i>Plane perpendicular to</i>: The Slicing plane will be done perpendicular to the axis
 
-   ``customaxis : numpy.ndarray[numpy.float32[3]] = [0, 1, 0]``
+   ``customaxis : numpy.ndarray[numpy.float64[3]] = [0, 1, 0]``
 
       .. raw:: html
 
@@ -1059,7 +1059,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Cross Type</i>:
+         <i>Cross Type</i>: 
 
 .. data:: csg_operation
 
@@ -1127,7 +1127,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Angle Thr (deg)</i>: To avoid excessive flipping/swapping we consider only couple of faces with a significant diedral angle (e.g. greater than the indicated threshold).
+         <i>Angle Thr (deg)</i>: To avoid excessive flipping/swapping we consider only couple of faces with a significant diedral angle (e.g. greater than the indicated threshold). 
 
    ``curvtype : str = 'mean' (or int = 0)``
 
@@ -1300,7 +1300,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Metric:</i>: Choose whether to trace rays from faces or from vertices.
+         <i>Metric:</i>: Choose whether to trace rays from faces or from vertices. 
 
    ``numberrays : int = 128``
 
@@ -1342,7 +1342,7 @@ apply_filter parameters
 
          <i>Smoothing steps</i>: The number of times that the whole algorithm (normal smoothing + vertex fitting) is iterated.
 
-   ``viewpoint : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
+   ``viewpoint : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -1389,7 +1389,7 @@ apply_filter parameters
 
          <i>Step:</i>: The purpose of this filter is to <b>constrain</b> any smoothing algorithm to moving vertices only along a give line of sight.<br> First you should store current vertex position, than after applying  one of the many smoothing algorithms you should re start this filter and blend the original positions with the smoothed results.<br>Given a view point  <i>vp</i> , the smoothed vertex position <i>vs</i> and the original position  <i>v</i>, The new vertex position is computed as the projection of  <i>vs</i> on the line  connecting  <i>v</i>  and <i>vp</i>.
 
-   ``viewpoint : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
+   ``viewpoint : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -1422,7 +1422,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Type:</i>: Choose the curvature value that you want transferred onto the scalar Quality.Mean (H) and Gaussian (K) curvature are computed according the technique described in the Desbrun et al. paper.<br>Absolute curvature is defined as |H|+|K| and RMS curvature as sqrt(4* H^2 - 2K) as explained in <br><i>Improved curvature estimationfor watershed segmentation of 3-dimensional meshes </i> by S. Pulla, A. Razdan, G. Farin.
+         <i>Type:</i>: Choose the curvature value that you want transferred onto the scalar Quality.Mean (H) and Gaussian (K) curvature are computed according the technique described in the Desbrun et al. paper.<br>Absolute curvature is defined as |H|+|K| and RMS curvature as sqrt(4* H^2 - 2K) as explained in <br><i>Improved curvature estimationfor watershed segmentation of 3-dimensional meshes </i> by S. Pulla, A. Razdan, G. Farin. 
 
 .. data:: disk_vertex_coloring
 
@@ -1450,7 +1450,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Radius</i>: the radius of the spheres centered in the VertexMesh seeds
+         <i>Radius</i>: the radius of the spheres centered in the VertexMesh seeds 
 
    ``sampleradius : bool = false``
 
@@ -1524,7 +1524,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``dust_dir : numpy.ndarray[numpy.float32[3]] = [0, 1, 0]``
+   ``dust_dir : numpy.ndarray[numpy.float64[3]] = [0, 1, 0]``
 
       .. raw:: html
 
@@ -1951,13 +1951,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``point1 : numpy.ndarray[numpy.float32[3]] = [1, 1, 1]``
+   ``point1 : numpy.ndarray[numpy.float64[3]] = [1, 1, 1]``
 
       .. raw:: html
 
          <i>Point 1</i>: A vertex on the mesh that represent one harmonic field boundary condition.
 
-   ``point2 : numpy.ndarray[numpy.float32[3]] = [-1, -1, -1]``
+   ``point2 : numpy.ndarray[numpy.float64[3]] = [-1, -1, -1]``
 
       .. raw:: html
 
@@ -2798,11 +2798,11 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``transformmatrix : numpy.ndarray[numpy.float32[4, 4]] = [[1, 0, 0, 0],[0, 1, 0, 0],[0, 0, 1, 0],[0, 0, 0, 1]]``
+   ``transformmatrix : numpy.ndarray[numpy.float64[4, 4]] = [[1, 0, 0, 0],[0, 1, 0, 0],[0, 0, 1, 0],[0, 0, 0, 1]]``
 
       .. raw:: html
 
-         <i></i>:
+         <i></i>: 
 
    ``compose : bool = false``
 
@@ -2918,7 +2918,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Merging distance</i>: All the vertices that closer than this threshold are merged together. Use very small values, default values is 1/10000 of bounding box diagonal.
+         <i>Merging distance</i>: All the vertices that closer than this threshold are merged together. Use very small values, default values is 1/10000 of bounding box diagonal. 
 
 .. data:: merge_wedge_texture_coord
 
@@ -2934,7 +2934,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Merging Threshold</i>: All the per-wedge texture coords that are on the same vertex and are distant less then the given threshold are merged together. It can be used to remove the fake texture seams that arise from error. Distance is in texture space (the default, 1e-4, corresponds to one texel on a 10kx10x texture)
+         <i>Merging Threshold</i>: All the per-wedge texture coords that are on the same vertex and are distant less then the given threshold are merged together. It can be used to remove the fake texture seams that arise from error. Distance is in texture space (the default, 1e-4, corresponds to one texel on a 10kx10x texture) 
 
 .. data:: mesh_element_sampling
 
@@ -3544,13 +3544,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``histmin : float = 3.40282e+38``
+   ``histmin : float = inf``
 
       .. raw:: html
 
          <i>Hist Min</i>: The faces are displaced of a vector whose norm is bounded by this value
 
-   ``histmax : float = -3.40282e+38``
+   ``histmax : float = -inf``
 
       .. raw:: html
 
@@ -3728,13 +3728,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``histmin : float = 3.40282e+38``
+   ``histmin : float = inf``
 
       .. raw:: html
 
          <i>Hist Min</i>: The vertex are displaced of a vector whose norm is bounded by this value
 
-   ``histmax : float = -3.40282e+38``
+   ``histmax : float = -inf``
 
       .. raw:: html
 
@@ -3868,7 +3868,7 @@ apply_filter parameters
 
          <i>Frequency:</i>: Frequency of the Perlin Noise function, expressed as multiples of mesh bbox (frequency 10 means a noise period of bbox diagonal / 10). High frequencies produces many small splashes of colours, while low frequencies produces few big splashes.
 
-   ``offset : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
+   ``offset : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -3964,7 +3964,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Best Sample Heuristic</i>: If true it will use a simple heuristic for choosing the samples. At a small cost (it can slow a bit the process) it usually improve the maximality of the generated sampling.
+         <i>Best Sample Heuristic</i>: If true it will use a simple heuristic for choosing the samples. At a small cost (it can slow a bit the process) it usually improve the maximality of the generated sampling. 
 
    ``bestsamplepool : int = 10``
 
@@ -3988,13 +3988,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``gravity_dir : numpy.ndarray[numpy.float32[3]] = [0, -1, 0]``
+   ``gravity_dir : numpy.ndarray[numpy.float64[3]] = [0, -1, 0]``
 
       .. raw:: html
 
          <i>g</i>: Direction of gravity
 
-   ``force_dir : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
+   ``force_dir : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -4058,7 +4058,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Generation Technique:</i>: Generation Technique:<b>Montecarlo</b>: The points are randomly generated with an uniform distribution.<br><b>Poisson Disk</b>: The points are to follow a poisson disk distribution.<br><b>Disco Ball</b> Dave Rusin's disco ball algorithm for the regular placement of points on a sphere is used. <br><b>Recursive Octahedron</b> Points are generated on the vertex of a recursively subdivided octahedron <br><b>Fibonacci</b> .
+         <i>Generation Technique:</i>: Generation Technique:<b>Montecarlo</b>: The points are randomly generated with an uniform distribution.<br><b>Poisson Disk</b>: The points are to follow a poisson disk distribution.<br><b>Disco Ball</b> Dave Rusin's disco ball algorithm for the regular placement of points on a sphere is used. <br><b>Recursive Octahedron</b> Points are generated on the vertex of a recursively subdivided octahedron <br><b>Fibonacci</b> . 
 
 .. data:: poisson_disk_sampling
 
@@ -4110,19 +4110,19 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Refine Existing Samples</i>: If true the vertices of the below mesh are used as starting vertices, and they will utterly refined by adding more and more points until possible.
+         <i>Refine Existing Samples</i>: If true the vertices of the below mesh are used as starting vertices, and they will utterly refined by adding more and more points until possible. 
 
    ``refinemesh : int = 0``
 
       .. raw:: html
 
-         <i>Samples to be refined</i>: Used only if the above option is checked.
+         <i>Samples to be refined</i>: Used only if the above option is checked. 
 
    ``bestsampleflag : bool = true``
 
       .. raw:: html
 
-         <i>Best Sample Heuristic</i>: If true it will use a simple heuristic for choosing the samples. At a small cost (it can slow a bit the process) it usually improve the maximality of the generated sampling.
+         <i>Best Sample Heuristic</i>: If true it will use a simple heuristic for choosing the samples. At a small cost (it can slow a bit the process) it usually improve the maximality of the generated sampling. 
 
    ``bestsamplepool : int = 10``
 
@@ -4346,13 +4346,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``minqualityval : float = 3.40282e+38``
+   ``minqualityval : float = inf``
 
       .. raw:: html
 
          <i>Minimum mesh quality</i>: The specified quality value is mapped in the <b>lower</b> end of the chosen color scale. Default value: the minimum quality value found on the mesh.
 
-   ``maxqualityval : float = -3.40282e+38``
+   ``maxqualityval : float = -inf``
 
       .. raw:: html
 
@@ -4471,7 +4471,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Weighting Mode:</i>:
+         <i>Weighting Mode:</i>: 
 
 .. data:: re_orient_all_faces_coherentely
 
@@ -4761,7 +4761,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Delete all vertices with quality under:</i>:
+         <i>Delete all vertices with quality under:</i>: 
 
 .. data:: remove_zero_area_faces
 
@@ -4877,7 +4877,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>delta</i>:
+         <i>delta</i>: 
 
    ``selected : bool = false``
 
@@ -4925,13 +4925,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``minq : float (bounded) = 1.70141e+38 [min: 3.40282e+38; max: -3.40282e+38]``
+   ``minq : float (bounded) = -nan [min: inf; max: -inf]``
 
       .. raw:: html
 
          <i>Min Quality</i>: Minimum acceptable quality value
 
-   ``maxq : float (bounded) = -1.70141e+38 [min: 3.40282e+38; max: -3.40282e+38]``
+   ``maxq : float (bounded) = -nan [min: inf; max: -inf]``
 
       .. raw:: html
 
@@ -4953,13 +4953,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``minq : float (bounded) = 1.70141e+38 [min: 3.40282e+38; max: -3.40282e+38]``
+   ``minq : float (bounded) = -nan [min: inf; max: -inf]``
 
       .. raw:: html
 
          <i>Min Quality</i>: Minimum acceptable quality value
 
-   ``maxq : float (bounded) = -1.70141e+38 [min: 3.40282e+38; max: -3.40282e+38]``
+   ``maxq : float (bounded) = -nan [min: inf; max: -inf]``
 
       .. raw:: html
 
@@ -5074,7 +5074,7 @@ apply_filter parameters
 
          <i>Use ViewPoint from Mesh Camera</i>: Uses the ViewPoint from the camera associated to the current mesh<br> if there is no camera, an error occurs
 
-   ``viewpoint : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
+   ``viewpoint : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -5250,7 +5250,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Select only non closed components</i>:
+         <i>Select only non closed components</i>: 
 
 .. data:: select_vertex_texture_seams
 
@@ -5298,7 +5298,7 @@ apply_filter parameters
 
          <i>Use ViewPoint from Mesh Camera</i>: Uses the ViewPoint from the camera associated to the current mesh<br> if there is no camera, an error occurs
 
-   ``viewpoint : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
+   ``viewpoint : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -5389,7 +5389,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Metric:</i>: Choose whether to trace rays from faces or from vertices.
+         <i>Metric:</i>: Choose whether to trace rays from faces or from vertices. 
 
    ``numberrays : int = 128``
 
@@ -5425,13 +5425,13 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Remove false intersections</i>: For eachray we check the normal at the point of intersection,and ignore intersections where the normal at the intersectionpoints is in the same direction as the point-of-origin(the same direction is defined as an angle difference lessthan 90)
+         <i>Remove false intersections</i>: For eachray we check the normal at the point of intersection,and ignore intersections where the normal at the intersectionpoints is in the same direction as the point-of-origin(the same direction is defined as an angle difference lessthan 90) 
 
    ``removeoutliers : bool = false``
 
       .. raw:: html
 
-         <i>Remove outliers</i>: The outliers removal is made on the fly with a supersampling of the depth buffer. For each ray that we trace, we take multiple depth values near the point of intersection and we output only the median of these values. Some mesh can benefit from this additional calculation.
+         <i>Remove outliers</i>: The outliers removal is made on the fly with a supersampling of the depth buffer. For each ray that we trace, we take multiple depth values near the point of intersection and we output only the median of these values. Some mesh can benefit from this additional calculation. 
 
 .. data:: simplification_clustering_decimation
 
@@ -5501,7 +5501,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Boundary Preserving Weight</i>: The importance of the boundary during simplification. Default (1.0) means that the boundary has the same importance of the rest. Values greater than 1.0 raise boundary importance and has the effect of removing less vertices on the border. Admitted range of values (0,+inf).
+         <i>Boundary Preserving Weight</i>: The importance of the boundary during simplification. Default (1.0) means that the boundary has the same importance of the rest. Values greater than 1.0 raise boundary importance and has the effect of removing less vertices on the border. Admitted range of values (0,+inf). 
 
    ``preservenormal : bool = false``
 
@@ -5519,7 +5519,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Optimal position of simplified vertices</i>: Each collapsed vertex is placed in the position minimizing the quadric error.<br> It can fail (creating bad spikes) in case of very flat areas. <br>If disabled edges are collapsed onto one of the two original vertices and the final mesh is composed by a subset of the original vertices.
+         <i>Optimal position of simplified vertices</i>: Each collapsed vertex is placed in the position minimizing the quadric error.<br> It can fail (creating bad spikes) in case of very flat areas. <br>If disabled edges are collapsed onto one of the two original vertices and the final mesh is composed by a subset of the original vertices. 
 
    ``planarquadric : bool = false``
 
@@ -5565,7 +5565,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Target number of faces</i>:
+         <i>Target number of faces</i>: 
 
    ``targetperc : float = 0``
 
@@ -5595,13 +5595,13 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Boundary Preserving Weight</i>: The importance of the boundary during simplification. Default (1.0) means that the boundary has the same importance of the rest. Values greater than 1.0 raise boundary importance and has the effect of removing less vertices on the border. Admitted range of values (0,+inf).
+         <i>Boundary Preserving Weight</i>: The importance of the boundary during simplification. Default (1.0) means that the boundary has the same importance of the rest. Values greater than 1.0 raise boundary importance and has the effect of removing less vertices on the border. Admitted range of values (0,+inf). 
 
    ``optimalplacement : bool = true``
 
       .. raw:: html
 
-         <i>Optimal position of simplified vertices</i>: Each collapsed vertex is placed in the position minimizing the quadric error.<br> It can fail (creating bad spikes) in case of very flat areas. <br>If disabled edges are collapsed onto one of the two original vertices and the final mesh is composed by a subset of the original vertices.
+         <i>Optimal position of simplified vertices</i>: Each collapsed vertex is placed in the position minimizing the quadric error.<br> It can fail (creating bad spikes) in case of very flat areas. <br>If disabled edges are collapsed onto one of the two original vertices and the final mesh is composed by a subset of the original vertices. 
 
    ``preservenormal : bool = false``
 
@@ -5815,7 +5815,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Eisen Script grammar</i>: Write a grammar according to Eisen Script specification and using the primitives box, sphere, mesh, dot and triangle
+         <i>Eisen Script grammar</i>: Write a grammar according to Eisen Script specification and using the primitives box, sphere, mesh, dot and triangle 
 
    ``seed : int = 1``
 
@@ -5827,7 +5827,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>set maximum resolution of sphere primitives, it must be included between 1 and 4</i>: increasing the resolution of the spheres will improve the quality of the mesh
+         <i>set maximum resolution of sphere primitives, it must be included between 1 and 4</i>: increasing the resolution of the spheres will improve the quality of the mesh 
 
 .. data:: subdivision_surfaces_butterfly_subdivision
 
@@ -6103,7 +6103,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Geodesic Weighting</i>: The influence of each range map is weighted with its geodesic distance from the borders. In this way when two (or more ) range maps overlaps their contribution blends smoothly hiding possible misalignments.
+         <i>Geodesic Weighting</i>: The influence of each range map is weighted with its geodesic distance from the borders. In this way when two (or more ) range maps overlaps their contribution blends smoothly hiding possible misalignments. 
 
    ``openresult : bool = true``
 
@@ -6569,13 +6569,13 @@ apply_filter parameters
 
          <i>Rotation Angle</i>: Angle of rotation (in <b>degree</b>). If snapping is enabled this value is rounded according to the snap value
 
-   ``customaxis : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
+   ``customaxis : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
 
       .. raw:: html
 
          <i>Custom axis</i>: This rotation axis is used only if the 'custom axis' option is chosen.
 
-   ``customcenter : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
+   ``customcenter : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -6657,13 +6657,13 @@ apply_filter parameters
 
          <i>Rotation Angle</i>: Angle of rotation (in <b>degree</b>). If snapping is enabled this value is rounded according to the snap value
 
-   ``customaxis : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
+   ``customaxis : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
 
       .. raw:: html
 
          <i>Custom axis</i>: This rotation axis is used only if the 'custom axis' option is chosen.
 
-   ``customcenter : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
+   ``customcenter : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -6767,7 +6767,7 @@ apply_filter parameters
 
          <i>Center of scaling:</i>: Choose a method
 
-   ``customcenter : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
+   ``customcenter : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -6837,7 +6837,7 @@ apply_filter parameters
 
          <i>Center of scaling:</i>: Choose a method
 
-   ``customcenter : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
+   ``customcenter : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -6871,11 +6871,11 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``transformmatrix : numpy.ndarray[numpy.float32[4, 4]] = [[1, 0, 0, 0],[0, 1, 0, 0],[0, 0, 1, 0],[0, 0, 0, 1]]``
+   ``transformmatrix : numpy.ndarray[numpy.float64[4, 4]] = [[1, 0, 0, 0],[0, 1, 0, 0],[0, 0, 1, 0],[0, 0, 0, 1]]``
 
       .. raw:: html
 
-         <i></i>:
+         <i></i>: 
 
    ``camera : str = 'Raster Camera' (or int = 0)``
 
@@ -7009,7 +7009,7 @@ apply_filter parameters
 
          <i>Z Axis</i>: when using [XYZ translation], amount of translation along the Z axis (in model units)
 
-   ``neworigin : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
+   ``neworigin : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -7549,49 +7549,49 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Gamma:</i>:
+         <i>Gamma:</i>: 
 
    ``in_min : float (bounded) = 0 [min: 0; max: 255]``
 
       .. raw:: html
 
-         <i>Min input level:</i>:
+         <i>Min input level:</i>: 
 
    ``in_max : float (bounded) = 255 [min: 0; max: 255]``
 
       .. raw:: html
 
-         <i>Max input level:</i>:
+         <i>Max input level:</i>: 
 
    ``out_min : float (bounded) = 0 [min: 0; max: 255]``
 
       .. raw:: html
 
-         <i>Min output level:</i>:
+         <i>Min output level:</i>: 
 
    ``out_max : float (bounded) = 255 [min: 0; max: 255]``
 
       .. raw:: html
 
-         <i>Max output level:</i>:
+         <i>Max output level:</i>: 
 
    ``rch : bool = true``
 
       .. raw:: html
 
-         <i>Red Channel:</i>:
+         <i>Red Channel:</i>: 
 
    ``gch : bool = true``
 
       .. raw:: html
 
-         <i>Green Channel:</i>:
+         <i>Green Channel:</i>: 
 
    ``bch : bool = true``
 
       .. raw:: html
 
-         <i>Blue Channel:</i>:
+         <i>Blue Channel:</i>: 
 
    ``onselected : bool = false``
 
@@ -7770,7 +7770,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Metric:</i>: Choose whether to trace rays from faces or from vertices.
+         <i>Metric:</i>: Choose whether to trace rays from faces or from vertices. 
 
    ``numberrays : int = 128``
 
@@ -7897,7 +7897,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Color Strategy</i>:
+         <i>Color Strategy</i>: 
 
    ``distancetype : str = 'Euclidean' (or int = 0)``
 
@@ -7909,13 +7909,13 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Distance Type</i>:
+         <i>Distance Type</i>: 
 
    ``preprocessflag : bool = false``
 
       .. raw:: html
 
-         <i>Preprocessing</i>:
+         <i>Preprocessing</i>: 
 
    ``refinefactor : int = 10``
 
@@ -8015,7 +8015,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Voronoi Element</i>:
+         <i>Voronoi Element</i>: 
 
 .. data:: voronoi_vertex_coloring
 
@@ -8195,7 +8195,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
       .. raw:: html
 
-         <i>set maximum resolution of sphere primitives, it must be included between 1 and 4</i>: increasing the resolution of the spheres will improve the quality of the mesh
+         <i>set maximum resolution of sphere primitives, it must be included between 1 and 4</i>: increasing the resolution of the spheres will improve the quality of the mesh 
 
    ``maxobj : int = 0``
 
@@ -8753,13 +8753,13 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>File Name</i>: The name of the file to save
 
-   ``position_val : numpy.ndarray[numpy.float32[3]] = [0, 0, -3.4641]``
+   ``position_val : numpy.ndarray[numpy.float64[3]] = [0, 0, -3.4641]``
 
       .. raw:: html
 
          <i>Camera Position</i>: The position in which the camera is set. The default value is derived by the 3d mesh's bounding box.
 
-   ``target_val : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
+   ``target_val : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -9083,13 +9083,13 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>File Name</i>: The name of the file to save
 
-   ``position_val : numpy.ndarray[numpy.float32[3]] = [0, 0, -3.4641]``
+   ``position_val : numpy.ndarray[numpy.float64[3]] = [0, 0, -3.4641]``
 
       .. raw:: html
 
          <i>Camera Position</i>: The position in which the camera is set. The default value is derived by the 3d mesh's bounding box.
 
-   ``target_val : numpy.ndarray[numpy.float32[3]] = [0, 0, 0]``
+   ``target_val : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
 
       .. raw:: html
 
@@ -9306,3 +9306,4 @@ Here are listed all the raster file formats that can be loaded usingthe function
       .. raw:: html
 
          <i>File Name</i>: The name of the file to load
+
