@@ -429,7 +429,7 @@ int currentMeshIOCapabilityMask(const MeshModel* mm)
 	return capability;
 }
 
-int capabilityMaskFromKwargs(pybind11::kwargs kwargs, int startingMask)
+int computeSaveSettingsMaskFromKwargs(pybind11::kwargs kwargs, int startingMask, int capabilityMask)
 {
 	std::array<QString, 14> params;
 	for (unsigned int i = 0; i < saveCapabilitiesStrings.size(); ++i)
@@ -443,8 +443,8 @@ int capabilityMaskFromKwargs(pybind11::kwargs kwargs, int startingMask)
 			//get the value p.second and set the right mask to capability
 			unsigned int i = it - params.begin();
 			bool value = py::cast<bool>(p.second);
-			if (value)
-				capability &= capabilitiesBits[i];
+			if (value && (capabilitiesBits[i] & capabilityMask))
+				capability |= capabilitiesBits[i];
 			else
 				capability &= ~capabilitiesBits[i];
 		}
@@ -499,18 +499,28 @@ void saveMeshUsingPlugin(
 		IOMeshPluginInterface* plugin = pm.allKnowOutputFormats[extension];
 		//int mask = 0; //todo: use this mask
 		RichParameterList rps;
-		int capability = 0, defbits = 0, capabilityMesh = 0, capabilityUser = 0;
-		plugin->GetExportMaskCapability(extension,capability,defbits);
-		plugin->initSaveParameter(extension, *mm, rps);
 
-		meshsethelper::updateRichParameterListFromKwargs(ff, kwargs, &md, rps, true);
+		//masks
+		int capabilityFormat = 0;    //what can be saved in the given format
+		int defaultSaveSettings = 0; //what is suggested to be saved in the given format
+		int capabilityMesh = 0;      //what can be saved of the current mesh
+		int userSettings = 0;        //what the user wants to be saved
+		
+		plugin->GetExportMaskCapability(extension, capabilityFormat, defaultSaveSettings);
 
 		capabilityMesh = currentMeshIOCapabilityMask(mm);
-		capabilityUser = capabilityMaskFromKwargs(kwargs, defbits & capabilityMesh);
+
+		plugin->initSaveParameter(extension, *mm, rps);
+		meshsethelper::updateRichParameterListFromKwargs(ff, kwargs, &md, rps, true);
+
+		capabilityMesh = capabilityMesh & capabilityFormat;
+		defaultSaveSettings &= capabilityMesh;
+
+		userSettings = computeSaveSettingsMaskFromKwargs(kwargs, defaultSaveSettings, capabilityMesh);
 
 		bool ok = plugin->save(
 					extension, QString::fromStdString(filename), *mm,
-					capabilityUser, rps);
+					userSettings, rps);
 		if (!ok){
 			throw MLException("Unable to save file: " + QString::fromStdString(filename));
 		}
