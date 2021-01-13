@@ -68,8 +68,6 @@ public:
 	//sharedDataContext management
 	bool isSceneGLSharedDataContextEnabled() const;
 	void initSceneGLSharedDataContext();
-	void makeSceneGLCurrent();
-	void doneSceneGLCurrent();
 	MLSceneGLSharedDataContext* sharedDataContext();
 	
 	

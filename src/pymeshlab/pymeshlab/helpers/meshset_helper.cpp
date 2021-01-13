@@ -667,9 +667,6 @@ void initOpenGLContext(QAction* action, FilterPluginInterface* fp, QGLWidget*& w
 {
 	if (fp->glContext == nullptr){
 		ms.initSceneGLSharedDataContext();
-		ms.makeSceneGLCurrent();
-		GLExtensionsManager::initializeGLextensions();
-		ms.doneSceneGLCurrent();
 		wid = new QGLWidget(nullptr, ms.sharedDataContext());
 		fp->glContext = new MLPluginGLContext(QGLFormat::defaultFormat(), wid->context()->device(),*ms.sharedDataContext());
 		bool created = fp->glContext->create(wid->context());

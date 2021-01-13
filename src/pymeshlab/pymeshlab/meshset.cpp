@@ -328,18 +328,6 @@ void pymeshlab::MeshSet::initSceneGLSharedDataContext()
 	}
 }
 
-void pymeshlab::MeshSet::makeSceneGLCurrent()
-{
-	if (isSceneGLSharedDataContextEnabled())
-		sceneGLSharedDataContext->makeCurrent();
-}
-
-void pymeshlab::MeshSet::doneSceneGLCurrent()
-{
-	if (isSceneGLSharedDataContextEnabled())
-		sceneGLSharedDataContext->doneCurrent();
-}
-
 MLSceneGLSharedDataContext* pymeshlab::MeshSet::sharedDataContext()
 {
 	return sceneGLSharedDataContext;
