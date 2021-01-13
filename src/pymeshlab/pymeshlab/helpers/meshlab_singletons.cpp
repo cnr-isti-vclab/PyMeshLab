@@ -5,7 +5,18 @@
 
 RichParameterList& pymeshlab::MeshLabSingletons::globalRPLInstance()
 {
+	static bool initialized = false;
 	static RichParameterList globalRPS;
+	if (!initialized){
+		initialized = true;
+		globalRPS.addParam(RichInt(
+			PYMESHLAB_GLOBAL_SETTING_MAXGPUMEM, 
+			350, 
+			"Maximum GPU Memory Dedicated to PyMeshLab (Mb)",
+			"Maximum GPU Memory Dedicated to PyMeshLab (megabyte) for the storing "
+				"of the geometry attributes. The dedicated memory must NOT be all "
+				"the GPU memory presents on the videocard."));
+	}
 	return globalRPS;
 }
 
@@ -24,6 +35,14 @@ PluginManager& pymeshlab::MeshLabSingletons::pluginManagerInstance(bool verbose)
 		delete qdbr;
 	}
 	return pm;
+}
+
+vcg::QtThreadSafeMemoryInfo& pymeshlab::MeshLabSingletons::threadSafeMemoryInfoInstance()
+{
+	static int gpumemmb = globalRPLInstance().getInt(PYMESHLAB_GLOBAL_SETTING_MAXGPUMEM);
+	static std::ptrdiff_t maxgpumem = (std::ptrdiff_t) gpumemmb * (float)(1024 * 1024);
+	static vcg::QtThreadSafeMemoryInfo gpumeminfo(maxgpumem);
+	return gpumeminfo;
 }
 
 pymeshlab::MeshLabSingletons::MeshLabSingletons()

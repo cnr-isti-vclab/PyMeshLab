@@ -5,6 +5,9 @@
 
 class RichParameterList;
 class PluginManager;
+namespace vcg {
+class QtThreadSafeMemoryInfo;
+};
 
 namespace pymeshlab {
 
@@ -14,6 +17,7 @@ public:
 	/** Singleton Instances **/
 	static RichParameterList& globalRPLInstance();
 	static PluginManager& pluginManagerInstance(bool verbose = false);
+	static vcg::QtThreadSafeMemoryInfo& threadSafeMemoryInfoInstance();
 
 	MeshLabSingletons(MeshLabSingletons const&) = delete;
 	void operator=(MeshLabSingletons const&) = delete;

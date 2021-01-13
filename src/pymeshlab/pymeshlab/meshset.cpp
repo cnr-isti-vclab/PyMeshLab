@@ -15,7 +15,8 @@ namespace py = pybind11;
 
 pymeshlab::MeshSet::MeshSet(bool verbose) :
 	MeshDocument(),
-	pm(MeshLabSingletons::pluginManagerInstance(verbose))
+	pm(MeshLabSingletons::pluginManagerInstance(verbose)),
+	sceneGLSharedDataContext(nullptr)
 {
 	filterFunctionSet.populate(pm);
 	setVerbosity(verbose);
@@ -23,6 +24,7 @@ pymeshlab::MeshSet::MeshSet(bool verbose) :
 
 pymeshlab::MeshSet::~MeshSet()
 {
+	delete sceneGLSharedDataContext;
 }
 
 void pymeshlab::MeshSet::setVerbosity(bool verbose)
@@ -305,6 +307,42 @@ void pymeshlab::MeshSet::printStatus() const
 		std::cout << "\tMesh label: " << m->label().toStdString() << "\n";
 		std::cout << "\tFull name: " << m->fullName().toStdString() << "\n\n";
 	}
+}
+
+bool pymeshlab::MeshSet::isSceneGLSharedDataContextEnabled() const
+{
+	return sceneGLSharedDataContext != nullptr;
+}
+
+void pymeshlab::MeshSet::initSceneGLSharedDataContext()
+{
+	if (! isSceneGLSharedDataContextEnabled()) {
+		vcg::QtThreadSafeMemoryInfo& gpumeminfo = MeshLabSingletons::threadSafeMemoryInfoInstance();
+		sceneGLSharedDataContext = 
+				new MLSceneGLSharedDataContext(
+					*this, 
+					gpumeminfo, 
+					MeshLabScalarTest<MESHLAB_SCALAR>::doublePrecision(), 
+					100000,
+					100000);
+	}
+}
+
+void pymeshlab::MeshSet::makeSceneGLCurrent()
+{
+	if (isSceneGLSharedDataContextEnabled())
+		sceneGLSharedDataContext->makeCurrent();
+}
+
+void pymeshlab::MeshSet::doneSceneGLCurrent()
+{
+	if (isSceneGLSharedDataContextEnabled())
+		sceneGLSharedDataContext->doneCurrent();
+}
+
+MLSceneGLSharedDataContext* pymeshlab::MeshSet::sharedDataContext()
+{
+	return sceneGLSharedDataContext;
 }
 
 std::string pymeshlab::MeshSet::filtersRSTDocumentation() const

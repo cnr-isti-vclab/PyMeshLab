@@ -65,9 +65,20 @@ public:
 	void printStatus() const;
 
 	/** Member functions not binded on Python **/
+	//sharedDataContext management
+	bool isSceneGLSharedDataContextEnabled() const;
+	void initSceneGLSharedDataContext();
+	void makeSceneGLCurrent();
+	void doneSceneGLCurrent();
+	MLSceneGLSharedDataContext* sharedDataContext();
+	
+	
+	//documentation
 	std::string filtersRSTDocumentation() const;
 private:
 	PluginManager& pm;
+	MLSceneGLSharedDataContext* sceneGLSharedDataContext;
+	
 	FilterFunctionSet filterFunctionSet;
 	FilterScript filterScript;
 

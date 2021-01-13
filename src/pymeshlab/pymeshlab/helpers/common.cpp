@@ -114,3 +114,9 @@ pybind11::dict pymeshlab::toPyDict(const std::map<std::string, QVariant>& qVaria
 	}
 	return outDict;
 }
+
+void pymeshlab::setMaxGPUMem(int max_gpu_mb)
+{
+	RichParameterList& rpl = MeshLabSingletons::globalRPLInstance();
+	rpl.setValue(PYMESHLAB_GLOBAL_SETTING_MAXGPUMEM, IntValue(max_gpu_mb));
+}

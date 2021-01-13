@@ -86,6 +86,8 @@ const char MESHLAB_TYPE_MESH[] = "RichMesh";
 const char MESHLAB_TYPE_OPENFILE[] = "RichOpenFile";
 const char MESHLAB_TYPE_SAVEFILE[] = "RichSaveFile";
 
+const char PYMESHLAB_GLOBAL_SETTING_MAXGPUMEM[] = "MeshLab::System::maxGPUMemDedicatedToGeometry";
+
 const static QStringList pythonKeywords = {
 	"False", "await", "else", "import", "pass",
 	"None", "break", "except", "in", "raise",
@@ -154,6 +156,8 @@ void printVersion();
 int numberPlugins();
 
 void printPluginList();
+
+void setMaxGPUMem(int max_gpu_mb);
 
 pybind11::dict toPyDict(const std::map<std::string, QVariant>& qVariantMap);
 

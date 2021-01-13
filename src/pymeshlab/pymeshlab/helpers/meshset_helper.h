@@ -11,6 +11,7 @@ class MeshModel;
 class RasterModel;
 class FilterPluginInterface;
 class FilterScript;
+class QGLWidget;
 
 namespace pybind11 {
 class kwargs;
@@ -21,6 +22,7 @@ namespace pymeshlab {
 
 class FilterFunction;
 class FilterFunctionSet;
+class MeshSet;
 
 namespace meshsethelper {
 
@@ -100,9 +102,15 @@ void saveMLP(
 		const QString& fileName,
 		MeshDocument& md);
 
+/** OpenGL context **/
+
+void initOpenGLContext(QAction* action, FilterPluginInterface* fp, QGLWidget*& wid, MeshSet& ms);
+void releaseOpenGLContext(FilterPluginInterface* fp, QGLWidget*& wid);
+
 /** Apply Filter **/
 
-pybind11::dict applyFilterRPL(const std::string& filtername,
+pybind11::dict applyFilterRPL(
+		const std::string& filtername,
 		const QString& meshlabFilterName,
 		QAction* action,
 		FilterPluginInterface* fp,
@@ -110,7 +118,7 @@ pybind11::dict applyFilterRPL(const std::string& filtername,
 		bool verbose,
 		FilterScript& filterScript,
 		bool updateFilterScript,
-		MeshDocument& md);
+		MeshSet& md);
 
 /** RST Documentation **/
 
