@@ -120,3 +120,11 @@ void pymeshlab::setMaxGPUMem(int max_gpu_mb)
 	RichParameterList& rpl = MeshLabSingletons::globalRPLInstance();
 	rpl.setValue(PYMESHLAB_GLOBAL_SETTING_MAXGPUMEM, IntValue(max_gpu_mb));
 }
+
+void pymeshlab::printSaveMask(int mask)
+{
+	for (uint i = 0; i < 14; i++){
+		if (mask & capabilitiesBits[i])
+			std::cout << saveCapabilitiesStrings[i].toStdString() << "\n";
+	}
+}

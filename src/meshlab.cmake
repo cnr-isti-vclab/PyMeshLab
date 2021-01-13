@@ -9,6 +9,7 @@ endif()
 
 ### Build options
 option(BUILD_STRICT "Strictly enforce resolution of all symbols" ON)
+option(BUILD_MESHLABSERVER "Build meshlabserver" OFF)
 
 ### Dependencies
 message(STATUS "Searching for required components")
@@ -83,6 +84,9 @@ endif()
 ### Enter subdirectories
 
 add_subdirectory(${MESHLAB_SRC_DIR}/common)
+if(BUILD_MESHLABSERVER)
+	add_subdirectory(${MESHLAB_SRC_DIR}/meshlabserver)
+endif()
 
 ### Plugin subdirectories
 set(MESHLAB_PLUGINS

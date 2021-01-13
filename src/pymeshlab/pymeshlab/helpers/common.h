@@ -150,6 +150,7 @@ private:
 std::string getRootPath();
 std::string getPluginsPath();
 std::string getSamplesPath();
+void printSaveMask(int mask);
 
 void printVersion();
 
