@@ -33,6 +33,15 @@ And apply filters with your parameters:
 
    ms.apply_filter('noisy_isosurface', resolution=128)
 
+The ``apply_filter`` function, most of the times, will return an empty dictionary. This is because the filter applied does not need to return anything.
+Most of the MeshLab filters will change in some way the state of the MeshSet. The behaviour of how filters change the state is the same of what
+happens when applying the same filter in MeshLab. However, some filters return values:
+
+.. code-block:: python
+
+   out_dict = ms.apply_filter('compute_geometric_measures')
+   print(out_dict['surface_area'])
+
 To run the tests:
 
 .. code-block:: shell

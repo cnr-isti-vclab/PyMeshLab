@@ -879,6 +879,9 @@ std::string RSTDocumentationFromFilterFunctionSet(const FilterFunctionSet& filte
 			"   * `File Name`: a classic ``str`` that represents the path of a file that is going to be saved or loaded by the filter. The string is expected to have at least an extension on its final characters; see the documentation of the specific filter for further info;\n"
 			"   * `Camera`: *still not supported*;\n\n"
 			
+			"The :py:meth:`pmeshlab.MeshSet.apply_filter` returns a dictionary that may contain some values returned by the "
+			"applied filter. Most of the filters do not return nothing, therefore the dictionary will be empty.\n\n"
+			
 			"**Please note**: some filter parameters depend on the mesh(es) used as "
 			"input of the filter. Default values listed here are computed on a 1x1x1 cube "
 			"(pymeshlab/tests/sample/cube.obj), but their value will be computed on the input mesh "

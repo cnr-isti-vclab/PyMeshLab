@@ -103,6 +103,8 @@ const char* PYMS_APPLY_FILTER =
 		"Applies the filter having the given filter name in the MeshSet. "
 		"Updates the current filter script, pushing the applied filter with the "
 		"given parameters. "
+		"Returns a dictionary containing pairs of [string - value] returned by "
+		"the applied filter. "
 		"See the :ref:`filter_list` page to a list of all the possible filters "
 		"that can be applied using this function.";
 
