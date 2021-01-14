@@ -20,27 +20,15 @@
 * for more details.                                                         *
 *                                                                           *
 ****************************************************************************/
-#ifndef PYMESHLAB_PYXCEPTIONS_DOC_H
-#define PYMESHLAB_PYXCEPTIONS_DOC_H
+#include "pymodule_functions.h"
 
-namespace pymeshlab {
-namespace doc {
+#include "pymeshlab/module_functions.h"
+#include "docs/pymodule_functions_doc.h"
 
-//PyMeshLabException
-const char* PYEXC_MLEXC =
-		"Generic PyMeshLab exception.";
-
-//InvalidPercentageException
-const char* PYEXC_INV_PER =
-		"Exception raised when an invalid value (not between 0 and 100) "
-		"is set in a :py:class:`Percentage` object.";
-
-//InvalidEnumException
-const char* PYEXC_INV_ENUM =
-		"Exception raised when an invalid enum value "
-		"is used as argument of a filter.";
-
+void pymeshlab::initModuleFunctions(pybind11::module& m)
+{
+	m.def("print_pymeshlab_version", &pymeshlab::printVersion, doc::MODULE_PRINT_VERSION);
+	m.def("number_plugins", &pymeshlab::numberPlugins, doc::MODULE_NUMBER_PLUGINS);
+	m.def("print_plugin_list", &pymeshlab::printPluginList, doc::MODULE_PRINT_PLUGIN_LIST);
+	m.def("set_max_gpu_memory", &pymeshlab::setMaxGPUMem, doc::MODULE_SET_MAX_GPU_MEMORY);
 }
-}
-
-#endif // PYMESHLAB_PYXCEPTIONS_DOC_H

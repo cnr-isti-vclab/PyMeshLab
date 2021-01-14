@@ -20,27 +20,45 @@
 * for more details.                                                         *
 *                                                                           *
 ****************************************************************************/
-#ifndef PYMESHLAB_PYXCEPTIONS_DOC_H
-#define PYMESHLAB_PYXCEPTIONS_DOC_H
+#include "module_functions.h"
+#include <common/mlapplication.h>
+#include <common/pluginmanager.h>
+#include "helpers/meshlab_singletons.h"
+#include "helpers/common.h"
 
-namespace pymeshlab {
-namespace doc {
-
-//PyMeshLabException
-const char* PYEXC_MLEXC =
-		"Generic PyMeshLab exception.";
-
-//InvalidPercentageException
-const char* PYEXC_INV_PER =
-		"Exception raised when an invalid value (not between 0 and 100) "
-		"is set in a :py:class:`Percentage` object.";
-
-//InvalidEnumException
-const char* PYEXC_INV_ENUM =
-		"Exception raised when an invalid enum value "
-		"is used as argument of a filter.";
-
-}
+void pymeshlab::printVersion()
+{
+	std::string pymsversion;
+#ifdef PYMESHLAB_VERSION
+	pymsversion = PYMESHLAB_STRINGIFY(PYMESHLAB_VERSION);
+#else
+	pymsversion = "DEV";
+#endif
+	
+	std::cout << "PyMeshLab " << pymsversion << " based on MeshLab " << 
+		MeshLabApplication::appVer().toStdString() << "\n";
 }
 
-#endif // PYMESHLAB_PYXCEPTIONS_DOC_H
+int pymeshlab::numberPlugins()
+{
+	PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
+	return pm.size();
+}
+
+void pymeshlab::printPluginList()
+{
+	PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
+	std::cout
+			<< "PyMeshLab - List of loaded plugins ("
+			<< pm.size() << "):\n";
+	for (const PluginInterface* p : pm.pluginIterator()){
+		std::cout << "\t" << p->pluginName().toStdString() << "\n";
+	}
+}
+
+void pymeshlab::setMaxGPUMem(int max_gpu_mb)
+{
+	RichParameterList& rpl = MeshLabSingletons::globalRPLInstance();
+	rpl.setValue(PYMESHLAB_GLOBAL_SETTING_MAXGPUMEM, IntValue(max_gpu_mb));
+}
+

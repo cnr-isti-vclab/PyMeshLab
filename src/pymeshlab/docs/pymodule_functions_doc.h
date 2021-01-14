@@ -20,27 +20,31 @@
 * for more details.                                                         *
 *                                                                           *
 ****************************************************************************/
-#ifndef PYMESHLAB_PYXCEPTIONS_DOC_H
-#define PYMESHLAB_PYXCEPTIONS_DOC_H
+#ifndef PYMESHLAB_MODULE_FUNCTIONS_DOC_H
+#define PYMESHLAB_MODULE_FUNCTIONS_DOC_H
 
 namespace pymeshlab {
 namespace doc {
 
-//PyMeshLabException
-const char* PYEXC_MLEXC =
-		"Generic PyMeshLab exception.";
+//print_pymeshlab_version
+const char* MODULE_PRINT_VERSION =
+		"Prints the PyMeshLab version that is currently running.";
 
-//InvalidPercentageException
-const char* PYEXC_INV_PER =
-		"Exception raised when an invalid value (not between 0 and 100) "
-		"is set in a :py:class:`Percentage` object.";
+//number_plugins
+const char* MODULE_NUMBER_PLUGINS =
+		"Returns the number of plugins loaded in the current session of PyMeshLab.";
 
-//InvalidEnumException
-const char* PYEXC_INV_ENUM =
-		"Exception raised when an invalid enum value "
-		"is used as argument of a filter.";
+//print_plugin_list
+const char* MODULE_PRINT_PLUGIN_LIST =
+		"Prints all the meshlab plugins loaded in the current session of PyMeshLab.";
+
+//set_max_gpu_memory
+const char* MODULE_SET_MAX_GPU_MEMORY =
+		"Sets the maximum number of GPU memory MegaBytes dedicated to PyMeshLab filters. "
+		"This function should be run just one time after ``import pymeshlab`` instruction. "
+		"If not changed, the default value is 350 Mb.";
 
 }
 }
 
-#endif // PYMESHLAB_PYXCEPTIONS_DOC_H
+#endif // PYMESHLAB_MODULE_FUNCTIONS_DOC_H

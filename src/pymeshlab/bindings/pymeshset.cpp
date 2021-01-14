@@ -1,3 +1,25 @@
+/****************************************************************************
+* PyMeshLab                                                         o o     *
+* A versatile mesh processing toolbox                             o     o   *
+*                                                                _   O  _   *
+* Copyright(C) 2005-2021                                           \/)\/    *
+* Visual Computing Lab                                            /\/|      *
+* ISTI - Italian National Research Council                           |      *
+*                                                                    \      *
+* All rights reserved.                                                      *
+*                                                                           *
+* This program is free software; you can redistribute it and/or modify      *
+* it under the terms of the GNU General Public License as published by      *
+* the Free Software Foundation; either version 2 of the License, or         *
+* (at your option) any later version.                                       *
+*                                                                           *
+* This program is distributed in the hope that it will be useful,           *
+* but WITHOUT ANY WARRANTY; without even the implied warranty of            *
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
+* GNU General Public License (http://www.gnu.org/licenses/gpl.txt)          *
+* for more details.                                                         *
+*                                                                           *
+****************************************************************************/
 #include "pymeshset.h"
 
 #include "pymeshlab/helpers/common.h"
@@ -37,7 +59,6 @@ void pymeshlab::initMeshSet(pybind11::module& m)
 	meshSetClass.def("clear_filter_script", &MeshSet::clearFilterScript, doc::PYMS_CLEAR_FILTER_SCRIPT);
 	meshSetClass.def("apply_filter_script", &MeshSet::applyFilterScript, doc::PYMS_APPLY_FILTER_SCRIPT);
 	meshSetClass.def("print_status", &MeshSet::printStatus, doc::PYMS_PRINT_STATUS);
-	meshSetClass.def("print_plugin_list", &MeshSet::printPluginList, doc::PYMS_PRINT_PLUGIN_LIST);
 	meshSetClass.def("print_filter_list", &MeshSet::printPythonFilterNamesList, doc::PYMS_PRINT_FILTER_LIST);
 	meshSetClass.def("print_filter_parameter_list", &MeshSet::printPythonFilterParameterList, doc::PYMS_PRINT_FILTER_PARAMETER_LIST, py::arg("filter_name"));
 	meshSetClass.def("print_filter_script", &MeshSet::printFilterScript, doc::PYMS_PRINT_FILTER_SCIRPT);

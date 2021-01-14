@@ -7,17 +7,20 @@ set(HEADERS
 	bindings/pyexceptions.h
 	bindings/pymesh.h
 	bindings/pymeshset.h
+	bindings/pymodule_functions.h
 	bindings/pypercentage.h
 	docs/pyboundingbox_doc.h
 	docs/pycolor_doc.h
 	docs/pyexceptions_doc.h
 	docs/pymesh_doc.h
 	docs/pymeshset_doc.h
+	docs/pymodule_functions_doc.h
 	docs/pypercentage_doc.h
 	pymeshlab/color.h
 	pymeshlab/exceptions.h
 	pymeshlab/mesh.h
 	pymeshlab/meshset.h
+	pymeshlab/module_functions.h
 	pymeshlab/percentage.h
 	pymeshlab/plugin_management/filterfunction.h
 	pymeshlab/plugin_management/filterfunctionparameter.h
@@ -36,10 +39,12 @@ set(SOURCES
 	bindings/pyexceptions.cpp
 	bindings/pymesh.cpp
 	bindings/pymeshset.cpp
+	bindings/pymodule_functions.cpp
 	bindings/pypercentage.cpp
 	pymeshlab/color.cpp
 	pymeshlab/mesh.cpp
 	pymeshlab/meshset.cpp
+	pymeshlab/module_functions.cpp
 	pymeshlab/percentage.cpp
 	pymeshlab/plugin_management/filterfunction.cpp
 	pymeshlab/plugin_management/filterfunctionparameter.cpp

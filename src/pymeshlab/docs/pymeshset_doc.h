@@ -1,3 +1,25 @@
+/****************************************************************************
+* PyMeshLab                                                         o o     *
+* A versatile mesh processing toolbox                             o     o   *
+*                                                                _   O  _   *
+* Copyright(C) 2005-2021                                           \/)\/    *
+* Visual Computing Lab                                            /\/|      *
+* ISTI - Italian National Research Council                           |      *
+*                                                                    \      *
+* All rights reserved.                                                      *
+*                                                                           *
+* This program is free software; you can redistribute it and/or modify      *
+* it under the terms of the GNU General Public License as published by      *
+* the Free Software Foundation; either version 2 of the License, or         *
+* (at your option) any later version.                                       *
+*                                                                           *
+* This program is distributed in the hope that it will be useful,           *
+* but WITHOUT ANY WARRANTY; without even the implied warranty of            *
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
+* GNU General Public License (http://www.gnu.org/licenses/gpl.txt)          *
+* for more details.                                                         *
+*                                                                           *
+****************************************************************************/
 #ifndef PYMESHLAB_PYMESHSET_DOC_H
 #define PYMESHLAB_PYMESHSET_DOC_H
 
@@ -128,10 +150,6 @@ const char* PYMS_APPLY_FILTER_SCRIPT =
 const char* PYMS_PRINT_STATUS =
 		"Prints the status of the MeshSet (number of meshes, and for every mesh "
 		"its ID, its label and its full name.)";
-
-//MeshSet::print_plugin_list
-const char* PYMS_PRINT_PLUGIN_LIST =
-		"Prints all the meshlab plugins loaded in the current session of PyMeshLab.";
 
 //MeshSet::print_filter_list
 const char* PYMS_PRINT_FILTER_LIST =
