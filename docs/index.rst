@@ -12,7 +12,6 @@ PyMeshLab is a Python library that interfaces to `MeshLab`_, the popular open so
 
    about
 
-
 Contents
 ========
 
@@ -26,8 +25,24 @@ Contents
    classes
    filter_list
 
+References
+==========
 
-Indices and tables
-==================
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.4438751.svg
+    :target: https://doi.org/10.5281/zenodo.4438751
 
-* :ref:`genindex`
+Please, when using this tool, cite:
+
+.. code-block:: latex
+
+   @software{pymeshlab,
+     author       = {Alessandro Muntoni and
+                     Paolo Cignoni},
+     title        = {PyMeshLab},
+     month        = jan,
+     year         = 2021,
+     publisher    = {Zenodo},
+     version      = {v0.1.8},
+     doi          = {10.5281/zenodo.4438751},
+     url          = {https://doi.org/10.5281/zenodo.4438751}
+   }
