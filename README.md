@@ -1,5 +1,7 @@
 # PyMeshLab
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4438751.svg)](https://doi.org/10.5281/zenodo.4438751)
+
 ![Linux](https://github.com/cnr-isti-vclab/PyMeshLab/workflows/Linux/badge.svg)
 ![MacOS](https://github.com/cnr-isti-vclab/PyMeshLab/workflows/MacOS/badge.svg)
 ![Windows](https://github.com/cnr-isti-vclab/PyMeshLab/workflows/Windows/badge.svg)
@@ -69,6 +71,23 @@ See the [`src`](src/README.md) folder that contains the instructions to build Py
    Visual Computing Lab  http://vcg.isti.cnr.it                    /\/|
    ISTI - Italian National Research Council                           |
    Copyright(C) 2020                                                  \
+```
+## References
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4438751.svg)](https://doi.org/10.5281/zenodo.4438751)
+
+Please, when using this tool, cite:
+```
+@software{pymeshlab,
+  author       = {Alessandro Muntoni and
+                  Paolo Cignoni},
+  title        = {PyMeshLab},
+  month        = jan,
+  year         = 2021,
+  publisher    = {Zenodo},
+  version      = {v0.1.8},
+  doi          = {10.5281/zenodo.4438751},
+  url          = {https://doi.org/10.5281/zenodo.4438751}
+}
 ```
 
 ## Contacts
