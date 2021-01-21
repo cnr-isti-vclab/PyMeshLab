@@ -195,6 +195,43 @@ void updateRichParameterFromKwarg(
 	}
 }
 
+pybind11::dict pydictFromRichParameterList( 
+		const RichParameterList& rps)
+{
+	pybind11::dict kw;
+	for (const RichParameter& par : rps){
+		std::string pname = FilterFunctionSet::toPythonName(par.name()).toStdString();
+		const Value& v = par.value();
+		if (v.isEnum())
+			kw[pname.c_str()] = v.getEnum();
+		if (v.isAbsPerc())
+			kw[pname.c_str()] = v.getAbsPerc();
+		if (v.isDynamicFloat())
+			kw[pname.c_str()] = v.getDynamicFloat();
+		if (v.isBool())
+			kw[pname.c_str()] = v.getBool();
+		if (v.isInt())
+			kw[pname.c_str()] = v.getInt();
+		if (v.isFloat())
+			kw[pname.c_str()] = v.getFloat();
+		if (v.isString())
+			kw[pname.c_str()] = v.getString().toStdString();
+		if (v.isMatrix44f())
+			kw[pname.c_str()] = v.getMatrix44f().ToEigenMatrix<Eigen::Matrix4d>();
+		if (v.isPoint3f())
+			kw[pname.c_str()] = v.getPoint3f().ToEigenVector<Eigen::Vector3d>();
+		if (v.isShotf())
+			kw[pname.c_str()] = "still_unsupported";
+		if (v.isColor())
+			kw[pname.c_str()] = v.getColor();
+		if (v.isMesh())
+			kw[pname.c_str()] = v.getMesh()->id();
+		if (v.isFileName())
+			kw[pname.c_str()] = v.getFileName().toStdString();
+	}
+	return kw;
+}
+
 void updateRichParameterListFromKwargs(
 		const FilterFunction& f,
 		const pybind11::kwargs& kwargs,
@@ -808,6 +845,10 @@ pybind11::dict applyFilterRPL(
 	}
 	else {
 		VerbosityManager::staticLogger = &md.Log;
+		std::cout << "\nApplying filter " << filtername << " with the following parameters:\n";
+		py::dict params = meshsethelper::pydictFromRichParameterList(rpl);
+		py::print(params);
+		std::cout << "\n";
 	}
 	try {
 		int req=fp->getRequirements(action);

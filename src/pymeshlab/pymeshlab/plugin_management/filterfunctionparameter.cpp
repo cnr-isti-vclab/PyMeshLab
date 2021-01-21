@@ -123,7 +123,7 @@ void pymeshlab::FilterFunctionParameter::printDefaultValue(std::ostream& o) cons
 		return;
 	}
 	if (parameter->value().isBool()) {
-		o << (parameter->value().getBool() ? "true" : "false");
+		o << (parameter->value().getBool() ? "True" : "False");
 		return;
 	}
 	if (parameter->value().isInt()) {

@@ -151,6 +151,17 @@ const char* PYMS_PRINT_STATUS =
 		"Prints the status of the MeshSet (number of meshes, and for every mesh "
 		"its ID, its label and its full name.)";
 
+//MeshSet::filter_parameter_values
+const char* PYMS_FILTER_PARAMETER_VALUES =
+		"Returns a dictionary containing the parameters and their values "
+		"that would be used by the given filter if the 'apply_filter' function "
+		"is called in the current MeshSet. "
+		"This function is useful to check which default values are set with the "
+		"current status of the MeshSet. "
+		"It takes also a (possibly empty) dictionary of parameters that could be "
+		"set by the user: in this case, the output value of these parameters "
+		"should be the same as input.";
+
 //MeshSet::print_filter_list
 const char* PYMS_PRINT_FILTER_LIST =
 		"Prints the list of all the filters that can be applied in the MeshSet.";

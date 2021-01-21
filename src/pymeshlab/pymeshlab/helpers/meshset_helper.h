@@ -62,6 +62,9 @@ void updateRichParameterListFromKwargs(
 		RichParameterList& rps,
 		bool ignoreFileName = false);
 
+pybind11::dict pydictFromRichParameterList(
+		const RichParameterList& rps);
+
 /** QVariant map management **/
 
 pybind11::dict toPyDict(const std::map<std::string, QVariant>& qVariantMap);

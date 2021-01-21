@@ -84,6 +84,10 @@ public:
 			pybind11::kwargs kwargs = pybind11::kwargs());
 
 	void printStatus() const;
+	
+	pybind11::dict filterParameterValues(
+			const std::string& filtername,
+			pybind11::kwargs kwargs = pybind11::kwargs());
 
 	/** Member functions not binded on Python **/
 	//sharedDataContext management

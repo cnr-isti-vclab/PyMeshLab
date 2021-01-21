@@ -302,6 +302,9 @@ pybind11::dict pymeshlab::MeshSet::applyFilter(const std::string& filtername, py
 		outputValues = meshsethelper::applyFilterRPL(
 				filtername, meshlabFilterName, action, fp, rpl,
 				verbose, filterScript, true, *this);
+		
+		if(verbose)
+			std::cout << std::endl;
 	}
 	else {
 		throw MLException(
@@ -319,6 +322,32 @@ void pymeshlab::MeshSet::printStatus() const
 		std::cout << "\tMesh label: " << m->label().toStdString() << "\n";
 		std::cout << "\tFull name: " << m->fullName().toStdString() << "\n\n";
 	}
+}
+
+pybind11::dict pymeshlab::MeshSet::filterParameterValues(
+		const std::string& filtername, 
+		pybind11::kwargs kwargs)
+{
+	py::dict outputValues;
+	FilterFunctionSet::iterator it = filterFunctionSet.find(QString::fromStdString(filtername));
+	if (it != filterFunctionSet.end() && 
+			!(QString::fromStdString(filtername).startsWith("load_") && 
+			!(QString::fromStdString(filtername).startsWith("save_")))) {
+		QString meshlabFilterName = it->meshlabFunctionName();
+		
+		QAction* action = nullptr;
+		FilterPluginInterface* fp = meshsethelper::pluginFromFilterName(meshlabFilterName, action);
+		RichParameterList rpl;
+		fp->initParameterList(action, *this, rpl);
+		meshsethelper::updateRichParameterListFromKwargs(*it, kwargs, this, rpl);
+		outputValues = meshsethelper::pydictFromRichParameterList(rpl);
+	}
+	else {
+		throw MLException(
+					"Failed to get default falues of filter: " + QString::fromStdString(filtername) + "\n" +
+					"Filter does not exists. Take a look at MeshSet.print_filter_list function.");
+	}
+	return outputValues;
 }
 
 bool pymeshlab::MeshSet::isSceneGLSharedDataContextEnabled() const

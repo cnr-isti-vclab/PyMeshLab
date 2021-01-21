@@ -104,7 +104,7 @@ apply_filter parameters
 
          <i>Cone amplitude</i>: Number of different views uniformly placed around the mesh. More views means better accuracy at the cost of increased calculation time
 
-   ``usegpu : bool = false``
+   ``usegpu : bool = False``
 
       .. raw:: html
 
@@ -206,7 +206,7 @@ apply_filter parameters
 
          <i>Substring match</i>: Apply visibility to all layers with name substring matching the entered string. If not empty, the first parameter is ignored.
 
-   ``ismeshvisible : bool = true``
+   ``ismeshvisible : bool = True``
 
       .. raw:: html
 
@@ -226,13 +226,13 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Min</i>: The value that will be mapped with the lower end of the scale (blue)
+         <i>Min</i>: The value that will be mapped with the lower end of the scale (red)
 
    ``maxval : float = -inf``
 
       .. raw:: html
 
-         <i>Max</i>: The value that will be mapped with the upper end of the scale (red)
+         <i>Max</i>: The value that will be mapped with the upper end of the scale (blue)
 
    ``perc : float (bounded) = 0 [min: 0; max: 100]``
 
@@ -240,7 +240,7 @@ apply_filter parameters
 
          <i>Percentile Crop [0..100]</i>: If not zero this value will be used for a percentile cropping of the quality values.<br> If this parameter is set to a value <i>P</i> then the two values <i>V_min,V_max</i> for which <i>P</i>% of the vertices have a quality <b>lower or greater</b> than <i>V_min,V_max</i> are used as min/max values for clamping.<br><br> The automated percentile cropping is very useful for automatically discarding outliers.
 
-   ``zerosym : bool = false``
+   ``zerosym : bool = False``
 
       .. raw:: html
 
@@ -262,19 +262,19 @@ apply_filter parameters
 
          <i>Max size to be closed </i>: The size is expressed as number of edges composing the hole boundary
 
-   ``selected : bool = false``
+   ``selected : bool = False``
 
       .. raw:: html
 
          <i>Close holes with selected faces</i>: Only the holes with at least one of the boundary faces selected are closed
 
-   ``newfaceselected : bool = true``
+   ``newfaceselected : bool = True``
 
       .. raw:: html
 
          <i>Select the newly created faces</i>: After closing a hole the faces that have been created are left selected. Any previous selection is lost. Useful for example for smoothing the newly created holes.
 
-   ``selfintersection : bool = true``
+   ``selfintersection : bool = True``
 
       .. raw:: html
 
@@ -307,7 +307,7 @@ apply_filter parameters
 
          <i>Representative Strategy:</i>: <b>Average</b>: for each cell we take the average of the sample falling into. The resulting point is a new point.<br><b>Closest to center</b>: for each cell we take the sample that is closest to the center of the cell. Chosen vertices are a subset of the original ones.
 
-   ``selected : bool = false``
+   ``selected : bool = False``
 
       .. raw:: html
 
@@ -329,7 +329,7 @@ apply_filter parameters
 
          <i>Noise bits:</i>: Bits of noise added to each RGB channel. Example: 3 noise bits adds three random offsets in the [-4,+4] interval to each RGB channels.
 
-   ``onselected : bool = false``
+   ``onselected : bool = False``
 
       .. raw:: html
 
@@ -357,13 +357,13 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Min</i>: The value that will be mapped with the lower end of the scale (blue)
+         <i>Min</i>: The value that will be mapped with the lower end of the scale (red)
 
    ``maxval : float = -inf``
 
       .. raw:: html
 
-         <i>Max</i>: The value that will be mapped with the upper end of the scale (red)
+         <i>Max</i>: The value that will be mapped with the upper end of the scale (blue)
 
    ``perc : float (bounded) = 0 [min: 0; max: 100]``
 
@@ -371,7 +371,7 @@ apply_filter parameters
 
          <i>Percentile Crop [0..100]</i>: If not zero this value will be used for a percentile cropping of the quality values.<br> If this parameter is set to a value <i>P</i> then the two values <i>V_min,V_max</i> for which <i>P</i>% of the faces have a quality <b>lower or greater</b> than <i>V_min,V_max</i> are used as min/max values for clamping.<br><br> The automated percentile cropping is very useful for automatically discarding outliers.
 
-   ``zerosym : bool = false``
+   ``zerosym : bool = False``
 
       .. raw:: html
 
@@ -429,13 +429,13 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Min</i>: The value that will be mapped with the lower end of the scale (blue)
+         <i>Min</i>: The value that will be mapped with the lower end of the scale (red)
 
    ``maxval : float = -inf``
 
       .. raw:: html
 
-         <i>Max</i>: The value that will be mapped with the upper end of the scale (red)
+         <i>Max</i>: The value that will be mapped with the upper end of the scale (blue)
 
    ``perc : float (bounded) = 0 [min: 0; max: 100]``
 
@@ -443,7 +443,7 @@ apply_filter parameters
 
          <i>Percentile Crop [0..100]</i>: If not zero this value will be used for a percentile cropping of the quality values.<br> If this parameter is set to a value <i>P</i> then the two values <i>V_min,V_max</i> for which <i>P</i>% of the vertices have a quality <b>lower or greater</b> than <i>V_min,V_max</i> are used as min/max values for clamping.<br><br> The automated percentile cropping is very useful for automatically discarding outliers.
 
-   ``zerosym : bool = false``
+   ``zerosym : bool = False``
 
       .. raw:: html
 
@@ -459,7 +459,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``selectiononly : bool = false``
+   ``selectiononly : bool = False``
 
       .. raw:: html
 
@@ -513,7 +513,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``selectiononly : bool = false``
+   ``selectiononly : bool = False``
 
       .. raw:: html
 
@@ -625,7 +625,7 @@ apply_filter parameters
 
          <i>Quality/Color Mapping</i>: Choose the curvature that is mapped into quality and visualized as per vertex color.
 
-   ``autoclean : bool = true``
+   ``autoclean : bool = True``
 
       .. raw:: html
 
@@ -661,7 +661,7 @@ apply_filter parameters
 
          <i>Smooth Iteration</i>: The number of smoothing iteration done on the p used to estimate and propagate normals.
 
-   ``flipflag : bool = false``
+   ``flipflag : bool = False``
 
       .. raw:: html
 
@@ -720,13 +720,13 @@ apply_filter parameters
 
          <i>plane reference</i>: Specify the reference from which the planes are shifted
 
-   ``createsectionsurface : bool = false``
+   ``createsectionsurface : bool = False``
 
       .. raw:: html
 
          <i>Create also section surface</i>: If selected, in addition to a layer with the section polyline, it will be created also a layer with a triangulated version of the section polyline. This only works if the section polyline is closed
 
-   ``splitsurfacewithsection : bool = false``
+   ``splitsurfacewithsection : bool = False``
 
       .. raw:: html
 
@@ -933,25 +933,25 @@ apply_filter parameters
 
          <i>Blending threshold:</i>: The fraction of craters radius beyond which the radial function is replaced with the blending function.
 
-   ``successiveimpacts : bool = true``
+   ``successiveimpacts : bool = True``
 
       .. raw:: html
 
          <i>Successive impacts</i>: If not checked, the impact-effects of generated craters will be superimposed with each other.
 
-   ``ppnoise : bool = true``
+   ``ppnoise : bool = True``
 
       .. raw:: html
 
          <i>Postprocessing noise</i>: Slightly perturbates the craters with a noise function.
 
-   ``invert : bool = false``
+   ``invert : bool = False``
 
       .. raw:: html
 
          <i>Invert perturbation</i>: If checked, inverts the sign of radial perturbation to create bumps instead of craters.
 
-   ``save_as_quality : bool = false``
+   ``save_as_quality : bool = False``
 
       .. raw:: html
 
@@ -975,7 +975,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``edgecylflag : bool = true``
+   ``edgecylflag : bool = True``
 
       .. raw:: html
 
@@ -987,7 +987,7 @@ apply_filter parameters
 
          <i>Edge Cylinder Rad.</i>: The radius of the cylinder replacing each edge.
 
-   ``vertcylflag : bool = false``
+   ``vertcylflag : bool = False``
 
       .. raw:: html
 
@@ -999,7 +999,7 @@ apply_filter parameters
 
          <i>Vertex Cylinder Rad.</i>: The radius of the cylinder replacing each vertex.
 
-   ``vertsphflag : bool = true``
+   ``vertsphflag : bool = True``
 
       .. raw:: html
 
@@ -1011,7 +1011,7 @@ apply_filter parameters
 
          <i>Vertex Sphere Rad.</i>: The radius of the sphere replacing each vertex.
 
-   ``faceextflag : bool = true``
+   ``faceextflag : bool = True``
 
       .. raw:: html
 
@@ -1029,7 +1029,7 @@ apply_filter parameters
 
          <i>Face Prism Inset</i>: The inset radius of each prism, e.g. how much it is moved toward the inside each vertex on the border of the prism.
 
-   ``edgefauxflag : bool = true``
+   ``edgefauxflag : bool = True``
 
       .. raw:: html
 
@@ -1119,7 +1119,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``selection : bool = false``
+   ``selection : bool = False``
 
       .. raw:: html
 
@@ -1221,7 +1221,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``alllayers : bool = false``
+   ``alllayers : bool = False``
 
       .. raw:: html
 
@@ -1356,7 +1356,7 @@ apply_filter parameters
 
          <i>Strength</i>: How much smoothing is applied: 0 (no smooth) e 1 (full smooth)
 
-   ``selected : bool = false``
+   ``selected : bool = False``
 
       .. raw:: html
 
@@ -1397,7 +1397,7 @@ apply_filter parameters
 
          <i>Viewpoint</i>: The position of the view point that is used to get the constraint direction.
 
-   ``selected : bool = false``
+   ``selected : bool = False``
 
       .. raw:: html
 
@@ -1454,13 +1454,13 @@ apply_filter parameters
 
          <i>Radius</i>: the radius of the spheres centered in the VertexMesh seeds 
 
-   ``sampleradius : bool = false``
+   ``sampleradius : bool = False``
 
       .. raw:: html
 
          <i>Use sample radius</i>: Use the radius that is stored in each sample of the vertex mesh. Useful for displaing the variable disk sampling results
 
-   ``approximategeodetic : bool = false``
+   ``approximategeodetic : bool = False``
 
       .. raw:: html
 
@@ -1488,7 +1488,7 @@ apply_filter parameters
 
          <i>Reference Mesh/PointCloud</i>: The Mesh/Pointcloud that is used as a reference, to measure distance from.
 
-   ``signeddist : bool = true``
+   ``signeddist : bool = True``
 
       .. raw:: html
 
@@ -1550,7 +1550,7 @@ apply_filter parameters
 
          <i>k</i>: Factor to model the general adhesion
 
-   ``draw_texture : bool = false``
+   ``draw_texture : bool = False``
 
       .. raw:: html
 
@@ -1566,25 +1566,25 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``rch : bool = true``
+   ``rch : bool = True``
 
       .. raw:: html
 
          <i>Red Channel:</i>: Select the red channel.
 
-   ``gch : bool = true``
+   ``gch : bool = True``
 
       .. raw:: html
 
          <i>Green Channel:</i>: Select the green channel.
 
-   ``bch : bool = true``
+   ``bch : bool = True``
 
       .. raw:: html
 
          <i>Blue Channel:</i>: Select the blue channel.<br><br>If no channel is selected<br>filter works on Lightness.
 
-   ``onselected : bool = false``
+   ``onselected : bool = False``
 
       .. raw:: html
 
@@ -1675,25 +1675,25 @@ apply_filter parameters
 
          <i>Tags</i>: Mandatory. Tags must be separated by a space. Typical tags usually used by MeshLab users: scan, photogrammetry.
 
-   ``isprivate : bool = false``
+   ``isprivate : bool = False``
 
       .. raw:: html
 
          <i>Private</i>: This parameter can be true only for PRO account.
 
-   ``ispublished : bool = false``
+   ``ispublished : bool = False``
 
       .. raw:: html
 
          <i>Publish</i>: If true the model will be published immediately.
 
-   ``autorotate : bool = true``
+   ``autorotate : bool = True``
 
       .. raw:: html
 
          <i>Auto Rotate</i>: If true the model rotated by 90 degree on the X axis to maintain similar default orientation.
 
-   ``saveapisetting : bool = false``
+   ``saveapisetting : bool = False``
 
       .. raw:: html
 
@@ -1721,7 +1721,7 @@ apply_filter parameters
 
          <i>Plane XY subivisions</i>: Subdivision steps of plane borders
 
-   ``hasuv : bool = false``
+   ``hasuv : bool = False``
 
       .. raw:: html
 
@@ -1751,25 +1751,25 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``mergevisible : bool = true``
+   ``mergevisible : bool = True``
 
       .. raw:: html
 
          <i>Merge Only Visible Layers</i>: If true, flatten only visible layers, otherwise, all layers are used
 
-   ``deletelayer : bool = true``
+   ``deletelayer : bool = True``
 
       .. raw:: html
 
          <i>Delete Layers </i>: Delete all the layers used as source in flattening. <br>If all layers are visible only a single layer will remain after the invocation of this filter
 
-   ``mergevertices : bool = true``
+   ``mergevertices : bool = True``
 
       .. raw:: html
 
          <i>Merge duplicate vertices</i>: Merge the vertices that are duplicated among different layers. <br><br>Very useful when the layers are spliced portions of a single big mesh.
 
-   ``alsounreferenced : bool = false``
+   ``alsounreferenced : bool = False``
 
       .. raw:: html
 
@@ -1853,7 +1853,7 @@ apply_filter parameters
 
          <i>Gain:</i>: Ignored in all the algorithms except the ridged one. This parameter defines how hard the terrain will be.
 
-   ``saveasquality : bool = false``
+   ``saveasquality : bool = False``
 
       .. raw:: html
 
@@ -1937,7 +1937,7 @@ apply_filter parameters
 
          <i>Gain:</i>: Ignored in all the algorithms except the ridged one. This parameter defines how hard the terrain will be.
 
-   ``saveasquality : bool = false``
+   ``saveasquality : bool = False``
 
       .. raw:: html
 
@@ -1977,7 +1977,7 @@ apply_filter parameters
 
          <i>value for the 2nd point</i>: Harmonic field value for the vertex.
 
-   ``colorize : bool = true``
+   ``colorize : bool = True``
 
       .. raw:: html
 
@@ -2069,7 +2069,7 @@ apply_filter parameters
 
          <i>Max. Computation time, in seconds</i>: Stop the computation before the end of the exploration (command line option: -t)
 
-   ``usesuper4pcs : bool = true``
+   ``usesuper4pcs : bool = True``
 
       .. raw:: html
 
@@ -2143,7 +2143,7 @@ apply_filter parameters
 
          <i>y scale</i>: absolute scale on y (float)
 
-   ``center : bool = false``
+   ``center : bool = False``
 
       .. raw:: html
 
@@ -2171,31 +2171,31 @@ apply_filter parameters
 
          <i>Target Mesh</i>: The mesh that is sampled for the comparison.
 
-   ``savesample : bool = false``
+   ``savesample : bool = False``
 
       .. raw:: html
 
          <i>Save Samples</i>: Save the position and distance of all the used samples on both the two surfaces, creating two new layers with two point clouds representing the used samples.
 
-   ``samplevert : bool = true``
+   ``samplevert : bool = True``
 
       .. raw:: html
 
          <i>Sample Vertices</i>: For the search of maxima it is useful to sample vertices and edges of the mesh with a greater care. It is quite probably the the farthest points falls along edges or on mesh vertices, and with uniform montecarlo sampling approachesthe probability of taking a sample over a vertex or an edge is theoretically null.<br>On the other hand this kind of sampling could make the overall sampling distribution slightly biased and slightly affects the cumulative results.
 
-   ``sampleedge : bool = false``
+   ``sampleedge : bool = False``
 
       .. raw:: html
 
          <i>Sample Edges</i>: See the above comment.
 
-   ``samplefauxedge : bool = false``
+   ``samplefauxedge : bool = False``
 
       .. raw:: html
 
          <i>Sample FauxEdge</i>: See the above comment.
 
-   ``sampleface : bool = false``
+   ``sampleface : bool = False``
 
       .. raw:: html
 
@@ -2260,13 +2260,13 @@ apply_filter parameters
 
          <i>Starting shot</i>: If the point of view has been set by hand, it must be retrieved from current trackball
 
-   ``estimate_focal : bool = false``
+   ``estimate_focal : bool = False``
 
       .. raw:: html
 
          <i>Estimate focal length</i>: Estimate focal length: if not checked, only extrinsic parameters are estimated
 
-   ``fine : bool = true``
+   ``fine : bool = True``
 
       .. raw:: html
 
@@ -2333,19 +2333,19 @@ apply_filter parameters
 
          <i>Threshold for refinement convergence (in pixels)</i>: The threshold (average quadratic variation in the projection on image plane of some samples of the mesh before and after each step of refinement) that stops the refinement
 
-   ``pre_alignment : bool = false``
+   ``pre_alignment : bool = False``
 
       .. raw:: html
 
          <i>Pre-alignment step</i>: Pre-alignment step
 
-   ``estimate_focal : bool = true``
+   ``estimate_focal : bool = True``
 
       .. raw:: html
 
          <i>Estimate focal length</i>: Estimate focal length
 
-   ``fine : bool = true``
+   ``fine : bool = True``
 
       .. raw:: html
 
@@ -2435,13 +2435,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``forceflip : bool = true``
+   ``forceflip : bool = True``
 
       .. raw:: html
 
          <i>Force Flip</i>: If selected, the normals will always be flipped; otherwise, the filter tries to set them outside
 
-   ``onlyselected : bool = false``
+   ``onlyselected : bool = False``
 
       .. raw:: html
 
@@ -2457,13 +2457,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``invfaces : bool = false``
+   ``invfaces : bool = False``
 
       .. raw:: html
 
          <i>Invert Faces</i>: If true the filter will invert the set of selected faces.
 
-   ``invverts : bool = false``
+   ``invverts : bool = False``
 
       .. raw:: html
 
@@ -2526,7 +2526,7 @@ apply_filter parameters
 
          <i>Convergence Precision</i>: This parameter controls the convergence speed/precision of the optimization of the texture coordinates. Larger the number slower the processing and ,eventually, slightly better results
 
-   ``doublestep : bool = true``
+   ``doublestep : bool = True``
 
       .. raw:: html
 
@@ -2598,19 +2598,19 @@ apply_filter parameters
 
          <i>Smoothing steps</i>: The number of times that the whole algorithm (normal smoothing + vertex fitting) is iterated.
 
-   ``boundary : bool = true``
+   ``boundary : bool = True``
 
       .. raw:: html
 
          <i>1D Boundary Smoothing</i>: Smooth boundary edges only by themselves (e.g. the polyline forming the boundary of the mesh is independently smoothed). This can reduce the shrinking on the border but can have strange effects on very small boundaries.
 
-   ``cotangentweight : bool = true``
+   ``cotangentweight : bool = True``
 
       .. raw:: html
 
          <i>Cotangent weighting</i>: Use cotangent weighting scheme for the averaging of the position. Otherwise the simpler umbrella scheme (1 if the edge is present) is used.
 
-   ``selected : bool = false``
+   ``selected : bool = False``
 
       .. raw:: html
 
@@ -2626,7 +2626,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``selection : bool = false``
+   ``selection : bool = False``
 
       .. raw:: html
 
@@ -2678,7 +2678,7 @@ apply_filter parameters
 
          <i>MLS - Spherical parameter</i>: Control the curvature of the fitted spheres: 0 is equivalent to a pure plane fit,1 to a pure spherical fit, values between 0 and 1 gives intermediate results,while other real values might give interesting results, but take care with extremesettings !
 
-   ``accuratenormal : bool = true``
+   ``accuratenormal : bool = True``
 
       .. raw:: html
 
@@ -2746,7 +2746,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``alllayers : bool = false``
+   ``alllayers : bool = False``
 
       .. raw:: html
 
@@ -2762,13 +2762,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``freeze : bool = true``
+   ``freeze : bool = True``
 
       .. raw:: html
 
          <i>Freeze Matrix</i>: The transformation is explicitly applied, and the vertex coordinates are actually changed
 
-   ``alllayers : bool = false``
+   ``alllayers : bool = False``
 
       .. raw:: html
 
@@ -2784,7 +2784,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``alllayers : bool = false``
+   ``alllayers : bool = False``
 
       .. raw:: html
 
@@ -2806,19 +2806,19 @@ apply_filter parameters
 
          <i></i>: 
 
-   ``compose : bool = false``
+   ``compose : bool = False``
 
       .. raw:: html
 
          <i>Compose with current</i>: If selected, the new matrix will be composed with the current one (matrix=new*old)
 
-   ``freeze : bool = true``
+   ``freeze : bool = True``
 
       .. raw:: html
 
          <i>Freeze Matrix</i>: The transformation is explicitly applied, and the vertex coordinates are actually changed
 
-   ``alllayers : bool = false``
+   ``alllayers : bool = False``
 
       .. raw:: html
 
@@ -2888,19 +2888,19 @@ apply_filter parameters
 
          <i>Z Scale</i>: Scaling factor on Z axis
 
-   ``compose : bool = false``
+   ``compose : bool = False``
 
       .. raw:: html
 
          <i>Compose with current</i>: If selected, the new matrix will be composed with the current one (matrix=new*old)
 
-   ``freeze : bool = true``
+   ``freeze : bool = True``
 
       .. raw:: html
 
          <i>Freeze Matrix</i>: The transformation is explicitly applied, and the vertex coordinates are actually changed
 
-   ``alllayers : bool = false``
+   ``alllayers : bool = False``
 
       .. raw:: html
 
@@ -2988,7 +2988,7 @@ apply_filter parameters
 
          <i>Proxy Mesh</i>: The mesh that will be projected/resampled onto the MLS surface.
 
-   ``selectiononly : bool = false``
+   ``selectiononly : bool = False``
 
       .. raw:: html
 
@@ -3018,7 +3018,7 @@ apply_filter parameters
 
          <i>MLS - Spherical parameter</i>: Control the curvature of the fitted spheres: 0 is equivalent to a pure plane fit,1 to a pure spherical fit, values between 0 and 1 gives intermediate results,while other real values might give interesting results, but take care with extremesettings !
 
-   ``accuratenormal : bool = true``
+   ``accuratenormal : bool = True``
 
       .. raw:: html
 
@@ -3058,7 +3058,7 @@ apply_filter parameters
 
          <i>Proxy Mesh</i>: The mesh that will be projected/resampled onto the MLS surface.
 
-   ``selectiononly : bool = false``
+   ``selectiononly : bool = False``
 
       .. raw:: html
 
@@ -3122,13 +3122,13 @@ apply_filter parameters
 
          <i>Number of samples</i>: The desired number of samples. It can be smaller or larger than the mesh size, and according to the chosen sampling strategy it will try to adapt.
 
-   ``weighted : bool = false``
+   ``weighted : bool = False``
 
       .. raw:: html
 
          <i>Quality Weighted Sampling</i>: Use per vertex quality to drive the vertex sampling. The number of samples falling in each face is proportional to the face area multiplied by the average quality of the face vertices.
 
-   ``perfacenormal : bool = false``
+   ``perfacenormal : bool = False``
 
       .. raw:: html
 
@@ -3140,13 +3140,13 @@ apply_filter parameters
 
          <i>Radius Variance</i>: The radius of the disk is allowed to vary between r/var and r*var. If this parameter is 1 the sampling is the same of the Poisson Disk Sampling
 
-   ``exactnum : bool = true``
+   ``exactnum : bool = True``
 
       .. raw:: html
 
          <i>Exact Sample Number</i>: If the required total number of samples is not a strict exact requirement we can exploit a different algorithmbased on the choice of the number of samples inside each triangle by a random Poisson-distributed number with mean equal to the expected number of samples times the area of the triangle over the surface of the whole mesh.
 
-   ``edgesampling : bool = false``
+   ``edgesampling : bool = False``
 
       .. raw:: html
 
@@ -3162,7 +3162,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``deleteoriginal : bool = true``
+   ``deleteoriginal : bool = True``
 
       .. raw:: html
 
@@ -3178,7 +3178,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``deleteoriginal : bool = true``
+   ``deleteoriginal : bool = True``
 
       .. raw:: html
 
@@ -3246,7 +3246,7 @@ apply_filter parameters
 
          <i>Texture name</i>: Specifies the name of the file into which the texture image will be saved
 
-   ``colorcorrection : bool = true``
+   ``colorcorrection : bool = True``
 
       .. raw:: html
 
@@ -3258,31 +3258,31 @@ apply_filter parameters
 
          <i>Color correction filter</i>: It is the radius (in pixel) of the kernel that is used to compute the difference between corresponding texels in different rasters. Default is 1 that generate a 3x3 kernel. Highest values increase the robustness of the color correction process in the case of strong image-to-geometry misalignments
 
-   ``usedistanceweight : bool = true``
+   ``usedistanceweight : bool = True``
 
       .. raw:: html
 
          <i>Use distance weight</i>: Includes a weight accounting for the distance to the camera during the computation of reference images
 
-   ``useimgborderweight : bool = true``
+   ``useimgborderweight : bool = True``
 
       .. raw:: html
 
          <i>Use image border weight</i>: Includes a weight accounting for the distance to the image border during the computation of reference images
 
-   ``usealphaweight : bool = false``
+   ``usealphaweight : bool = False``
 
       .. raw:: html
 
          <i>Use image alpha weight</i>: If true, alpha channel of the image is used as additional weight. In this way it is possible to mask-out parts of the images that should not be projected on the mesh. Please note this is not a transparency effect, but just influences the weigthing between different images
 
-   ``cleanisolatedtriangles : bool = true``
+   ``cleanisolatedtriangles : bool = True``
 
       .. raw:: html
 
          <i>Clean isolated triangles</i>: Remove all patches compound of a single triangle by aggregating them to adjacent patches
 
-   ``stretchingallowed : bool = false``
+   ``stretchingallowed : bool = False``
 
       .. raw:: html
 
@@ -3304,31 +3304,31 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``usedistanceweight : bool = true``
+   ``usedistanceweight : bool = True``
 
       .. raw:: html
 
          <i>Use distance weight</i>: Includes a weight accounting for the distance to the camera during the computation of reference images
 
-   ``useimgborderweight : bool = true``
+   ``useimgborderweight : bool = True``
 
       .. raw:: html
 
          <i>Use image border weight</i>: Includes a weight accounting for the distance to the image border during the computation of reference images
 
-   ``usealphaweight : bool = false``
+   ``usealphaweight : bool = False``
 
       .. raw:: html
 
          <i>Use image alpha weight</i>: If true, alpha channel of the image is used as additional weight. In this way it is possible to mask-out parts of the images that should not be projected on the mesh. Please note this is not a transparency effect, but just influences the weigthing between different images
 
-   ``cleanisolatedtriangles : bool = true``
+   ``cleanisolatedtriangles : bool = True``
 
       .. raw:: html
 
          <i>Clean isolated triangles</i>: Remove all patches compound of a single triangle by aggregating them to adjacent patches
 
-   ``stretchingallowed : bool = false``
+   ``stretchingallowed : bool = False``
 
       .. raw:: html
 
@@ -3362,7 +3362,7 @@ apply_filter parameters
 
          <i>Projection plane</i>: Choose the projection plane
 
-   ``aspectratio : bool = false``
+   ``aspectratio : bool = False``
 
       .. raw:: html
 
@@ -3429,7 +3429,7 @@ apply_filter parameters
 
          <i>Approx. Region Num</i>: An estimation of the number of regions that must be generated. Smaller regions could lead to parametrizations with smaller distortion.
 
-   ``overlapflag : bool = false``
+   ``overlapflag : bool = False``
 
       .. raw:: html
 
@@ -3469,7 +3469,7 @@ apply_filter parameters
 
          <i>func alpha = </i>: function to generate Alpha component. Expected Range 0-255
 
-   ``onselected : bool = false``
+   ``onselected : bool = False``
 
       .. raw:: html
 
@@ -3518,19 +3518,19 @@ apply_filter parameters
 
          <i>func q0 = </i>: function to generate new Quality foreach face
 
-   ``normalize : bool = false``
+   ``normalize : bool = False``
 
       .. raw:: html
 
          <i>normalize</i>: if checked normalize all quality values in range [0..1]
 
-   ``map : bool = false``
+   ``map : bool = False``
 
       .. raw:: html
 
          <i>map into color</i>: if checked map quality generated values into per-vertex color
 
-   ``onselected : bool = false``
+   ``onselected : bool = False``
 
       .. raw:: html
 
@@ -3558,7 +3558,7 @@ apply_filter parameters
 
          <i>Hist Max</i>: The faces are displaced of a vector whose norm is bounded by this value
 
-   ``areaweighted : bool = false``
+   ``areaweighted : bool = False``
 
       .. raw:: html
 
@@ -3612,7 +3612,7 @@ apply_filter parameters
 
          <i>func alpha = </i>: function to generate Alpha component. Expected Range 0-255
 
-   ``onselected : bool = false``
+   ``onselected : bool = False``
 
       .. raw:: html
 
@@ -3646,7 +3646,7 @@ apply_filter parameters
 
          <i>func z = </i>: insert function to generate new coord for z
 
-   ``onselected : bool = false``
+   ``onselected : bool = False``
 
       .. raw:: html
 
@@ -3680,7 +3680,7 @@ apply_filter parameters
 
          <i>func nz = </i>: insert function to generate new z for the normal
 
-   ``onselected : bool = false``
+   ``onselected : bool = False``
 
       .. raw:: html
 
@@ -3702,19 +3702,19 @@ apply_filter parameters
 
          <i>func q = </i>: function to generate new Quality for every vertex
 
-   ``normalize : bool = false``
+   ``normalize : bool = False``
 
       .. raw:: html
 
          <i>normalize</i>: if checked normalize all quality values in range [0..1]
 
-   ``map : bool = false``
+   ``map : bool = False``
 
       .. raw:: html
 
          <i>map into color</i>: if checked map quality generated values into per-vertex color
 
-   ``onselected : bool = false``
+   ``onselected : bool = False``
 
       .. raw:: html
 
@@ -3742,7 +3742,7 @@ apply_filter parameters
 
          <i>Hist Max</i>: The vertex are displaced of a vector whose norm is bounded by this value
 
-   ``areaweighted : bool = false``
+   ``areaweighted : bool = False``
 
       .. raw:: html
 
@@ -3784,7 +3784,7 @@ apply_filter parameters
 
          <i>func v = </i>: function to generate v texture coord. Expected Range 0-1
 
-   ``onselected : bool = false``
+   ``onselected : bool = False``
 
       .. raw:: html
 
@@ -3836,7 +3836,7 @@ apply_filter parameters
 
          <i>func v2 = </i>: function to generate v texture coord. of wedge 2. Expected Range 0-1
 
-   ``onselected : bool = false``
+   ``onselected : bool = False``
 
       .. raw:: html
 
@@ -3876,7 +3876,7 @@ apply_filter parameters
 
          <i>Offset</i>: This values is the XYZ frequency offset of the Noise function (offset 1 means 1 period shift).
 
-   ``onselected : bool = false``
+   ``onselected : bool = False``
 
       .. raw:: html
 
@@ -3908,7 +3908,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``selection : bool = false``
+   ``selection : bool = False``
 
       .. raw:: html
 
@@ -3962,7 +3962,7 @@ apply_filter parameters
 
          <i>Explicit Radius</i>: If not zero this parameter override the previous parameter to allow exact radius specification
 
-   ``bestsampleflag : bool = true``
+   ``bestsampleflag : bool = True``
 
       .. raw:: html
 
@@ -3974,7 +3974,7 @@ apply_filter parameters
 
          <i>Best Sample Pool Size</i>: Used only if the Best Sample Flag is true. It control the number of attempt that it makes to get the best sample. It is reasonable that it is smaller than the Montecarlo oversampling factor.
 
-   ``exactnumflag : bool = false``
+   ``exactnumflag : bool = False``
 
       .. raw:: html
 
@@ -4026,7 +4026,7 @@ apply_filter parameters
 
          <i>m</i>: Mass of the particle
 
-   ``colorize_mesh : bool = false``
+   ``colorize_mesh : bool = False``
 
       .. raw:: html
 
@@ -4090,25 +4090,25 @@ apply_filter parameters
 
          <i>MonterCarlo OverSampling</i>: The over-sampling rate that is used to generate the initial Montecarlo samples (e.g. if this parameter is <i>K</i> means that<i>K</i> x <i>poisson sample</i> points will be used). The generated Poisson-disk samples are a subset of these initial Montecarlo samples. Larger this number slows the process but make it a bit more accurate.
 
-   ``savemontecarlo : bool = false``
+   ``savemontecarlo : bool = False``
 
       .. raw:: html
 
          <i>Save Montecarlo</i>: If true, it will generate an additional Layer with the montecarlo sampling that was pruned to build the poisson distribution.
 
-   ``approximategeodesicdistance : bool = false``
+   ``approximategeodesicdistance : bool = False``
 
       .. raw:: html
 
          <i>Approximate Geodesic Distance</i>: If true Poisson Disc distances are computed using an approximate geodesic distance, e.g. an euclidean distance weighted by a function of the difference between the normals of the two points.
 
-   ``subsample : bool = false``
+   ``subsample : bool = False``
 
       .. raw:: html
 
          <i>Base Mesh Subsampling</i>: If true the original vertices of the base mesh are used as base set of points. In this case the SampleNum should be obviously much smaller than the original vertex number.<br>Note that this option is very useful in the case you want to subsample a dense point cloud.
 
-   ``refineflag : bool = false``
+   ``refineflag : bool = False``
 
       .. raw:: html
 
@@ -4120,7 +4120,7 @@ apply_filter parameters
 
          <i>Samples to be refined</i>: Used only if the above option is checked. 
 
-   ``bestsampleflag : bool = true``
+   ``bestsampleflag : bool = True``
 
       .. raw:: html
 
@@ -4132,7 +4132,7 @@ apply_filter parameters
 
          <i>Best Sample Pool Size</i>: Used only if the Best Sample Flag is true. It control the number of attempt that it makes to get the best sample. It is reasonable that it is smaller than the Montecarlo oversampling factor.
 
-   ``exactnumflag : bool = false``
+   ``exactnumflag : bool = False``
 
       .. raw:: html
 
@@ -4160,37 +4160,37 @@ apply_filter parameters
 
          <i>depth threshold</i>: threshold value for depth buffer projection (shadow buffer)
 
-   ``onselection : bool = false``
+   ``onselection : bool = False``
 
       .. raw:: html
 
          <i>Only on selection</i>: If true, projection is only done for selected vertices
 
-   ``useangle : bool = true``
+   ``useangle : bool = True``
 
       .. raw:: html
 
          <i>use angle weight</i>: If true, color contribution is weighted by pixel view angle
 
-   ``usedistance : bool = true``
+   ``usedistance : bool = True``
 
       .. raw:: html
 
          <i>use distance weight</i>: If true, color contribution is weighted by pixel view distance
 
-   ``useborders : bool = true``
+   ``useborders : bool = True``
 
       .. raw:: html
 
          <i>use image borders weight</i>: If true, color contribution is weighted by pixel distance from image boundaries
 
-   ``usesilhouettes : bool = true``
+   ``usesilhouettes : bool = True``
 
       .. raw:: html
 
          <i>use depth discontinuities weight</i>: If true, color contribution is weighted by pixel distance from depth discontinuities (external and internal silhouettes)
 
-   ``usealpha : bool = false``
+   ``usealpha : bool = False``
 
       .. raw:: html
 
@@ -4224,7 +4224,7 @@ apply_filter parameters
 
          <i>pixel size of texture image</i>: pixel size of texture image, the image will be a square tsize X tsize, most applications do require that tsize is a power of 2
 
-   ``dorefill : bool = true``
+   ``dorefill : bool = True``
 
       .. raw:: html
 
@@ -4236,37 +4236,37 @@ apply_filter parameters
 
          <i>depth threshold</i>: threshold value for depth buffer projection (shadow buffer)
 
-   ``onselection : bool = false``
+   ``onselection : bool = False``
 
       .. raw:: html
 
          <i>Only on selection</i>: If true, projection is only done for selected vertices
 
-   ``useangle : bool = true``
+   ``useangle : bool = True``
 
       .. raw:: html
 
          <i>use angle weight</i>: If true, color contribution is weighted by pixel view angle
 
-   ``usedistance : bool = true``
+   ``usedistance : bool = True``
 
       .. raw:: html
 
          <i>use distance weight</i>: If true, color contribution is weighted by pixel view distance
 
-   ``useborders : bool = true``
+   ``useborders : bool = True``
 
       .. raw:: html
 
          <i>use image borders weight</i>: If true, color contribution is weighted by pixel distance from image boundaries
 
-   ``usesilhouettes : bool = true``
+   ``usesilhouettes : bool = True``
 
       .. raw:: html
 
          <i>use depth discontinuities weight</i>: If true, color contribution is weighted by pixel distance from depth discontinuities (external and internal silhouettes)
 
-   ``usealpha : bool = false``
+   ``usealpha : bool = False``
 
       .. raw:: html
 
@@ -4282,7 +4282,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``usedepth : bool = true``
+   ``usedepth : bool = True``
 
       .. raw:: html
 
@@ -4294,7 +4294,7 @@ apply_filter parameters
 
          <i>depth threshold</i>: threshold value for depth buffer projection (shadow buffer)
 
-   ``onselection : bool = false``
+   ``onselection : bool = False``
 
       .. raw:: html
 
@@ -4316,7 +4316,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``normalizequality : bool = false``
+   ``normalizequality : bool = False``
 
       .. raw:: html
 
@@ -4332,7 +4332,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``normalizequality : bool = false``
+   ``normalizequality : bool = False``
 
       .. raw:: html
 
@@ -4424,7 +4424,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``updatenormals : bool = true``
+   ``updatenormals : bool = True``
 
       .. raw:: html
 
@@ -4563,13 +4563,13 @@ apply_filter parameters
 
          <i>Iterations</i>: Number of iterations of the remeshing operations to repeat on the mesh.
 
-   ``adaptive : bool = false``
+   ``adaptive : bool = False``
 
       .. raw:: html
 
          <i>Adaptive remeshing</i>: Toggles adaptive isotropic remeshing.
 
-   ``selectedonly : bool = false``
+   ``selectedonly : bool = False``
 
       .. raw:: html
 
@@ -4587,7 +4587,7 @@ apply_filter parameters
 
          <i>Crease Angle</i>: Minimum angle between faces of the original to consider the shared edge as a feature to be preserved.
 
-   ``checksurfdist : bool = true``
+   ``checksurfdist : bool = True``
 
       .. raw:: html
 
@@ -4599,31 +4599,31 @@ apply_filter parameters
 
          <i>Max. Surface Distance</i>: Maximal surface deviation allowed for each local operation
 
-   ``splitflag : bool = true``
+   ``splitflag : bool = True``
 
       .. raw:: html
 
          <i>Refine Step</i>: If checked the remeshing operations will include a refine step.
 
-   ``collapseflag : bool = true``
+   ``collapseflag : bool = True``
 
       .. raw:: html
 
          <i>Collapse Step</i>: If checked the remeshing operations will include a collapse step.
 
-   ``swapflag : bool = true``
+   ``swapflag : bool = True``
 
       .. raw:: html
 
          <i>Edge-Swap Step</i>: If checked the remeshing operations will include a edge-swap step, aimed at improving the vertex valence of the resulting mesh.
 
-   ``smoothflag : bool = true``
+   ``smoothflag : bool = True``
 
       .. raw:: html
 
          <i>Smooth Step</i>: If checked the remeshing operations will include a smoothing step, aimed at relaxing the vertex positions in a Laplacian sense.
 
-   ``reprojectflag : bool = true``
+   ``reprojectflag : bool = True``
 
       .. raw:: html
 
@@ -4669,7 +4669,7 @@ apply_filter parameters
 
          <i>Enter max diameter of isolated pieces</i>: Delete all the connected components (floating pieces) with a diameter smaller than the specified one
 
-   ``removeunref : bool = true``
+   ``removeunref : bool = True``
 
       .. raw:: html
 
@@ -4691,7 +4691,7 @@ apply_filter parameters
 
          <i>Enter minimum conn. comp size:</i>: Delete all the connected components (floating pieces) composed by a number of triangles smaller than the specified one
 
-   ``removeunref : bool = true``
+   ``removeunref : bool = True``
 
       .. raw:: html
 
@@ -4713,7 +4713,7 @@ apply_filter parameters
 
          <i>Ratio</i>: Detects faces where the base/height ratio is lower than this value
 
-   ``repeat : bool = true``
+   ``repeat : bool = True``
 
       .. raw:: html
 
@@ -4735,7 +4735,7 @@ apply_filter parameters
 
          <i>Ratio</i>: Detects faces where the base/height ratio is lower than this value
 
-   ``repeat : bool = true``
+   ``repeat : bool = True``
 
       .. raw:: html
 
@@ -4853,7 +4853,7 @@ apply_filter parameters
 
          <i>Gradient Threshold</i>: The maximum value admitted for the quality gradient (in absolute value)
 
-   ``updatecolor : bool = false``
+   ``updatecolor : bool = False``
 
       .. raw:: html
 
@@ -4881,7 +4881,7 @@ apply_filter parameters
 
          <i>delta</i>: 
 
-   ``selected : bool = false``
+   ``selected : bool = False``
 
       .. raw:: html
 
@@ -4897,13 +4897,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``allfaces : bool = true``
+   ``allfaces : bool = True``
 
       .. raw:: html
 
          <i>Select all Faces</i>: If true the filter will select all the faces.
 
-   ``allverts : bool = true``
+   ``allverts : bool = True``
 
       .. raw:: html
 
@@ -4939,7 +4939,7 @@ apply_filter parameters
 
          <i>Max Quality</i>: Maximum acceptable quality value
 
-   ``inclusive : bool = true``
+   ``inclusive : bool = True``
 
       .. raw:: html
 
@@ -4967,7 +4967,7 @@ apply_filter parameters
 
          <i>Max Quality</i>: Maximum acceptable quality value
 
-   ``inclusive : bool = true``
+   ``inclusive : bool = True``
 
       .. raw:: html
 
@@ -5030,7 +5030,7 @@ apply_filter parameters
 
          <i>Pick Color Space</i>: The color space that the sliders will manipulate.
 
-   ``inclusive : bool = true``
+   ``inclusive : bool = True``
 
       .. raw:: html
 
@@ -5070,7 +5070,7 @@ apply_filter parameters
 
          <i>angle threshold (deg)</i>: faces with normal at higher angle w.r.t. the view direction are selected
 
-   ``usecamera : bool = false``
+   ``usecamera : bool = False``
 
       .. raw:: html
 
@@ -5092,7 +5092,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``inclusive : bool = true``
+   ``inclusive : bool = True``
 
       .. raw:: html
 
@@ -5156,13 +5156,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``allfaces : bool = true``
+   ``allfaces : bool = True``
 
       .. raw:: html
 
          <i>De-select all Faces</i>: If true the filter will de-select all the faces.
 
-   ``allverts : bool = true``
+   ``allverts : bool = True``
 
       .. raw:: html
 
@@ -5200,7 +5200,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``usear : bool = true``
+   ``usear : bool = True``
 
       .. raw:: html
 
@@ -5212,7 +5212,7 @@ apply_filter parameters
 
          <i>Aspect Ratio</i>: Triangle face aspect ratio [1 (equilateral) - 0 (line)]: face will be selected if BELOW this threshold
 
-   ``usenf : bool = false``
+   ``usenf : bool = False``
 
       .. raw:: html
 
@@ -5248,7 +5248,7 @@ apply_filter parameters
 
          <i>Small component ratio</i>: This ratio (between 0 and 1) defines the meaning of <i>small</i> as the threshold ratio between the number of facesof the largest component and the other ones. A larger value will select more components.
 
-   ``nonclosedonly : bool = false``
+   ``nonclosedonly : bool = False``
 
       .. raw:: html
 
@@ -5272,7 +5272,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``inclusive : bool = true``
+   ``inclusive : bool = True``
 
       .. raw:: html
 
@@ -5294,7 +5294,7 @@ apply_filter parameters
 
          <i>radius threshold </i>: Bounds the radius of the sphere used to select visible points.It is used to adjust the radius of the sphere (calculated as distance between the center and the farthest point from it) according to the following equation: <br>radius = radius * pow(10,threshold); <br>As the radius increases more points are marked as visible.Use a big threshold for dense point clouds, a small one for sparse clouds.
 
-   ``usecamera : bool = false``
+   ``usecamera : bool = False``
 
       .. raw:: html
 
@@ -5306,13 +5306,13 @@ apply_filter parameters
 
          <i>ViewPoint</i>: if UseCamera is true, this value is ignored
 
-   ``convex_hullfp : bool = false``
+   ``convex_hullfp : bool = False``
 
       .. raw:: html
 
          <i>Show Partial Convex Hull of flipped points</i>: Show Partial Convex Hull of the transformed point cloud
 
-   ``triangvp : bool = false``
+   ``triangvp : bool = False``
 
       .. raw:: html
 
@@ -5423,13 +5423,13 @@ apply_filter parameters
 
          <i>Cone amplitude</i>: Cone amplitude around normals in degrees. Rays are traced within this cone.
 
-   ``removefalse : bool = true``
+   ``removefalse : bool = True``
 
       .. raw:: html
 
          <i>Remove false intersections</i>: For eachray we check the normal at the point of intersection,and ignore intersections where the normal at the intersectionpoints is in the same direction as the point-of-origin(the same direction is defined as an angle difference lessthan 90) 
 
-   ``removeoutliers : bool = false``
+   ``removeoutliers : bool = False``
 
       .. raw:: html
 
@@ -5451,7 +5451,7 @@ apply_filter parameters
 
          <i>Cell Size</i>: The size of the cell of the clustering grid. Smaller the cell finer the resulting mesh. For obtaining a very coarse mesh use larger values.
 
-   ``selected : bool = false``
+   ``selected : bool = False``
 
       .. raw:: html
 
@@ -5493,7 +5493,7 @@ apply_filter parameters
 
          <i>Quality threshold</i>: Quality threshold for penalizing bad shaped faces.<br>The value is in the range [0..1]<br> 0 accept any kind of face (no penalties),<br> 0.5  penalize faces with quality < 0.5, proportionally to their shape<br>
 
-   ``preserveboundary : bool = false``
+   ``preserveboundary : bool = False``
 
       .. raw:: html
 
@@ -5505,25 +5505,25 @@ apply_filter parameters
 
          <i>Boundary Preserving Weight</i>: The importance of the boundary during simplification. Default (1.0) means that the boundary has the same importance of the rest. Values greater than 1.0 raise boundary importance and has the effect of removing less vertices on the border. Admitted range of values (0,+inf). 
 
-   ``preservenormal : bool = false``
+   ``preservenormal : bool = False``
 
       .. raw:: html
 
          <i>Preserve Normal</i>: Try to avoid face flipping effects and try to preserve the original orientation of the surface
 
-   ``preservetopology : bool = false``
+   ``preservetopology : bool = False``
 
       .. raw:: html
 
          <i>Preserve Topology</i>: Avoid all the collapses that should cause a topology change in the mesh (like closing holes, squeezing handles, etc). If checked the genus of the mesh should stay unchanged.
 
-   ``optimalplacement : bool = true``
+   ``optimalplacement : bool = True``
 
       .. raw:: html
 
          <i>Optimal position of simplified vertices</i>: Each collapsed vertex is placed in the position minimizing the quadric error.<br> It can fail (creating bad spikes) in case of very flat areas. <br>If disabled edges are collapsed onto one of the two original vertices and the final mesh is composed by a subset of the original vertices. 
 
-   ``planarquadric : bool = false``
+   ``planarquadric : bool = False``
 
       .. raw:: html
 
@@ -5535,19 +5535,19 @@ apply_filter parameters
 
          <i>Planar Simp. Weight</i>: How much we should try to preserve the triangles in the planar regions. If you lower this value planar areas will be simplified more.
 
-   ``qualityweight : bool = false``
+   ``qualityweight : bool = False``
 
       .. raw:: html
 
          <i>Weighted Simplification</i>: Use the Per-Vertex quality as a weighting factor for the simplification. The weight is used as a error amplification value, so a vertex with a high quality value will not be simplified and a portion of the mesh with low quality values will be aggressively simplified.
 
-   ``autoclean : bool = true``
+   ``autoclean : bool = True``
 
       .. raw:: html
 
          <i>Post-simplification cleaning</i>: After the simplification an additional set of steps is performed to clean the mesh (unreferenced vertices, bad faces, etc)
 
-   ``selected : bool = false``
+   ``selected : bool = False``
 
       .. raw:: html
 
@@ -5587,7 +5587,7 @@ apply_filter parameters
 
          <i>Texture Weight</i>: Additional weight for each extra Texture Coordinates for every (selected) vertex
 
-   ``preserveboundary : bool = false``
+   ``preserveboundary : bool = False``
 
       .. raw:: html
 
@@ -5599,25 +5599,25 @@ apply_filter parameters
 
          <i>Boundary Preserving Weight</i>: The importance of the boundary during simplification. Default (1.0) means that the boundary has the same importance of the rest. Values greater than 1.0 raise boundary importance and has the effect of removing less vertices on the border. Admitted range of values (0,+inf). 
 
-   ``optimalplacement : bool = true``
+   ``optimalplacement : bool = True``
 
       .. raw:: html
 
          <i>Optimal position of simplified vertices</i>: Each collapsed vertex is placed in the position minimizing the quadric error.<br> It can fail (creating bad spikes) in case of very flat areas. <br>If disabled edges are collapsed onto one of the two original vertices and the final mesh is composed by a subset of the original vertices. 
 
-   ``preservenormal : bool = false``
+   ``preservenormal : bool = False``
 
       .. raw:: html
 
          <i>Preserve Normal</i>: Try to avoid face flipping effects and try to preserve the original orientation of the surface
 
-   ``planarquadric : bool = false``
+   ``planarquadric : bool = False``
 
       .. raw:: html
 
          <i>Planar Simplification</i>: Add additional simplification constraints that improves the quality of the simplification of the planar portion of the mesh.
 
-   ``selected : bool = false``
+   ``selected : bool = False``
 
       .. raw:: html
 
@@ -5687,7 +5687,7 @@ apply_filter parameters
 
          <i>Number of neighbors</i>: The number of neighbors used to smooth normals.
 
-   ``usedist : bool = false``
+   ``usedist : bool = False``
 
       .. raw:: html
 
@@ -5709,7 +5709,7 @@ apply_filter parameters
 
          <i>Edge Distance Ratio</i>: Collapse edge when the edge / distance ratio is greater than this value. E.g. for default value 1000 two straight border edges are collapsed if the central vertex dist from the straight line composed by the two edges less than a 1/1000 of the sum of the edges length. Larger values enforce that only vertices very close to the line are removed.
 
-   ``unifyvertices : bool = true``
+   ``unifyvertices : bool = True``
 
       .. raw:: html
 
@@ -5797,7 +5797,7 @@ apply_filter parameters
 
          <i>Element to sample:</i>: <b>Similar Triangle</b>: each triangle is subdivided into similar triangles and the internal vertices of these triangles are considered. This sampling leave space around edges and vertices for separate sampling of these entities.<br><b>Dual Similar Triangle</b>: each triangle is subdivided into similar triangles and the internal vertices of these triangles are considered.  <br><b>Long Edge Subdiv</b> each triangle is recursively subdivided along the longest edge. <br><b>Sample Edges</b> Only the edges of the mesh are uniformly sampled. <br><b>Sample NonFaux Edges</b> Only the non-faux edges of the mesh are uniformly sampled.
 
-   ``random : bool = false``
+   ``random : bool = False``
 
       .. raw:: html
 
@@ -5853,7 +5853,7 @@ apply_filter parameters
 
          <i>Edge Threshold</i>: All the edges <b>longer</b> than this threshold will be refined.<br>Setting this value to zero will force an uniform refinement.
 
-   ``selected : bool = false``
+   ``selected : bool = False``
 
       .. raw:: html
 
@@ -5901,7 +5901,7 @@ apply_filter parameters
 
          <i>Edge Threshold</i>: All the edges <b>longer</b> than this threshold will be refined.<br>Setting this value to zero will force an uniform refinement.
 
-   ``selected : bool = false``
+   ``selected : bool = False``
 
       .. raw:: html
 
@@ -5941,7 +5941,7 @@ apply_filter parameters
 
          <i>Edge Threshold</i>: All the edges <b>longer</b> than this threshold will be refined.<br>Setting this value to zero will force an uniform refinement.
 
-   ``selected : bool = false``
+   ``selected : bool = False``
 
       .. raw:: html
 
@@ -5969,7 +5969,7 @@ apply_filter parameters
 
          <i>Edge Threshold</i>: All the edges <b>longer</b> than this threshold will be refined.<br>Setting this value to zero will force an uniform refinement.
 
-   ``selected : bool = false``
+   ``selected : bool = False``
 
       .. raw:: html
 
@@ -6003,7 +6003,7 @@ apply_filter parameters
 
          <i>Angle Threshold (degrees)</i>: If we encounter a crease angle that is too large we should stop the ball rolling
 
-   ``deletefaces : bool = false``
+   ``deletefaces : bool = False``
 
       .. raw:: html
 
@@ -6019,7 +6019,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``visiblelayer : bool = false``
+   ``visiblelayer : bool = False``
 
       .. raw:: html
 
@@ -6067,13 +6067,13 @@ apply_filter parameters
 
          <i>Gauss-Seidel Relaxations</i>: This integer value specifies the number of Gauss-Seidel relaxations to be performed at each level of the hierarchy. The default value for this parameter is 8.
 
-   ``confidence : bool = false``
+   ``confidence : bool = False``
 
       .. raw:: html
 
          <i>Confidence Flag</i>: Enabling this flag tells the reconstructor to use the quality as confidence information; this is done by scaling the unit normals with the quality values. When the flag is not enabled, all normals are normalized to have unit-length prior to reconstruction.
 
-   ``preclean : bool = false``
+   ``preclean : bool = False``
 
       .. raw:: html
 
@@ -6107,7 +6107,7 @@ apply_filter parameters
 
          <i>Geodesic Weighting</i>: The influence of each range map is weighted with its geodesic distance from the borders. In this way when two (or more ) range maps overlaps their contribution blends smoothly hiding possible misalignments. 
 
-   ``openresult : bool = true``
+   ``openresult : bool = True``
 
       .. raw:: html
 
@@ -6125,13 +6125,13 @@ apply_filter parameters
 
          <i>Widening</i>:  How many voxel the field is expanded. Larger this value more holes will be filled
 
-   ``mergecolor : bool = false``
+   ``mergecolor : bool = False``
 
       .. raw:: html
 
          <i>Vertex Splatting</i>: This option use a different way to build up the volume, instead of using rasterization of the triangular face it splat the vertices into the grids. It works under the assumption that you have at least one sample for each voxel of your reconstructed volume.
 
-   ``simplification : bool = false``
+   ``simplification : bool = False``
 
       .. raw:: html
 
@@ -6171,7 +6171,7 @@ apply_filter parameters
 
          <i>Smoothing steps</i>: The number of times that the taubin smoothing is iterated. Usually it requires a larger number of iteration than the classical laplacian
 
-   ``selected : bool = false``
+   ``selected : bool = False``
 
       .. raw:: html
 
@@ -6207,13 +6207,13 @@ apply_filter parameters
 
          <i>Texture Height</i>: A sample for each texel is generated, so the desired texture size is need, only samples for the texels falling inside some faces are generated.<br> Setting this param to 256 means that you get at most 256x256 = 65536 samples)
 
-   ``texturespace : bool = false``
+   ``texturespace : bool = False``
 
       .. raw:: html
 
          <i>UV Space Sampling</i>: The generated texel samples have their UV coords as point positions. The resulting point set is has a square domain, the texels/points, even if on a flat domain retain the original vertex normal to help a better perception of the original provenience.
 
-   ``recovercolor : bool = false``
+   ``recovercolor : bool = False``
 
       .. raw:: html
 
@@ -6271,7 +6271,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``allvisiblemesh : bool = false``
+   ``allvisiblemesh : bool = False``
 
       .. raw:: html
 
@@ -6380,19 +6380,19 @@ apply_filter parameters
 
          <i>Texture height (px)</i>: The texture height
 
-   ``overwrite : bool = false``
+   ``overwrite : bool = False``
 
       .. raw:: html
 
          <i>Overwrite Target Mesh Texture</i>: if target mesh has a texture will be overwritten (with provided texture dimension)
 
-   ``assign : bool = false``
+   ``assign : bool = False``
 
       .. raw:: html
 
          <i>Assign Texture</i>: assign the newly created texture to target mesh
 
-   ``pullpush : bool = true``
+   ``pullpush : bool = True``
 
       .. raw:: html
 
@@ -6426,19 +6426,19 @@ apply_filter parameters
 
          <i>Texture height (px)</i>: The texture height
 
-   ``overwrite : bool = false``
+   ``overwrite : bool = False``
 
       .. raw:: html
 
          <i>Overwrite texture</i>: if current mesh has a texture will be overwritten (with provided texture dimension)
 
-   ``assign : bool = false``
+   ``assign : bool = False``
 
       .. raw:: html
 
          <i>Assign texture</i>: assign the newly created texture
 
-   ``pullpush : bool = true``
+   ``pullpush : bool = True``
 
       .. raw:: html
 
@@ -6454,19 +6454,19 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``pointsflag : bool = true``
+   ``pointsflag : bool = True``
 
       .. raw:: html
 
          <i>Use vertex</i>: If selected, only the vertices of the mesh are used to compute the Principal Axis. Mandatory for point clouds or for non water tight meshes
 
-   ``freeze : bool = true``
+   ``freeze : bool = True``
 
       .. raw:: html
 
          <i>Freeze Matrix</i>: The transformation is explicitly applied, and the vertex coordinates are actually changed
 
-   ``alllayers : bool = false``
+   ``alllayers : bool = False``
 
       .. raw:: html
 
@@ -6482,49 +6482,49 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``flipx : bool = false``
+   ``flipx : bool = False``
 
       .. raw:: html
 
          <i>Flip X axis</i>: If selected the axis will be swapped (mesh mirrored along the YZ plane
 
-   ``flipy : bool = false``
+   ``flipy : bool = False``
 
       .. raw:: html
 
          <i>Flip Y axis</i>: If selected the axis will be swapped (mesh mirrored along the XZ plane
 
-   ``flipz : bool = false``
+   ``flipz : bool = False``
 
       .. raw:: html
 
          <i>Flip Z axis</i>: If selected the axis will be swapped (mesh mirrored along the XY plane
 
-   ``swapxy : bool = false``
+   ``swapxy : bool = False``
 
       .. raw:: html
 
          <i>Swap X-Y axis</i>: If selected the two axis will be swapped. All the swaps are performed in this order
 
-   ``swapxz : bool = false``
+   ``swapxz : bool = False``
 
       .. raw:: html
 
          <i>Swap X-Z axis</i>: If selected the two axis will be swapped. All the swaps are performed in this order
 
-   ``swapyz : bool = false``
+   ``swapyz : bool = False``
 
       .. raw:: html
 
          <i>Swap Y-Z axis</i>: If selected the two axis will be swapped. All the swaps are performed in this order
 
-   ``freeze : bool = true``
+   ``freeze : bool = True``
 
       .. raw:: html
 
          <i>Freeze Matrix</i>: The transformation is explicitly applied, and the vertex coordinates are actually changed
 
-   ``alllayers : bool = false``
+   ``alllayers : bool = False``
 
       .. raw:: html
 
@@ -6583,7 +6583,7 @@ apply_filter parameters
 
          <i>Custom center</i>: This rotation center is used only if the 'custom point' option is chosen.
 
-   ``snapflag : bool = false``
+   ``snapflag : bool = False``
 
       .. raw:: html
 
@@ -6595,13 +6595,13 @@ apply_filter parameters
 
          <i>Snapping Value</i>: This value is used to snap the rotation angle (i.e. if the snapping value is 30, 227 becomes 210).
 
-   ``freeze : bool = true``
+   ``freeze : bool = True``
 
       .. raw:: html
 
          <i>Freeze Matrix</i>: The transformation is explicitly applied, and the vertex coordinates are actually changed
 
-   ``alllayers : bool = false``
+   ``alllayers : bool = False``
 
       .. raw:: html
 
@@ -6671,13 +6671,13 @@ apply_filter parameters
 
          <i>Custom center</i>: This rotation center is used only if the 'custom point' option is chosen.
 
-   ``toallraster : bool = false``
+   ``toallraster : bool = False``
 
       .. raw:: html
 
          <i>Apply to all active Raster layers</i>: Apply the same scaling to all the active Raster layers: it is taken into account only if 'Raster Camera' is selected
 
-   ``toall : bool = false``
+   ``toall : bool = False``
 
       .. raw:: html
 
@@ -6718,19 +6718,19 @@ apply_filter parameters
 
          <i>Rotate on:</i>: Choose on which axis do the rotation: 'any axis' guarantee the best fit of the selection to the plane, only use X,Y or Z it if you want to preserve that specific axis.
 
-   ``toorigin : bool = true``
+   ``toorigin : bool = True``
 
       .. raw:: html
 
          <i>Move to Origin</i>: Also apply a translation, such that the centroid of selection rests on the Origin
 
-   ``freeze : bool = true``
+   ``freeze : bool = True``
 
       .. raw:: html
 
          <i>Freeze Matrix</i>: The transformation is explicitly applied, and the vertex coordinates are actually changed
 
-   ``alllayers : bool = false``
+   ``alllayers : bool = False``
 
       .. raw:: html
 
@@ -6781,13 +6781,13 @@ apply_filter parameters
 
          <i>Scale factor</i>: The scale factor that has to be applied to the camera
 
-   ``toallraster : bool = false``
+   ``toallraster : bool = False``
 
       .. raw:: html
 
          <i>Apply to all active Raster layers</i>: Apply the same scaling to all the active Raster layers: it is taken into account only if 'Raster Camera' is selected
 
-   ``toall : bool = false``
+   ``toall : bool = False``
 
       .. raw:: html
 
@@ -6821,7 +6821,7 @@ apply_filter parameters
 
          <i>Z Axis</i>: Scaling
 
-   ``uniformflag : bool = true``
+   ``uniformflag : bool = True``
 
       .. raw:: html
 
@@ -6845,19 +6845,19 @@ apply_filter parameters
 
          <i>Custom center</i>: This scaling center is used only if the 'custom point' option is chosen.
 
-   ``unitflag : bool = false``
+   ``unitflag : bool = False``
 
       .. raw:: html
 
          <i>Scale to Unit bbox</i>: If selected, the object is scaled to a box whose sides are at most 1 unit length
 
-   ``freeze : bool = true``
+   ``freeze : bool = True``
 
       .. raw:: html
 
          <i>Freeze Matrix</i>: The transformation is explicitly applied, and the vertex coordinates are actually changed
 
-   ``alllayers : bool = false``
+   ``alllayers : bool = False``
 
       .. raw:: html
 
@@ -6901,13 +6901,13 @@ apply_filter parameters
 
          <i>Matrix semantic</i>: What the matrix is used for
 
-   ``toallraster : bool = false``
+   ``toallraster : bool = False``
 
       .. raw:: html
 
          <i>Apply to all active Raster layers</i>: Apply the same scaling to all the active Raster layers: it is taken into account only if 'Raster Camera' is selected
 
-   ``toall : bool = false``
+   ``toall : bool = False``
 
       .. raw:: html
 
@@ -6952,19 +6952,19 @@ apply_filter parameters
 
          <i>Z Axis</i>: Absolute translation amount along the Z axis
 
-   ``centerflag : bool = false``
+   ``centerflag : bool = False``
 
       .. raw:: html
 
          <i>translate viewpoint position to the origin</i>: If selected, the camera viewpoint is translated to the origin
 
-   ``toallraster : bool = false``
+   ``toallraster : bool = False``
 
       .. raw:: html
 
          <i>Apply to all active Raster layers</i>: Apply the same scaling to all the active Raster layers: it is taken into account only if 'Raster Camera' is selected
 
-   ``toall : bool = false``
+   ``toall : bool = False``
 
       .. raw:: html
 
@@ -7017,13 +7017,13 @@ apply_filter parameters
 
          <i>New Origin:</i>: when using [Set new Origin], this is the location of the new Origin.
 
-   ``freeze : bool = true``
+   ``freeze : bool = True``
 
       .. raw:: html
 
          <i>Freeze Matrix</i>: The transformation is explicitly applied, and the vertex coordinates are actually changed
 
-   ``alllayers : bool = false``
+   ``alllayers : bool = False``
 
       .. raw:: html
 
@@ -7109,7 +7109,7 @@ apply_filter parameters
 
          <i>Vertex Fitting steps</i>: Number of iterations of the vertex fitting procedure.
 
-   ``selected : bool = false``
+   ``selected : bool = False``
 
       .. raw:: html
 
@@ -7137,25 +7137,25 @@ apply_filter parameters
 
          <i>Offset</i>: Offset of the created surface (i.e. distance of the created surface from the original one).<br>If offset is zero, the created surface passes on the original mesh itself. Values greater than zero mean an external surface, and lower than zero mean an internal surface.<br> In practice this value is the threshold passed to the Marching Cube algorithm to extract the isosurface from the distance field representation.
 
-   ``mergeclosevert : bool = false``
+   ``mergeclosevert : bool = False``
 
       .. raw:: html
 
          <i>Clean Vertices</i>: If true the mesh generated by MC will be cleaned by unifying vertices that are almost coincident
 
-   ``discretize : bool = false``
+   ``discretize : bool = False``
 
       .. raw:: html
 
          <i>Discretize</i>: If true the position of the intersected edge of the marching cube grid is not computed by linear interpolation, but it is placed in fixed middle position. As a consequence the resampled object will look severely aliased by a stairstep appearance.<br>Useful only for simulating the output of 3D printing devices.
 
-   ``multisample : bool = false``
+   ``multisample : bool = False``
 
       .. raw:: html
 
          <i>Multi-sample</i>: If true the distance field is more accurately compute by multisampling the volume (7 sample for each voxel). Much slower but less artifacts.
 
-   ``absdist : bool = false``
+   ``absdist : bool = False``
 
       .. raw:: html
 
@@ -7227,7 +7227,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``recalc : bool = false``
+   ``recalc : bool = False``
 
       .. raw:: html
 
@@ -7349,37 +7349,37 @@ apply_filter parameters
 
          <i>Target Mesh</i>: The mesh whose vertices will receive the data from the source.
 
-   ``geomtransfer : bool = false``
+   ``geomtransfer : bool = False``
 
       .. raw:: html
 
          <i>Transfer Geometry</i>: if enabled, the position of each vertex of the target mesh will be snapped onto the corresponding closest point on the source mesh
 
-   ``normaltransfer : bool = false``
+   ``normaltransfer : bool = False``
 
       .. raw:: html
 
          <i>Transfer Normal</i>: if enabled, the normal of each vertex of the target mesh will get the (interpolated) normal of the corresponding closest point on the source mesh
 
-   ``colortransfer : bool = true``
+   ``colortransfer : bool = True``
 
       .. raw:: html
 
          <i>Transfer Color</i>: if enabled, the color of each vertex of the target mesh will become the color of the corresponding closest point on the source mesh
 
-   ``qualitytransfer : bool = false``
+   ``qualitytransfer : bool = False``
 
       .. raw:: html
 
          <i>Transfer quality</i>: if enabled, the quality of each vertex of the target mesh will become the quality of the corresponding closest point on the source mesh
 
-   ``selectiontransfer : bool = false``
+   ``selectiontransfer : bool = False``
 
       .. raw:: html
 
          <i>Transfer Selection</i>: if enabled,  each vertex of the target mesh will be selected if the corresponding closest point on the source mesh falls in a selected face
 
-   ``qualitydistance : bool = false``
+   ``qualitydistance : bool = False``
 
       .. raw:: html
 
@@ -7391,7 +7391,7 @@ apply_filter parameters
 
          <i>Max Dist Search</i>: Sample points for which we do not find anything within this distance are rejected and not considered for recovering attributes.
 
-   ``onselected : bool = false``
+   ``onselected : bool = False``
 
       .. raw:: html
 
@@ -7425,7 +7425,7 @@ apply_filter parameters
 
          <i>Gamma:</i>: Sets the values of the exponent gamma.
 
-   ``onselected : bool = false``
+   ``onselected : bool = False``
 
       .. raw:: html
 
@@ -7465,7 +7465,7 @@ apply_filter parameters
 
          <i>Blending:</i>: Sets the blending factor used in adding the new color to the existing one.
 
-   ``onselected : bool = false``
+   ``onselected : bool = False``
 
       .. raw:: html
 
@@ -7493,7 +7493,7 @@ apply_filter parameters
 
          <i>Desaturation method:</i>: Lightness is computed as (Max(r,g,b)+Min(r,g,b))/2<br>Luminosity is computed as 0.212*r + 0.715*g + 0.072*b<br>Average is computed as (r+g+b)/3
 
-   ``onselected : bool = false``
+   ``onselected : bool = False``
 
       .. raw:: html
 
@@ -7515,7 +7515,7 @@ apply_filter parameters
 
          <i>Color:</i>: Sets the color to apply to vertices.
 
-   ``onselected : bool = false``
+   ``onselected : bool = False``
 
       .. raw:: html
 
@@ -7531,7 +7531,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``onselected : bool = false``
+   ``onselected : bool = False``
 
       .. raw:: html
 
@@ -7577,31 +7577,31 @@ apply_filter parameters
 
          <i>Max output level:</i>: 
 
-   ``rch : bool = true``
+   ``rch : bool = True``
 
       .. raw:: html
 
          <i>Red Channel:</i>: 
 
-   ``gch : bool = true``
+   ``gch : bool = True``
 
       .. raw:: html
 
          <i>Green Channel:</i>: 
 
-   ``bch : bool = true``
+   ``bch : bool = True``
 
       .. raw:: html
 
          <i>Blue Channel:</i>: 
 
-   ``onselected : bool = false``
+   ``onselected : bool = False``
 
       .. raw:: html
 
          <i>Only on selection</i>: If checked, only affects selected vertices
 
-   ``apply_to_all : bool = false``
+   ``apply_to_all : bool = False``
 
       .. raw:: html
 
@@ -7663,7 +7663,7 @@ apply_filter parameters
 
          <i>Threshold:</i>: Vertices with color above the lightness threshold becomes Color 2, the others Color 1.
 
-   ``onselected : bool = false``
+   ``onselected : bool = False``
 
       .. raw:: html
 
@@ -7685,7 +7685,7 @@ apply_filter parameters
 
          <i>Unbalanced white: </i>: The color that is supposed to be white.
 
-   ``onselected : bool = false``
+   ``onselected : bool = False``
 
       .. raw:: html
 
@@ -7723,31 +7723,31 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``depth : bool = true``
+   ``depth : bool = True``
 
       .. raw:: html
 
          <i>Depth</i>: Use depth as a factor.
 
-   ``facing : bool = false``
+   ``facing : bool = False``
 
       .. raw:: html
 
          <i>ViewAngle</i>: Use cosine of viewing angle as a factor.
 
-   ``clip : bool = false``
+   ``clip : bool = False``
 
       .. raw:: html
 
          <i>Clipping</i>: clip values outside the viewport to zero.
 
-   ``normalize : bool = false``
+   ``normalize : bool = False``
 
       .. raw:: html
 
          <i>normalize</i>: if checked normalize all quality values in range [0..1]
 
-   ``map : bool = false``
+   ``map : bool = False``
 
       .. raw:: html
 
@@ -7832,7 +7832,7 @@ apply_filter parameters
 
          <i>Volume Sample Num.</i>: Number of volumetric samples scattered inside the mesh and used for choosing the voronoi seeds and performing the Lloyd relaxation for having a centroidal voronoi diagram.
 
-   ``poissonfiltering : bool = true``
+   ``poissonfiltering : bool = True``
 
       .. raw:: html
 
@@ -7913,7 +7913,7 @@ apply_filter parameters
 
          <i>Distance Type</i>: 
 
-   ``preprocessflag : bool = false``
+   ``preprocessflag : bool = False``
 
       .. raw:: html
 
@@ -8001,7 +8001,7 @@ apply_filter parameters
 
          <i>Lloyd Relax Step</i>: Number of Lloyd relaxation step to get a better distribution of the voronoi seeds.
 
-   ``surfflag : bool = true``
+   ``surfflag : bool = True``
 
       .. raw:: html
 
@@ -8041,7 +8041,7 @@ apply_filter parameters
 
          <i>Vertex Mesh</i>: The mesh whose vertices are used as seed points for the color computation. These seeds point are projected onto the above mesh.
 
-   ``backward : bool = false``
+   ``backward : bool = False``
 
       .. raw:: html
 
@@ -8103,7 +8103,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
          <i>Header Row to be skipped</i>: The number of lines that must be skipped at the beginning of the file.
 
-   ``triangulate : bool = true``
+   ``triangulate : bool = True``
 
       .. raw:: html
 
@@ -8124,13 +8124,13 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
          <i>File Name</i>: The name of the file to load
 
-   ``pointsonly : bool = false``
+   ``pointsonly : bool = False``
 
       .. raw:: html
 
          <i>only import points</i>: Just import points, without triangulation
 
-   ``unify : bool = true``
+   ``unify : bool = True``
 
       .. raw:: html
 
@@ -8265,31 +8265,31 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
          <i>File Name</i>: The name of the file to load
 
-   ``usecolors : bool = true``
+   ``usecolors : bool = True``
 
       .. raw:: html
 
          <i>Use Atoms colors</i>: Atoms are colored according to atomic type
 
-   ``justpoints : bool = false``
+   ``justpoints : bool = False``
 
       .. raw:: html
 
          <i>SURFACE: Atoms as Points</i>: Atoms are created as points, no surface is built. Overrides all subsequential surface parameters
 
-   ``justspheres : bool = true``
+   ``justspheres : bool = True``
 
       .. raw:: html
 
          <i>SURFACE: Atoms as Spheres</i>: Atoms are created as intersecting spheres, no interpolation surface is built. Overrides all subsequential surface parameters
 
-   ``interpspheres : bool = false``
+   ``interpspheres : bool = False``
 
       .. raw:: html
 
          <i>SURFACE: Atoms as Jointed Spheres</i>: Atoms are created as spheres, joining surface is built. Overrides all subsequential surface parameters
 
-   ``metaballs : bool = false``
+   ``metaballs : bool = False``
 
       .. raw:: html
 
@@ -8358,31 +8358,31 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
          <i>Index of Range Map to be Imported</i>: PTX files may contain more than one range map. 0 is the first range map. If the number if higher than the actual mesh number, the import will fail
 
-   ``pointsonly : bool = true``
+   ``pointsonly : bool = True``
 
       .. raw:: html
 
          <i>Keep only points</i>: Import points a point cloud only, with radius and normals, no triangulation involved, isolated points and points with normals with steep angles are removed.
 
-   ``usecolor : bool = true``
+   ``usecolor : bool = True``
 
       .. raw:: html
 
          <i>import color</i>: Read color from PTX, if color is not present, uses reflectance instead
 
-   ``flipfaces : bool = false``
+   ``flipfaces : bool = False``
 
       .. raw:: html
 
          <i>LEICA: flip normal direction</i>: LEICA PTX exporter goes counterclockwise, FARO PTX exporter goes clockwise
 
-   ``pointcull : bool = true``
+   ``pointcull : bool = True``
 
       .. raw:: html
 
          <i>delete unsampled points</i>: Deletes unsampled points in the grid that are normally located in [0,0,0]
 
-   ``anglecull : bool = true``
+   ``anglecull : bool = True``
 
       .. raw:: html
 
@@ -8424,7 +8424,7 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
          <i>File Name</i>: The name of the file to load
 
-   ``meshlabiostlunifyvertices : bool = true``
+   ``meshlabiostlunifyvertices : bool = True``
 
       .. raw:: html
 
@@ -8617,25 +8617,25 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>File Name</i>: The name of the file to save
 
-   ``save_face_color : bool = true``
+   ``save_face_color : bool = True``
 
       .. raw:: html
 
          <i>Save Face Color</i>: Save Face Color
 
-   ``save_face_normal : bool = true``
+   ``save_face_normal : bool = True``
 
       .. raw:: html
 
          <i>Save Face Normal</i>: Save Face Normal
 
-   ``save_wedge_texcoord : bool = true``
+   ``save_wedge_texcoord : bool = True``
 
       .. raw:: html
 
          <i>Save Wedge TexCoord</i>: Save Wedge TexCoord
 
-   ``save_wedge_normal : bool = true``
+   ``save_wedge_normal : bool = True``
 
       .. raw:: html
 
@@ -8656,7 +8656,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>File Name</i>: The name of the file to save
 
-   ``lossless : bool = false``
+   ``lossless : bool = False``
 
       .. raw:: html
 
@@ -8668,13 +8668,13 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>Relative Coord Precision</i>: When using a lossy compression this number control the introduced error and hence the compression factor.It is a number relative to the average edge length. (e.g. the default means that the error should be roughly 1/10000 of the average edge length)
 
-   ``save_vertex_quality : bool = true``
+   ``save_vertex_quality : bool = True``
 
       .. raw:: html
 
          <i>Save Vertex Quality</i>: Save Vertex Quality
 
-   ``save_vertex_color : bool = true``
+   ``save_vertex_color : bool = True``
 
       .. raw:: html
 
@@ -8695,31 +8695,31 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>File Name</i>: The name of the file to save
 
-   ``save_vertex_color : bool = true``
+   ``save_vertex_color : bool = True``
 
       .. raw:: html
 
          <i>Save Vertex Color</i>: Save Vertex Color
 
-   ``save_vertex_coord : bool = true``
+   ``save_vertex_coord : bool = True``
 
       .. raw:: html
 
          <i>Save Vertex Coord</i>: Save Vertex Coord
 
-   ``save_vertex_normal : bool = true``
+   ``save_vertex_normal : bool = True``
 
       .. raw:: html
 
          <i>Save Vertex Normal</i>: Save Vertex Normal
 
-   ``save_wedge_texcoord : bool = true``
+   ``save_wedge_texcoord : bool = True``
 
       .. raw:: html
 
          <i>Save Wedge TexCoord</i>: Save Wedge TexCoord
 
-   ``save_wedge_normal : bool = true``
+   ``save_wedge_normal : bool = True``
 
       .. raw:: html
 
@@ -8779,31 +8779,31 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>U3D quality 0..1000</i>: U3D mesh's compression ratio. The values' range is between 0-1000 degree. The default value is 500.
 
-   ``save_vertex_color : bool = false``
+   ``save_vertex_color : bool = False``
 
       .. raw:: html
 
          <i>Save Vertex Color</i>: Save Vertex Color
 
-   ``save_vertex_normal : bool = false``
+   ``save_vertex_normal : bool = False``
 
       .. raw:: html
 
          <i>Save Vertex Normal</i>: Save Vertex Normal
 
-   ``save_face_color : bool = false``
+   ``save_face_color : bool = False``
 
       .. raw:: html
 
          <i>Save Face Color</i>: Save Face Color
 
-   ``save_wedge_texcoord : bool = true``
+   ``save_wedge_texcoord : bool = True``
 
       .. raw:: html
 
          <i>Save Wedge TexCoord</i>: Save Wedge TexCoord
 
-   ``save_wedge_normal : bool = true``
+   ``save_wedge_normal : bool = True``
 
       .. raw:: html
 
@@ -8824,19 +8824,19 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>File Name</i>: The name of the file to save
 
-   ``save_vertex_color : bool = true``
+   ``save_vertex_color : bool = True``
 
       .. raw:: html
 
          <i>Save Vertex Color</i>: Save Vertex Color
 
-   ``save_vertex_coord : bool = true``
+   ``save_vertex_coord : bool = True``
 
       .. raw:: html
 
          <i>Save Vertex Coord</i>: Save Vertex Coord
 
-   ``save_vertex_normal : bool = true``
+   ``save_vertex_normal : bool = True``
 
       .. raw:: html
 
@@ -8857,43 +8857,43 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>File Name</i>: The name of the file to save
 
-   ``save_vertex_color : bool = true``
+   ``save_vertex_color : bool = True``
 
       .. raw:: html
 
          <i>Save Vertex Color</i>: Save Vertex Color
 
-   ``save_vertex_coord : bool = true``
+   ``save_vertex_coord : bool = True``
 
       .. raw:: html
 
          <i>Save Vertex Coord</i>: Save Vertex Coord
 
-   ``save_vertex_normal : bool = true``
+   ``save_vertex_normal : bool = True``
 
       .. raw:: html
 
          <i>Save Vertex Normal</i>: Save Vertex Normal
 
-   ``save_face_color : bool = true``
+   ``save_face_color : bool = True``
 
       .. raw:: html
 
          <i>Save Face Color</i>: Save Face Color
 
-   ``save_wedge_texcoord : bool = true``
+   ``save_wedge_texcoord : bool = True``
 
       .. raw:: html
 
          <i>Save Wedge TexCoord</i>: Save Wedge TexCoord
 
-   ``save_wedge_normal : bool = true``
+   ``save_wedge_normal : bool = True``
 
       .. raw:: html
 
          <i>Save Wedge Normal</i>: Save Wedge Normal
 
-   ``save_polygonal : bool = true``
+   ``save_polygonal : bool = True``
 
       .. raw:: html
 
@@ -8914,25 +8914,25 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>File Name</i>: The name of the file to save
 
-   ``save_vertex_color : bool = true``
+   ``save_vertex_color : bool = True``
 
       .. raw:: html
 
          <i>Save Vertex Color</i>: Save Vertex Color
 
-   ``save_vertex_coord : bool = true``
+   ``save_vertex_coord : bool = True``
 
       .. raw:: html
 
          <i>Save Vertex Coord</i>: Save Vertex Coord
 
-   ``save_face_color : bool = true``
+   ``save_face_color : bool = True``
 
       .. raw:: html
 
          <i>Save Face Color</i>: Save Face Color
 
-   ``save_polygonal : bool = true``
+   ``save_polygonal : bool = True``
 
       .. raw:: html
 
@@ -8953,85 +8953,85 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>File Name</i>: The name of the file to save
 
-   ``binary : bool = true``
+   ``binary : bool = True``
 
       .. raw:: html
 
          <i>Binary encoding</i>: Save the mesh using a binary encoding. If false the mesh is saved in a plain, readable ascii format.
 
-   ``save_vertex_quality : bool = true``
+   ``save_vertex_quality : bool = True``
 
       .. raw:: html
 
          <i>Save Vertex Quality</i>: Save Vertex Quality
 
-   ``save_vertex_flag : bool = false``
+   ``save_vertex_flag : bool = False``
 
       .. raw:: html
 
          <i>Save Vertex Flag</i>: Save Vertex Flag
 
-   ``save_vertex_color : bool = true``
+   ``save_vertex_color : bool = True``
 
       .. raw:: html
 
          <i>Save Vertex Color</i>: Save Vertex Color
 
-   ``save_vertex_coord : bool = true``
+   ``save_vertex_coord : bool = True``
 
       .. raw:: html
 
          <i>Save Vertex Coord</i>: Save Vertex Coord
 
-   ``save_vertex_normal : bool = false``
+   ``save_vertex_normal : bool = False``
 
       .. raw:: html
 
          <i>Save Vertex Normal</i>: Save Vertex Normal
 
-   ``save_vertex_radius : bool = true``
+   ``save_vertex_radius : bool = True``
 
       .. raw:: html
 
          <i>Save Vertex Radius</i>: Save Vertex Radius
 
-   ``save_face_quality : bool = true``
+   ``save_face_quality : bool = True``
 
       .. raw:: html
 
          <i>Save Face Quality</i>: Save Face Quality
 
-   ``save_face_flag : bool = false``
+   ``save_face_flag : bool = False``
 
       .. raw:: html
 
          <i>Save Face Flag</i>: Save Face Flag
 
-   ``save_face_color : bool = true``
+   ``save_face_color : bool = True``
 
       .. raw:: html
 
          <i>Save Face Color</i>: Save Face Color
 
-   ``save_wedge_color : bool = true``
+   ``save_wedge_color : bool = True``
 
       .. raw:: html
 
          <i>Save Wedge Color</i>: Save Wedge Color
 
-   ``save_wedge_texcoord : bool = true``
+   ``save_wedge_texcoord : bool = True``
 
       .. raw:: html
 
          <i>Save Wedge TexCoord</i>: Save Wedge TexCoord
 
-   ``save_wedge_normal : bool = true``
+   ``save_wedge_normal : bool = True``
 
       .. raw:: html
 
          <i>Save Wedge Normal</i>: Save Wedge Normal
 
-   ``save_polygonal : bool = true``
+   ``save_polygonal : bool = True``
 
       .. raw:: html
 
@@ -9052,19 +9052,19 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>File Name</i>: The name of the file to save
 
-   ``binary : bool = true``
+   ``binary : bool = True``
 
       .. raw:: html
 
          <i>Binary encoding</i>: Save the mesh using a binary encoding. If false the mesh is saved in a plain, readable ascii format.
 
-   ``colormode : bool = true``
+   ``colormode : bool = True``
 
       .. raw:: html
 
          <i>Materialise Color Encoding</i>: Save the color using a binary encoding according to the Materialise's Magic style (e.g. RGB coding instead of BGR coding).
 
-   ``save_face_color : bool = true``
+   ``save_face_color : bool = True``
 
       .. raw:: html
 
@@ -9109,19 +9109,19 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>U3D quality 0..1000</i>: U3D mesh's compression ratio. The values' range is between 0-1000 degree. The default value is 500.
 
-   ``save_vertex_color : bool = false``
+   ``save_vertex_color : bool = False``
 
       .. raw:: html
 
          <i>Save Vertex Color</i>: Save Vertex Color
 
-   ``save_face_color : bool = false``
+   ``save_face_color : bool = False``
 
       .. raw:: html
 
          <i>Save Face Color</i>: Save Face Color
 
-   ``save_wedge_texcoord : bool = true``
+   ``save_wedge_texcoord : bool = True``
 
       .. raw:: html
 
@@ -9142,19 +9142,19 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>File Name</i>: The name of the file to save
 
-   ``save_vertex_color : bool = true``
+   ``save_vertex_color : bool = True``
 
       .. raw:: html
 
          <i>Save Vertex Color</i>: Save Vertex Color
 
-   ``save_wedge_color : bool = true``
+   ``save_wedge_color : bool = True``
 
       .. raw:: html
 
          <i>Save Wedge Color</i>: Save Wedge Color
 
-   ``save_wedge_texcoord : bool = true``
+   ``save_wedge_texcoord : bool = True``
 
       .. raw:: html
 
@@ -9175,49 +9175,49 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>File Name</i>: The name of the file to save
 
-   ``save_vertex_color : bool = true``
+   ``save_vertex_color : bool = True``
 
       .. raw:: html
 
          <i>Save Vertex Color</i>: Save Vertex Color
 
-   ``save_vertex_coord : bool = true``
+   ``save_vertex_coord : bool = True``
 
       .. raw:: html
 
          <i>Save Vertex Coord</i>: Save Vertex Coord
 
-   ``save_vertex_normal : bool = true``
+   ``save_vertex_normal : bool = True``
 
       .. raw:: html
 
          <i>Save Vertex Normal</i>: Save Vertex Normal
 
-   ``save_face_color : bool = false``
+   ``save_face_color : bool = False``
 
       .. raw:: html
 
          <i>Save Face Color</i>: Save Face Color
 
-   ``save_face_normal : bool = false``
+   ``save_face_normal : bool = False``
 
       .. raw:: html
 
          <i>Save Face Normal</i>: Save Face Normal
 
-   ``save_wedge_color : bool = false``
+   ``save_wedge_color : bool = False``
 
       .. raw:: html
 
          <i>Save Wedge Color</i>: Save Wedge Color
 
-   ``save_wedge_texcoord : bool = false``
+   ``save_wedge_texcoord : bool = False``
 
       .. raw:: html
 
          <i>Save Wedge TexCoord</i>: Save Wedge TexCoord
 
-   ``save_wedge_normal : bool = false``
+   ``save_wedge_normal : bool = False``
 
       .. raw:: html
 
@@ -9238,7 +9238,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>File Name</i>: The name of the file to save
 
-   ``save_vertex_normal : bool = true``
+   ``save_vertex_normal : bool = True``
 
       .. raw:: html
 
