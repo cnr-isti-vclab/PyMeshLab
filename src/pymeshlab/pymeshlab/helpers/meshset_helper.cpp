@@ -225,6 +225,55 @@ void updateRichParameterListFromKwargs(
 	}
 }
 
+/** QVariant map management **/
+
+pybind11::dict toPyDict(const std::map<std::string, QVariant>& qVariantMap)
+{
+	pybind11::dict outDict;
+	for (const auto& p : qVariantMap){
+		if (std::string(p.second.typeName()) == "int"){
+			outDict[p.first.c_str()] = p.second.toInt();
+		}
+		else if (std::string(p.second.typeName()) == "double"){
+			outDict[p.first.c_str()] = p.second.toDouble();
+		}
+		else if (std::string(p.second.typeName()) == "float"){
+			outDict[p.first.c_str()] = p.second.toFloat();
+		}
+		else if (std::string(p.second.typeName()) == "bool"){
+			outDict[p.first.c_str()] = p.second.toBool();
+		}
+		else if (p.second.canConvert<Point2m>()){
+			outDict[p.first.c_str()] = 
+					p.second.value<Point2m>().ToEigenVector<Eigen::Vector2d>();
+		}
+		else if (p.second.canConvert<Point3m>()){
+			outDict[p.first.c_str()] = 
+					p.second.value<Point3m>().ToEigenVector<Eigen::Vector3d>();
+		}
+		else if (p.second.canConvert<Box3m>()){
+			outDict[p.first.c_str()] = p.second.value<Box3m>();
+		}
+		else if (p.second.canConvert<Matrix33m>()){
+			outDict[p.first.c_str()] = 
+					p.second.value<Matrix33m>().ToEigenMatrix<Eigen::Matrix3d>();
+		}
+		else if (p.second.canConvert<Matrix44m>()){
+			outDict[p.first.c_str()] = 
+					p.second.value<Matrix44m>().ToEigenMatrix<Eigen::Matrix4d>();
+		}
+		else if (p.second.canConvert<Eigen::VectorXd>()){
+			outDict[p.first.c_str()] = p.second.value<Eigen::VectorXd>();
+		}
+		else {
+			std::cerr << "Warning: type " << p.second.typeName() 
+				<< " still not supported for py::dict conversion\n"
+				<< "Please open an issue on GitHub about this."; 
+		}
+	}
+	return outDict;
+}
+
 /** Filter name management **/
 
 FilterPluginInterface* pluginFromFilterName(

@@ -174,10 +174,6 @@ std::string getPluginsPath();
 std::string getSamplesPath();
 void printSaveMask(int mask);
 
-
-
-pybind11::dict toPyDict(const std::map<std::string, QVariant>& qVariantMap);
-
 }
 
 #endif // PYMESHLAB_PYMESHLABCOMMON_H

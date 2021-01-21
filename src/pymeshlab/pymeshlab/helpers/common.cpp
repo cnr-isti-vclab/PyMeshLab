@@ -24,6 +24,8 @@
 #include "common.h"
 
 #include <QDir>
+#include <common/ml_document/base_types.h>
+#include <common/interfaces/filter_plugin_interface.h>
 
 /** Ridirects **/
 
@@ -77,32 +79,6 @@ std::string pymeshlab::getSamplesPath()
 {
 	std::string rootPath = getRootPath();
 	return rootPath + "/tests/sample/";
-}
-
-
-pybind11::dict pymeshlab::toPyDict(const std::map<std::string, QVariant>& qVariantMap)
-{
-	pybind11::dict outDict;
-	for (const auto& p : qVariantMap){
-		if (std::string(p.second.typeName()) == "int"){
-			outDict[p.first.c_str()] = p.second.toInt();
-		}
-		else if (std::string(p.second.typeName()) == "double"){
-			outDict[p.first.c_str()] = p.second.toDouble();
-		}
-		else if (std::string(p.second.typeName()) == "float"){
-			outDict[p.first.c_str()] = p.second.toFloat();
-		}
-		else if (std::string(p.second.typeName()) == "bool"){
-			outDict[p.first.c_str()] = p.second.toBool();
-		}
-		else {
-			std::cerr << "Warning: type " << p.second.typeName() 
-				<< " still not supported for py::dict conversion\n"
-				<< "Please open an issue on GitHub about this."; 
-		}
-	}
-	return outDict;
 }
 
 void pymeshlab::printSaveMask(int mask)

@@ -62,6 +62,10 @@ void updateRichParameterListFromKwargs(
 		RichParameterList& rps,
 		bool ignoreFileName = false);
 
+/** QVariant map management **/
+
+pybind11::dict toPyDict(const std::map<std::string, QVariant>& qVariantMap);
+
 /** Filter name management **/
 
 FilterPluginInterface* pluginFromFilterName(
