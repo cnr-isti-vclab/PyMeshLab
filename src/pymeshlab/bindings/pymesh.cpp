@@ -39,10 +39,10 @@ void pymeshlab::initMesh(py::module& m)
 	//constructor (could be empty)
 	meshClass.def(
 				py::init(&Mesh::createFromMatrices), doc::PYMESH_INIT,
-				py::arg("vertex_matrix") = Eigen::MatrixX3f(),
+				py::arg("vertex_matrix") = Eigen::MatrixX3d(),
 				py::arg("face_matrix") = Eigen::MatrixX3i(),
-				py::arg("v_normals_matrix") = Eigen::MatrixX3f(),
-				py::arg("f_normals_matrix") = Eigen::MatrixX3f());
+				py::arg("v_normals_matrix") = Eigen::MatrixX3d(),
+				py::arg("f_normals_matrix") = Eigen::MatrixX3d());
 
 	meshClass.def("vertex_number", &CMeshO::VN, doc::PYMESH_VN);
 	meshClass.def("face_number", &CMeshO::FN, doc::PYMESH_FN);
@@ -60,9 +60,14 @@ void pymeshlab::initMesh(py::module& m)
 	meshClass.def("face_matrix", &Mesh::faceMatrix, doc::PYMESH_FACE_MAT);
 	meshClass.def("vertex_normal_matrix", &Mesh::vertexNormalMatrix, doc::PYMESH_VERT_NORM_MAT);
 	meshClass.def("face_normal_matrix", &Mesh::faceNormalMatrix, doc::PYMESH_FACE_NORM_MAT);
-	meshClass.def("vertex_quality_matrix", &Mesh::vertexQualityMatrix, doc::PYMESH_VERT_QUAL_MAT);
-	meshClass.def("face_quality_matrix", &Mesh::faceQualityMatrix, doc::PYMESH_FACE_QUAL_MAT);
-	meshClass.def("vertex_tex_coord_matrix", &Mesh::vertexTexCoordMatrix, doc::PYMESH_VERT_QUAL_MAT);
+	meshClass.def("vertex_quality_array", &Mesh::vertexQualityArray, doc::PYMESH_VERT_QUAL_ARRAY);
+	meshClass.def("face_quality_array", &Mesh::faceQualityArray, doc::PYMESH_FACE_QUAL_ARRAY);
+	meshClass.def("vertex_tex_coord_matrix", &Mesh::vertexTexCoordMatrix, doc::PYMESH_VERT_QUAL_ARRAY);
 
 	meshClass.def("face_face_adjacency_matrix", &Mesh::faceFaceAdjacency, doc::PYMESH_FFADJ_MAT);
+	
+	meshClass.def("vertex_scalar_attribute_array", &Mesh::vertexScalarAttributeArray, doc::PYMESH_VERT_SCALAR_ATTR_ARRAY);
+	meshClass.def("vertex_vector_attribute_matrix", &Mesh::vertexVectorAttributeMatrix, doc::PYMESH_VERT_VECTOR_ATTR_MATRIX);
+	meshClass.def("face_scalar_attribute_array", &Mesh::faceScalarAttributeArray, doc::PYMESH_FACE_SCALAR_ATTR_ARRAY);
+	meshClass.def("face_vector_attribute_matrix", &Mesh::faceVectorAttributeMatrix, doc::PYMESH_FACE_VECTOR_ATTR_MATRIX);
 }

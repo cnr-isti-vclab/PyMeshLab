@@ -103,15 +103,15 @@ const char* PYMESH_FACE_NORM_MAT =
 		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact.";
 
 //Mesh::vertex_quality_matrix
-const char* PYMESH_VERT_QUAL_MAT =
-		"Returns the vertex quality matrix of the mesh as a numpy array. "
+const char* PYMESH_VERT_QUAL_ARRAY =
+		"Returns the vertex quality array of the mesh as a numpy array. "
 		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact. "
 		"Raises a :py:exc:`MissingComponentException` if the mesh has no vertex "
 		"quality component. ";
 
 //Mesh::face_quality_matrix
-const char* PYMESH_FACE_QUAL_MAT =
-		"Returns the face quality matrix of the mesh as a numpy array. "
+const char* PYMESH_FACE_QUAL_ARRAY =
+		"Returns the face quality array of the mesh as a numpy array. "
 		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact. "
 		"Raises a :py:exc:`MissingComponentException` if the mesh has no face "
 		"quality component. ";
@@ -129,6 +129,30 @@ const char* PYMESH_FFADJ_MAT =
 		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact. "
 		"Raises a :py:exc:`MissingComponentException` if the mesh has no face-to-face "
 		"adjacency component. ";
+
+const char* PYMESH_VERT_SCALAR_ATTR_ARRAY = 
+		"Returns a numpy array containing the scalar values of the given user defined "
+		"attribute name associated to the vertices of the mesh. "
+		"Raisesa a :py:exc:`PyMeshLabException` if the given name does not "
+		"represent a vertex scalar attribute in the mesh.";
+
+const char* PYMESH_VERT_VECTOR_ATTR_MATRIX = 
+		"Returns a numpy matrix containing the vector values of the given user defined "
+		"attribute name associated to the vertices of the mesh. "
+		"Raisesa a :py:exc:`PyMeshLabException` if the given name does not "
+		"represent a vertex vector attribute in the mesh.";
+
+const char* PYMESH_FACE_SCALAR_ATTR_ARRAY = 
+		"Returns a numpy array containing the scalar values of the given user defined "
+		"attribute name associated to the faces of the mesh. "
+		"Raisesa a :py:exc:`PyMeshLabException` if the given name does not "
+		"represent a face scalar attribute in the mesh.";
+
+const char* PYMESH_FACE_VECTOR_ATTR_MATRIX = 
+		"Returns a numpy matrix containing the vector values of the given user defined "
+		"attribute name associated to the faces of the mesh. "
+		"Raisesa a :py:exc:`PyMeshLabException` if the given name does not "
+		"represent a face vector attribute in the mesh.";;
 }
 }
 
