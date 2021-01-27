@@ -25,6 +25,7 @@
 #include <common/plugin_manager.h>
 #include "helpers/meshlab_singletons.h"
 #include "helpers/common.h"
+#include <common/globals.h>
 
 void pymeshlab::printVersion()
 {
@@ -41,13 +42,13 @@ void pymeshlab::printVersion()
 
 int pymeshlab::numberPlugins()
 {
-	PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
+	PluginManager& pm = meshlab::pluginManagerInstance();
 	return pm.size();
 }
 
 void pymeshlab::printPluginList()
 {
-	PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
+	PluginManager& pm = meshlab::pluginManagerInstance();
 	std::cout
 			<< "PyMeshLab - List of loaded plugins ("
 			<< pm.size() << "):\n";

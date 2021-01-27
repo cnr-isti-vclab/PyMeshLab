@@ -27,6 +27,7 @@
 #include <pybind11/eigen.h>
 #include <common/parameters/rich_parameter_list.h>
 #include <common/mlexception.h>
+#include <common/globals.h>
 #include <common/GLExtensionsManager.h>
 #include <common/meshlabdocumentxml.h>
 #include <common/meshlabdocumentbundler.h>
@@ -317,7 +318,7 @@ FilterPluginInterface* pluginFromFilterName(
 		const QString& filterName, 
 		QAction*& action)
 {
-	PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
+	PluginManager& pm = meshlab::pluginManagerInstance();
 	for (FilterPluginInterface* fp : pm.filterPluginIterator()){
 		QList<QAction*> acts = fp->actions();
 		for (QAction* act : acts) {
@@ -397,7 +398,7 @@ void loadMeshUsingPlugin(
 		throw MLException("File does not exists: " + QString::fromStdString(filename));
 	}
 	else {
-		PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
+		PluginManager& pm = meshlab::pluginManagerInstance();
 		if (pm.isInputMeshFormatSupported(extension)){
 			IOMeshPluginInterface* plugin = pm.inputMeshPlugin(extension);
 			
@@ -446,7 +447,7 @@ void loadMeshUsingPlugin(
 		throw MLException("File does not exists: " + QString::fromStdString(filename));
 	}
 	else {
-		PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
+		PluginManager& pm = meshlab::pluginManagerInstance();
 		if (pm.isInputMeshFormatSupported(extension)){
 			auto it = filterFunctionSet.find("load_" + extension);
 			if (it == filterFunctionSet.end()){
@@ -500,7 +501,7 @@ void loadRasterUsingPlugin(
 		throw MLException("File does not exists: " + QString::fromStdString(filename));
 	}
 	else {
-		PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
+		PluginManager& pm = meshlab::pluginManagerInstance();
 		if (pm.isInputRasterFormatSupported(extension)){
 			IORasterPluginInterface* plugin = pm.inputRasterPlugin(extension);
 			
@@ -569,7 +570,7 @@ void saveMeshUsingPlugin(
 		throw MLException("Input model is nullptr. This should never happen.\nPlease open an issue on GitHub!");
 	QFileInfo finfo(QString::fromStdString(filename));
 	QString extension = finfo.suffix().toLower();
-	PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
+	PluginManager& pm = meshlab::pluginManagerInstance();
 	if (pm.isOutputMeshFormatSupported(extension)){
 		IOMeshPluginInterface* plugin = pm.outputMeshPlugin(extension);
 		RichParameterList rps;
@@ -601,7 +602,7 @@ void saveMeshUsingPlugin(
 		throw MLException("Input model is nullptr. This should never happen.\nPlease open an issue on GitHub!");
 	QFileInfo finfo(QString::fromStdString(filename));
 	QString extension = finfo.suffix().toLower();
-	PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
+	PluginManager& pm = meshlab::pluginManagerInstance();
 	if (pm.isOutputMeshFormatSupported(extension)){
 		FilterFunction ff = *filterFunctionSet.find("save_" + extension);
 		IOMeshPluginInterface* plugin = pm.outputMeshPlugin(extension);

@@ -26,6 +26,7 @@
 #include <pybind11/eigen.h>
 #include <common/mlexception.h>
 
+#include <common/globals.h>
 #include "percentage.h"
 #include "exceptions.h"
 #include "helpers/common.h"
@@ -37,9 +38,10 @@ namespace py = pybind11;
 
 pymeshlab::MeshSet::MeshSet(bool verbose) :
 	MeshDocument(),
-	pm(MeshLabSingletons::pluginManagerInstance(verbose)),
+	pm(meshlab::pluginManagerInstance()),
 	sceneGLSharedDataContext(nullptr)
 {
+	pm.loadPlugins(QString::fromStdString(getPluginsPath()));
 	filterFunctionSet.populate(pm);
 	setVerbosity(verbose);
 }
