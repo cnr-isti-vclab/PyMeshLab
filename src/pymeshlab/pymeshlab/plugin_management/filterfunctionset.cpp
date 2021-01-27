@@ -42,11 +42,11 @@ void pymeshlab::FilterFunctionSet::populate(const PluginManager& pm)
 	mask |= vcg::tri::io::Mask::IOM_FACEQUALITY;
 	dummyMeshDocument.mm()->Enable(mask);
 
-	for (auto inputFormat : pm.allKnowInputMeshFormats.keys()){
+	for (auto inputFormat : pm.inputMeshFormatList()){
 		QString originalFilterName = inputFormat;
 		QString pythonFilterName = "load_" + inputFormat.toLower();
 		FilterFunction f(pythonFilterName, originalFilterName, "Load " + inputFormat + " format.");
-		IOMeshPluginInterface* plugin = pm.allKnowInputMeshFormats[inputFormat];
+		IOMeshPluginInterface* plugin = pm.inputMeshPlugin(inputFormat);
 		RichParameterList rps;
 		plugin->initPreOpenParameter(inputFormat, dummyMesh, rps);
 		plugin->initOpenParameter(inputFormat, *dummyMeshDocument.mm(), rps);
@@ -67,11 +67,11 @@ void pymeshlab::FilterFunctionSet::populate(const PluginManager& pm)
 		functionSet.insert(f);
 	}
 
-	for (auto outputFormat : pm.allKnowOutputFormats.keys()){
+	for (auto outputFormat : pm.outputMeshFormatList()){
 		QString originalFilterName = outputFormat;
 		QString pythonFilterName = "save_" + outputFormat.toLower();
 		FilterFunction f(pythonFilterName, originalFilterName, "Save " + outputFormat + " format.");
-		IOMeshPluginInterface* plugin = pm.allKnowOutputFormats[outputFormat];
+		IOMeshPluginInterface* plugin = pm.outputMeshPlugin(outputFormat);
 		RichParameterList rps;
 		plugin->initSaveParameter(outputFormat, *dummyMeshDocument.mm(), rps);
 
@@ -94,7 +94,7 @@ void pymeshlab::FilterFunctionSet::populate(const PluginManager& pm)
 		functionSet.insert(f);
 	}
 	
-	for (auto inputRasterFormat : pm.allKnownInputRasterFormats.keys()){
+	for (auto inputRasterFormat : pm.inputRasterFormatList()){
 		QString originalFilterName = inputRasterFormat;
 		QString pythonFilterName = "loadr_" + inputRasterFormat.toLower();
 		FilterFunction f(pythonFilterName, originalFilterName, "Load " + inputRasterFormat + " format.");
@@ -110,7 +110,7 @@ void pymeshlab::FilterFunctionSet::populate(const PluginManager& pm)
 		functionSet.insert(f);
 	}
 
-	for (FilterPluginInterface* fp : pm.meshFilterPlug){
+	for (FilterPluginInterface* fp : pm.filterPluginIterator()){
 		QList<QAction*> acts = fp->actions();
 		for (QAction* act : acts) {
 			QString originalFilterName = fp->filterName(act);

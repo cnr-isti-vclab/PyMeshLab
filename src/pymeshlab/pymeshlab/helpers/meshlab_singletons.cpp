@@ -22,7 +22,7 @@
 ****************************************************************************/
 #include "meshlab_singletons.h"
 
-#include <common/pluginmanager.h>
+#include <common/plugin_manager.h>
 #include "common.h"
 
 RichParameterList& pymeshlab::MeshLabSingletons::globalRPLInstance()
@@ -50,10 +50,9 @@ PluginManager& pymeshlab::MeshLabSingletons::pluginManagerInstance(bool verbose)
 		initialized = true;
 		QDir dir(QString::fromStdString(getPluginsPath()));
 		pymeshlab::QDebugRedirect* qdbr = nullptr;
-		RichParameterList& globalRPS = globalRPLInstance();
 		if (!verbose)
 			qdbr = new pymeshlab::QDebugRedirect(); //redirect qdebug to null, just for this scope
-		pm.loadPlugins(globalRPS, dir);
+		pm.loadPlugins(dir);
 		delete qdbr;
 	}
 	return pm;

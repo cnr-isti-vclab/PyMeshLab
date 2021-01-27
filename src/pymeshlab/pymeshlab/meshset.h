@@ -26,7 +26,7 @@
 #include <pybind11/pybind11.h>
 #include <common/ml_document/mesh_document.h>
 #include <common/filterscript.h>
-#include <common/pluginmanager.h>
+#include <common/plugin_manager.h>
 #include "plugin_management/filterfunctionset.h"
 
 namespace pymeshlab {

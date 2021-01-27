@@ -318,7 +318,7 @@ FilterPluginInterface* pluginFromFilterName(
 		QAction*& action)
 {
 	PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
-	for (FilterPluginInterface* fp : pm.meshFilterPlug){
+	for (FilterPluginInterface* fp : pm.filterPluginIterator()){
 		QList<QAction*> acts = fp->actions();
 		for (QAction* act : acts) {
 			if (filterName == fp->filterName(act)){
@@ -398,8 +398,8 @@ void loadMeshUsingPlugin(
 	}
 	else {
 		PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
-		if (pm.allKnowInputMeshFormats.contains(extension)){
-			IOMeshPluginInterface* plugin = pm.allKnowInputMeshFormats[extension];
+		if (pm.isInputMeshFormatSupported(extension)){
+			IOMeshPluginInterface* plugin = pm.inputMeshPlugin(extension);
 			
 			bool justCreated = false;
 			if (mm == nullptr){
@@ -447,13 +447,13 @@ void loadMeshUsingPlugin(
 	}
 	else {
 		PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
-		if (pm.allKnowInputMeshFormats.contains(extension)){
+		if (pm.isInputMeshFormatSupported(extension)){
 			auto it = filterFunctionSet.find("load_" + extension);
 			if (it == filterFunctionSet.end()){
 				throw MLException("Unknown format to load in MeshSet. This should never happen.\nPlease open an issue on GitHub!");
 			}
 			FilterFunction ff = *it;
-			IOMeshPluginInterface* plugin = pm.allKnowInputMeshFormats[extension];
+			IOMeshPluginInterface* plugin = pm.inputMeshPlugin(extension);
 			
 			bool justCreated = false;
 			if (mm == nullptr){
@@ -501,8 +501,8 @@ void loadRasterUsingPlugin(
 	}
 	else {
 		PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
-		if (pm.allKnownInputRasterFormats.contains(extension)){
-			IORasterPluginInterface* plugin = pm.allKnownInputRasterFormats[extension];
+		if (pm.isInputRasterFormatSupported(extension)){
+			IORasterPluginInterface* plugin = pm.inputRasterPlugin(extension);
 			
 			bool justCreated = false;
 			if (rm == nullptr){
@@ -570,8 +570,8 @@ void saveMeshUsingPlugin(
 	QFileInfo finfo(QString::fromStdString(filename));
 	QString extension = finfo.suffix().toLower();
 	PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
-	if (pm.allKnowOutputFormats.contains(extension)){
-		IOMeshPluginInterface* plugin = pm.allKnowOutputFormats[extension];
+	if (pm.isOutputMeshFormatSupported(extension)){
+		IOMeshPluginInterface* plugin = pm.outputMeshPlugin(extension);
 		RichParameterList rps;
 		int capability = 0, defbits = 0, capabilityMesh;
 		plugin->GetExportMaskCapability(extension, capability, defbits);
@@ -602,9 +602,9 @@ void saveMeshUsingPlugin(
 	QFileInfo finfo(QString::fromStdString(filename));
 	QString extension = finfo.suffix().toLower();
 	PluginManager& pm = MeshLabSingletons::pluginManagerInstance();
-	if (pm.allKnowOutputFormats.contains(extension)){
+	if (pm.isOutputMeshFormatSupported(extension)){
 		FilterFunction ff = *filterFunctionSet.find("save_" + extension);
-		IOMeshPluginInterface* plugin = pm.allKnowOutputFormats[extension];
+		IOMeshPluginInterface* plugin = pm.outputMeshPlugin(extension);
 		//int mask = 0; //todo: use this mask
 		RichParameterList rps;
 

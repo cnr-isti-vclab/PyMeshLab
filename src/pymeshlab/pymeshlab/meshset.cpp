@@ -53,12 +53,12 @@ void pymeshlab::MeshSet::setVerbosity(bool verbose)
 {
 	this->verbose = verbose;
 	if (verbose){
-		for (auto p : pm.pluginIterator())
-			p->setLog(&Log);
+		for (auto p : pm.namePluginPairIterator())
+			p.second->setLog(&Log);
 	}
 	else {
-		for (auto p : pm.pluginIterator())
-			p->setLog(nullptr);
+		for (auto p : pm.namePluginPairIterator())
+			p.second->setLog(nullptr);
 	}
 }
 
