@@ -4,7 +4,7 @@
 Save Project
 ============
 
-Description...
+This simple script shows how to save a project file having all the objects contained in a :ref:`meshset`.
 
 This script can be executed by running the following command:
 

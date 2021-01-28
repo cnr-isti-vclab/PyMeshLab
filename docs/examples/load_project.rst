@@ -4,7 +4,7 @@
 Load Project
 ============
 
-Description...
+This simple script shows how to load a project in a :ref:`meshset`.
 
 This script can be executed by running the following command:
 

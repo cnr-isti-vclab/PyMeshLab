@@ -4,7 +4,7 @@
 Save Mesh
 =========
 
-Description...
+This simple script shows how to save a mesh contained in a :ref:`meshset`.
 
 This script can be executed by running the following command:
 

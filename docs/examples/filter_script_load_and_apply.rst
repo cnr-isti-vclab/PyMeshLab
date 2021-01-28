@@ -4,7 +4,7 @@
 Filter Script: load and apply
 =============================
 
-Description...
+This example shows how to load and then apply a given filter script.
 
 This script can be executed by running the following command:
 

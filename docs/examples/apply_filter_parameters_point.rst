@@ -4,8 +4,8 @@
 apply_filter parameters: Point
 ==============================
 
-This example shows how to pass a point as a parameter to a filter through the
-:py:meth:`pmeshlab.MeshSet.apply_filter` function.
+This example shows how to pass a point as a parameter to a filter through the :py:meth:`pmeshlab.MeshSet.apply_filter` function.
+Points are represented as ``numpy.array``.
 
 This script can be executed by running the following command:
 

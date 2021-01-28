@@ -4,7 +4,7 @@
 Import Mesh from Arrays
 =======================
 
-Description...
+This example shows how to import a Mesh from values stored in numpy arrays, and then insert the mesh in the MeshSet.
 
 This script can be executed by running the following command:
 

@@ -4,7 +4,7 @@
 Filter Script: create and save
 ==============================
 
-Description...
+This example shows how to create and then save a new filter script.
 
 This script can be executed by running the following command:
 

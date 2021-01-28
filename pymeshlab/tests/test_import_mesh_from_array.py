@@ -7,6 +7,9 @@ def test_import_mesh_from_array():
     print('\n')
     output_path = samples_common.test_output_path()
 
+    # create a numpy 8x3 array of vertices
+    # columns are the coordinates (x, y, z)
+    # every row represents a vertex
     verts = numpy.array([
         [-0.5, -0.5, -0.5],
         [0.5, -0.5, -0.5],
@@ -17,6 +20,10 @@ def test_import_mesh_from_array():
         [-0.5, 0.5, 0.5],
         [0.5, 0.5, 0.5]])
 
+    # create a numpy 12x3 array of faces
+    # every row represents a face (trianlge in this case)
+    # for every triangle, the index of the vertex
+    # in the vertex array
     faces = numpy.array([
         [2, 1, 0],
         [1, 2, 3],
@@ -31,11 +38,17 @@ def test_import_mesh_from_array():
         [5, 3, 7],
         [3, 5, 1]])
 
+    # create a new Mesh with the two arrays
     m = ml.Mesh(verts, faces)
 
     assert m.vertex_number() == 8
     assert m.face_number() == 12
 
+    # create a new MeshSet
     ms = ml.MeshSet()
+
+    # add the mesh to the MeshSet
     ms.add_mesh(m, "cube_mesh")
+
+    # save the current mesh
     ms.save_current_mesh(output_path + "saved_cube_from_array.ply")
