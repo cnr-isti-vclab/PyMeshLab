@@ -142,6 +142,7 @@ instance/
 
 # Sphinx documentation
 docs/_build/
+docs/examples/base.rst
 
 # PyBuilder
 target/

@@ -24,6 +24,7 @@ Contents
    filter_scripts
    classes
    filter_list
+   examples
 
 References
 ==========
