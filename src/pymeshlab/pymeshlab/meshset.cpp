@@ -40,9 +40,13 @@ pymeshlab::MeshSet::MeshSet(bool verbose) :
 	pm(meshlab::pluginManagerInstance())//,
 	//sceneGLSharedDataContext(nullptr)
 {
+	if (!verbose)
+		VerbosityManager::disableVersbosity();
 	pm.loadPlugins(QString::fromStdString(getPluginsPath()));
 	filterFunctionSet.populate(pm);
 	setVerbosity(verbose);
+	if (!verbose)
+		VerbosityManager::enableVerbosity();
 }
 
 pymeshlab::MeshSet::~MeshSet()

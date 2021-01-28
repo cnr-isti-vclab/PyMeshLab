@@ -138,7 +138,7 @@ private:
 
 /**
  * @brief The CerrRedirect class
- * Will redirect the cout buffer in the scope that is declared an instance this class.
+ * Will redirect the cerr buffer in the scope that is declared an instance this class.
  */
 class CerrRedirect {
 public:
@@ -154,7 +154,7 @@ private:
 
 /**
  * @brief The QDebugRedirect class
- * Will redirect the cout buffer in the scope that is declared an instance this class.
+ * Will redirect the qdebug buffer in the scope that is declared an instance this class.
  */
 class QDebugRedirect {
 public:
