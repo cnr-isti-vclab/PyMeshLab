@@ -30,7 +30,6 @@
 #include "percentage.h"
 #include "exceptions.h"
 #include "helpers/common.h"
-#include "helpers/meshlab_singletons.h"
 #include "helpers/meshset_helper.h"
 #include "helpers/verbosity_manager.h"
 
@@ -38,8 +37,8 @@ namespace py = pybind11;
 
 pymeshlab::MeshSet::MeshSet(bool verbose) :
 	MeshDocument(),
-	pm(meshlab::pluginManagerInstance()),
-	sceneGLSharedDataContext(nullptr)
+	pm(meshlab::pluginManagerInstance())//,
+	//sceneGLSharedDataContext(nullptr)
 {
 	pm.loadPlugins(QString::fromStdString(getPluginsPath()));
 	filterFunctionSet.populate(pm);
@@ -48,7 +47,7 @@ pymeshlab::MeshSet::MeshSet(bool verbose) :
 
 pymeshlab::MeshSet::~MeshSet()
 {
-	delete sceneGLSharedDataContext;
+	//delete sceneGLSharedDataContext;
 }
 
 void pymeshlab::MeshSet::setVerbosity(bool verbose)
@@ -352,29 +351,20 @@ pybind11::dict pymeshlab::MeshSet::filterParameterValues(
 	return outputValues;
 }
 
-bool pymeshlab::MeshSet::isSceneGLSharedDataContextEnabled() const
-{
-	return sceneGLSharedDataContext != nullptr;
-}
+//bool pymeshlab::MeshSet::isSceneGLSharedDataContextEnabled() const
+//{
+//	return sceneGLSharedDataContext != nullptr;
+//}
 
-void pymeshlab::MeshSet::initSceneGLSharedDataContext()
-{
-	if (! isSceneGLSharedDataContextEnabled()) {
-		vcg::QtThreadSafeMemoryInfo& gpumeminfo = MeshLabSingletons::threadSafeMemoryInfoInstance();
-		sceneGLSharedDataContext = 
-				new MLSceneGLSharedDataContext(
-					*this, 
-					gpumeminfo, 
-					MeshLabScalarTest<MESHLAB_SCALAR>::doublePrecision(), 
-					100000,
-					100000);
-	}
-}
+//void pymeshlab::MeshSet::initSceneGLSharedDataContext()
+//{
+//	//Todo
+//}
 
-MLSceneGLSharedDataContext* pymeshlab::MeshSet::sharedDataContext()
-{
-	return sceneGLSharedDataContext;
-}
+//MLSceneGLSharedDataContext* pymeshlab::MeshSet::sharedDataContext()
+//{
+//	return sceneGLSharedDataContext;
+//}
 
 std::string pymeshlab::MeshSet::filtersRSTDocumentation() const
 {

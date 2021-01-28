@@ -26,7 +26,6 @@ set(HEADERS
 	pymeshlab/plugin_management/filterfunctionparameter.h
 	pymeshlab/plugin_management/filterfunctionset.h
 	pymeshlab/helpers/common.h
-	pymeshlab/helpers/meshlab_singletons.h
 	pymeshlab/helpers/meshset_helper.h
 	pymeshlab/helpers/verbosity_manager.h
 )
@@ -50,7 +49,6 @@ set(SOURCES
 	pymeshlab/plugin_management/filterfunctionparameter.cpp
 	pymeshlab/plugin_management/filterfunctionset.cpp
 	pymeshlab/helpers/common.cpp
-	pymeshlab/helpers/meshlab_singletons.cpp
 	pymeshlab/helpers/meshset_helper.cpp
 	pymeshlab/helpers/verbosity_manager.cpp
 )

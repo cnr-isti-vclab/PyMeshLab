@@ -133,8 +133,8 @@ void saveMLP(
 
 /** OpenGL context **/
 
-void initOpenGLContext(QAction* action, FilterPluginInterface* fp, QGLWidget*& wid, MeshSet& ms);
-void releaseOpenGLContext(FilterPluginInterface* fp, QGLWidget*& wid);
+//void initOpenGLContext(QAction* action, FilterPluginInterface* fp, QGLWidget*& wid, MeshSet& ms);
+//void releaseOpenGLContext(FilterPluginInterface* fp, QGLWidget*& wid);
 
 /** Apply Filter **/
 

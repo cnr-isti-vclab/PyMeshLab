@@ -91,16 +91,16 @@ public:
 
 	/** Member functions not binded on Python **/
 	//sharedDataContext management
-	bool isSceneGLSharedDataContextEnabled() const;
-	void initSceneGLSharedDataContext();
-	MLSceneGLSharedDataContext* sharedDataContext();
+//	bool isSceneGLSharedDataContextEnabled() const;
+//	void initSceneGLSharedDataContext();
+//	MLSceneGLSharedDataContext* sharedDataContext();
 	
 	
 	//documentation
 	std::string filtersRSTDocumentation() const;
 private:
 	PluginManager& pm;
-	MLSceneGLSharedDataContext* sceneGLSharedDataContext;
+//	MLSceneGLSharedDataContext* sceneGLSharedDataContext;
 	
 	FilterFunctionSet filterFunctionSet;
 	FilterScript filterScript;

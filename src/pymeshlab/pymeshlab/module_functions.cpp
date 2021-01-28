@@ -23,7 +23,6 @@
 #include "module_functions.h"
 #include <common/mlapplication.h>
 #include <common/plugin_manager.h>
-#include "helpers/meshlab_singletons.h"
 #include "helpers/common.h"
 #include <common/globals.h>
 
@@ -55,11 +54,5 @@ void pymeshlab::printPluginList()
 	for (const auto& p : pm.namePluginPairIterator()){
 		std::cout << "\t" << p.first.toStdString() << "\n";
 	}
-}
-
-void pymeshlab::setMaxGPUMem(int max_gpu_mb)
-{
-	RichParameterList& rpl = MeshLabSingletons::globalRPLInstance();
-	rpl.setValue(PYMESHLAB_GLOBAL_SETTING_MAXGPUMEM, IntValue(max_gpu_mb));
 }
 
