@@ -1,7 +1,7 @@
 <!DOCTYPE MeshLabDocument>
 <MeshLabProject>
  <MeshGroup>
-  <MLMesh visible="1" label="bone.ply" filename="bone.ply">
+  <MLMesh filename="bone.ply" label="bone.ply" visible="1">
    <MLMatrix44>
 1 0 0 0 
 0 1 0 0 

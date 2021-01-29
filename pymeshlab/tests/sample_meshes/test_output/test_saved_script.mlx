@@ -1,40 +1,40 @@
 <!DOCTYPE FilterScript>
 <FilterScript>
  <filter name="Remeshing: Isotropic Explicit Remeshing">
-  <Param tooltip="Number of iterations of the remeshing operations to repeat on the mesh." value="3" type="RichInt" description="Iterations" name="Iterations"/>
-  <Param tooltip="Toggles adaptive isotropic remeshing." value="false" type="RichBool" description="Adaptive remeshing" name="Adaptive"/>
-  <Param tooltip="If checked the remeshing operations will be applied only to the selected faces." value="false" type="RichBool" description="Remesh only selected faces" name="SelectedOnly"/>
-  <Param tooltip="Sets the target length for the remeshed mesh edges." value="0.0173205" max="1.73205" type="RichAbsPerc" description="Target Length" min="0" name="TargetLen"/>
-  <Param tooltip="Minimum angle between faces of the original to consider the shared edge as a feature to be preserved." value="30" type="RichFloat" description="Crease Angle" name="FeatureDeg"/>
-  <Param tooltip="If toggled each local operation must deviate from original mesh by [Max. surface distance]" value="false" type="RichBool" description="Check Surface Distance" name="CheckSurfDist"/>
-  <Param tooltip="Maximal surface deviation allowed for each local operation" value="0.0173205" max="1.73205" type="RichAbsPerc" description="Max. Surface Distance" min="0" name="MaxSurfDist"/>
-  <Param tooltip="If checked the remeshing operations will include a refine step." value="true" type="RichBool" description="Refine Step" name="SplitFlag"/>
-  <Param tooltip="If checked the remeshing operations will include a collapse step." value="true" type="RichBool" description="Collapse Step" name="CollapseFlag"/>
-  <Param tooltip="If checked the remeshing operations will include a edge-swap step, aimed at improving the vertex valence of the resulting mesh." value="true" type="RichBool" description="Edge-Swap Step" name="SwapFlag"/>
-  <Param tooltip="If checked the remeshing operations will include a smoothing step, aimed at relaxing the vertex positions in a Laplacian sense." value="true" type="RichBool" description="Smooth Step" name="SmoothFlag"/>
-  <Param tooltip="If checked the remeshing operations will include a step to reproject the mesh vertices on the original surface." value="true" type="RichBool" description="Reproject Step" name="ReprojectFlag"/>
+  <Param tooltip="Number of iterations of the remeshing operations to repeat on the mesh." name="Iterations" description="Iterations" type="RichInt" value="3"/>
+  <Param tooltip="Toggles adaptive isotropic remeshing." name="Adaptive" description="Adaptive remeshing" type="RichBool" value="false"/>
+  <Param tooltip="If checked the remeshing operations will be applied only to the selected faces." name="SelectedOnly" description="Remesh only selected faces" type="RichBool" value="false"/>
+  <Param tooltip="Sets the target length for the remeshed mesh edges." name="TargetLen" min="0" max="1.73205" description="Target Length" type="RichAbsPerc" value="0.0173205"/>
+  <Param tooltip="Minimum angle between faces of the original to consider the shared edge as a feature to be preserved." name="FeatureDeg" description="Crease Angle" type="RichFloat" value="30"/>
+  <Param tooltip="If toggled each local operation must deviate from original mesh by [Max. surface distance]" name="CheckSurfDist" description="Check Surface Distance" type="RichBool" value="false"/>
+  <Param tooltip="Maximal surface deviation allowed for each local operation" name="MaxSurfDist" min="0" max="1.73205" description="Max. Surface Distance" type="RichAbsPerc" value="0.0173205"/>
+  <Param tooltip="If checked the remeshing operations will include a refine step." name="SplitFlag" description="Refine Step" type="RichBool" value="true"/>
+  <Param tooltip="If checked the remeshing operations will include a collapse step." name="CollapseFlag" description="Collapse Step" type="RichBool" value="true"/>
+  <Param tooltip="If checked the remeshing operations will include a edge-swap step, aimed at improving the vertex valence of the resulting mesh." name="SwapFlag" description="Edge-Swap Step" type="RichBool" value="true"/>
+  <Param tooltip="If checked the remeshing operations will include a smoothing step, aimed at relaxing the vertex positions in a Laplacian sense." name="SmoothFlag" description="Smooth Step" type="RichBool" value="true"/>
+  <Param tooltip="If checked the remeshing operations will include a step to reproject the mesh vertices on the original surface." name="ReprojectFlag" description="Reproject Step" type="RichBool" value="true"/>
  </filter>
  <filter name="Remeshing: Isotropic Explicit Remeshing">
-  <Param tooltip="Number of iterations of the remeshing operations to repeat on the mesh." value="3" type="RichInt" description="Iterations" name="Iterations"/>
-  <Param tooltip="Toggles adaptive isotropic remeshing." value="false" type="RichBool" description="Adaptive remeshing" name="Adaptive"/>
-  <Param tooltip="If checked the remeshing operations will be applied only to the selected faces." value="false" type="RichBool" description="Remesh only selected faces" name="SelectedOnly"/>
-  <Param tooltip="Sets the target length for the remeshed mesh edges." value="0.0173205" max="1.73205" type="RichAbsPerc" description="Target Length" min="0" name="TargetLen"/>
-  <Param tooltip="Minimum angle between faces of the original to consider the shared edge as a feature to be preserved." value="30" type="RichFloat" description="Crease Angle" name="FeatureDeg"/>
-  <Param tooltip="If toggled each local operation must deviate from original mesh by [Max. surface distance]" value="false" type="RichBool" description="Check Surface Distance" name="CheckSurfDist"/>
-  <Param tooltip="Maximal surface deviation allowed for each local operation" value="0.0173205" max="1.73205" type="RichAbsPerc" description="Max. Surface Distance" min="0" name="MaxSurfDist"/>
-  <Param tooltip="If checked the remeshing operations will include a refine step." value="true" type="RichBool" description="Refine Step" name="SplitFlag"/>
-  <Param tooltip="If checked the remeshing operations will include a collapse step." value="true" type="RichBool" description="Collapse Step" name="CollapseFlag"/>
-  <Param tooltip="If checked the remeshing operations will include a edge-swap step, aimed at improving the vertex valence of the resulting mesh." value="true" type="RichBool" description="Edge-Swap Step" name="SwapFlag"/>
-  <Param tooltip="If checked the remeshing operations will include a smoothing step, aimed at relaxing the vertex positions in a Laplacian sense." value="true" type="RichBool" description="Smooth Step" name="SmoothFlag"/>
-  <Param tooltip="If checked the remeshing operations will include a step to reproject the mesh vertices on the original surface." value="true" type="RichBool" description="Reproject Step" name="ReprojectFlag"/>
+  <Param tooltip="Number of iterations of the remeshing operations to repeat on the mesh." name="Iterations" description="Iterations" type="RichInt" value="3"/>
+  <Param tooltip="Toggles adaptive isotropic remeshing." name="Adaptive" description="Adaptive remeshing" type="RichBool" value="false"/>
+  <Param tooltip="If checked the remeshing operations will be applied only to the selected faces." name="SelectedOnly" description="Remesh only selected faces" type="RichBool" value="false"/>
+  <Param tooltip="Sets the target length for the remeshed mesh edges." name="TargetLen" min="0" max="1.73205" description="Target Length" type="RichAbsPerc" value="0.0173205"/>
+  <Param tooltip="Minimum angle between faces of the original to consider the shared edge as a feature to be preserved." name="FeatureDeg" description="Crease Angle" type="RichFloat" value="30"/>
+  <Param tooltip="If toggled each local operation must deviate from original mesh by [Max. surface distance]" name="CheckSurfDist" description="Check Surface Distance" type="RichBool" value="false"/>
+  <Param tooltip="Maximal surface deviation allowed for each local operation" name="MaxSurfDist" min="0" max="1.73205" description="Max. Surface Distance" type="RichAbsPerc" value="0.0173205"/>
+  <Param tooltip="If checked the remeshing operations will include a refine step." name="SplitFlag" description="Refine Step" type="RichBool" value="true"/>
+  <Param tooltip="If checked the remeshing operations will include a collapse step." name="CollapseFlag" description="Collapse Step" type="RichBool" value="true"/>
+  <Param tooltip="If checked the remeshing operations will include a edge-swap step, aimed at improving the vertex valence of the resulting mesh." name="SwapFlag" description="Edge-Swap Step" type="RichBool" value="true"/>
+  <Param tooltip="If checked the remeshing operations will include a smoothing step, aimed at relaxing the vertex positions in a Laplacian sense." name="SmoothFlag" description="Smooth Step" type="RichBool" value="true"/>
+  <Param tooltip="If checked the remeshing operations will include a step to reproject the mesh vertices on the original surface." name="ReprojectFlag" description="Reproject Step" type="RichBool" value="true"/>
  </filter>
  <filter name="Per Face Quality according to Triangle shape and aspect ratio">
-  <Param enum_val3="Area" tooltip="Choose a metric to compute triangle quality." value="0" enum_val4="Texture Angle Distortion" enum_val1="inradius/circumradius" enum_val2="Mean ratio" type="RichEnum" enum_val5="Texture Area Distortion" description="Metric:" enum_cardinality="8" enum_val7="Polygonal planarity (relative)" name="Metric" enum_val6="Polygonal planarity (max)" enum_val0="area/max side"/>
+  <Param enum_val2="Mean ratio" tooltip="Choose a metric to compute triangle quality." enum_val7="Polygonal planarity (relative)" enum_val4="Texture Angle Distortion" enum_val3="Area" name="Metric" enum_cardinality="8" description="Metric:" type="RichEnum" enum_val1="inradius/circumradius" enum_val5="Texture Area Distortion" enum_val6="Polygonal planarity (max)" value="0" enum_val0="area/max side"/>
  </filter>
  <filter name="Colorize by face Quality">
-  <Param tooltip="The value that will be mapped with the lower end of the scale (red)" value="0.471051" type="RichFloat" description="Min" name="minVal"/>
-  <Param tooltip="The value that will be mapped with the upper end of the scale (blue)" value="0.77602" type="RichFloat" description="Max" name="maxVal"/>
-  <Param tooltip="If not zero this value will be used for a percentile cropping of the quality values.&lt;br> If this parameter is set to a value &lt;i>P&lt;/i> then the two values &lt;i>V_min,V_max&lt;/i> for which &lt;i>P&lt;/i>% of the faces have a quality &lt;b>lower or greater&lt;/b> than &lt;i>V_min,V_max&lt;/i> are used as min/max values for clamping.&lt;br>&lt;br> The automated percentile cropping is very useful for automatically discarding outliers." value="0" max="100" type="RichDynamicFloat" description="Percentile Crop [0..100]" min="0" name="perc"/>
-  <Param tooltip="If true the min max range will be enlarged to be symmetric (so that green is always Zero)" value="false" type="RichBool" description="Zero Symmetric" name="zeroSym"/>
+  <Param tooltip="The value that will be mapped with the lower end of the scale (red)" name="minVal" description="Min" type="RichFloat" value="0.471051"/>
+  <Param tooltip="The value that will be mapped with the upper end of the scale (blue)" name="maxVal" description="Max" type="RichFloat" value="0.77602"/>
+  <Param tooltip="If not zero this value will be used for a percentile cropping of the quality values.&lt;br> If this parameter is set to a value &lt;i>P&lt;/i> then the two values &lt;i>V_min,V_max&lt;/i> for which &lt;i>P&lt;/i>% of the faces have a quality &lt;b>lower or greater&lt;/b> than &lt;i>V_min,V_max&lt;/i> are used as min/max values for clamping.&lt;br>&lt;br> The automated percentile cropping is very useful for automatically discarding outliers." name="perc" min="0" max="100" description="Percentile Crop [0..100]" type="RichDynamicFloat" value="0"/>
+  <Param tooltip="If true the min max range will be enlarged to be symmetric (so that green is always Zero)" name="zeroSym" description="Zero Symmetric" type="RichBool" value="false"/>
  </filter>
 </FilterScript>

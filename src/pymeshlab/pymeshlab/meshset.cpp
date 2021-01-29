@@ -112,7 +112,7 @@ void pymeshlab::MeshSet::printPythonFilterNamesList() const
  * passed to the "apply_filter" function
  * @param functionName
  */
-void pymeshlab::MeshSet::printPythonFilterParameterList(const std::string functionName) const
+void pymeshlab::MeshSet::printPythonFilterParameterList(const std::string& functionName) const
 {
 	if (meshsethelper::pythonFilterNameExists(functionName, filterFunctionSet)){
 		std::cout << "Filter " << functionName << " not found.\n";

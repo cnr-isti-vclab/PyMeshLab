@@ -61,7 +61,7 @@ public:
 	CMeshO& mesh(int id);
 
 	void printPythonFilterNamesList() const;
-	void printPythonFilterParameterList(const std::string functionName) const;
+	void printPythonFilterParameterList(const std::string& functionName) const;
 	void printFilterScript() const;
 
 	void loadNewMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());
