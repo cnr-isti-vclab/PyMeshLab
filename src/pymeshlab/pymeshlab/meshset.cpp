@@ -114,7 +114,7 @@ void pymeshlab::MeshSet::printPythonFilterNamesList() const
  */
 void pymeshlab::MeshSet::printPythonFilterParameterList(const std::string& functionName) const
 {
-	if (meshsethelper::pythonFilterNameExists(functionName, filterFunctionSet)){
+	if (!meshsethelper::pythonFilterNameExists(functionName, filterFunctionSet)){
 		std::cout << "Filter " << functionName << " not found.\n";
 	}
 	else {
