@@ -1,0 +1,24 @@
+<!DOCTYPE MeshLabDocument>
+<MeshLabProject>
+ <MeshGroup>
+  <MLMesh visible="1" label="airplane.obj" filename="airplane.obj">
+   <MLMatrix44>
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+0 0 0 1 
+</MLMatrix44>
+   <RenderingOption pointColor="131 149 69 255" wireColor="64 64 64 255" pointSize="3" wireWidth="1" solidColor="192 192 192 255" boxColor="234 234 234 255">100001000000000000000000000001010100000010100000000100111011110000001001</RenderingOption>
+  </MLMesh>
+  <MLMesh visible="1" label="bone.ply" filename="bone.ply">
+   <MLMatrix44>
+1 0 0 0 
+0 1 0 0 
+0 0 1 0 
+0 0 0 1 
+</MLMatrix44>
+   <RenderingOption pointColor="131 149 69 255" wireColor="64 64 64 255" pointSize="3" wireWidth="1" solidColor="192 192 192 255" boxColor="234 234 234 255">100001000000000000000000000001010100000010100000000100111011110000001001</RenderingOption>
+  </MLMesh>
+ </MeshGroup>
+ <RasterGroup/>
+</MeshLabProject>

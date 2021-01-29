@@ -1,8 +1,8 @@
 .. apply_filter_output:
 
-===================
-apply_filter output
-===================
+====================
+Apply Filter: Output
+====================
 
 This example shows how to extract the output of a filter from the :py:meth:`pmeshlab.MeshSet.apply_filter` function.
 The output of this method is a python dictionary, often empty because most of the filters do not need to return anything.
@@ -14,9 +14,9 @@ This script can be executed by running the following command:
 
 .. code-block:: none
 
-   pytest --pyargs pymeshlab -k 'compute_geometric_measures'
+   pytest --pyargs pymeshlab -k 'apply_filter_output'
 
-**tests/test_compute_geometric_measures.py**
+**tests/example_apply_filter_output.py**
 
-.. include:: ../../pymeshlab/tests/test_compute_geometric_measures.py
+.. include:: ../../pymeshlab/tests/example_apply_filter_output.py
    :literal:

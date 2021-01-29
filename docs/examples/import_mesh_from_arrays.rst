@@ -10,9 +10,9 @@ This script can be executed by running the following command:
 
 .. code-block:: none
 
-   pytest --pyargs pymeshlab -k 'import_mesh_from_array'
+   pytest --pyargs pymeshlab -k 'import_mesh_from_arrays'
 
-**tests/test_import_mesh_from_array.py**
+**tests/example_import_mesh_from_arrays.py**
 
-.. include:: ../../pymeshlab/tests/test_import_mesh_from_array.py
+.. include:: ../../pymeshlab/tests/example_import_mesh_from_arrays.py
    :literal:

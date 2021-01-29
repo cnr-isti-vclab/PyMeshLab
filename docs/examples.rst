@@ -19,6 +19,7 @@ These examples compose the pymeshlab tests that can be executed by running the f
    examples/load_project
    examples/save_project
    examples/apply_filter
+   examples/apply_filter_parameters
    examples/apply_filter_parameters_point
    examples/apply_filter_parameters_percentage
    examples/apply_filter_output

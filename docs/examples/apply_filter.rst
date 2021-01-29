@@ -11,9 +11,9 @@ This script can be executed by running the following command:
 
 .. code-block:: none
 
-   pytest --pyargs pymeshlab -k 'convex_hull'
+   pytest --pyargs pymeshlab -k 'apply_filter'
 
-**tests/test_convex_hull.py**
+**tests/example_apply_filter.py**
 
-.. include:: ../../pymeshlab/tests/test_convex_hull.py
+.. include:: ../../pymeshlab/tests/example_apply_filter.py
    :literal:

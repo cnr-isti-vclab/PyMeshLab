@@ -10,9 +10,9 @@ This script can be executed by running the following command:
 
 .. code-block:: none
 
-   pytest --pyargs pymeshlab -k 'load_apply_filter_script'
+   pytest --pyargs pymeshlab -k 'filter_script_load_and_apply'
 
-**tests/test_load_apply_filter_script.py**
+**tests/example_filter_script_load_and_apply.py**
 
-.. include:: ../../pymeshlab/tests/test_load_apply_filter_script.py
+.. include:: ../../pymeshlab/tests/example_filter_script_load_and_apply.py
    :literal:

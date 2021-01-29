@@ -1,7 +1,7 @@
 .. apply_filter_parameters_percentage:
 
 ===================================
-apply_filter parameters: Percentage
+Apply Filter Parameters: Percentage
 ===================================
 
 This example shows how to pass a Percentage as a parameter to a filter through the :py:meth:`pmeshlab.MeshSet.apply_filter` function.
@@ -12,9 +12,9 @@ This script can be executed by running the following command:
 
 .. code-block:: none
 
-   pytest --pyargs pymeshlab -k 'remove_isolated_pieces_diameter'
+   pytest --pyargs pymeshlab -k 'apply_filter_parameters_percentage'
 
-**tests/test_remove_isolated_pieces_diameter.py**
+**tests/example_apply_filter_parameters_percentage.py**
 
-.. include:: ../../pymeshlab/tests/test_remove_isolated_pieces_diameter.py
+.. include:: ../../pymeshlab/tests/example_apply_filter_parameters_percentage.py
    :literal:

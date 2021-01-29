@@ -10,9 +10,9 @@ This script can be executed by running the following command:
 
 .. code-block:: none
 
-   pytest --pyargs pymeshlab -k 'save_projects'
+   pytest --pyargs pymeshlab -k 'save_project'
 
-**tests/test_save_projects.py**
+**tests/example_save_project.py**
 
-.. include:: ../../pymeshlab/tests/test_save_projects.py
+.. include:: ../../pymeshlab/tests/example_save_project.py
    :literal:

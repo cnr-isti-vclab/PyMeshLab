@@ -10,9 +10,9 @@ This script can be executed by running the following command:
 
 .. code-block:: none
 
-   pytest --pyargs pymeshlab -k 'save_filter_script'
+   pytest --pyargs pymeshlab -k 'filter_script_create_and_save'
 
-**tests/test_save_filter_script.py**
+**tests/example_filter_script_create_and_save.py**
 
-.. include:: ../../pymeshlab/tests/test_save_filter_script.py
+.. include:: ../../pymeshlab/tests/example_filter_script_create_and_save.py
    :literal:

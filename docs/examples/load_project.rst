@@ -10,9 +10,9 @@ This script can be executed by running the following command:
 
 .. code-block:: none
 
-   pytest --pyargs pymeshlab -k 'load_projects'
+   pytest --pyargs pymeshlab -k 'load_project'
 
-**tests/test_load_projects.py**
+**tests/example_load_project.py**
 
-.. include:: ../../pymeshlab/tests/test_load_projects.py
+.. include:: ../../pymeshlab/tests/example_load_project.py
    :literal:
