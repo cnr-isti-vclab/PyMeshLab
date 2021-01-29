@@ -1,6 +1,6 @@
 # PyMeshLab
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4438751.svg)](https://doi.org/10.5281/zenodo.4438751)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4438750.svg)](https://doi.org/10.5281/zenodo.4438750)
 
 ![Linux](https://github.com/cnr-isti-vclab/PyMeshLab/workflows/Linux/badge.svg)
 ![MacOS](https://github.com/cnr-isti-vclab/PyMeshLab/workflows/MacOS/badge.svg)
@@ -73,7 +73,7 @@ See the [`src`](src/README.md) folder that contains the instructions to build Py
    Copyright(C) 2020                                                  \
 ```
 ## References
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4438751.svg)](https://doi.org/10.5281/zenodo.4438751)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4438750.svg)](https://doi.org/10.5281/zenodo.4438750)
 
 Please, when using this tool, cite:
 ```
