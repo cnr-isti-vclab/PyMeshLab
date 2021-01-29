@@ -31,8 +31,8 @@ Contents
 References
 ==========
 
-.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.4438751.svg
-    :target: https://doi.org/10.5281/zenodo.4438751
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.4438750.svg
+    :target: https://doi.org/10.5281/zenodo.4438750
 
 Please, when using this tool, cite:
 
@@ -45,7 +45,6 @@ Please, when using this tool, cite:
      month        = jan,
      year         = 2021,
      publisher    = {Zenodo},
-     version      = {v0.1.8},
-     doi          = {10.5281/zenodo.4438751},
-     url          = {https://doi.org/10.5281/zenodo.4438751}
+     doi          = {10.5281/zenodo.4438750},
+     url          = {https://doi.org/10.5281/zenodo.4438750}
    }
