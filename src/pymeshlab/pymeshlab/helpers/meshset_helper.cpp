@@ -584,6 +584,7 @@ void saveMeshUsingPlugin(
 		if (!ok){
 			throw MLException("Unable to save file: " + QString::fromStdString(filename));
 		}
+		mm->setFileName(finfo.absoluteFilePath());
 	}
 	else {
 		throw MLException("Unknown format for save: " + extension);
@@ -632,6 +633,7 @@ void saveMeshUsingPlugin(
 		if (!ok){
 			throw MLException("Unable to save file: " + QString::fromStdString(filename));
 		}
+		mm->setFileName(finfo.absoluteFilePath());
 	}
 	else {
 		throw MLException("Unknown format for save: " + extension);
