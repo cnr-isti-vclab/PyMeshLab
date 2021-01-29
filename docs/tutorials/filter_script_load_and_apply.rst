@@ -1,4 +1,4 @@
-.. filter_script_load_and_apply:
+.. _filter_script_load_and_apply:
 
 =============================
 Filter Script: load and apply

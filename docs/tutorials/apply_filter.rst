@@ -1,4 +1,4 @@
-.. apply_filter:
+.. _apply_filter:
 
 ==============
 Apply a Filter

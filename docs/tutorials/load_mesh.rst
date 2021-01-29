@@ -1,4 +1,4 @@
-.. load_mesh:
+.. _load_mesh:
 
 =========
 Load Mesh

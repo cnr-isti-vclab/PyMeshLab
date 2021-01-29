@@ -16,8 +16,8 @@ In PyMeshLab, every :ref:`meshset` object stores internally a filter script: you
 
 .. code-block:: python
 
-   import pymeshlab as ml
-   ms = ml.MeshSet()
+   import pymeshlab
+   ms = pymeshlab.MeshSet()
    ms.load_new_mesh('input.obj')
    ms.apply_filter('laplacian_smooth', stepsmoothnum=10)
    #apply some other filters....
@@ -29,11 +29,13 @@ You can then apply all the filters of the script to another input mesh:
 
 .. code-block:: python
 
-   import pymeshlab as ml
-   ms = ml.MeshSet()
+   import pymeshlab
+   ms = pymeshlab.MeshSet()
    ms.load_new_mesh('another_input.obj')
    ms.load_filter_script('my_script.mlx')
    ms.apply_filter_script()
    ms.save_current_mesh('result.obj')
 
 The :ref:`meshset` class provides methods that allow to load, save, clear and print a Filter Script. Check the documentation of the :ref:`meshset` class for more details.
+
+For further details check the :ref:`filter_script_load_and_apply` and :ref:`filter_script_create_and_save` tutorials.

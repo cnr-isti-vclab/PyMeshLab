@@ -27,8 +27,8 @@ pip3 install pymeshlab
 After installing PyMeshLab through pip:
 ```
 python
->>> import pymeshlab as ml
->>> ms = ml.MeshSet()
+>>> import pymeshlab
+>>> ms = pymeshlab.MeshSet()
 ```
 You can load, save meshes and apply MeshLab filters:
 ```

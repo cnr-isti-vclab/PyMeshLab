@@ -1,4 +1,4 @@
-.. apply_filter_output:
+.. _apply_filter_output:
 
 ====================
 Apply Filter: Output

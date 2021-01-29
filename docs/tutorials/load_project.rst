@@ -1,4 +1,4 @@
-.. load_project:
+.. _load_project:
 
 ============
 Load Project

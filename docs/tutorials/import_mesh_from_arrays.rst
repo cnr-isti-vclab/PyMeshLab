@@ -1,4 +1,4 @@
-.. import_mesh_from_arrays:
+.. _import_mesh_from_arrays:
 
 =======================
 Import Mesh from Arrays

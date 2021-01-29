@@ -1,4 +1,4 @@
-.. apply_filter_parameters_point:
+.. _apply_filter_parameters_point:
 
 ==============================
 Apply Filter Parameters: Point

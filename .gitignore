@@ -68,7 +68,7 @@ pymeshlab/PlugIns/*
 
 
 # Test saved meshes
-pymeshlab/tests/sample/test_output/*
+pymeshlab/tests/sample_meshes/test_output/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

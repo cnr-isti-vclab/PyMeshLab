@@ -1,4 +1,4 @@
-.. apply_filter_parameters_percentage:
+.. _apply_filter_parameters_percentage:
 
 ===================================
 Apply Filter Parameters: Percentage

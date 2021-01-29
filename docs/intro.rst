@@ -9,8 +9,8 @@ After installing PyMeshLab through pip:
 
 .. code-block:: python
 
-   import pymeshlab as ml
-   ms = ml.MeshSet()
+   import pymeshlab
+   ms = pymeshlab.MeshSet()
 
 You can load, save meshes and apply MeshLab filters:
 
@@ -42,7 +42,9 @@ happens when applying the same filter in MeshLab. However, some filters return v
    out_dict = ms.apply_filter('compute_geometric_measures')
    print(out_dict['surface_area'])
 
-To run the tests:
+For further example usage of the libraries, check the :ref:`tutorials` page, which provides several use case examples of PyMeshLab.
+
+To run the PyMeshLab tests, you can use ``pytest``:
 
 .. code-block:: shell
 

@@ -1,4 +1,4 @@
-.. save_project:
+.. _save_project:
 
 ============
 Save Project

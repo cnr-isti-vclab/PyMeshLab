@@ -1,4 +1,4 @@
-.. tutorials:
+.. _tutorials:
 
 =========
 Tutorials
@@ -24,7 +24,8 @@ These tutorials compose the pymeshlab tests that can be executed by running the 
    tutorials/apply_filter_parameters_percentage
    tutorials/apply_filter_output
    tutorials/apply_filter_parameters_check_default_values
+   tutorials/get_mesh_values
    tutorials/import_mesh_from_arrays
    tutorials/filter_script_load_and_apply
    tutorials/filter_script_create_and_save
-   tutorials/user_defined_attributes
+   tutorials/user_defined_mesh_attributes

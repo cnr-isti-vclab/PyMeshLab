@@ -1,4 +1,4 @@
-.. base:
+.. _base:
 
 ====
 base

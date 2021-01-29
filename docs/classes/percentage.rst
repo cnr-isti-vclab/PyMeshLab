@@ -17,6 +17,8 @@ Here is a simple example of usage of the class:
 
 This class is necessary to distinguish between relative Percentage values and absolute values (which are of type float).
 
+Check the :ref:`apply_filter_parameters_percentage` tutorial for further examples.
+
 .. autoclass:: pmeshlab.Percentage
    :special-members:
    :members:

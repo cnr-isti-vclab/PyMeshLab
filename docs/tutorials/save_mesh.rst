@@ -1,4 +1,4 @@
-.. save_mesh:
+.. _save_mesh:
 
 =========
 Save Mesh
