@@ -1,5 +1,8 @@
 from .pmeshlab import *
 
-pmeshlab.load_default_plugins()
+try:
+    load_default_plugins()
+except PyMeshLabException as e:
+    print("Warning:\n" + e)
 
-pmeshlab.print_pymeshlab_version()
+print_pymeshlab_version()
