@@ -107,11 +107,25 @@ endif()
 
 #meshlab-common
 if (NOT BUILD_MESHLAB)
+	if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../meshlab/ML_VERSION")
+		file(READ "${CMAKE_CURRENT_SOURCE_DIR}/../meshlab/ML_VERSION" MESHLAB_VERSION)
+		if (BUILD_WITH_DOUBLE_SCALAR)
+			set(MESHLAB_VERSION "${MESHLAB_VERSION}d")
+		endif()
+		#add_definitions(-DMESHLAB_VERSION=${MESHLAB_VERSION})
+		message(STATUS "MeshLab version: ${MESHLAB_VERSION}")
+	endif()
+	
 	if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
 		target_link_directories(${PYMESHLAB_MODULE_NAME} PUBLIC "${PYMESHLAB_BUILD_DISTRIB_DIR}/lib")
 	else()
 		target_link_directories(${PYMESHLAB_MODULE_NAME} PUBLIC "${PYMESHLAB_BUILD_DISTRIB_DIR}/dummybin.app/Contents/Frameworks")
 	endif()
+	target_compile_definitions(${PYMESHLAB_MODULE_NAME}
+		PUBLIC 
+			MESHLAB_VERSION=${MESHLAB_VERSION}
+			MESHLAB_SCALAR=${MESHLAB_SCALAR}
+		)
 endif()
 target_link_libraries(${PYMESHLAB_MODULE_NAME} PUBLIC meshlab-common)
 
