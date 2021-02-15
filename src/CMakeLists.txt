@@ -73,7 +73,6 @@ message(STATUS "Searching for required components with bundled fallback")
 find_package(GLEW)
 find_package(Eigen3)
 find_package(OpenMP)
-find_package(Qt5Qml)
 
 ### Build settings
 set(CMAKE_C_STANDARD 99)

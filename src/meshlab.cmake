@@ -25,7 +25,6 @@ find_package(GMP)
 find_package(muparser)
 find_package(OpenCTM)
 find_package(Qhull COMPONENTS libqhull)
-find_package(Qt5Qml)
 
 ### Build directories
 if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
