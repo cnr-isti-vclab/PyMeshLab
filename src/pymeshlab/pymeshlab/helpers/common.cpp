@@ -25,7 +25,7 @@
 
 #include <QDir>
 #include <common/ml_document/base_types.h>
-#include <common/interfaces/filter_plugin_interface.h>
+#include <common/plugins/interfaces/filter_plugin_interface.h>
 
 /** Ridirects **/
 

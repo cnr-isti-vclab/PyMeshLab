@@ -26,6 +26,14 @@
 namespace pymeshlab {
 namespace doc {
 
+//load_default_plugins
+
+const char* LOAD_DEFAULT_PLUGINS =
+		"Loads the set of default plugins that are shipped with pymeshlab. "
+		"This function is automatically run when importing pymeshlab, and it should "
+		"be called just one time per session. If called when plugins are already "
+		"loaded, a :py:exc:`PyMeshLabException` will be raised.";
+
 //print_pymeshlab_version
 const char* MODULE_PRINT_VERSION =
 		"Prints the PyMeshLab version that is currently running.";

@@ -25,6 +25,7 @@
 
 namespace pymeshlab {
 
+void loadDefaultPlugins();
 void printVersion();
 int numberPlugins();
 void printPluginList();

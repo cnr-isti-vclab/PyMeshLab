@@ -22,7 +22,7 @@
 ****************************************************************************/
 #include "module_functions.h"
 #include <common/mlapplication.h>
-#include <common/plugin_manager.h>
+#include <common/plugins/plugin_manager.h>
 #include "helpers/common.h"
 #include <common/globals.h>
 
@@ -51,8 +51,14 @@ void pymeshlab::printPluginList()
 	std::cout
 			<< "PyMeshLab - List of loaded plugins ("
 			<< pm.size() << "):\n";
-	for (const auto& p : pm.namePluginPairIterator()){
-		std::cout << "\t" << p.first.toStdString() << "\n";
+	for (const auto& p : pm.pluginIterator()){
+		std::cout << "\t" << p->pluginName().toStdString() << "\n";
 	}
 }
 
+
+void pymeshlab::loadDefaultPlugins()
+{
+	PluginManager& pm = meshlab::pluginManagerInstance();
+	pm.loadPlugins(QString::fromStdString(getPluginsPath()));
+}

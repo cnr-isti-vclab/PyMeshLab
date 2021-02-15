@@ -42,7 +42,7 @@ pymeshlab::MeshSet::MeshSet(bool verbose) :
 {
 	if (!verbose)
 		VerbosityManager::disableVersbosity();
-	pm.loadPlugins(QString::fromStdString(getPluginsPath()));
+	//pm.loadPlugins(QString::fromStdString(getPluginsPath()));
 	filterFunctionSet.populate(pm);
 	setVerbosity(verbose);
 	if (!verbose)
@@ -58,12 +58,20 @@ void pymeshlab::MeshSet::setVerbosity(bool verbose)
 {
 	this->verbose = verbose;
 	if (verbose){
-		for (auto p : pm.namePluginPairIterator())
-			p.second->setLog(&Log);
+		for (auto p : pm.filterPluginIterator())
+			p->setLog(&Log);
+		for (auto p : pm.ioMeshPluginIterator())
+			p->setLog(&Log);
+		for (auto p : pm.ioRasterPluginIterator())
+			p->setLog(&Log);
 	}
 	else {
-		for (auto p : pm.namePluginPairIterator())
-			p.second->setLog(nullptr);
+		for (auto p : pm.filterPluginIterator())
+			p->setLog(nullptr);
+		for (auto p : pm.ioMeshPluginIterator())
+			p->setLog(nullptr);
+		for (auto p : pm.ioRasterPluginIterator())
+			p->setLog(nullptr);
 	}
 }
 
