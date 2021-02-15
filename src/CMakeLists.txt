@@ -65,7 +65,7 @@ endif()
 find_package(OpenGL REQUIRED)
 find_package(
 	Qt5
-	COMPONENTS OpenGL Xml
+	COMPONENTS OpenGL Xml Network
 	REQUIRED)
 
 message(STATUS "Searching for required components with bundled fallback")
