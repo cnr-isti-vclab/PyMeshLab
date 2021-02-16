@@ -171,12 +171,12 @@ void updateRichParameterFromKwarg(
 	}
 	else if (meshlabType == MESHLAB_TYPE_OPENFILE){
 		RichOpenFile& of = dynamic_cast<RichOpenFile&>(par);
-		of.setValue(StringValue(
+		of.setValue(FileValue(
 					QString::fromStdString(py::cast<std::string>(k.second))));
 	}
 	else if (meshlabType == MESHLAB_TYPE_SAVEFILE){
 		RichSaveFile& sf = dynamic_cast<RichSaveFile&>(par);
-		sf.setValue(StringValue(
+		sf.setValue(FileValue(
 					QString::fromStdString(py::cast<std::string>(k.second))));
 	}
 	else if (meshlabType == MESHLAB_TYPE_MESH) {
