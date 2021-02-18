@@ -27,7 +27,7 @@
 #include <common/ml_document/mesh_document.h>
 #include <common/filterscript.h>
 #include <common/plugins/plugin_manager.h>
-#include "plugin_management/filterfunctionset.h"
+#include "plugin_management/function_set.h"
 
 namespace pymeshlab {
 
@@ -102,7 +102,7 @@ private:
 	PluginManager& pm;
 //	MLSceneGLSharedDataContext* sceneGLSharedDataContext;
 	
-	FilterFunctionSet filterFunctionSet;
+	FunctionSet functionSet;
 	FilterScript filterScript;
 
 	bool verbose;

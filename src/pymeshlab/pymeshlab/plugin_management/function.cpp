@@ -20,42 +20,71 @@
 * for more details.                                                         *
 *                                                                           *
 ****************************************************************************/
-#ifndef PYMESHLAB_NAMEBINDER_H
-#define PYMESHLAB_NAMEBINDER_H
+#include "function.h"
 
-#include <common/plugins/plugin_manager.h>
-#include "filterfunction.h"
+#include <QStringList>
+#include <common/parameters/rich_parameter.h>
 
-namespace pymeshlab {
-
-class FilterFunctionSet
+pymeshlab::Function::Function()
 {
-public:
-	FilterFunctionSet();
-	void populate(const PluginManager& pm);
-
-	QStringList pythonFunctionNames() const;
-
-	using iterator = std::set<FilterFunction>::iterator;
-
-	iterator begin() const {return functionSet.begin();}
-	iterator end() const {return functionSet.end();}
-
-	iterator find(const QString& pythonFunctionName) const;
-	bool contains(const QString& pythonFunctionName) const;
-
-	static QString toPythonName(const QString& name);
-
-private:
-	void addFunction(const FilterFunction& f);
-	void deleteFunction(const FilterFunction& f);
-	void updateSaveParameters(
-			IOMeshPluginInterface* plugin,
-			const QString& outputFormat,
-			FilterFunction& f);
-	std::set<FilterFunction> functionSet;
-};
-
 }
 
-#endif // PYMESHLAB_NAMEBINDER_H
+pymeshlab::Function::Function(
+		const QString pythonFunctionName,
+		const QString meshlabFilterName,
+		const QString description) :
+	pythonFunName(pythonFunctionName), meshlabFunName(meshlabFilterName), funDescription(description)
+{
+}
+
+void pymeshlab::Function::addParameter(const pymeshlab::FunctionParameter& p)
+{
+	parameters.push_back(p);
+}
+
+QString pymeshlab::Function::pythonFunctionName() const
+{
+	return pythonFunName;
+}
+
+QString pymeshlab::Function::meshlabFunctionName() const
+{
+	return meshlabFunName;
+}
+
+QString pymeshlab::Function::description() const
+{
+	return funDescription;
+}
+
+unsigned int pymeshlab::Function::parametersNumber() const
+{
+	return parameters.size();
+}
+
+QStringList pymeshlab::Function::pythonFunctionParameters() const
+{
+	QStringList list;
+	for (const FunctionParameter& p : parameters)
+		list.push_back(p.pythonName());
+	return list;
+}
+
+bool pymeshlab::Function::contains(const QString& pythonParameter) const
+{
+	RichInt tmp("", 0);
+	iterator it = std::find(parameters.begin(), parameters.end(), FunctionParameter(pythonParameter, tmp));
+	return it != parameters.end();
+}
+
+const pymeshlab::FunctionParameter& pymeshlab::Function::getFilterFunctionParameter(const QString& pythonParameter) const
+{
+	RichInt tmp("", 0);
+	iterator it = std::find(parameters.begin(), parameters.end(), FunctionParameter(pythonParameter, tmp));
+	return *it;
+}
+
+bool pymeshlab::Function::operator<(const pymeshlab::Function& oth) const
+{
+	return pythonFunName < oth.pythonFunName;
+}

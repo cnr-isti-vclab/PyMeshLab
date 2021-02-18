@@ -20,12 +20,12 @@
 * for more details.                                                         *
 *                                                                           *
 ****************************************************************************/
-#include "filterfunctionparameter.h"
+#include "function_parameter.h"
 
 #include "pymeshlab/helpers/common.h"
 #include <common/parameters/rich_parameter_list.h>
 
-pymeshlab::FilterFunctionParameter::FilterFunctionParameter(const QString& pName,
+pymeshlab::FunctionParameter::FunctionParameter(const QString& pName,
 		const RichParameter& parameter) :
 	pName(pName),
 	pType(computePythonTypeString(parameter)),
@@ -33,15 +33,15 @@ pymeshlab::FilterFunctionParameter::FilterFunctionParameter(const QString& pName
 {
 }
 
-pymeshlab::FilterFunctionParameter::FilterFunctionParameter(
-		const pymeshlab::FilterFunctionParameter& oth):
+pymeshlab::FunctionParameter::FunctionParameter(
+		const pymeshlab::FunctionParameter& oth):
 	pName(oth.pName),
 	pType(oth.pType),
 	parameter(oth.parameter->clone())
 {
 }
 
-pymeshlab::FilterFunctionParameter::FilterFunctionParameter(pymeshlab::FilterFunctionParameter&& oth):
+pymeshlab::FunctionParameter::FunctionParameter(pymeshlab::FunctionParameter&& oth):
 	pName(oth.pName),
 	pType(oth.pType)
 {
@@ -49,32 +49,32 @@ pymeshlab::FilterFunctionParameter::FilterFunctionParameter(pymeshlab::FilterFun
 	oth.parameter = nullptr;
 }
 
-pymeshlab::FilterFunctionParameter::~FilterFunctionParameter()
+pymeshlab::FunctionParameter::~FunctionParameter()
 {
 	delete parameter;
 }
 
-QString pymeshlab::FilterFunctionParameter::pythonName() const
+QString pymeshlab::FunctionParameter::pythonName() const
 {
 	return pName;
 }
 
-QString pymeshlab::FilterFunctionParameter::meshlabName() const
+QString pymeshlab::FunctionParameter::meshlabName() const
 {
 	return parameter->name();
 }
 
-QString pymeshlab::FilterFunctionParameter::pythonTypeString() const
+QString pymeshlab::FunctionParameter::pythonTypeString() const
 {
 	return pType;
 }
 
-QString pymeshlab::FilterFunctionParameter::meshlabTypeString() const
+QString pymeshlab::FunctionParameter::meshlabTypeString() const
 {
 	return parameter->stringType();
 }
 
-QString pymeshlab::FilterFunctionParameter::description() const
+QString pymeshlab::FunctionParameter::description() const
 {
 	if (parameter){
 		return parameter->fieldDescription();
@@ -82,7 +82,7 @@ QString pymeshlab::FilterFunctionParameter::description() const
 	return QString();
 }
 
-QString pymeshlab::FilterFunctionParameter::longDescription() const
+QString pymeshlab::FunctionParameter::longDescription() const
 {
 	if (parameter){
 		return parameter->toolTip();
@@ -90,17 +90,17 @@ QString pymeshlab::FilterFunctionParameter::longDescription() const
 	return QString();
 }
 
-const Value& pymeshlab::FilterFunctionParameter::defaultValue() const
+const Value& pymeshlab::FunctionParameter::defaultValue() const
 {
 	return parameter->value();
 }
 
-const RichParameter& pymeshlab::FilterFunctionParameter::richParameter() const
+const RichParameter& pymeshlab::FunctionParameter::richParameter() const
 {
 	return *parameter;
 }
 
-void pymeshlab::FilterFunctionParameter::printDefaultValue(std::ostream& o) const
+void pymeshlab::FunctionParameter::printDefaultValue(std::ostream& o) const
 {
 	if (!parameter)
 		o << "no_value";
@@ -178,37 +178,37 @@ void pymeshlab::FilterFunctionParameter::printDefaultValue(std::ostream& o) cons
 	//to support: dynamicfloat, filename, mesh
 }
 
-QString pymeshlab::FilterFunctionParameter::defaultValueString() const
+QString pymeshlab::FunctionParameter::defaultValueString() const
 {
 	std::stringstream ss;
 	printDefaultValue(ss);
 	return QString::fromStdString(ss.str());
 }
 
-pymeshlab::FilterFunctionParameter& pymeshlab::FilterFunctionParameter::operator=(pymeshlab::FilterFunctionParameter oth)
+pymeshlab::FunctionParameter& pymeshlab::FunctionParameter::operator=(pymeshlab::FunctionParameter oth)
 {
 	this->swap(oth);
 	return *this;
 }
 
-bool pymeshlab::FilterFunctionParameter::operator<(const pymeshlab::FilterFunctionParameter& oth) const
+bool pymeshlab::FunctionParameter::operator<(const pymeshlab::FunctionParameter& oth) const
 {
 	return pName < oth.pName;
 }
 
-bool pymeshlab::FilterFunctionParameter::operator==(const pymeshlab::FilterFunctionParameter& oth) const
+bool pymeshlab::FunctionParameter::operator==(const pymeshlab::FunctionParameter& oth) const
 {
 	return pName == oth.pName;
 }
 
-void pymeshlab::FilterFunctionParameter::swap(pymeshlab::FilterFunctionParameter& oth)
+void pymeshlab::FunctionParameter::swap(pymeshlab::FunctionParameter& oth)
 {
 	std::swap(pName, oth.pName);
 	std::swap(pType, oth.pType);
 	std::swap(parameter, oth.parameter);
 }
 
-QString pymeshlab::FilterFunctionParameter::computePythonTypeString(const RichParameter& par)
+QString pymeshlab::FunctionParameter::computePythonTypeString(const RichParameter& par)
 {
 	const Value& v = par.value();
 	if (v.isEnum())

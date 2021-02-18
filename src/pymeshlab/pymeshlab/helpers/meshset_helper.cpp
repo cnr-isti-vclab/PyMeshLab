@@ -35,7 +35,7 @@
 
 #include "common.h"
 #include "verbosity_manager.h"
-#include "../plugin_management/filterfunctionset.h"
+#include "../plugin_management/function_set.h"
 #include "../percentage.h"
 #include "../exceptions.h"
 #include "../meshset.h"
@@ -67,7 +67,7 @@ void updateRichParameterList(
 void updateRichParameterFromKwarg(
 		RichParameter& par,
 		MeshDocument* md,
-		const FilterFunctionParameter& ffp,
+		const FunctionParameter& ffp,
 		const std::pair<py::handle, py::handle>& k)
 {
 	QString meshlabType = ffp.meshlabTypeString();
@@ -200,7 +200,7 @@ pybind11::dict pydictFromRichParameterList(
 {
 	pybind11::dict kw;
 	for (const RichParameter& par : rps){
-		std::string pname = FilterFunctionSet::toPythonName(par.name()).toStdString();
+		std::string pname = FunctionSet::toPythonName(par.name()).toStdString();
 		const Value& v = par.value();
 		if (v.isEnum())
 			kw[pname.c_str()] = v.getEnum();
@@ -233,7 +233,7 @@ pybind11::dict pydictFromRichParameterList(
 }
 
 void updateRichParameterListFromKwargs(
-		const FilterFunction& f,
+		const Function& f,
 		const pybind11::kwargs& kwargs,
 		MeshDocument* md,
 		RichParameterList& rps,
@@ -244,7 +244,7 @@ void updateRichParameterListFromKwargs(
 			std::string key = p.first.cast<std::string>();
 			if (!ignoreFileName || key!="file_name"){
 				if (f.contains(QString::fromStdString(key))){
-					const FilterFunctionParameter& ffp = f.getFilterFunctionParameter(QString::fromStdString(key));
+					const FunctionParameter& ffp = f.getFilterFunctionParameter(QString::fromStdString(key));
 					RichParameterList::iterator it = rps.findParameter(ffp.meshlabName());
 					if (it != rps.end()){
 						updateRichParameterFromKwarg(*it, md, ffp, p);
@@ -334,14 +334,9 @@ FilterPluginInterface* pluginFromFilterName(
 
 bool pythonFilterNameExists(
 		const std::string& filtername,
-		const FilterFunctionSet& filterFunctionSet)
+		const FunctionSet& filterFunctionSet)
 {
-	FilterFunctionSet::iterator it = filterFunctionSet.find(QString::fromStdString(filtername));
-	if (it != filterFunctionSet.end() && 
-			!(QString::fromStdString(filtername).startsWith("load_") && 
-			!(QString::fromStdString(filtername).startsWith("save_"))))
-		return true;
-	return false;
+	return filterFunctionSet.containsFilterFunction(QString::fromStdString(filtername));
 }
 
 /** Load/Save Mesh **/
@@ -437,7 +432,7 @@ void loadMeshUsingPlugin(
 		MeshModel* mm, 
 		pybind11::kwargs kwargs,
 		MeshDocument& md,
-		const FilterFunctionSet& filterFunctionSet)
+		const FunctionSet& filterFunctionSet)
 {
 	QFileInfo finfo(QString::fromStdString(filename));
 	QString extension = finfo.suffix().toLower();
@@ -448,11 +443,7 @@ void loadMeshUsingPlugin(
 	else {
 		PluginManager& pm = meshlab::pluginManagerInstance();
 		if (pm.isInputMeshFormatSupported(extension)){
-			auto it = filterFunctionSet.find("load_" + extension);
-			if (it == filterFunctionSet.end()){
-				throw MLException("Unknown format to load in MeshSet. This should never happen.\nPlease open an issue on GitHub!");
-			}
-			FilterFunction ff = *it;
+			Function ff = *filterFunctionSet.findLoadMeshFunction("load_" + extension);
 			IOMeshPluginInterface* plugin = pm.inputMeshPlugin(extension);
 			
 			bool justCreated = false;
@@ -541,7 +532,7 @@ int computeSaveSettingsMaskFromKwargs(pybind11::kwargs kwargs, int startingMask,
 {
 	std::array<QString, 14> params;
 	for (unsigned int i = 0; i < saveCapabilitiesStrings.size(); ++i)
-		params[i] = FilterFunctionSet::toPythonName(saveCapabilitiesStrings[i]);
+		params[i] = FunctionSet::toPythonName(saveCapabilitiesStrings[i]);
 
 	int capability = startingMask;
 	for (std::pair<py::handle, py::handle> p : kwargs){
@@ -596,7 +587,7 @@ void saveMeshUsingPlugin(
 		MeshModel* mm,
 		pybind11::kwargs kwargs,
 		MeshDocument& md,
-		const FilterFunctionSet& filterFunctionSet)
+		const FunctionSet& filterFunctionSet)
 {
 	if (mm == nullptr)
 		throw MLException("Input model is nullptr. This should never happen.\nPlease open an issue on GitHub!");
@@ -604,7 +595,7 @@ void saveMeshUsingPlugin(
 	QString extension = finfo.suffix().toLower();
 	PluginManager& pm = meshlab::pluginManagerInstance();
 	if (pm.isOutputMeshFormatSupported(extension)){
-		FilterFunction ff = *filterFunctionSet.find("save_" + extension);
+		Function ff = *filterFunctionSet.findSaveMeshFunction("save_" + extension);
 		IOMeshPluginInterface* plugin = pm.outputMeshPlugin(extension);
 		//int mask = 0; //todo: use this mask
 		RichParameterList rps;
@@ -905,29 +896,29 @@ void endLineHTMLSubstitution(QString& htmlString)
 }
 
 std::string filterRSTDocumentation(
-		FilterFunctionSet::iterator it,
+		const Function& it,
 		bool loadSave)
 {
 	std::string doc;
 
 	doc += ".. data:: ";
 	if (!loadSave) {
-		doc += it->pythonFunctionName().toStdString() + "\n\n";
-		doc += "   *MeshLab filter name*: '" + it->meshlabFunctionName().toStdString() + "'\n\n";
+		doc += it.pythonFunctionName().toStdString() + "\n\n";
+		doc += "   *MeshLab filter name*: '" + it.meshlabFunctionName().toStdString() + "'\n\n";
 	}
 	else {
-		doc += it->meshlabFunctionName().toStdString() + "\n   :noindex:\n\n";
+		doc += it.meshlabFunctionName().toStdString() + "\n   :noindex:\n\n";
 	}
 	doc += "   .. raw:: html\n\n";
-	QString desc = it->description();
+	QString desc = it.description();
 	meshsethelper::endLineHTMLSubstitution(desc);
 	doc += "      " + desc.toStdString() + "</p>\n\n";
 
-	if (it->parametersNumber() > 0) {
+	if (it.parametersNumber() > 0) {
 
 		doc += "   **Parameters:**\n\n";
 
-		for (const FilterFunctionParameter& p : *it){
+		for (const FunctionParameter& p : it){
 
 			if (! p.defaultValue().isEnum()){
 				doc += "   ``" + p.pythonName().toStdString() + " : " +
@@ -963,7 +954,7 @@ std::string filterRSTDocumentation(
 	return doc;
 }
 
-std::string RSTDocumentationFromFilterFunctionSet(const FilterFunctionSet& filterFunctionSet)
+std::string RSTDocumentationFromFilterFunctionSet(const FunctionSet& filterFunctionSet)
 {
 	std::string doc;
 
@@ -1003,11 +994,8 @@ std::string RSTDocumentationFromFilterFunctionSet(const FilterFunctionSet& filte
 			"apply_filter parameters\n-----------------------\n\n";
 
 	/// apply_filter parameters
-	for (auto it = filterFunctionSet.begin(); it != filterFunctionSet.end(); ++it) {
-		if (!(it->pythonFunctionName().startsWith("load_")) && 
-				!(it->pythonFunctionName().startsWith("save_")) &&
-				!(it->pythonFunctionName().startsWith("loadr_")))
-			doc += filterRSTDocumentation(it, false);
+	for (const Function& f : filterFunctionSet.filterFunctionIterator()) {
+		doc += filterRSTDocumentation(f, false);
 	}
 
 	//load parameters
@@ -1018,9 +1006,8 @@ std::string RSTDocumentationFromFilterFunctionSet(const FilterFunctionSet& filte
 			":py:meth:`pmeshlab.MeshSet.load_current_mesh`, with all the possible "
 			"parameters that can be accepted by these functions.\n\n";
 
-	for (auto it = filterFunctionSet.begin(); it != filterFunctionSet.end(); ++it) {
-		if (it->pythonFunctionName().startsWith("load_"))
-			doc += filterRSTDocumentation(it, true);
+	for (const Function& f : filterFunctionSet.loadMeshFunctionIterator()) {
+		doc += filterRSTDocumentation(f, true);
 	}
 
 	//save parameters
@@ -1031,9 +1018,8 @@ std::string RSTDocumentationFromFilterFunctionSet(const FilterFunctionSet& filte
 			"with all the possible parameters that can be accepted by these "
 			"functions.\n\n";
 
-	for (auto it = filterFunctionSet.begin(); it != filterFunctionSet.end(); ++it) {
-		if (it->pythonFunctionName().startsWith("save_"))
-			doc += filterRSTDocumentation(it, true);
+	for (const Function& f : filterFunctionSet.saveMeshFunctionIterator()) {
+		doc += filterRSTDocumentation(f, true);
 	}
 	
 	//load raster parameters
@@ -1043,9 +1029,8 @@ std::string RSTDocumentationFromFilterFunctionSet(const FilterFunctionSet& filte
 			"Here are listed all the raster file formats that can be loaded using"
 			"the functions :py:meth:`pmeshlab.MeshSet.load_new_raster`.\n\n";
 	
-	for (auto it = filterFunctionSet.begin(); it != filterFunctionSet.end(); ++it) {
-		if (it->pythonFunctionName().startsWith("loadr_"))
-			doc += filterRSTDocumentation(it, true);
+	for (const Function& f : filterFunctionSet.loadRasterFunctionIterator()) {
+		doc += filterRSTDocumentation(f, true);
 	}
 
 	return doc;

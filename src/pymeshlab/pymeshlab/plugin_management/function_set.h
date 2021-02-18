@@ -20,45 +20,67 @@
 * for more details.                                                         *
 *                                                                           *
 ****************************************************************************/
-#ifndef PYMESHLAB_FILTERFUNCTIONLIST_H
-#define PYMESHLAB_FILTERFUNCTIONLIST_H
+#ifndef PYMESHLAB_NAMEBINDER_H
+#define PYMESHLAB_NAMEBINDER_H
 
-#include "filterfunctionparameter.h"
-
-#include <QString>
-#include <list>
-#include <set>
+#include <common/plugins/plugin_manager.h>
+#include "function.h"
 
 namespace pymeshlab {
 
-class FilterFunction
+class FunctionSet
 {
 public:
-	FilterFunction();
-	FilterFunction(const QString pythonFunName, const QString meshlabFunName, const QString description);
-	void addParameter(const FilterFunctionParameter& p);
-	QString pythonFunctionName() const;
-	QString meshlabFunctionName() const;
-	QString description() const;
-	unsigned int parametersNumber() const;
-	QStringList pythonFunctionParameters() const;
-	bool contains(const QString& pythonParameter) const;
-	const FilterFunctionParameter& getFilterFunctionParameter(const QString& pythonParameter) const;
+	FunctionSet();
+	void populate(const PluginManager& pm);
 
-	bool operator< (const FilterFunction& oth) const;
+	QStringList pythonFilterFunctionNames() const;
 
-	using iterator = std::list<FilterFunctionParameter>::const_iterator;
+	using iterator = std::set<Function>::iterator;
 
-	iterator begin() const {return parameters.begin();}
-	iterator end() const {return parameters.end();}
+	iterator findFilterFunction(const QString& pythonFunctionName) const;
+	bool containsFilterFunction(const QString& pythonFunctionName) const;
+
+	iterator findLoadMeshFunction(const QString& pythonFunctionName) const;
+	bool containsLoadMeshFunction(const QString& pythonFunctionName) const;
+
+	iterator findSaveMeshFunction(const QString& pythonFunctionName) const;
+	bool containsSaveMeshFunction(const QString& pythonFunctionName) const;
+
+	iterator findLoadRasterFunction(const QString& pythonFunctionName) const;
+	bool containsLoadRasterFunction(const QString& pythonFunctionName) const;
+
+	//iterators
+	class FunctionRangeIterator
+	{
+		friend class FunctionSet;
+	public:
+		std::set<Function>::const_iterator begin() { return s.begin();}
+		std::set<Function>::const_iterator end() {return s.end();}
+	private:
+		FunctionRangeIterator(const std::set<Function>& s) : s(s) {};
+		const std::set<Function>& s;
+	};
+
+	FunctionRangeIterator filterFunctionIterator() const;
+	FunctionRangeIterator loadMeshFunctionIterator() const;
+	FunctionRangeIterator saveMeshFunctionIterator() const;
+	FunctionRangeIterator loadRasterFunctionIterator() const;
+
+	static QString toPythonName(const QString& name);
 
 private:
-	QString pythonFunName;
-	QString meshlabFunName;
-	QString funDescription;
-	std::list<FilterFunctionParameter> parameters;
+	void updateSaveParameters(
+			IOMeshPluginInterface* plugin,
+			const QString& outputFormat,
+			Function& f);
+
+	std::set<Function> filterSet;
+	std::set<Function> loadMeshSet;
+	std::set<Function> saveMeshSet;
+	std::set<Function> loadRasterSet;
 };
 
 }
 
-#endif // PYMESHLAB_FILTERFUNCTIONLIST_H
+#endif // PYMESHLAB_NAMEBINDER_H

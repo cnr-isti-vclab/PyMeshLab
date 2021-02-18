@@ -20,17 +20,17 @@
 * for more details.                                                         *
 *                                                                           *
 ****************************************************************************/
-#include "filterfunctionset.h"
+#include "function_set.h"
 
 #include <QRegularExpression>
 #include <algorithm>
 #include "pymeshlab/helpers/common.h"
 
-pymeshlab::FilterFunctionSet::FilterFunctionSet()
+pymeshlab::FunctionSet::FunctionSet()
 {
 }
 
-void pymeshlab::FilterFunctionSet::populate(const PluginManager& pm)
+void pymeshlab::FunctionSet::populate(const PluginManager& pm)
 {
 	std::string samplesPath = getSamplesPath();
 
@@ -45,7 +45,7 @@ void pymeshlab::FilterFunctionSet::populate(const PluginManager& pm)
 	for (auto inputFormat : pm.inputMeshFormatList()){
 		QString originalFilterName = inputFormat;
 		QString pythonFilterName = "load_" + inputFormat.toLower();
-		FilterFunction f(pythonFilterName, originalFilterName, "Load " + inputFormat + " format.");
+		Function f(pythonFilterName, originalFilterName, "Load " + inputFormat + " format.");
 		IOMeshPluginInterface* plugin = pm.inputMeshPlugin(inputFormat);
 		RichParameterList rps;
 		plugin->initPreOpenParameter(inputFormat, dummyMesh, rps);
@@ -56,21 +56,21 @@ void pymeshlab::FilterFunctionSet::populate(const PluginManager& pm)
 		QString sv = "file_name." + inputFormat;
 		QStringList sl(inputFormat);
 		RichOpenFile of("fileName", sv, sl, "File Name", "The name of the file to load");
-		FilterFunctionParameter par(pythonParameterName, of);
+		FunctionParameter par(pythonParameterName, of);
 		f.addParameter(par);
 
 		for (const RichParameter& rp : rps){
 			QString pythonParameterName = toPythonName(rp.name());
-			FilterFunctionParameter par(pythonParameterName, rp);
+			FunctionParameter par(pythonParameterName, rp);
 			f.addParameter(par);
 		}
-		functionSet.insert(f);
+		loadMeshSet.insert(f);
 	}
 
 	for (auto outputFormat : pm.outputMeshFormatList()){
 		QString originalFilterName = outputFormat;
 		QString pythonFilterName = "save_" + outputFormat.toLower();
-		FilterFunction f(pythonFilterName, originalFilterName, "Save " + outputFormat + " format.");
+		Function f(pythonFilterName, originalFilterName, "Save " + outputFormat + " format.");
 		IOMeshPluginInterface* plugin = pm.outputMeshPlugin(outputFormat);
 		RichParameterList rps;
 		plugin->initSaveParameter(outputFormat, *dummyMeshDocument.mm(), rps);
@@ -79,35 +79,35 @@ void pymeshlab::FilterFunctionSet::populate(const PluginManager& pm)
 		QString pythonParameterName = "file_name";
 		QString sv = "file_name." + outputFormat;
 		RichSaveFile of("fileName", sv, outputFormat, "File Name", "The name of the file to save");
-		FilterFunctionParameter par(pythonParameterName, of);
+		FunctionParameter par(pythonParameterName, of);
 		f.addParameter(par);
 
 		for (const RichParameter& rp : rps){
 			QString pythonParameterName = toPythonName(rp.name());
-			FilterFunctionParameter par(pythonParameterName, rp);
+			FunctionParameter par(pythonParameterName, rp);
 			f.addParameter(par);
 		}
 
 		//data to save
 		updateSaveParameters(plugin, outputFormat, f);
 
-		functionSet.insert(f);
+		saveMeshSet.insert(f);
 	}
 	
 	for (auto inputRasterFormat : pm.inputRasterFormatList()){
 		QString originalFilterName = inputRasterFormat;
 		QString pythonFilterName = "loadr_" + inputRasterFormat.toLower();
-		FilterFunction f(pythonFilterName, originalFilterName, "Load " + inputRasterFormat + " format.");
+		Function f(pythonFilterName, originalFilterName, "Load " + inputRasterFormat + " format.");
 
 		//filename parameter
 		QString pythonParameterName = "file_name";
 		QString sv = "file_name." + inputRasterFormat;
 		QStringList sl(inputRasterFormat);
 		RichOpenFile of("fileName", sv, sl, "File Name", "The name of the file to load");
-		FilterFunctionParameter par(pythonParameterName, of);
+		FunctionParameter par(pythonParameterName, of);
 		f.addParameter(par);
 
-		functionSet.insert(f);
+		loadRasterSet.insert(f);
 	}
 
 	for (FilterPluginInterface* fp : pm.filterPluginIterator()){
@@ -116,41 +116,91 @@ void pymeshlab::FilterFunctionSet::populate(const PluginManager& pm)
 			QString originalFilterName = fp->filterName(act);
 			QString description = fp->filterInfo(act);
 			QString pythonFilterName = toPythonName(originalFilterName);
-			FilterFunction f(pythonFilterName, originalFilterName, description);
+			Function f(pythonFilterName, originalFilterName, description);
 
 			RichParameterList rps;
 			fp->initParameterList(act, dummyMeshDocument, rps);
 
 			for (const RichParameter& rp : rps){
 				QString pythonParameterName = toPythonName(rp.name());
-				FilterFunctionParameter par(pythonParameterName, rp);
+				FunctionParameter par(pythonParameterName, rp);
 				f.addParameter(par);
 			}
-			functionSet.insert(f);
+			filterSet.insert(f);
 		}
 	}
 }
 
-QStringList pymeshlab::FilterFunctionSet::pythonFunctionNames() const
+QStringList pymeshlab::FunctionSet::pythonFilterFunctionNames() const
 {
 	QStringList fnames;
-	for (const FilterFunction& f: functionSet){
+	for (const Function& f: filterSet){
 		fnames.push_back(f.pythonFunctionName());
 	}
 	return fnames;
 }
 
-pymeshlab::FilterFunctionSet::iterator pymeshlab::FilterFunctionSet::find(const QString& pythonFunctionName) const
+pymeshlab::FunctionSet::iterator pymeshlab::FunctionSet::findFilterFunction(const QString& pythonFunctionName) const
 {
-	return functionSet.find(FilterFunction(pythonFunctionName, "", ""));
+	return filterSet.find(Function(pythonFunctionName, "", ""));
 }
 
-bool pymeshlab::FilterFunctionSet::contains(const QString& pythonFunctionName) const
+bool pymeshlab::FunctionSet::containsFilterFunction(const QString& pythonFunctionName) const
 {
-	return find(pythonFunctionName) != end();
+	return findFilterFunction(pythonFunctionName) != filterSet.end();
 }
 
-QString pymeshlab::FilterFunctionSet::toPythonName(const QString& name)
+pymeshlab::FunctionSet::iterator pymeshlab::FunctionSet::findLoadMeshFunction(const QString& pythonFunctionName) const
+{
+	return loadMeshSet.find(Function(pythonFunctionName, "", ""));
+}
+
+bool pymeshlab::FunctionSet::containsLoadMeshFunction(const QString& pythonFunctionName) const
+{
+	return findLoadMeshFunction(pythonFunctionName) != loadMeshSet.end();
+}
+
+pymeshlab::FunctionSet::iterator pymeshlab::FunctionSet::findSaveMeshFunction(const QString& pythonFunctionName) const
+{
+	return saveMeshSet.find(Function(pythonFunctionName, "", ""));
+}
+
+bool pymeshlab::FunctionSet::containsSaveMeshFunction(const QString& pythonFunctionName) const
+{
+	return findSaveMeshFunction(pythonFunctionName) != saveMeshSet.end();
+}
+
+pymeshlab::FunctionSet::iterator pymeshlab::FunctionSet::findLoadRasterFunction(const QString& pythonFunctionName) const
+{
+	return loadRasterSet.find(Function(pythonFunctionName, "", ""));
+}
+
+bool pymeshlab::FunctionSet::containsLoadRasterFunction(const QString& pythonFunctionName) const
+{
+	return findLoadRasterFunction(pythonFunctionName) != loadRasterSet.end();
+}
+
+pymeshlab::FunctionSet::FunctionRangeIterator pymeshlab::FunctionSet::filterFunctionIterator() const
+{
+	return FunctionRangeIterator(filterSet);
+}
+
+pymeshlab::FunctionSet::FunctionRangeIterator pymeshlab::FunctionSet::loadMeshFunctionIterator() const
+{
+	return FunctionRangeIterator(loadMeshSet);
+}
+
+pymeshlab::FunctionSet::FunctionRangeIterator pymeshlab::FunctionSet::saveMeshFunctionIterator() const
+{
+	return FunctionRangeIterator(saveMeshSet);
+}
+
+pymeshlab::FunctionSet::FunctionRangeIterator pymeshlab::FunctionSet::loadRasterFunctionIterator() const
+{
+	return FunctionRangeIterator(loadRasterSet);
+}
+
+QString pymeshlab::FunctionSet::toPythonName(const QString& name)
 {
 	QString pythonName = name.toLower();
 	pythonName.replace(' ', '_');
@@ -163,19 +213,9 @@ QString pymeshlab::FilterFunctionSet::toPythonName(const QString& name)
 	return pythonName;
 }
 
-void pymeshlab::FilterFunctionSet::addFunction(const pymeshlab::FilterFunction& f)
-{
-	functionSet.insert(f);
-}
-
-void pymeshlab::FilterFunctionSet::deleteFunction(const pymeshlab::FilterFunction& f)
-{
-	functionSet.erase(f);
-}
-
-void pymeshlab::FilterFunctionSet::updateSaveParameters(IOMeshPluginInterface* plugin,
+void pymeshlab::FunctionSet::updateSaveParameters(IOMeshPluginInterface* plugin,
 		const QString& outputFormat,
-		pymeshlab::FilterFunction& f)
+		pymeshlab::Function& f)
 {
 	int capabilityBits, defaultBits;
 	plugin->GetExportMaskCapability(outputFormat, capabilityBits, defaultBits);
@@ -186,7 +226,7 @@ void pymeshlab::FilterFunctionSet::updateSaveParameters(IOMeshPluginInterface* p
 			RichBool rb(
 						saveCapabilitiesStrings[i], def,
 						saveCapabilitiesStrings[i], saveCapabilitiesStrings[i]);
-			FilterFunctionParameter par(toPythonName(saveCapabilitiesStrings[i]), rb);
+			FunctionParameter par(toPythonName(saveCapabilitiesStrings[i]), rb);
 			f.addParameter(par);
 
 		}

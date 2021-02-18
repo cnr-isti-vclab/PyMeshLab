@@ -43,7 +43,7 @@ pymeshlab::MeshSet::MeshSet(bool verbose) :
 	if (!verbose)
 		VerbosityManager::disableVersbosity();
 	//pm.loadPlugins(QString::fromStdString(getPluginsPath()));
-	filterFunctionSet.populate(pm);
+	functionSet.populate(pm);
 	setVerbosity(verbose);
 	if (!verbose)
 		VerbosityManager::enableVerbosity();
@@ -107,7 +107,7 @@ CMeshO& pymeshlab::MeshSet::mesh(int id)
  */
 void pymeshlab::MeshSet::printPythonFilterNamesList() const
 {
-	QStringList list = filterFunctionSet.pythonFunctionNames();
+	QStringList list = functionSet.pythonFilterFunctionNames();
 	std::cout << "MeshSet class - list of filter names:\n";
 	for (const QString& fname : list){
 		if (!fname.startsWith("load_") && !fname.startsWith("save_"))
@@ -122,11 +122,11 @@ void pymeshlab::MeshSet::printPythonFilterNamesList() const
  */
 void pymeshlab::MeshSet::printPythonFilterParameterList(const std::string& functionName) const
 {
-	if (!meshsethelper::pythonFilterNameExists(functionName, filterFunctionSet)){
+	if (!meshsethelper::pythonFilterNameExists(functionName, functionSet)){
 		std::cout << "Filter " << functionName << " not found.\n";
 	}
 	else {
-		FilterFunctionSet::iterator it = filterFunctionSet.find(QString::fromStdString(functionName));
+		FunctionSet::iterator it = functionSet.findFilterFunction(QString::fromStdString(functionName));
 		std::cout <<
 					"Please note: some parameters depend on the mesh(es) used as input of the \n"
 					"filter. Default values listed here are computed on a 1x1x1 cube \n"
@@ -134,12 +134,12 @@ void pymeshlab::MeshSet::printPythonFilterParameterList(const std::string& funct
 					"if they are left as default.\n";
 
 		std::cout << functionName <<" filter - list of parameter names:\n";
-		const FilterFunction& ff = *it;
+		const Function& ff = *it;
 		if (ff.parametersNumber() == 0) {
 			std::cout << "\tNone.\n";
 		}
 		else {
-			for (const FilterFunctionParameter& ffp : ff) {
+			for (const FunctionParameter& ffp : ff) {
 				std::cout << "\t" << ffp.pythonName().toStdString() << " : "
 						  << ffp.pythonTypeString().toStdString() << " = ";
 				ffp.printDefaultValue(std::cout);
@@ -158,10 +158,10 @@ void pymeshlab::MeshSet::printFilterScript() const
 	std::cout << "Filter Script Size : " << filterScript.size() << "\n\n";
 	uint i = 0;
 	for (const FilterNameParameterValuesPair& p :filterScript){
-		std::cout << std::to_string(i) + ": " << FilterFunctionSet::toPythonName(p.filterName()).toStdString() <<
+		std::cout << std::to_string(i) + ": " << FunctionSet::toPythonName(p.filterName()).toStdString() <<
 					 "\n";
 		for (const RichParameter& par : p.second){
-			FilterFunctionParameter ffp(FilterFunctionSet::toPythonName(par.name()), par);
+			FunctionParameter ffp(FunctionSet::toPythonName(par.name()), par);
 			std::cout << "\t" << ffp.pythonName().toStdString() << " : "
 					  << ffp.pythonTypeString().toStdString() << " = ";
 			ffp.printDefaultValue(std::cout);
@@ -174,7 +174,7 @@ void pymeshlab::MeshSet::printFilterScript() const
 
 void pymeshlab::MeshSet::loadNewMesh(const std::string& filename, py::kwargs kwargs)
 {
-	meshsethelper::loadMeshUsingPlugin(filename, nullptr, kwargs, *this, filterFunctionSet);
+	meshsethelper::loadMeshUsingPlugin(filename, nullptr, kwargs, *this, functionSet);
 }
 
 void pymeshlab::MeshSet::loadCurrentMesh(const std::string& filename, pybind11::kwargs kwargs)
@@ -182,14 +182,14 @@ void pymeshlab::MeshSet::loadCurrentMesh(const std::string& filename, pybind11::
 	if (mm() == nullptr)
 		throw MLException("MeshSet has no selected Mesh.");
 	mm()->Clear();
-	meshsethelper::loadMeshUsingPlugin(filename, mm(), kwargs, *this, filterFunctionSet);
+	meshsethelper::loadMeshUsingPlugin(filename, mm(), kwargs, *this, functionSet);
 }
 
 void pymeshlab::MeshSet::saveCurrentMesh(const std::string& filename, pybind11::kwargs kwargs)
 {
 	if (mm() == nullptr)
 		throw MLException("MeshSet has no selected Mesh.");
-	meshsethelper::saveMeshUsingPlugin(filename, mm(), kwargs, *this, filterFunctionSet);
+	meshsethelper::saveMeshUsingPlugin(filename, mm(), kwargs, *this, functionSet);
 }
 
 /**
@@ -286,7 +286,7 @@ void pymeshlab::MeshSet::applyFilterScript()
 {
 	for (FilterNameParameterValuesPair p : filterScript){
 		QString meshlabFilterName = p.first;
-		std::string filtername = FilterFunctionSet::toPythonName(meshlabFilterName).toStdString();
+		std::string filtername = FunctionSet::toPythonName(meshlabFilterName).toStdString();
 		QAction* action = nullptr;
 		FilterPluginInterface* fp = meshsethelper::pluginFromFilterName(meshlabFilterName, action);
 		RichParameterList rpl;
@@ -301,10 +301,8 @@ void pymeshlab::MeshSet::applyFilterScript()
 pybind11::dict pymeshlab::MeshSet::applyFilter(const std::string& filtername, pybind11::kwargs kwargs)
 {
 	py::dict outputValues;
-	FilterFunctionSet::iterator it = filterFunctionSet.find(QString::fromStdString(filtername));
-	if (it != filterFunctionSet.end() && 
-			!(QString::fromStdString(filtername).startsWith("load_") && 
-			!(QString::fromStdString(filtername).startsWith("save_")))) {
+	if (functionSet.containsFilterFunction(QString::fromStdString(filtername))) {
+		FunctionSet::iterator it = functionSet.findFilterFunction(QString::fromStdString(filtername));
 		QString meshlabFilterName = it->meshlabFunctionName();
 		
 		QAction* action = nullptr;
@@ -342,10 +340,8 @@ pybind11::dict pymeshlab::MeshSet::filterParameterValues(
 		pybind11::kwargs kwargs)
 {
 	py::dict outputValues;
-	FilterFunctionSet::iterator it = filterFunctionSet.find(QString::fromStdString(filtername));
-	if (it != filterFunctionSet.end() && 
-			!(QString::fromStdString(filtername).startsWith("load_") && 
-			!(QString::fromStdString(filtername).startsWith("save_")))) {
+	if (functionSet.containsFilterFunction(QString::fromStdString(filtername))) {
+		FunctionSet::iterator it = functionSet.findFilterFunction(QString::fromStdString(filtername));
 		QString meshlabFilterName = it->meshlabFunctionName();
 		
 		QAction* action = nullptr;
@@ -380,7 +376,7 @@ pybind11::dict pymeshlab::MeshSet::filterParameterValues(
 
 std::string pymeshlab::MeshSet::filtersRSTDocumentation() const
 {
-	return meshsethelper::RSTDocumentationFromFilterFunctionSet(filterFunctionSet);
+	return meshsethelper::RSTDocumentationFromFilterFunctionSet(functionSet);
 }
 
 

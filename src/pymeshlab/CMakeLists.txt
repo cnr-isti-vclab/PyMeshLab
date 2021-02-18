@@ -22,9 +22,9 @@ set(HEADERS
 	pymeshlab/meshset.h
 	pymeshlab/module_functions.h
 	pymeshlab/percentage.h
-	pymeshlab/plugin_management/filterfunction.h
-	pymeshlab/plugin_management/filterfunctionparameter.h
-	pymeshlab/plugin_management/filterfunctionset.h
+	pymeshlab/plugin_management/function.h
+	pymeshlab/plugin_management/function_parameter.h
+	pymeshlab/plugin_management/function_set.h
 	pymeshlab/helpers/common.h
 	pymeshlab/helpers/meshset_helper.h
 	pymeshlab/helpers/verbosity_manager.h
@@ -45,9 +45,9 @@ set(SOURCES
 	pymeshlab/meshset.cpp
 	pymeshlab/module_functions.cpp
 	pymeshlab/percentage.cpp
-	pymeshlab/plugin_management/filterfunction.cpp
-	pymeshlab/plugin_management/filterfunctionparameter.cpp
-	pymeshlab/plugin_management/filterfunctionset.cpp
+	pymeshlab/plugin_management/function.cpp
+	pymeshlab/plugin_management/function_parameter.cpp
+	pymeshlab/plugin_management/function_set.cpp
 	pymeshlab/helpers/common.cpp
 	pymeshlab/helpers/meshset_helper.cpp
 	pymeshlab/helpers/verbosity_manager.cpp

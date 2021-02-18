@@ -30,15 +30,15 @@ class RichParameter;
 
 namespace pymeshlab {
 
-class FilterFunctionParameter
+class FunctionParameter
 {
 public:
-	FilterFunctionParameter(
+	FunctionParameter(
 			const QString& pName,
 			const RichParameter& parameter);
-	FilterFunctionParameter(const FilterFunctionParameter& oth);
-	FilterFunctionParameter(FilterFunctionParameter&& oth);
-	virtual ~FilterFunctionParameter();
+	FunctionParameter(const FunctionParameter& oth);
+	FunctionParameter(FunctionParameter&& oth);
+	virtual ~FunctionParameter();
 	QString pythonName() const;
 	QString meshlabName() const;
 	QString pythonTypeString() const;
@@ -50,10 +50,10 @@ public:
 	void printDefaultValue(std::ostream& o) const;
 	QString defaultValueString() const;
 
-	FilterFunctionParameter& operator=(FilterFunctionParameter oth);
-	bool operator< (const FilterFunctionParameter& oth) const;
-	bool operator==(const FilterFunctionParameter& oth) const;
-	void swap(FilterFunctionParameter& oth);
+	FunctionParameter& operator=(FunctionParameter oth);
+	bool operator< (const FunctionParameter& oth) const;
+	bool operator==(const FunctionParameter& oth) const;
+	void swap(FunctionParameter& oth);
 private:
 	QString computePythonTypeString(const RichParameter& par);
 	QString pName;

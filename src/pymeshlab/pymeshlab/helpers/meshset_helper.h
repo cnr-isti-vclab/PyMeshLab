@@ -42,8 +42,8 @@ class dict;
 
 namespace pymeshlab {
 
-class FilterFunction;
-class FilterFunctionSet;
+class Function;
+class FunctionSet;
 class MeshSet;
 
 namespace meshsethelper {
@@ -56,7 +56,7 @@ void updateRichParameterList(
 		RichParameterList& toUpdate);
 
 void updateRichParameterListFromKwargs(
-		const FilterFunction& f,
+		const Function& f,
 		const pybind11::kwargs& kwargs,
 		MeshDocument* md,
 		RichParameterList& rps,
@@ -77,7 +77,7 @@ FilterPluginInterface* pluginFromFilterName(
 
 bool pythonFilterNameExists(
 		const std::string& filtername, 
-		const FilterFunctionSet& filterFunctionSet);
+		const FunctionSet& filterFunctionSet);
 
 /** Load/Save Mesh **/
 
@@ -91,7 +91,7 @@ void loadMeshUsingPlugin(
 		MeshModel* mm,
 		pybind11::kwargs kwargs, 
 		MeshDocument& md, 
-		const FilterFunctionSet& filterFunctionSet);
+		const FunctionSet& filterFunctionSet);
 
 void loadRasterUsingPlugin(
 		const std::string& filename,
@@ -107,7 +107,7 @@ void saveMeshUsingPlugin(
 		MeshModel* mm,
 		pybind11::kwargs kwargs,
 		MeshDocument& md,
-		const FilterFunctionSet& filterFunctionSet);
+		const FunctionSet& filterFunctionSet);
 
 /** Load/Save Project **/
 
@@ -152,7 +152,7 @@ pybind11::dict applyFilterRPL(
 /** RST Documentation **/
 
 std::string RSTDocumentationFromFilterFunctionSet(
-		const FilterFunctionSet& filterFunctionSet);
+		const FunctionSet& filterFunctionSet);
 
 } //namespace pymeshlab::meshset_helper
 } //namespace pymeshlab
