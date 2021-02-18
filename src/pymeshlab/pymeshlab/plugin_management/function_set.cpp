@@ -23,6 +23,7 @@
 #include "function_set.h"
 
 #include <QRegularExpression>
+#include <common/mlexception.h>
 #include <algorithm>
 #include "pymeshlab/helpers/common.h"
 
@@ -44,7 +45,7 @@ void pymeshlab::FunctionSet::populate(const PluginManager& pm)
 
 	for (auto inputFormat : pm.inputMeshFormatList()){
 		QString originalFilterName = inputFormat;
-		QString pythonFilterName = "load_" + inputFormat.toLower();
+		QString pythonFilterName = inputFormat.toLower();
 		Function f(pythonFilterName, originalFilterName, "Load " + inputFormat + " format.");
 		IOMeshPluginInterface* plugin = pm.inputMeshPlugin(inputFormat);
 		RichParameterList rps;
@@ -69,7 +70,7 @@ void pymeshlab::FunctionSet::populate(const PluginManager& pm)
 
 	for (auto outputFormat : pm.outputMeshFormatList()){
 		QString originalFilterName = outputFormat;
-		QString pythonFilterName = "save_" + outputFormat.toLower();
+		QString pythonFilterName = outputFormat.toLower();
 		Function f(pythonFilterName, originalFilterName, "Save " + outputFormat + " format.");
 		IOMeshPluginInterface* plugin = pm.outputMeshPlugin(outputFormat);
 		RichParameterList rps;
@@ -96,7 +97,7 @@ void pymeshlab::FunctionSet::populate(const PluginManager& pm)
 	
 	for (auto inputRasterFormat : pm.inputRasterFormatList()){
 		QString originalFilterName = inputRasterFormat;
-		QString pythonFilterName = "loadr_" + inputRasterFormat.toLower();
+		QString pythonFilterName = inputRasterFormat.toLower();
 		Function f(pythonFilterName, originalFilterName, "Load " + inputRasterFormat + " format.");
 
 		//filename parameter
@@ -140,44 +141,56 @@ QStringList pymeshlab::FunctionSet::pythonFilterFunctionNames() const
 	return fnames;
 }
 
-pymeshlab::FunctionSet::iterator pymeshlab::FunctionSet::findFilterFunction(const QString& pythonFunctionName) const
+const pymeshlab::Function& pymeshlab::FunctionSet::filterFunction(const QString& pythonFunctionName) const
 {
-	return filterSet.find(Function(pythonFunctionName, "", ""));
+	auto it = filterSet.find(Function(pythonFunctionName, "", ""));
+	if (it == filterSet.end())
+		throw MLException(pythonFunctionName + " filter not found.");
+	return *it;
 }
 
 bool pymeshlab::FunctionSet::containsFilterFunction(const QString& pythonFunctionName) const
 {
-	return findFilterFunction(pythonFunctionName) != filterSet.end();
+	return filterSet.find(Function(pythonFunctionName, "", "")) != filterSet.end();
 }
 
-pymeshlab::FunctionSet::iterator pymeshlab::FunctionSet::findLoadMeshFunction(const QString& pythonFunctionName) const
+const pymeshlab::Function& pymeshlab::FunctionSet::loadMeshFunction(const QString& pythonFunctionName) const
 {
-	return loadMeshSet.find(Function(pythonFunctionName, "", ""));
+	auto it = loadMeshSet.find(Function(pythonFunctionName, "", ""));
+	if (it == loadMeshSet.end())
+		throw MLException(pythonFunctionName + " format for loading mesh not found.");
+	return *it;
 }
 
 bool pymeshlab::FunctionSet::containsLoadMeshFunction(const QString& pythonFunctionName) const
 {
-	return findLoadMeshFunction(pythonFunctionName) != loadMeshSet.end();
+	return loadMeshSet.find(Function(pythonFunctionName, "", "")) != loadMeshSet.end();
 }
 
-pymeshlab::FunctionSet::iterator pymeshlab::FunctionSet::findSaveMeshFunction(const QString& pythonFunctionName) const
+const pymeshlab::Function& pymeshlab::FunctionSet::saveMeshFunction(const QString& pythonFunctionName) const
 {
-	return saveMeshSet.find(Function(pythonFunctionName, "", ""));
+	auto it = saveMeshSet.find(Function(pythonFunctionName, "", ""));
+	if (it == saveMeshSet.end())
+		throw MLException(pythonFunctionName + " format for saving mesh not found.");
+	return *it;
 }
 
 bool pymeshlab::FunctionSet::containsSaveMeshFunction(const QString& pythonFunctionName) const
 {
-	return findSaveMeshFunction(pythonFunctionName) != saveMeshSet.end();
+	return saveMeshSet.find(Function(pythonFunctionName, "", "")) != saveMeshSet.end();
 }
 
-pymeshlab::FunctionSet::iterator pymeshlab::FunctionSet::findLoadRasterFunction(const QString& pythonFunctionName) const
+const pymeshlab::Function& pymeshlab::FunctionSet::loadRasterFunction(const QString& pythonFunctionName) const
 {
-	return loadRasterSet.find(Function(pythonFunctionName, "", ""));
+	auto it = loadRasterSet.find(Function(pythonFunctionName, "", ""));
+	if (it == loadRasterSet.end())
+		throw MLException(pythonFunctionName + " format for loading raster not found.");
+	return *it;
 }
 
 bool pymeshlab::FunctionSet::containsLoadRasterFunction(const QString& pythonFunctionName) const
 {
-	return findLoadRasterFunction(pythonFunctionName) != loadRasterSet.end();
+	return loadRasterSet.find(Function(pythonFunctionName, "", "")) != loadRasterSet.end();
 }
 
 pymeshlab::FunctionSet::FunctionRangeIterator pymeshlab::FunctionSet::filterFunctionIterator() const

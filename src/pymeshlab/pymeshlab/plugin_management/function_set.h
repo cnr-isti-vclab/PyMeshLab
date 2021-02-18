@@ -36,18 +36,16 @@ public:
 
 	QStringList pythonFilterFunctionNames() const;
 
-	using iterator = std::set<Function>::iterator;
-
-	iterator findFilterFunction(const QString& pythonFunctionName) const;
+	const Function& filterFunction(const QString& pythonFunctionName) const;
 	bool containsFilterFunction(const QString& pythonFunctionName) const;
 
-	iterator findLoadMeshFunction(const QString& pythonFunctionName) const;
+	const Function& loadMeshFunction(const QString& pythonFunctionName) const;
 	bool containsLoadMeshFunction(const QString& pythonFunctionName) const;
 
-	iterator findSaveMeshFunction(const QString& pythonFunctionName) const;
+	const Function& saveMeshFunction(const QString& pythonFunctionName) const;
 	bool containsSaveMeshFunction(const QString& pythonFunctionName) const;
 
-	iterator findLoadRasterFunction(const QString& pythonFunctionName) const;
+	const Function& loadRasterFunction(const QString& pythonFunctionName) const;
 	bool containsLoadRasterFunction(const QString& pythonFunctionName) const;
 
 	//iterators

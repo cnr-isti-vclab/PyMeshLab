@@ -110,8 +110,7 @@ void pymeshlab::MeshSet::printPythonFilterNamesList() const
 	QStringList list = functionSet.pythonFilterFunctionNames();
 	std::cout << "MeshSet class - list of filter names:\n";
 	for (const QString& fname : list){
-		if (!fname.startsWith("load_") && !fname.startsWith("save_"))
-			std::cout << "\t" << fname.toStdString() << "\n";
+		std::cout << "\t" << fname.toStdString() << "\n";
 	}
 }
 
@@ -122,29 +121,23 @@ void pymeshlab::MeshSet::printPythonFilterNamesList() const
  */
 void pymeshlab::MeshSet::printPythonFilterParameterList(const std::string& functionName) const
 {
-	if (!meshsethelper::pythonFilterNameExists(functionName, functionSet)){
-		std::cout << "Filter " << functionName << " not found.\n";
+	const Function& ff = functionSet.filterFunction(QString::fromStdString(functionName));
+	std::cout <<
+				"Please note: some parameters depend on the mesh(es) used as input of the \n"
+				"filter. Default values listed here are computed on a 1x1x1 cube \n"
+				"(pymeshlab/tests/sample/cube.obj), and they will be computed on the input mesh\n"
+				"if they are left as default.\n";
+
+	std::cout << functionName <<" filter - list of parameter names:\n";
+	if (ff.parametersNumber() == 0) {
+		std::cout << "\tNone.\n";
 	}
 	else {
-		FunctionSet::iterator it = functionSet.findFilterFunction(QString::fromStdString(functionName));
-		std::cout <<
-					"Please note: some parameters depend on the mesh(es) used as input of the \n"
-					"filter. Default values listed here are computed on a 1x1x1 cube \n"
-					"(pymeshlab/tests/sample/cube.obj), and they will be computed on the input mesh\n"
-					"if they are left as default.\n";
-
-		std::cout << functionName <<" filter - list of parameter names:\n";
-		const Function& ff = *it;
-		if (ff.parametersNumber() == 0) {
-			std::cout << "\tNone.\n";
-		}
-		else {
-			for (const FunctionParameter& ffp : ff) {
-				std::cout << "\t" << ffp.pythonName().toStdString() << " : "
-						  << ffp.pythonTypeString().toStdString() << " = ";
-				ffp.printDefaultValue(std::cout);
-				std::cout << "\n";
-			}
+		for (const FunctionParameter& ffp : ff) {
+			std::cout << "\t" << ffp.pythonName().toStdString() << " : "
+					  << ffp.pythonTypeString().toStdString() << " = ";
+			ffp.printDefaultValue(std::cout);
+			std::cout << "\n";
 		}
 	}
 }
@@ -302,14 +295,14 @@ pybind11::dict pymeshlab::MeshSet::applyFilter(const std::string& filtername, py
 {
 	py::dict outputValues;
 	if (functionSet.containsFilterFunction(QString::fromStdString(filtername))) {
-		FunctionSet::iterator it = functionSet.findFilterFunction(QString::fromStdString(filtername));
-		QString meshlabFilterName = it->meshlabFunctionName();
+		const Function& f = functionSet.filterFunction(QString::fromStdString(filtername));
+		QString meshlabFilterName = f.meshlabFunctionName();
 		
 		QAction* action = nullptr;
 		FilterPluginInterface* fp = meshsethelper::pluginFromFilterName(meshlabFilterName, action);
 		RichParameterList rpl;
 		fp->initParameterList(action, *this, rpl);
-		meshsethelper::updateRichParameterListFromKwargs(*it, kwargs, this, rpl);
+		meshsethelper::updateRichParameterListFromKwargs(f, kwargs, this, rpl);
 		outputValues = meshsethelper::applyFilterRPL(
 				filtername, meshlabFilterName, action, fp, rpl,
 				verbose, filterScript, true, *this);
@@ -341,14 +334,14 @@ pybind11::dict pymeshlab::MeshSet::filterParameterValues(
 {
 	py::dict outputValues;
 	if (functionSet.containsFilterFunction(QString::fromStdString(filtername))) {
-		FunctionSet::iterator it = functionSet.findFilterFunction(QString::fromStdString(filtername));
-		QString meshlabFilterName = it->meshlabFunctionName();
+		const Function& f = functionSet.filterFunction(QString::fromStdString(filtername));
+		QString meshlabFilterName = f.meshlabFunctionName();
 		
 		QAction* action = nullptr;
 		FilterPluginInterface* fp = meshsethelper::pluginFromFilterName(meshlabFilterName, action);
 		RichParameterList rpl;
 		fp->initParameterList(action, *this, rpl);
-		meshsethelper::updateRichParameterListFromKwargs(*it, kwargs, this, rpl);
+		meshsethelper::updateRichParameterListFromKwargs(f, kwargs, this, rpl);
 		outputValues = meshsethelper::pydictFromRichParameterList(rpl);
 	}
 	else {

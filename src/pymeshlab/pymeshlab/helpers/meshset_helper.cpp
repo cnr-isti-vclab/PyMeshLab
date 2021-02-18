@@ -443,7 +443,7 @@ void loadMeshUsingPlugin(
 	else {
 		PluginManager& pm = meshlab::pluginManagerInstance();
 		if (pm.isInputMeshFormatSupported(extension)){
-			Function ff = *filterFunctionSet.findLoadMeshFunction("load_" + extension);
+			const Function& ff = filterFunctionSet.loadMeshFunction(extension);
 			IOMeshPluginInterface* plugin = pm.inputMeshPlugin(extension);
 			
 			bool justCreated = false;
@@ -595,7 +595,7 @@ void saveMeshUsingPlugin(
 	QString extension = finfo.suffix().toLower();
 	PluginManager& pm = meshlab::pluginManagerInstance();
 	if (pm.isOutputMeshFormatSupported(extension)){
-		Function ff = *filterFunctionSet.findSaveMeshFunction("save_" + extension);
+		const Function& ff = filterFunctionSet.saveMeshFunction(extension);
 		IOMeshPluginInterface* plugin = pm.outputMeshPlugin(extension);
 		//int mask = 0; //todo: use this mask
 		RichParameterList rps;
