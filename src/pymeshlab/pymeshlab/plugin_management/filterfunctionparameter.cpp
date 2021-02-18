@@ -56,7 +56,8 @@ pymeshlab::FilterFunctionParameter::~FilterFunctionParameter()
 
 QString pymeshlab::FilterFunctionParameter::pythonName() const
 {
-	return pName;
+	//return pName;
+	return parameter->pythonName();
 }
 
 QString pymeshlab::FilterFunctionParameter::meshlabName() const
@@ -66,7 +67,8 @@ QString pymeshlab::FilterFunctionParameter::meshlabName() const
 
 QString pymeshlab::FilterFunctionParameter::pythonTypeString() const
 {
-	return pType;
+	//return pType;
+	return parameter->pythonType();
 }
 
 QString pymeshlab::FilterFunctionParameter::meshlabTypeString() const
