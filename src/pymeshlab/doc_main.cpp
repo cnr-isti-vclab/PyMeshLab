@@ -2,9 +2,11 @@
 
 #include "pymeshlab/meshset.h"
 #include "pymeshlab/helpers/common.h"
+#include "pymeshlab/module_functions.h"
 
 int main(int , char *[])
 {
+	pymeshlab::loadDefaultPlugins();
 	pymeshlab::MeshSet ms;
 
 	std::string doc = ms.filtersRSTDocumentation();
