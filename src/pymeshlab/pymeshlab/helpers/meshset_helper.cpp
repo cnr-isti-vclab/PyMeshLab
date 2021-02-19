@@ -785,7 +785,7 @@ void initOpenGLContext(QAction* action, OpenGLContextData& data, FilterPluginInt
 		//QOpenGLPaintDevice p;
 		//wid = new QGLWidget(nullptr, sceneGLSharedDataContext->getGLWidget());
 		fp->glContext = new MLPluginGLContext(QGLFormat::defaultFormat(), &(data.paintDevice), data.sceneGLSharedDataContext);
-		bool created = fp->glContext->create(/*wid->context()*/);
+		bool created = fp->glContext->create(data.sceneGLSharedDataContext.getGLContext());
 		if ((!created) || (!fp->glContext->isValid())) {
 			throw MLException("A valid GLContext is required by the filter to work.\n");
 		}
@@ -856,7 +856,7 @@ pybind11::dict applyFilterRPL(
 		py::print(params);
 		std::cout << "\n";
 	}
-	try {
+	//try {
 		int req=fp->getRequirements(action);
 		if (fp->requiresGLContext(action)){
 			data = new OpenGLContextData(md);
@@ -891,16 +891,16 @@ pybind11::dict applyFilterRPL(
 			delete data;
 			data = nullptr;
 		}
-	}
-	catch(const std::exception& e) {
-		if (data != nullptr){
-			delete data;
-			releaseOpenGLContext(fp);
-		}
-		throw MLException(
-					"Failed to apply filter: " + QString::fromStdString(filtername) + "\n" +
-					"Details: " + e.what());
-	}
+//	}
+//	catch(const std::exception& e) {
+//		if (data != nullptr){
+//			delete data;
+//			releaseOpenGLContext(fp);
+//		}
+//		throw MLException(
+//					"Failed to apply filter: " + QString::fromStdString(filtername) + "\n" +
+//					"Details: " + e.what());
+//	}
 	VerbosityManager::enableVerbosity();
 	return outputDict;
 }
