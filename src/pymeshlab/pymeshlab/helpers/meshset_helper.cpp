@@ -790,7 +790,7 @@ void initOpenGLContext(QAction* action, OpenGLContextData& data, FilterPluginInt
 {
 	if (fp->glContext == nullptr){
 		fp->glContext = new MLPluginGLContext(QGLFormat::defaultFormat(), data.wid.context()->device(), data.sceneGLSharedDataContext);
-		bool created = fp->glContext->create();
+		bool created = fp->glContext->create(data.wid.context());
 		if ((!created) || (!fp->glContext->isValid())) {
 			throw MLException("A valid GLContext is required by the filter to work.\n");
 		}
@@ -874,9 +874,11 @@ pybind11::dict applyFilterRPL(
 		
 		md.meshDocStateData().clear();
 		md.meshDocStateData().create(md);
+		md.setBusy(true);
 		unsigned int postConditionMask = MeshModel::MM_UNKNOWN;
 		std::map<std::string, QVariant> outputValues;
 		bool res = fp->applyFilter(action, md, outputValues, postConditionMask, rpl, &VerbosityManager::filterCallBack);
+		md.setBusy(false);
 		if (res){
 			VerbosityManager::filterCallBack(100, (filtername + " applied!").c_str());
 			if (md.mm() != nullptr) {
