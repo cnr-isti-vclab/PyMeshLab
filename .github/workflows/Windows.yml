@@ -90,7 +90,7 @@ jobs:
       shell: bash
       run: |
         pip install pytest numpy
-        pytest --pyargs
+        pytest --pyargs pymeshlab
     - name: Upload PyMeshLab results
       uses: actions/upload-artifact@v2
       with:
