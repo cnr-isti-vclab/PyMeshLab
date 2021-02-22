@@ -34,6 +34,7 @@
 #include <wrap/io_trimesh/alnParser.h>
 
 #include <QOpenGLPaintDevice>
+#include <QApplication>
 
 #include "common.h"
 #include "verbosity_manager.h"
@@ -769,23 +770,27 @@ void saveMLP(
 class OpenGLContextData
 {
 public:
-	OpenGLContextData(MeshSet& ms) :
+	OpenGLContextData(MeshSet& ms, int argc, char **argv) :
+		app(argc, argv), 
 		gpumeminfo((std::ptrdiff_t) (350 * (float)(1024 * 1024))),
-		sceneGLSharedDataContext(ms, gpumeminfo, true, 40) {}
+		sceneGLSharedDataContext(ms, gpumeminfo, true, 100000,100000),
+		wid(nullptr, &sceneGLSharedDataContext)
+	{
+		sceneGLSharedDataContext.makeCurrent();
+		GLExtensionsManager::initializeGLextensions();
+		sceneGLSharedDataContext.doneCurrent();
+	}
+	QApplication app;
 	vcg::QtThreadSafeMemoryInfo gpumeminfo;
 	MLSceneGLSharedDataContext sceneGLSharedDataContext;
-	QOpenGLPaintDevice paintDevice;
-
+	QGLWidget wid;
 };
 
 void initOpenGLContext(QAction* action, OpenGLContextData& data, FilterPluginInterface* fp, MeshSet& ms)
 {
 	if (fp->glContext == nullptr){
-		//MLSceneGLSharedDataContext* sceneGLSharedDataContext; //init this with ms
-		//QOpenGLPaintDevice p;
-		//wid = new QGLWidget(nullptr, sceneGLSharedDataContext->getGLWidget());
-		fp->glContext = new MLPluginGLContext(QGLFormat::defaultFormat(), &(data.paintDevice), data.sceneGLSharedDataContext);
-		bool created = fp->glContext->create(data.sceneGLSharedDataContext.getGLContext());
+		fp->glContext = new MLPluginGLContext(QGLFormat::defaultFormat(), data.wid.context()->device(), data.sceneGLSharedDataContext);
+		bool created = fp->glContext->create();
 		if ((!created) || (!fp->glContext->isValid())) {
 			throw MLException("A valid GLContext is required by the filter to work.\n");
 		}
@@ -856,10 +861,12 @@ pybind11::dict applyFilterRPL(
 		py::print(params);
 		std::cout << "\n";
 	}
-	//try {
+	try {
 		int req=fp->getRequirements(action);
 		if (fp->requiresGLContext(action)){
-			data = new OpenGLContextData(md);
+			int argc=1;
+			char* argv[] = {"pymeshlab"};
+			data = new OpenGLContextData(md, argc, argv);
 			initOpenGLContext(action, *data, fp, md);
 		}
 		if (md.mm() != nullptr)
@@ -891,16 +898,16 @@ pybind11::dict applyFilterRPL(
 			delete data;
 			data = nullptr;
 		}
-//	}
-//	catch(const std::exception& e) {
-//		if (data != nullptr){
-//			delete data;
-//			releaseOpenGLContext(fp);
-//		}
-//		throw MLException(
-//					"Failed to apply filter: " + QString::fromStdString(filtername) + "\n" +
-//					"Details: " + e.what());
-//	}
+	}
+	catch(const std::exception& e) {
+		if (data != nullptr){
+			delete data;
+			releaseOpenGLContext(fp);
+		}
+		throw MLException(
+					"Failed to apply filter: " + QString::fromStdString(filtername) + "\n" +
+					"Details: " + e.what());
+	}
 	VerbosityManager::enableVerbosity();
 	return outputDict;
 }
