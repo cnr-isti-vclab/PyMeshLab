@@ -576,7 +576,7 @@ void saveMeshUsingPlugin(
 					extension, QString::fromStdString(filename), *mm,
 					capabilityMesh & defbits, rps);
 		if (!ok){
-			throw MLException("Unable to save file: " + QString::fromStdString(filename));
+			throw MLException("Unable to save file: " + QString::fromStdString(filename) + ":\n" + plugin->errorMsg());
 		}
 		mm->setFileName(finfo.absoluteFilePath());
 	}
@@ -625,7 +625,7 @@ void saveMeshUsingPlugin(
 					extension, QString::fromStdString(filename), *mm,
 					userSettings, rps);
 		if (!ok){
-			throw MLException("Unable to save file: " + QString::fromStdString(filename));
+			throw MLException("Unable to save file: " + QString::fromStdString(filename) + ":\n" + plugin->errorMsg());
 		}
 		mm->setFileName(finfo.absoluteFilePath());
 	}
@@ -865,7 +865,7 @@ pybind11::dict applyFilterRPL(
 		int req=fp->getRequirements(action);
 		if (fp->requiresGLContext(action)){
 			int argc=1;
-			char* argv[] = {"pymeshlab"};
+			char* argv[] = {(char*)"pymeshlab"};
 			data = new OpenGLContextData(md, argc, argv);
 			initOpenGLContext(action, *data, fp, md);
 		}
