@@ -48,6 +48,7 @@ jobs:
       with:
         python-version: ${{ matrix.pyversion }}
     - name: Set use_cpu_opengl option
+      shell: bash
       id: use-cpu-opengl
       if: runner.os == 'Windows'
       run: |
