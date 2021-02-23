@@ -90,6 +90,7 @@ jobs:
       shell: bash
       run: |
         pip install pytest numpy
+        python -c 'import pymeshlab; pymeshlab.use_cpu_opengl()'
         pytest --pyargs pymeshlab
     - name: Upload PyMeshLab results
       uses: actions/upload-artifact@v2
