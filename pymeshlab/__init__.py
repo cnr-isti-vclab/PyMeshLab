@@ -6,8 +6,6 @@ import pathlib
 this_path=str(pathlib.Path(__file__).parent.absolute())
 if platform == 'win32':
     os.environ['QT_PLUGIN_PATH']=this_path
-elif os.name == "linux":
-    os.environ['QT_PLUGIN_PATH']=this_path+'/lib'
 
 try:
     load_default_plugins()

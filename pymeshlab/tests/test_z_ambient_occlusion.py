@@ -1,5 +1,6 @@
 import pymeshlab as ml
 from . import samples_common
+import pytest
 
 
 def test_ambient_occlusion():
