@@ -47,16 +47,10 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.pyversion }}
-    - name: Set use_cpu_opengl option
-      shell: bash
-      id: use-cpu-opengl
-      if: runner.os == 'Windows'
-      run: |
-        echo  ::set-output name=use-cpu-opengl::"python -c 'import pymeshlab; pymeshlab.use_cpu_opengl()'"
     - name: Install and Test Wheel
       shell: bash
       run: |
         pip install pytest
         pip install pymeshlab*.whl
-        ${{steps.use-cpu-opengl.outputs.use-cpu-opengl}}
+        python -c 'import pymeshlab; pymeshlab.use_cpu_opengl() #just for windows
         pytest --pyargs pymeshlab
