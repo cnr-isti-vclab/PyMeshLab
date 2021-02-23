@@ -14,12 +14,12 @@ print_pymeshlab_version()
 
 def use_cpu_opengl():
     if os.name == 'nt':
-        os.rename(this_path + '/opengl32sw.dll', this_path + '/opengl32.dll')
+        os.rename(this_path + '\\opengl32sw.dll', this_path + '\\opengl32.dll')
     else:
         print("Nothing to do.")
 
 def do_not_use_cpu_opengl():
     if os.name == 'nt':
-        os.rename(this_path + '/opengl32.dll', this_path + '/opengl32sw.dll')
+        os.rename(this_path + '\\opengl32.dll', this_path + '\\opengl32sw.dll')
     else:
         print("Nothing to do.")
