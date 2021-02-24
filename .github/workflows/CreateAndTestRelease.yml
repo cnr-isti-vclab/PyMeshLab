@@ -188,7 +188,7 @@ jobs:
     - name: Run Tests ${{ matrix.pyversion }}
       run: |
         pip install pytest
-        python -c 'import pymeshlab; pymeshlab.use_cpu_opengl() #just for windows
+        python -c 'import pymeshlab; pymeshlab.use_cpu_opengl()' #just for windows
         pytest -s --pyargs pymeshlab
 
   build_wheel:
@@ -241,7 +241,7 @@ jobs:
       run: |
         pip install pytest
         pip install pymeshlab*.whl
-        python -c 'import pymeshlab; pymeshlab.use_cpu_opengl() #just for windows
+        python -c 'import pymeshlab; pymeshlab.use_cpu_opengl()' #just for windows
         pytest --pyargs pymeshlab
     - name: Get Wheel Name
       id: wheel_name

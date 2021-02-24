@@ -52,5 +52,5 @@ jobs:
       run: |
         pip install pytest
         pip install pymeshlab*.whl
-        python -c 'import pymeshlab; pymeshlab.use_cpu_opengl() #just for windows
+        python -c 'import pymeshlab; pymeshlab.use_cpu_opengl()' #just for windows
         pytest --pyargs pymeshlab
