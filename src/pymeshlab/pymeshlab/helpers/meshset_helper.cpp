@@ -31,13 +31,14 @@
 #include <common/GLExtensionsManager.h>
 #include <common/meshlabdocumentxml.h>
 #include <common/meshlabdocumentbundler.h>
+#include <common/python/function_set.h>
+#include <common/python/python_utils.h>
 #include <wrap/io_trimesh/alnParser.h>
 
 #include <QApplication>
 
 #include "common.h"
 #include "verbosity_manager.h"
-#include "../plugin_management/function_set.h"
 #include "../percentage.h"
 #include "../exceptions.h"
 #include "../meshset.h"
@@ -202,7 +203,7 @@ pybind11::dict pydictFromRichParameterList(
 {
 	pybind11::dict kw;
 	for (const RichParameter& par : rps){
-		std::string pname = FunctionSet::toPythonName(par.name()).toStdString();
+		std::string pname = computePythonName(par.name()).toStdString();
 		const Value& v = par.value();
 		if (v.isEnum())
 			kw[pname.c_str()] = v.getEnum();
@@ -534,7 +535,7 @@ int computeSaveSettingsMaskFromKwargs(pybind11::kwargs kwargs, int startingMask,
 {
 	std::array<QString, 14> params;
 	for (unsigned int i = 0; i < saveCapabilitiesStrings.size(); ++i)
-		params[i] = FunctionSet::toPythonName(saveCapabilitiesStrings[i]);
+		params[i] = computePythonName(saveCapabilitiesStrings[i]);
 
 	int capability = startingMask;
 	for (std::pair<py::handle, py::handle> p : kwargs){

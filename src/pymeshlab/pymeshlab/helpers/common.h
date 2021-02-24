@@ -45,54 +45,6 @@ class dict;
 
 namespace pymeshlab {
 
-const static std::array<int, 14> capabilitiesBits= {
-	vcg::tri::io::Mask::IOM_VERTQUALITY,
-	vcg::tri::io::Mask::IOM_VERTFLAGS,
-	vcg::tri::io::Mask::IOM_VERTCOLOR,
-	vcg::tri::io::Mask::IOM_VERTTEXCOORD,
-	vcg::tri::io::Mask::IOM_VERTNORMAL,
-	vcg::tri::io::Mask::IOM_VERTRADIUS,
-	vcg::tri::io::Mask::IOM_FACEQUALITY,
-	vcg::tri::io::Mask::IOM_FACEFLAGS,
-	vcg::tri::io::Mask::IOM_FACECOLOR,
-	vcg::tri::io::Mask::IOM_FACENORMAL,
-	vcg::tri::io::Mask::IOM_WEDGCOLOR,
-	vcg::tri::io::Mask::IOM_WEDGTEXCOORD,
-	vcg::tri::io::Mask::IOM_WEDGNORMAL,
-	vcg::tri::io::Mask::IOM_BITPOLYGONAL
-};
-
-const static std::array<QString, 14> saveCapabilitiesStrings = {
-	"Save Vertex Quality",
-	"Save Vertex Flag",
-	"Save Vertex Color",
-	"Save Vertex Coord",
-	"Save Vertex Normal",
-	"Save Vertex Radius",
-	"Save Face Quality",
-	"Save Face Flag",
-	"Save Face Color",
-	"Save Face Normal",
-	"Save Wedge Color",
-	"Save Wedge TexCoord",
-	"Save Wedge Normal",
-	"Save Polygonal"
-};
-
-const char PYTHON_TYPE_ENUM[] = "str";
-const char PYTHON_TYPE_ABSPERC[] = "Percentage";
-const char PYTHON_TYPE_DYNAMIC_FLOAT[] = "float (bounded)";
-const char PYTHON_TYPE_BOOL[] = "bool";
-const char PYTHON_TYPE_INT[] = "int";
-const char PYTHON_TYPE_FLOAT[] = "float";
-const char PYTHON_TYPE_STRING[] = "str";
-const char PYTHON_TYPE_MATRIX44F[] = "numpy.ndarray[numpy.float64[4, 4]]";
-const char PYTHON_TYPE_POINT3F[] = "numpy.ndarray[numpy.float64[3]]";
-const char PYTHON_TYPE_SHOTF[] = "Shotf [still unsupported]";
-const char PYTHON_TYPE_COLOR[] = "Color";
-const char PYTHON_TYPE_MESH[] = "int";
-const char PYTHON_TYPE_FILENAME[] = "str";
-
 const char MESHLAB_TYPE_ENUM[] = "RichEnum";
 const char MESHLAB_TYPE_ABSPERC[] = "RichAbsPerc";
 const char MESHLAB_TYPE_DYNAMIC_FLOAT[] = "RichDynamicFloat";
@@ -109,16 +61,6 @@ const char MESHLAB_TYPE_OPENFILE[] = "RichOpenFile";
 const char MESHLAB_TYPE_SAVEFILE[] = "RichSaveFile";
 
 const char PYMESHLAB_GLOBAL_SETTING_MAXGPUMEM[] = "MeshLab::System::maxGPUMemDedicatedToGeometry";
-
-const static QStringList pythonKeywords = {
-	"False", "await", "else", "import", "pass",
-	"None", "break", "except", "in", "raise",
-	"True", "class", "finally", "is", "return",
-	"and", "continue", "for", "lambda", "try",
-	"as", "def	from", "nonlocal", "while",
-	"assert", "del", "global", "not", "with",
-	"async", "elif", "if", "or", "yield"
-};
 
 /**
  * @brief The CoutRedirect class
@@ -172,7 +114,6 @@ private:
 std::string getRootPath();
 std::string getPluginsPath();
 std::string getSamplesPath();
-void printSaveMask(int mask);
 
 }
 

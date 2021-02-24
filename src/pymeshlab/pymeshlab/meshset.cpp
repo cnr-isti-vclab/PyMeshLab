@@ -27,6 +27,7 @@
 #include <common/mlexception.h>
 
 #include <common/globals.h>
+#include <common/python/python_utils.h>
 #include "percentage.h"
 #include "exceptions.h"
 #include "helpers/common.h"
@@ -37,13 +38,12 @@ namespace py = pybind11;
 
 pymeshlab::MeshSet::MeshSet(bool verbose) :
 	MeshDocument(),
-	pm(meshlab::pluginManagerInstance())//,
+	pm(meshlab::pluginManagerInstance()),
+	functionSet(pm, QString::fromStdString(getSamplesPath() + "cube.obj"))
 {
 	if (!verbose)
 		VerbosityManager::disableVersbosity();
 	std::string samplesPath = getSamplesPath();
-	QString dummyMesh(QString::fromStdString(getSamplesPath() + "cube.obj"));
-	functionSet.populate(pm, dummyMesh);
 	setVerbosity(verbose);
 	if (!verbose)
 		VerbosityManager::enableVerbosity();
@@ -150,10 +150,10 @@ void pymeshlab::MeshSet::printFilterScript() const
 	std::cout << "Filter Script Size : " << filterScript.size() << "\n\n";
 	uint i = 0;
 	for (const FilterNameParameterValuesPair& p :filterScript){
-		std::cout << std::to_string(i) + ": " << FunctionSet::toPythonName(p.filterName()).toStdString() <<
+		std::cout << std::to_string(i) + ": " << computePythonName(p.filterName()).toStdString() <<
 					 "\n";
 		for (const RichParameter& par : p.second){
-			FunctionParameter ffp(FunctionSet::toPythonName(par.name()), par);
+			FunctionParameter ffp(computePythonName(par.name()), par);
 			std::cout << "\t" << ffp.pythonName().toStdString() << " : "
 					  << ffp.pythonTypeString().toStdString() << " = ";
 			ffp.printDefaultValue(std::cout);
@@ -278,7 +278,7 @@ void pymeshlab::MeshSet::applyFilterScript()
 {
 	for (FilterNameParameterValuesPair p : filterScript){
 		QString meshlabFilterName = p.first;
-		std::string filtername = FunctionSet::toPythonName(meshlabFilterName).toStdString();
+		std::string filtername = computePythonName(meshlabFilterName).toStdString();
 		QAction* action = nullptr;
 		FilterPluginInterface* fp = meshsethelper::pluginFromFilterName(meshlabFilterName, action);
 		RichParameterList rpl;

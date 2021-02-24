@@ -80,11 +80,3 @@ std::string pymeshlab::getSamplesPath()
 	std::string rootPath = getRootPath();
 	return rootPath + "/tests/sample/";
 }
-
-void pymeshlab::printSaveMask(int mask)
-{
-	for (uint i = 0; i < 14; i++){
-		if (mask & capabilitiesBits[i])
-			std::cout << saveCapabilitiesStrings[i].toStdString() << "\n";
-	}
-}
