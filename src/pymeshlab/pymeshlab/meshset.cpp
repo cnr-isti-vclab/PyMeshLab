@@ -38,12 +38,12 @@ namespace py = pybind11;
 pymeshlab::MeshSet::MeshSet(bool verbose) :
 	MeshDocument(),
 	pm(meshlab::pluginManagerInstance())//,
-	//sceneGLSharedDataContext(nullptr)
 {
 	if (!verbose)
 		VerbosityManager::disableVersbosity();
-	//pm.loadPlugins(QString::fromStdString(getPluginsPath()));
-	functionSet.populate(pm);
+	std::string samplesPath = getSamplesPath();
+	QString dummyMesh(QString::fromStdString(getSamplesPath() + "cube.obj"));
+	functionSet.populate(pm, dummyMesh);
 	setVerbosity(verbose);
 	if (!verbose)
 		VerbosityManager::enableVerbosity();
@@ -51,7 +51,6 @@ pymeshlab::MeshSet::MeshSet(bool verbose) :
 
 pymeshlab::MeshSet::~MeshSet()
 {
-	//delete sceneGLSharedDataContext;
 }
 
 void pymeshlab::MeshSet::setVerbosity(bool verbose)
@@ -351,21 +350,6 @@ pybind11::dict pymeshlab::MeshSet::filterParameterValues(
 	}
 	return outputValues;
 }
-
-//bool pymeshlab::MeshSet::isSceneGLSharedDataContextEnabled() const
-//{
-//	return sceneGLSharedDataContext != nullptr;
-//}
-
-//void pymeshlab::MeshSet::initSceneGLSharedDataContext()
-//{
-//	//Todo
-//}
-
-//MLSceneGLSharedDataContext* pymeshlab::MeshSet::sharedDataContext()
-//{
-//	return sceneGLSharedDataContext;
-//}
 
 std::string pymeshlab::MeshSet::filtersRSTDocumentation() const
 {

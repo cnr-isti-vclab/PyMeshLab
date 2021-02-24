@@ -26,6 +26,13 @@
 #include "helpers/common.h"
 #include <common/globals.h>
 
+void pymeshlab::loadDefaultPlugins()
+{
+	PluginManager& pm = meshlab::pluginManagerInstance();
+	pm.loadPlugins(QString::fromStdString(getPluginsPath()));
+}
+
+
 void pymeshlab::printVersion()
 {
 	std::string pymsversion;
@@ -56,9 +63,7 @@ void pymeshlab::printPluginList()
 	}
 }
 
-
-void pymeshlab::loadDefaultPlugins()
+void pymeshlab::printFilterList()
 {
-	PluginManager& pm = meshlab::pluginManagerInstance();
-	pm.loadPlugins(QString::fromStdString(getPluginsPath()));
+	//todo
 }

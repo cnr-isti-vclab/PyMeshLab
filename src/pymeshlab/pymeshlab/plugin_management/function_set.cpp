@@ -31,13 +31,10 @@ pymeshlab::FunctionSet::FunctionSet()
 {
 }
 
-void pymeshlab::FunctionSet::populate(const PluginManager& pm)
+void pymeshlab::FunctionSet::populate(const PluginManager& pm, const QString& dummyMeshFile)
 {
-	std::string samplesPath = getSamplesPath();
-
 	MeshDocument dummyMeshDocument;
-	QString dummyMesh(QString::fromStdString(getSamplesPath() + "cube.obj"));
-	dummyMeshDocument.addNewMesh(dummyMesh, "cube");
+	dummyMeshDocument.addNewMesh(dummyMeshFile, "");
 	int mask = 0;
 	mask |= vcg::tri::io::Mask::IOM_VERTQUALITY;
 	mask |= vcg::tri::io::Mask::IOM_FACEQUALITY;
@@ -49,7 +46,7 @@ void pymeshlab::FunctionSet::populate(const PluginManager& pm)
 		Function f(pythonFilterName, originalFilterName, "Load " + inputFormat + " format.");
 		IOMeshPluginInterface* plugin = pm.inputMeshPlugin(inputFormat);
 		RichParameterList rps;
-		plugin->initPreOpenParameter(inputFormat, dummyMesh, rps);
+		plugin->initPreOpenParameter(inputFormat, dummyMeshFile, rps);
 		plugin->initOpenParameter(inputFormat, *dummyMeshDocument.mm(), rps);
 
 		//filename parameter

@@ -90,18 +90,11 @@ public:
 			pybind11::kwargs kwargs = pybind11::kwargs());
 
 	/** Member functions not binded on Python **/
-	//sharedDataContext management
-//	bool isSceneGLSharedDataContextEnabled() const;
-//	void initSceneGLSharedDataContext();
-//	MLSceneGLSharedDataContext* sharedDataContext();
-	
-	
+
 	//documentation
 	std::string filtersRSTDocumentation() const;
 private:
 	PluginManager& pm;
-//	MLSceneGLSharedDataContext* sceneGLSharedDataContext;
-	
 	FunctionSet functionSet;
 	FilterScript filterScript;
 

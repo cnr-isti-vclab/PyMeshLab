@@ -29,7 +29,7 @@ void loadDefaultPlugins();
 void printVersion();
 int numberPlugins();
 void printPluginList();
-void setMaxGPUMem(int max_gpu_mb);
+void printFilterList();
 
 }
 

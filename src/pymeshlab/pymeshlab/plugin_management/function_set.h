@@ -32,7 +32,7 @@ class FunctionSet
 {
 public:
 	FunctionSet();
-	void populate(const PluginManager& pm);
+	void populate(const PluginManager& pm, const QString& dummyMeshFile);
 
 	QStringList pythonFilterFunctionNames() const;
 
