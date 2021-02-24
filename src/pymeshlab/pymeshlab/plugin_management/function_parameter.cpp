@@ -56,7 +56,8 @@ pymeshlab::FunctionParameter::~FunctionParameter()
 
 QString pymeshlab::FunctionParameter::pythonName() const
 {
-	return pName;
+	//return pName;
+	return parameter->pythonName();
 }
 
 QString pymeshlab::FunctionParameter::meshlabName() const
@@ -66,7 +67,8 @@ QString pymeshlab::FunctionParameter::meshlabName() const
 
 QString pymeshlab::FunctionParameter::pythonTypeString() const
 {
-	return pType;
+	//return pType;
+	return parameter->pythonType();
 }
 
 QString pymeshlab::FunctionParameter::meshlabTypeString() const
