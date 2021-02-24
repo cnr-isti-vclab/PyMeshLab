@@ -33,6 +33,8 @@
 #include <common/meshlabdocumentbundler.h>
 #include <wrap/io_trimesh/alnParser.h>
 
+#include <QApplication>
+
 #include "common.h"
 #include "verbosity_manager.h"
 #include "../plugin_management/function_set.h"
@@ -573,7 +575,7 @@ void saveMeshUsingPlugin(
 					extension, QString::fromStdString(filename), *mm,
 					capabilityMesh & defbits, rps);
 		if (!ok){
-			throw MLException("Unable to save file: " + QString::fromStdString(filename));
+			throw MLException("Unable to save file: " + QString::fromStdString(filename) + ":\n" + plugin->errorMsg());
 		}
 		mm->setFileName(finfo.absoluteFilePath());
 	}
@@ -622,7 +624,7 @@ void saveMeshUsingPlugin(
 					extension, QString::fromStdString(filename), *mm,
 					userSettings, rps);
 		if (!ok){
-			throw MLException("Unable to save file: " + QString::fromStdString(filename));
+			throw MLException("Unable to save file: " + QString::fromStdString(filename) + ":\n" + plugin->errorMsg());
 		}
 		mm->setFileName(finfo.absoluteFilePath());
 	}
@@ -764,58 +766,73 @@ void saveMLP(
 
 /** OpenGL context **/
 
-//void initOpenGLContext(QAction* action, FilterPluginInterface* fp, QGLWidget*& wid, MeshSet& ms)
-//{
-//	if (fp->glContext == nullptr){
-//		ms.initSceneGLSharedDataContext();
-//		wid = new QGLWidget(nullptr, ms.sharedDataContext());
-//		fp->glContext = new MLPluginGLContext(QGLFormat::defaultFormat(), wid->context()->device(),*ms.sharedDataContext());
-//		bool created = fp->glContext->create(wid->context());
-//		if ((!created) || (!fp->glContext->isValid())) {
-//			throw MLException("A valid GLContext is required by the filter to work.\n");
-//		}
-//		MLRenderingData dt;
-//		MLRenderingData::RendAtts atts;
-//		atts[MLRenderingData::ATT_NAMES::ATT_VERTPOSITION] = true;
-//		atts[MLRenderingData::ATT_NAMES::ATT_VERTNORMAL] = true;
+class OpenGLContextData
+{
+public:
+	OpenGLContextData(MeshSet& ms, int argc, char **argv) :
+		app(argc, argv), 
+		gpumeminfo((std::ptrdiff_t) (350 * (float)(1024 * 1024))),
+		sceneGLSharedDataContext(ms, gpumeminfo, true, 100000,100000),
+		wid(nullptr, &sceneGLSharedDataContext)
+	{
+		sceneGLSharedDataContext.makeCurrent();
+		GLExtensionsManager::initializeGLextensions();
+		sceneGLSharedDataContext.doneCurrent();
+	}
+	QApplication app;
+	vcg::QtThreadSafeMemoryInfo gpumeminfo;
+	MLSceneGLSharedDataContext sceneGLSharedDataContext;
+	QGLWidget wid;
+};
 
-//		if (fp->filterArity(action) == FilterPluginInterface::SINGLE_MESH) {
-//			MLRenderingData::PRIMITIVE_MODALITY pm = MLPoliciesStandAloneFunctions::bestPrimitiveModalityAccordingToMesh(ms.mm());
-//			if ((pm != MLRenderingData::PR_ARITY) && (ms.mm() != nullptr)) {
-//				dt.set(pm, atts);
-//				fp->glContext->initPerViewRenderingData(ms.mm()->id(), dt);
-//			}
+void initOpenGLContext(QAction* action, OpenGLContextData& data, FilterPluginInterface* fp, MeshSet& ms)
+{
+	if (fp->glContext == nullptr){
+		fp->glContext = new MLPluginGLContext(QGLFormat::defaultFormat(), data.wid.context()->device(), data.sceneGLSharedDataContext);
+		bool created = fp->glContext->create(data.wid.context());
+		if ((!created) || (!fp->glContext->isValid())) {
+			throw MLException("A valid GLContext is required by the filter to work.\n");
+		}
+		MLRenderingData dt;
+		MLRenderingData::RendAtts atts;
+		atts[MLRenderingData::ATT_NAMES::ATT_VERTPOSITION] = true;
+		atts[MLRenderingData::ATT_NAMES::ATT_VERTNORMAL] = true;
 
-//			if (ms.mm() != NULL) {
-//				ms.mm()->cm.svn = int(vcg::tri::UpdateSelection<CMeshO>::VertexCount(ms.mm()->cm));
-//				ms.mm()->cm.sfn = int(vcg::tri::UpdateSelection<CMeshO>::FaceCount(ms.mm()->cm));
-//			}
-//		}
-//		else {
-//			for (int ii = 0; ii < ms.meshList.size(); ++ii) {
-//				MeshModel* mm = ms.meshList[ii];
-//				MLRenderingData::PRIMITIVE_MODALITY pm = MLPoliciesStandAloneFunctions::bestPrimitiveModalityAccordingToMesh(mm);
-//				if ((pm != MLRenderingData::PR_ARITY) && (mm != nullptr)) {
-//					dt.set(pm, atts);
-//					fp->glContext->initPerViewRenderingData(mm->id(), dt);
-//				}
+		if (fp->filterArity(action) == FilterPluginInterface::SINGLE_MESH) {
+			MLRenderingData::PRIMITIVE_MODALITY pm = MLPoliciesStandAloneFunctions::bestPrimitiveModalityAccordingToMesh(ms.mm());
+			if ((pm != MLRenderingData::PR_ARITY) && (ms.mm() != nullptr)) {
+				dt.set(pm, atts);
+				fp->glContext->initPerViewRenderingData(ms.mm()->id(), dt);
+			}
 
-//				if (mm != nullptr) {
-//					mm->cm.svn = int(vcg::tri::UpdateSelection<CMeshO>::VertexCount(mm->cm));
-//					mm->cm.sfn = int(vcg::tri::UpdateSelection<CMeshO>::FaceCount(mm->cm));
-//				}
-//			}
-//		}
-//	}
-//}
+			if (ms.mm() != NULL) {
+				ms.mm()->cm.svn = int(vcg::tri::UpdateSelection<CMeshO>::VertexCount(ms.mm()->cm));
+				ms.mm()->cm.sfn = int(vcg::tri::UpdateSelection<CMeshO>::FaceCount(ms.mm()->cm));
+			}
+		}
+		else {
+			for (int ii = 0; ii < ms.meshList.size(); ++ii) {
+				MeshModel* mm = ms.meshList[ii];
+				MLRenderingData::PRIMITIVE_MODALITY pm = MLPoliciesStandAloneFunctions::bestPrimitiveModalityAccordingToMesh(mm);
+				if ((pm != MLRenderingData::PR_ARITY) && (mm != nullptr)) {
+					dt.set(pm, atts);
+					fp->glContext->initPerViewRenderingData(mm->id(), dt);
+				}
 
-//void releaseOpenGLContext(FilterPluginInterface* fp, QGLWidget*& wid)
-//{
-//	delete fp->glContext;
-//	fp->glContext = nullptr;
-//	delete wid;
-//	wid = nullptr;
-//}
+				if (mm != nullptr) {
+					mm->cm.svn = int(vcg::tri::UpdateSelection<CMeshO>::VertexCount(mm->cm));
+					mm->cm.sfn = int(vcg::tri::UpdateSelection<CMeshO>::FaceCount(mm->cm));
+				}
+			}
+		}
+	}
+}
+
+void releaseOpenGLContext(FilterPluginInterface* fp)
+{
+	delete fp->glContext;
+	fp->glContext = nullptr;
+}
 
 /** Apply Filter **/
 
@@ -831,7 +848,7 @@ pybind11::dict applyFilterRPL(
 		MeshSet& md)
 {
 	py::dict outputDict;
-//	QGLWidget* wid = nullptr;
+	OpenGLContextData* data = nullptr;
 	if (!verbose){
 		VerbosityManager::disableVersbosity();
 		VerbosityManager::staticLogger = nullptr;
@@ -845,17 +862,22 @@ pybind11::dict applyFilterRPL(
 	}
 	try {
 		int req=fp->getRequirements(action);
-//		if (fp->requiresGLContext(action)){
-//			initOpenGLContext(action, fp, wid, md);
-//		}
+		if (fp->requiresGLContext(action)){
+			int argc=1;
+			char* argv[] = {(char*)"pymeshlab"};
+			data = new OpenGLContextData(md, argc, argv);
+			initOpenGLContext(action, *data, fp, md);
+		}
 		if (md.mm() != nullptr)
 			md.mm()->updateDataMask(req);
 		
 		md.meshDocStateData().clear();
 		md.meshDocStateData().create(md);
+		md.setBusy(true);
 		unsigned int postConditionMask = MeshModel::MM_UNKNOWN;
 		std::map<std::string, QVariant> outputValues;
 		bool res = fp->applyFilter(action, md, outputValues, postConditionMask, rpl, &VerbosityManager::filterCallBack);
+		md.setBusy(false);
 		if (res){
 			VerbosityManager::filterCallBack(100, (filtername + " applied!").c_str());
 			if (md.mm() != nullptr) {
@@ -872,14 +894,17 @@ pybind11::dict applyFilterRPL(
 		else {
 			throw MLException(fp->errorMsg());
 		}
-//		if (fp->requiresGLContext(action)){
-//			releaseOpenGLContext(fp, wid);
-//		}
+		if (fp->requiresGLContext(action)){
+			releaseOpenGLContext(fp);
+			delete data;
+			data = nullptr;
+		}
 	}
 	catch(const std::exception& e) {
-//		if (wid != nullptr){
-//			releaseOpenGLContext(fp, wid);
-//		}
+		if (data != nullptr){
+			delete data;
+			releaseOpenGLContext(fp);
+		}
 		throw MLException(
 					"Failed to apply filter: " + QString::fromStdString(filtername) + "\n" +
 					"Details: " + e.what());

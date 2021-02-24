@@ -10,6 +10,7 @@ endif()
 ### Build options
 option(BUILD_STRICT "Strictly enforce resolution of all symbols" ON)
 option(BUILD_MESHLABSERVER "Build meshlabserver" OFF)
+option(BUILD_DEBUG_MESHLAB_FILTERS_ONLY "Build just a small set of filters for debug" OFF)
 
 ### Dependencies
 message(STATUS "Searching for required components")
@@ -88,63 +89,70 @@ if(BUILD_MESHLABSERVER)
 endif()
 
 ### Plugin subdirectories
-set(MESHLAB_PLUGINS
-	# IO plugins
-	meshlabplugins/io_3ds
-	meshlabplugins/io_base
-	meshlabplugins/io_bre
-	meshlabplugins/io_collada
-	meshlabplugins/io_ctm
-	meshlabplugins/io_expe
-	meshlabplugins/io_json
-	meshlabplugins/io_pdb
-	meshlabplugins/io_tri
-	meshlabplugins/io_txt
-	meshlabplugins/io_u3d
-	meshlabplugins/io_x3d
-
-	# IORaster plugins
-	meshlabplugins/ioraster_base
-
-	# Filter plugins
-	meshlabplugins/filter_sample
-	meshlabplugins/filter_sample_dyn
-	meshlabplugins/filter_createiso
-	meshlabplugins/filter_geodesic
-	meshlabplugins/filter_sample_gpu
-	meshlabplugins/filter_ao
-	meshlabplugins/filter_camera
-	meshlabplugins/filter_clean
-	meshlabplugins/filter_color_projection
-	meshlabplugins/filter_colorproc
-	meshlabplugins/filter_create
-	meshlabplugins/filter_csg
-	meshlabplugins/filter_dirt
-	meshlabplugins/filter_fractal
-	meshlabplugins/filter_func
-	meshlabplugins/filter_globalregistration
-	meshlabplugins/filter_img_patch_param
-	meshlabplugins/filter_isoparametrization
-	meshlabplugins/filter_layer
-	meshlabplugins/filter_measure
-	meshlabplugins/filter_meshing
-	meshlabplugins/filter_mls
-	meshlabplugins/filter_mutualglobal
-	meshlabplugins/filter_mutualinfo
-	meshlabplugins/filter_plymc
-	meshlabplugins/filter_qhull
-	meshlabplugins/filter_quality
-	meshlabplugins/filter_sampling
-	meshlabplugins/filter_screened_poisson
-	meshlabplugins/filter_sdfgpu
-	meshlabplugins/filter_select
-	meshlabplugins/filter_sketchfab
-	meshlabplugins/filter_ssynth
-	meshlabplugins/filter_texture
-	meshlabplugins/filter_trioptimize
-	meshlabplugins/filter_unsharp
-	meshlabplugins/filter_voronoi
-)
+if (BUILD_DEBUG_MESHLAB_FILTERS_ONLY)
+	set(MESHLAB_PLUGINS
+		meshlabplugins/io_base
+		meshlabplugins/filter_ao
+		)
+else()
+	set(MESHLAB_PLUGINS
+		# IO plugins
+		meshlabplugins/io_3ds
+		meshlabplugins/io_base
+		meshlabplugins/io_bre
+		meshlabplugins/io_collada
+		meshlabplugins/io_ctm
+		meshlabplugins/io_expe
+		meshlabplugins/io_json
+		meshlabplugins/io_pdb
+		meshlabplugins/io_tri
+		meshlabplugins/io_txt
+		meshlabplugins/io_u3d
+		meshlabplugins/io_x3d
+	
+		# IORaster plugins
+		meshlabplugins/ioraster_base
+	
+		# Filter plugins
+		meshlabplugins/filter_sample
+		meshlabplugins/filter_sample_dyn
+		meshlabplugins/filter_createiso
+		meshlabplugins/filter_geodesic
+		meshlabplugins/filter_sample_gpu
+		meshlabplugins/filter_ao
+		meshlabplugins/filter_camera
+		meshlabplugins/filter_clean
+		meshlabplugins/filter_color_projection
+		meshlabplugins/filter_colorproc
+		meshlabplugins/filter_create
+		meshlabplugins/filter_csg
+		meshlabplugins/filter_dirt
+		meshlabplugins/filter_fractal
+		meshlabplugins/filter_func
+		meshlabplugins/filter_globalregistration
+		meshlabplugins/filter_img_patch_param
+		meshlabplugins/filter_isoparametrization
+		meshlabplugins/filter_layer
+		meshlabplugins/filter_measure
+		meshlabplugins/filter_meshing
+		meshlabplugins/filter_mls
+		meshlabplugins/filter_mutualglobal
+		meshlabplugins/filter_mutualinfo
+		meshlabplugins/filter_plymc
+		meshlabplugins/filter_qhull
+		meshlabplugins/filter_quality
+		meshlabplugins/filter_sampling
+		meshlabplugins/filter_screened_poisson
+		meshlabplugins/filter_sdfgpu
+		meshlabplugins/filter_select
+		meshlabplugins/filter_sketchfab
+		meshlabplugins/filter_ssynth
+		meshlabplugins/filter_texture
+		meshlabplugins/filter_trioptimize
+		meshlabplugins/filter_unsharp
+		meshlabplugins/filter_voronoi
+	)
+endif()
 
 message(STATUS "\nConfiguring plugins")
 foreach(PLUGIN ${MESHLAB_PLUGINS})

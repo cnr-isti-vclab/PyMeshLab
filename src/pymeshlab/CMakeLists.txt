@@ -75,7 +75,13 @@ if (BUILD_PYMESHLAB_DEBUG) #bin to debug pymeshlab
 	target_link_libraries(
 		${PYMESHLAB_MODULE_NAME} 
 		PUBLIC  
-			meshlab-common)
+			meshlab-common
+			pybind11_headers
+			${PYTHON_LIBRARIES})
+	target_include_directories(
+		${PYMESHLAB_MODULE_NAME}
+		PUBLIC
+			${PYTHON_INCLUDE_DIRS})
 	set_property(TARGET ${PYMESHLAB_MODULE_NAME}
 		PROPERTY RUNTIME_OUTPUT_DIRECTORY ${PYMESHLAB_BUILD_DISTRIB_DIR})
 elseif(BUILD_PYMESHLAB_UPDATE_DOC) #bin to update doc

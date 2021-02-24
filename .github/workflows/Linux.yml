@@ -81,3 +81,8 @@ jobs:
       run: |
         pip3 install pytest numpy
         pytest --pyargs pymeshlab
+    - name: Upload PyMeshLab results
+      uses: actions/upload-artifact@v2
+      with:
+        name: PyMeshLabResults_${{ runner.os }}_python${{ matrix.pyversion }}
+        path: pymeshlab/tests/sample_meshes/test_output
