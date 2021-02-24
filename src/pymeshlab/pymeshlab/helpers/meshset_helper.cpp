@@ -33,7 +33,6 @@
 #include <common/meshlabdocumentbundler.h>
 #include <wrap/io_trimesh/alnParser.h>
 
-#include <QOpenGLPaintDevice>
 #include <QApplication>
 
 #include "common.h"
