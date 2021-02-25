@@ -162,10 +162,6 @@ const char* PYMS_FILTER_PARAMETER_VALUES =
 		"set by the user: in this case, the output value of these parameters "
 		"should be the same as input.";
 
-//MeshSet::print_filter_list
-const char* PYMS_PRINT_FILTER_LIST =
-		"Prints the list of all the filters that can be applied in the MeshSet.";
-
 //MeshSet::print_filter_parameter_list
 const char* PYMS_PRINT_FILTER_PARAMETER_LIST =
 		"Prints the list of the parameters of the given filter, with their "

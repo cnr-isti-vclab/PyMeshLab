@@ -23,8 +23,9 @@
 #include "module_functions.h"
 #include <common/mlapplication.h>
 #include <common/plugins/plugin_manager.h>
-#include "helpers/common.h"
+#include <common/python/function_set.h>
 #include <common/globals.h>
+#include "helpers/common.h"
 
 void pymeshlab::loadDefaultPlugins()
 {
@@ -65,5 +66,10 @@ void pymeshlab::printPluginList()
 
 void pymeshlab::printFilterList()
 {
-	//todo
+	FunctionSet& fs = pymeshlab::functionSetInstance();
+	std::list<std::string> list = fs.pythonFilterFunctionNames();
+	std::cout << "MeshSet class - list of filter names:\n";
+	for (const std::string& fname : list){
+		std::cout << "\t" << fname << "\n";
+	}
 }

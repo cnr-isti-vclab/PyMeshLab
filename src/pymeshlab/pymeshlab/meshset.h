@@ -60,7 +60,6 @@ public:
 	bool meshIdExists(int id) const;
 	CMeshO& mesh(int id);
 
-	void printPythonFilterNamesList() const;
 	void printPythonFilterParameterList(const std::string& functionName) const;
 	void printFilterScript() const;
 

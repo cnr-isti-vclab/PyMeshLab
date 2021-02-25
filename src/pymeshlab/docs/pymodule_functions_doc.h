@@ -28,7 +28,7 @@ namespace doc {
 
 //load_default_plugins
 
-const char* LOAD_DEFAULT_PLUGINS =
+const char* MODULE_LOAD_DEFAULT_PLUGINS =
 		"Loads the set of default plugins that are shipped with pymeshlab. "
 		"This function is automatically run when importing pymeshlab, and it should "
 		"be called just one time per session. If called when plugins are already "
@@ -46,12 +46,9 @@ const char* MODULE_NUMBER_PLUGINS =
 const char* MODULE_PRINT_PLUGIN_LIST =
 		"Prints all the meshlab plugins loaded in the current session of PyMeshLab.";
 
-//set_max_gpu_memory
-const char* MODULE_SET_MAX_GPU_MEMORY =
-		"Sets the maximum number of GPU memory MegaBytes dedicated to PyMeshLab filters. "
-		"This function should be run just one time after ``import pymeshlab`` instruction. "
-		"If not changed, the default value is 350 Mb.";
-
+//print_filter_list
+const char* MODULE_PRINT_FILTER_LIST =
+		"Prints the list of all the filters have been loaded in the pymeshlab session.";
 }
 }
 

@@ -102,18 +102,6 @@ CMeshO& pymeshlab::MeshSet::mesh(int id)
 }
 
 /**
- * @brief lists all the filters that can be called using the "apply_filter" function
- */
-void pymeshlab::MeshSet::printPythonFilterNamesList() const
-{
-	QStringList list = functionSet.pythonFilterFunctionNames();
-	std::cout << "MeshSet class - list of filter names:\n";
-	for (const QString& fname : list){
-		std::cout << "\t" << fname.toStdString() << "\n";
-	}
-}
-
-/**
  * @brief given the function names, lists all its parameters that can be 
  * passed to the "apply_filter" function
  * @param functionName
