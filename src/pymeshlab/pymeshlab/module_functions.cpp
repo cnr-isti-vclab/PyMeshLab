@@ -47,6 +47,11 @@ void pymeshlab::printVersion()
 		MeshLabApplication::appVer().toStdString() << "\n";
 }
 
+std::list<std::string> pymeshlab::filterList()
+{
+	return pymeshlab::functionSetInstance().pythonFilterFunctionNames();
+}
+
 int pymeshlab::numberPlugins()
 {
 	PluginManager& pm = meshlab::pluginManagerInstance();

@@ -22,6 +22,7 @@
 ****************************************************************************/
 #include "pymodule_functions.h"
 
+#include <pybind11/stl.h>
 #include "pymeshlab/module_functions.h"
 #include "docs/pymodule_functions_doc.h"
 
@@ -29,6 +30,7 @@ void pymeshlab::initModuleFunctions(pybind11::module& m)
 {
 	m.def("load_default_plugins", &pymeshlab::loadDefaultPlugins, doc::MODULE_LOAD_DEFAULT_PLUGINS);
 	m.def("print_pymeshlab_version", &pymeshlab::printVersion, doc::MODULE_PRINT_VERSION);
+	m.def("filter_list", &pymeshlab::filterList, doc::MODULE_FILTER_LIST);
 	m.def("number_plugins", &pymeshlab::numberPlugins, doc::MODULE_NUMBER_PLUGINS);
 	m.def("print_plugin_list", &pymeshlab::printPluginList, doc::MODULE_PRINT_PLUGIN_LIST);
 	m.def("print_filter_list", &pymeshlab::printFilterList, doc::MODULE_PRINT_FILTER_LIST);

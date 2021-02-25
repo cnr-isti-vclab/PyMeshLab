@@ -24,11 +24,13 @@
 #define PYMESHLAB_MODULE_FUNCTIONS_H
 
 #include <string>
+#include <list>
 
 namespace pymeshlab {
 
 void loadDefaultPlugins();
 void printVersion();
+std::list<std::string> filterList();
 int numberPlugins();
 void printPluginList();
 void printFilterList();

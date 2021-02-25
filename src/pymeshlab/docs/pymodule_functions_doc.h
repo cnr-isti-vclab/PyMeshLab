@@ -38,6 +38,11 @@ const char* MODULE_LOAD_DEFAULT_PLUGINS =
 const char* MODULE_PRINT_VERSION =
 		"Prints the PyMeshLab version that is currently running.";
 
+//filter_list
+const char* MODULE_FILTER_LIST =
+		"Returns a list of all the (python names of the) filters that have been "
+		"loaded in the current session of PyMeshLab.";
+
 //number_plugins
 const char* MODULE_NUMBER_PLUGINS =
 		"Returns the number of plugins loaded in the current session of PyMeshLab.";
@@ -48,7 +53,8 @@ const char* MODULE_PRINT_PLUGIN_LIST =
 
 //print_filter_list
 const char* MODULE_PRINT_FILTER_LIST =
-		"Prints the list of all the filters have been loaded in the pymeshlab session.";
+		"Prints the list of all the filters have been loaded in the current "
+		"session of PyMeshLab.";
 
 //print_filter_parameter_list
 const char* MODULE_PRINT_FILTER_PARAMETER_LIST =
