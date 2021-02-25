@@ -1026,7 +1026,8 @@ std::string RSTDocumentationFromFilterFunctionSet(const FunctionSet& filterFunct
 
 	//load parameters
 	doc += 
-			"load parameters\n---------------\n\n"
+			".. _load_mesh_parameters:\n\n"
+			"load mesh parameters\n--------------------\n\n"
 			"Here are listed all the file formats that can be loaded using"
 			"the functions :py:meth:`pmeshlab.MeshSet.load_new_mesh` and "
 			":py:meth:`pmeshlab.MeshSet.load_current_mesh`, with all the possible "
@@ -1038,7 +1039,8 @@ std::string RSTDocumentationFromFilterFunctionSet(const FunctionSet& filterFunct
 
 	//save parameters
 	doc += 
-			"save parameters\n---------------\n\n"
+			".. _save_mesh_parameters:\n\n"
+			"save mesh parameters\n--------------------\n\n"
 			"Here are listed all the file formats that can be saved using"
 			"the function :py:meth:`pmeshlab.MeshSet.save_current_mesh`, "
 			"with all the possible parameters that can be accepted by these "
@@ -1051,6 +1053,7 @@ std::string RSTDocumentationFromFilterFunctionSet(const FunctionSet& filterFunct
 	//load raster parameters
 	
 	doc +=
+			".. _load_raster_parameters:\n\n"
 			"load raster parameters\n----------------------\n\n"
 			"Here are listed all the raster file formats that can be loaded using"
 			"the functions :py:meth:`pmeshlab.MeshSet.load_new_raster`.\n\n";
