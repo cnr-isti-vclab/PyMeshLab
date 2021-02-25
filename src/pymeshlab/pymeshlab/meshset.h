@@ -87,10 +87,6 @@ public:
 			const std::string& filtername,
 			pybind11::kwargs kwargs = pybind11::kwargs());
 
-	/** Member functions not binded on Python **/
-
-	//documentation
-	std::string filtersRSTDocumentation() const;
 private:
 	PluginManager& pm;
 	FunctionSet& functionSet;

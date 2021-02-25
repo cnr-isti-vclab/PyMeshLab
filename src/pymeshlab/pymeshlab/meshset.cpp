@@ -310,10 +310,4 @@ pybind11::dict pymeshlab::MeshSet::filterParameterValues(
 	return outputValues;
 }
 
-std::string pymeshlab::MeshSet::filtersRSTDocumentation() const
-{
-	return meshsethelper::RSTDocumentationFromFilterFunctionSet(functionSet);
-}
-
-
 

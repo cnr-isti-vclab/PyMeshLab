@@ -115,6 +115,9 @@ std::string getRootPath();
 std::string getPluginsPath();
 std::string getSamplesPath();
 
+std::string filterListRSTDocumentation();
+std::string ioFormatListRSTDocumentation();
+
 }
 
 #endif // PYMESHLAB_PYMESHLABCOMMON_H
