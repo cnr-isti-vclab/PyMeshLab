@@ -95,7 +95,7 @@ public:
 	std::string filtersRSTDocumentation() const;
 private:
 	PluginManager& pm;
-	FunctionSet functionSet;
+	FunctionSet& functionSet;
 	FilterScript filterScript;
 
 	bool verbose;

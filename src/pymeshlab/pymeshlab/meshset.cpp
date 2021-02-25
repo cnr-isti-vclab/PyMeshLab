@@ -39,7 +39,7 @@ namespace py = pybind11;
 pymeshlab::MeshSet::MeshSet(bool verbose) :
 	MeshDocument(),
 	pm(meshlab::pluginManagerInstance()),
-	functionSet(pm, QString::fromStdString(getSamplesPath() + "cube.obj"))
+	functionSet(pymeshlab::functionSetInstance())
 {
 	if (!verbose)
 		VerbosityManager::disableVersbosity();
@@ -192,8 +192,7 @@ void pymeshlab::MeshSet::saveCurrentMesh(const std::string& filename, pybind11::
  */
 void pymeshlab::MeshSet::addMesh(const CMeshO& mesh, const std::string& name, bool setAsCurrent)
 {
-	MeshModel* mm = this->addNewMesh("", QString::fromStdString(name), setAsCurrent);
-	mm->cm = mesh;
+	this->addNewMesh(mesh, QString::fromStdString(name), setAsCurrent);
 }
 
 void pymeshlab::MeshSet::loadNewRaster(const std::string& filename)
