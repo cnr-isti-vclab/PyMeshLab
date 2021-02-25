@@ -43,7 +43,6 @@ pymeshlab::MeshSet::MeshSet(bool verbose) :
 {
 	if (!verbose)
 		VerbosityManager::disableVersbosity();
-	std::string samplesPath = getSamplesPath();
 	setVerbosity(verbose);
 	if (!verbose)
 		VerbosityManager::enableVerbosity();
