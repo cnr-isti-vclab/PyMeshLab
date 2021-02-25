@@ -17,7 +17,7 @@ You can load, save meshes and apply MeshLab filters:
 .. code-block:: python
 
    ms.load_new_mesh('airplane.obj')
-   ms.apply_filter('convex_hull')
+   ms.convex_hull()
    ms.save_current_mesh('convex_hull.ply')
 
 You can list all the available filters and theirs parameters:
@@ -31,15 +31,15 @@ And apply filters with your parameters:
 
 .. code-block:: python
 
-   ms.apply_filter('noisy_isosurface', resolution=128)
+   ms.noisy_isosurface(resolution=128)
 
-The ``apply_filter`` function, most of the times, will return an empty dictionary. This is because the filter applied does not need to return anything.
 Most of the MeshLab filters will change in some way the state of the MeshSet. The behaviour of how filters change the state is the same of what
-happens when applying the same filter in MeshLab. However, some filters return values:
+happens when applying the same filter in MeshLab.
+Some filters may return values, and these values are placed in a dictionary that is returned by the called method:
 
 .. code-block:: python
 
-   out_dict = ms.apply_filter('compute_geometric_measures')
+   out_dict = ms.compute_geometric_measures()
    print(out_dict['surface_area'])
 
 For further example usage of the libraries, check the :ref:`tutorials` page, which provides several use case examples of PyMeshLab.
