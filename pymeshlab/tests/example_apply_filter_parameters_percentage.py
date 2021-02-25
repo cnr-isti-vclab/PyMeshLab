@@ -22,7 +22,7 @@ def example_apply_filter_parameters_percentage():
 
     # apply the filter that will remove connected components having diameter less than 50%
     # of the diameter of the entire mesh
-    ms.apply_filter('remove_isolated_pieces_wrt_diameter', mincomponentdiag=p)
+    ms.remove_isolated_pieces_wrt_diameter(mincomponentdiag=p)
 
     assert ms.current_mesh().face_number() == 161606
 

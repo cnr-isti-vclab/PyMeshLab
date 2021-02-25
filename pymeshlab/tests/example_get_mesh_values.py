@@ -14,11 +14,11 @@ def example_get_mesh_values():
     ms.load_new_mesh(base_path + 'chameleon.pts')
 
     # applying some filters...
-    ms.apply_filter('point_cloud_simplification')
-    ms.apply_filter('surface_reconstruction_ball_pivoting')
-    ms.apply_filter('parametrization_trivial_per_triangle', textdim=1024)
+    ms.point_cloud_simplification()
+    ms.surface_reconstruction_ball_pivoting()
+    ms.parametrization_trivial_per_triangle(textdim=1024)
     ms.save_current_mesh(output_path + 'chameleon_simplified.obj')
-    ms.apply_filter('transfer_vertex_color_to_texture', textname='chameleon_simplified.png')
+    ms.transfer_vertex_color_to_texture(textname='chameleon_simplified.png')
 
     # get a reference to the current mesh
     m = ms.current_mesh()

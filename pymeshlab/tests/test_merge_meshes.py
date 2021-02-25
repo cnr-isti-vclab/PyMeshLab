@@ -11,6 +11,6 @@ def test_merge_meshes():
     ms.load_new_mesh(base_path + "bone.ply")
     ms.load_new_mesh(base_path + "airplane.obj")
 
-    ms.apply_filter("flatten_visible_layers")
+    ms.flatten_visible_layers()
     
     ms.save_current_mesh(output_path + "merged.obj")

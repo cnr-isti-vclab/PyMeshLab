@@ -11,9 +11,9 @@ def test_hausdorff():
     ms.load_new_mesh(base_path + "bone.ply")  # id: 1, just for test id on mesh parameter
     ms.load_new_mesh(base_path + "cow.obj")  # id: 2
 
-    ms.apply_filter('remeshing_isotropic_explicit_remeshing', iterations=10)  # remesh mesh id3
+    ms.remeshing_isotropic_explicit_remeshing(iterations=10)  # remesh mesh id3
 
-    res_dict = ms.apply_filter('hausdorff_distance', targetmesh=0, sampledmesh=2)
+    res_dict = ms.hausdorff_distance(targetmesh=0, sampledmesh=2)
 
     print('Mean hausdorff distance: ' + str(res_dict['mean']))
     print('Mean hausdorff distance w.r.t bb diag of first mesh: ' + str(res_dict['mean'] / res_dict['diag_mesh_0']))

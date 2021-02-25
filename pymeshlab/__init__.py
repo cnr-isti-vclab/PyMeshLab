@@ -19,8 +19,10 @@ except PyMeshLabException as e:
 # function that binds a name to a method of a class that calls the apply_filter function
 def bind_function(name):
     def foo(self, **kwargs): # Have to add self since this will become a method
-        self.apply_filter(name, **kwargs)
-    foo.__name__ = name #change the name of the function to the actual filter name
+        dict = self.apply_filter(name, **kwargs)
+        if (bool(dict)): # return the dictionary only if it is not empty
+            return dict
+    foo.__name__ = name # change the name of the function to the actual filter name
     return foo
 
 # for each filter loaded, create a method in the MeshSet class with that name that calls the apply_filter

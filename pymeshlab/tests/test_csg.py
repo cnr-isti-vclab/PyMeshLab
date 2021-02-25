@@ -12,6 +12,6 @@ def test_csg():
     ms.load_new_mesh(base_path + "bone.ply")  # id: 1, just for test id on mesh parameter
     ms.load_new_mesh(base_path + "airplane.obj")  # id: 2
 
-    ms.apply_filter('csg_operation', firstmesh=0, secondmesh=2, operator='Union')
+    ms.csg_operation(firstmesh=0, secondmesh=2, operator='Union')
 
     ms.save_current_mesh(output_path + 'cow_with_wings.obj')
