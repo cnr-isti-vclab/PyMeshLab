@@ -14,7 +14,7 @@ def example_apply_filter_output():
 
     # compute the geometric measures of the current mesh
     # and save the results in the out_dict dictionary
-    out_dict = ms.apply_filter('compute_geometric_measures')
+    out_dict = ms.compute_geometric_measures()
 
     # get the average edge length from the dictionary
     avg_edge_length = out_dict['avg_edge_length']

@@ -14,8 +14,7 @@ def example_apply_filter_parameters():
     # apply the filter 'noisy_isosurface', with a resolution parameter of 128
     # the parameter for this filter is an integer. Check the type of each parameter
     # in the Filter List page.
-    ms.apply_filter('noisy_isosurface', resolution=128)
+    ms.noisy_isosurface(resolution=128)
 
     # save the new current mesh created by the filter
     ms.save_current_mesh(output_path + 'noisy_isosurface' + str(128) + '.ply')
-

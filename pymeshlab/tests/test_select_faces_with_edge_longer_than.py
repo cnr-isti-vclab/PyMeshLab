@@ -10,10 +10,10 @@ def test_select_faces_with_edge_longer_than():
     ms.load_new_mesh(base_path + "cube.obj")
 
     # butterfly subdivision
-    ms.apply_filter('subdivision_surfaces_butterfly_subdivision')
+    ms.subdivision_surfaces_butterfly_subdivision()
     
     # select faces with edge longer than
-    ms.apply_filter('select_faces_with_edges_longer_than', threshold=0.2)
+    ms.select_faces_with_edges_longer_than(threshold=0.2)
     
     m = ms.current_mesh()
     

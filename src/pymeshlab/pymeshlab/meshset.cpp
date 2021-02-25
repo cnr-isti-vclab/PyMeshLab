@@ -27,6 +27,7 @@
 #include <common/mlexception.h>
 
 #include <common/globals.h>
+#include <common/python/python_utils.h>
 #include "percentage.h"
 #include "exceptions.h"
 #include "helpers/common.h"
@@ -37,13 +38,11 @@ namespace py = pybind11;
 
 pymeshlab::MeshSet::MeshSet(bool verbose) :
 	MeshDocument(),
-	pm(meshlab::pluginManagerInstance())//,
-	//sceneGLSharedDataContext(nullptr)
+	pm(meshlab::pluginManagerInstance()),
+	functionSet(pymeshlab::functionSetInstance())
 {
 	if (!verbose)
 		VerbosityManager::disableVersbosity();
-	//pm.loadPlugins(QString::fromStdString(getPluginsPath()));
-	functionSet.populate(pm);
 	setVerbosity(verbose);
 	if (!verbose)
 		VerbosityManager::enableVerbosity();
@@ -51,7 +50,6 @@ pymeshlab::MeshSet::MeshSet(bool verbose) :
 
 pymeshlab::MeshSet::~MeshSet()
 {
-	//delete sceneGLSharedDataContext;
 }
 
 void pymeshlab::MeshSet::setVerbosity(bool verbose)
@@ -103,46 +101,6 @@ CMeshO& pymeshlab::MeshSet::mesh(int id)
 }
 
 /**
- * @brief lists all the filters that can be called using the "apply_filter" function
- */
-void pymeshlab::MeshSet::printPythonFilterNamesList() const
-{
-	QStringList list = functionSet.pythonFilterFunctionNames();
-	std::cout << "MeshSet class - list of filter names:\n";
-	for (const QString& fname : list){
-		std::cout << "\t" << fname.toStdString() << "\n";
-	}
-}
-
-/**
- * @brief given the function names, lists all its parameters that can be 
- * passed to the "apply_filter" function
- * @param functionName
- */
-void pymeshlab::MeshSet::printPythonFilterParameterList(const std::string& functionName) const
-{
-	const Function& ff = functionSet.filterFunction(QString::fromStdString(functionName));
-	std::cout <<
-				"Please note: some parameters depend on the mesh(es) used as input of the \n"
-				"filter. Default values listed here are computed on a 1x1x1 cube \n"
-				"(pymeshlab/tests/sample/cube.obj), and they will be computed on the input mesh\n"
-				"if they are left as default.\n";
-
-	std::cout << functionName <<" filter - list of parameter names:\n";
-	if (ff.parametersNumber() == 0) {
-		std::cout << "\tNone.\n";
-	}
-	else {
-		for (const FunctionParameter& ffp : ff) {
-			std::cout << "\t" << ffp.pythonName().toStdString() << " : "
-					  << ffp.pythonTypeString().toStdString() << " = ";
-			ffp.printDefaultValue(std::cout);
-			std::cout << "\n";
-		}
-	}
-}
-
-/**
  * @brief prints all the filters (with their parameters) that have been applied on the current 
  * MeshSet. 
  */
@@ -151,10 +109,10 @@ void pymeshlab::MeshSet::printFilterScript() const
 	std::cout << "Filter Script Size : " << filterScript.size() << "\n\n";
 	uint i = 0;
 	for (const FilterNameParameterValuesPair& p :filterScript){
-		std::cout << std::to_string(i) + ": " << FunctionSet::toPythonName(p.filterName()).toStdString() <<
+		std::cout << std::to_string(i) + ": " << computePythonName(p.filterName()).toStdString() <<
 					 "\n";
 		for (const RichParameter& par : p.second){
-			FunctionParameter ffp(FunctionSet::toPythonName(par.name()), par);
+			FunctionParameter ffp(computePythonName(par.name()), par);
 			std::cout << "\t" << ffp.pythonName().toStdString() << " : "
 					  << ffp.pythonTypeString().toStdString() << " = ";
 			ffp.printDefaultValue(std::cout);
@@ -193,8 +151,7 @@ void pymeshlab::MeshSet::saveCurrentMesh(const std::string& filename, pybind11::
  */
 void pymeshlab::MeshSet::addMesh(const CMeshO& mesh, const std::string& name, bool setAsCurrent)
 {
-	MeshModel* mm = this->addNewMesh("", QString::fromStdString(name), setAsCurrent);
-	mm->cm = mesh;
+	this->addNewMesh(mesh, QString::fromStdString(name), setAsCurrent);
 }
 
 void pymeshlab::MeshSet::loadNewRaster(const std::string& filename)
@@ -279,7 +236,7 @@ void pymeshlab::MeshSet::applyFilterScript()
 {
 	for (FilterNameParameterValuesPair p : filterScript){
 		QString meshlabFilterName = p.first;
-		std::string filtername = FunctionSet::toPythonName(meshlabFilterName).toStdString();
+		std::string filtername = computePythonName(meshlabFilterName).toStdString();
 		QAction* action = nullptr;
 		FilterPluginInterface* fp = meshsethelper::pluginFromFilterName(meshlabFilterName, action);
 		RichParameterList rpl;
@@ -351,26 +308,5 @@ pybind11::dict pymeshlab::MeshSet::filterParameterValues(
 	}
 	return outputValues;
 }
-
-//bool pymeshlab::MeshSet::isSceneGLSharedDataContextEnabled() const
-//{
-//	return sceneGLSharedDataContext != nullptr;
-//}
-
-//void pymeshlab::MeshSet::initSceneGLSharedDataContext()
-//{
-//	//Todo
-//}
-
-//MLSceneGLSharedDataContext* pymeshlab::MeshSet::sharedDataContext()
-//{
-//	return sceneGLSharedDataContext;
-//}
-
-std::string pymeshlab::MeshSet::filtersRSTDocumentation() const
-{
-	return meshsethelper::RSTDocumentationFromFilterFunctionSet(functionSet);
-}
-
 
 

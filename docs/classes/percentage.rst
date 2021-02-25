@@ -13,7 +13,7 @@ Here is a simple example of usage of the class:
 
    ms = pymeshlab.MeshSet()
    [...]
-   ms.apply_filter('uniform_mesh_resampling', cellsize=Percentage(0.01), offset=1)
+   ms.uniform_mesh_resampling(cellsize=Percentage(0.01), offset=1)
 
 This class is necessary to distinguish between relative Percentage values and absolute values (which are of type float).
 

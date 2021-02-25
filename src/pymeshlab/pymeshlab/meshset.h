@@ -27,7 +27,7 @@
 #include <common/ml_document/mesh_document.h>
 #include <common/filterscript.h>
 #include <common/plugins/plugin_manager.h>
-#include "plugin_management/function_set.h"
+#include <common/python/function_set.h>
 
 namespace pymeshlab {
 
@@ -60,8 +60,6 @@ public:
 	bool meshIdExists(int id) const;
 	CMeshO& mesh(int id);
 
-	void printPythonFilterNamesList() const;
-	void printPythonFilterParameterList(const std::string& functionName) const;
 	void printFilterScript() const;
 
 	void loadNewMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());
@@ -89,20 +87,9 @@ public:
 			const std::string& filtername,
 			pybind11::kwargs kwargs = pybind11::kwargs());
 
-	/** Member functions not binded on Python **/
-	//sharedDataContext management
-//	bool isSceneGLSharedDataContextEnabled() const;
-//	void initSceneGLSharedDataContext();
-//	MLSceneGLSharedDataContext* sharedDataContext();
-	
-	
-	//documentation
-	std::string filtersRSTDocumentation() const;
 private:
 	PluginManager& pm;
-//	MLSceneGLSharedDataContext* sceneGLSharedDataContext;
-	
-	FunctionSet functionSet;
+	FunctionSet& functionSet;
 	FilterScript filterScript;
 
 	bool verbose;

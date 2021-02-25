@@ -15,7 +15,9 @@ def example_apply_filter():
     ms.load_new_mesh(base_path + "airplane.obj")
 
     # apply convex hull filter to the current selected mesh (last loaded)
-    ms.apply_filter('convex_hull')
+    ms.convex_hull()
+    # alternatively:
+    # ms.apply_filter('convex_hull')
 
     assert ms.number_meshes() == 2
 

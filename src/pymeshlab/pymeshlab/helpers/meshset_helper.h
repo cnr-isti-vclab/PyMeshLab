@@ -149,11 +149,6 @@ pybind11::dict applyFilterRPL(
 		bool updateFilterScript,
 		MeshSet& md);
 
-/** RST Documentation **/
-
-std::string RSTDocumentationFromFilterFunctionSet(
-		const FunctionSet& filterFunctionSet);
-
 } //namespace pymeshlab::meshset_helper
 } //namespace pymeshlab
 

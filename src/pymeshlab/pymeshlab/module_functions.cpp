@@ -23,8 +23,16 @@
 #include "module_functions.h"
 #include <common/mlapplication.h>
 #include <common/plugins/plugin_manager.h>
-#include "helpers/common.h"
+#include <common/python/function_set.h>
 #include <common/globals.h>
+#include "helpers/common.h"
+
+void pymeshlab::loadDefaultPlugins()
+{
+	PluginManager& pm = meshlab::pluginManagerInstance();
+	pm.loadPlugins(QString::fromStdString(getPluginsPath()));
+}
+
 
 void pymeshlab::printVersion()
 {
@@ -37,6 +45,11 @@ void pymeshlab::printVersion()
 	
 	std::cout << "PyMeshLab " << pymsversion << " based on MeshLab " << 
 		MeshLabApplication::appVer().toStdString() << "\n";
+}
+
+std::list<std::string> pymeshlab::filterList()
+{
+	return pymeshlab::functionSetInstance().pythonFilterFunctionNames();
 }
 
 int pymeshlab::numberPlugins()
@@ -56,9 +69,40 @@ void pymeshlab::printPluginList()
 	}
 }
 
-
-void pymeshlab::loadDefaultPlugins()
+void pymeshlab::printFilterList()
 {
-	PluginManager& pm = meshlab::pluginManagerInstance();
-	pm.loadPlugins(QString::fromStdString(getPluginsPath()));
+	FunctionSet& fs = pymeshlab::functionSetInstance();
+	std::list<std::string> list = fs.pythonFilterFunctionNames();
+	std::cout << "MeshSet class - list of filter names:\n";
+	for (const std::string& fname : list){
+		std::cout << "\t" << fname << "\n";
+	}
+}
+
+/**
+ * @brief @brief given the function names, lists all its parameters that can be
+ * passed to the "apply_filter" function
+ */
+void pymeshlab::printFilterParameterList(const std::string& filterName)
+{
+	FunctionSet& fs = pymeshlab::functionSetInstance();
+	const Function& ff = fs.filterFunction(QString::fromStdString(filterName));
+	std::cout <<
+				"Please note: some parameters depend on the mesh(es) used as input of the \n"
+				"filter. Default values listed here are computed on a 1x1x1 cube \n"
+				"(pymeshlab/tests/sample/cube.obj), and they will be computed on the input mesh\n"
+				"if they are left as default.\n";
+
+	std::cout << filterName <<" filter - list of parameter names:\n";
+	if (ff.parametersNumber() == 0) {
+		std::cout << "\tNone.\n";
+	}
+	else {
+		for (const FunctionParameter& ffp : ff) {
+			std::cout << "\t" << ffp.pythonName().toStdString() << " : "
+					  << ffp.pythonTypeString().toStdString() << " = ";
+			ffp.printDefaultValue(std::cout);
+			std::cout << "\n";
+		}
+	}
 }
