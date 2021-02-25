@@ -222,13 +222,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``minval : float = inf``
+   ``minval : float = 0``
 
       .. raw:: html
 
          <i>Min</i>: The value that will be mapped with the lower end of the scale (red)
 
-   ``maxval : float = -inf``
+   ``maxval : float = 0``
 
       .. raw:: html
 
@@ -353,13 +353,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``minval : float = inf``
+   ``minval : float = 0``
 
       .. raw:: html
 
          <i>Min</i>: The value that will be mapped with the lower end of the scale (red)
 
-   ``maxval : float = -inf``
+   ``maxval : float = 0``
 
       .. raw:: html
 
@@ -387,7 +387,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``startpoint : numpy.ndarray[numpy.float64[3]] = [1, 1, 1]``
+   ``startpoint : numpy.ndarray[numpy.float64[3]] = [-0.5, -0.5, -0.5]``
 
       .. raw:: html
 
@@ -425,13 +425,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``minval : float = inf``
+   ``minval : float = 0``
 
       .. raw:: html
 
          <i>Min</i>: The value that will be mapped with the lower end of the scale (red)
 
-   ``maxval : float = -inf``
+   ``maxval : float = 0``
 
       .. raw:: html
 
@@ -1448,7 +1448,7 @@ apply_filter parameters
 
          <i>Vertex Mesh</i>: The mesh whose vertices are used as seed points for the color computation. These seeds point are projected onto the above mesh.
 
-   ``radius : float (bounded) = 0.34641 [min: 0; max: 1.1547]``
+   ``radius : float (bounded) = 0.173205 [min: 0; max: 0.57735]``
 
       .. raw:: html
 
@@ -1953,13 +1953,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``point1 : numpy.ndarray[numpy.float64[3]] = [1, 1, 1]``
+   ``point1 : numpy.ndarray[numpy.float64[3]] = [-0.5, -0.5, -0.5]``
 
       .. raw:: html
 
          <i>Point 1</i>: A vertex on the mesh that represent one harmonic field boundary condition.
 
-   ``point2 : numpy.ndarray[numpy.float64[3]] = [-1, -1, -1]``
+   ``point2 : numpy.ndarray[numpy.float64[3]] = [0.5, 0.5, 0.5]``
 
       .. raw:: html
 
@@ -2010,70 +2010,6 @@ apply_filter parameters
       .. raw:: html
 
          <i>Projection Radius</i>: If non zero, this parameter specifies the desired radius of the reference cylinder used for the projection. Changing this parameter affect the <b>X</b> horizontal scaling of the resulting mesh. If zero (default) the average distance of the mesh from the axis is chosen.
-
-.. data:: global_registration
-
-   *MeshLab filter name*: 'Global registration'
-
-   .. raw:: html
-
-      Compute the rigid transformation aligning two 3d objects.</p>
-
-   **Parameters:**
-
-   ``refmesh : int = 0``
-
-      .. raw:: html
-
-         <i>Reference Mesh</i>: Reference point-cloud or mesh
-
-   ``targetmesh : int = 0``
-
-      .. raw:: html
-
-         <i>Target Mesh</i>: Point-cloud or mesh to be aligned to the reference
-
-   ``overlap : Percentage = 50%``
-
-      .. raw:: html
-
-         <i>Overlap Ratio</i>: Overlap ratio between the two clouds (command line option: -o)
-
-   ``delta : float = 0.1``
-
-      .. raw:: html
-
-         <i>Registration tolerance</i>: Tolerance value for the congruent set exploration and LCP computation (command line option: -d)
-
-   ``nbsamples : int = 200``
-
-      .. raw:: html
-
-         <i>Number of samples</i>: Number of samples used in each mesh (command line option: -n)
-
-   ``norm_diff : float = -1``
-
-      .. raw:: html
-
-         <i>Filter: difference of normal (degrees)</i>: Allowed difference of normals allowed between corresponding pairs of points(command line option: -a)
-
-   ``color_diff : float = -1``
-
-      .. raw:: html
-
-         <i>Filter: difference color</i>: Allowed difference of colors allowed between corresponding pairs of points(command line option: -c)
-
-   ``max_time_seconds : int = 10000``
-
-      .. raw:: html
-
-         <i>Max. Computation time, in seconds</i>: Stop the computation before the end of the exploration (command line option: -t)
-
-   ``usesuper4pcs : bool = True``
-
-      .. raw:: html
-
-         <i>Use Super4PCS</i>: When disable, use 4PCS algorithm (command line option: -x
 
 .. data:: gpu_filter_example_
 
@@ -2201,7 +2137,7 @@ apply_filter parameters
 
          <i>Sample Faces</i>: See the above comment.
 
-   ``samplenum : int = 0``
+   ``samplenum : int = 8``
 
       .. raw:: html
 
@@ -3116,7 +3052,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``samplenum : int = 0``
+   ``samplenum : int = 8``
 
       .. raw:: html
 
@@ -3546,13 +3482,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``histmin : float = inf``
+   ``histmin : float = 0``
 
       .. raw:: html
 
          <i>Hist Min</i>: The faces are displaced of a vector whose norm is bounded by this value
 
-   ``histmax : float = -inf``
+   ``histmax : float = 0``
 
       .. raw:: html
 
@@ -3730,13 +3666,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``histmin : float = inf``
+   ``histmin : float = 0``
 
       .. raw:: html
 
          <i>Hist Min</i>: The vertex are displaced of a vector whose norm is bounded by this value
 
-   ``histmax : float = -inf``
+   ``histmax : float = 0``
 
       .. raw:: html
 
@@ -4212,7 +4148,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``textname : str = 'cube_color.png'``
+   ``textname : str = '_color.png'``
 
       .. raw:: html
 
@@ -4348,13 +4284,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``minqualityval : float = inf``
+   ``minqualityval : float = 0``
 
       .. raw:: html
 
          <i>Minimum mesh quality</i>: The specified quality value is mapped in the <b>lower</b> end of the chosen color scale. Default value: the minimum quality value found on the mesh.
 
-   ``maxqualityval : float = -inf``
+   ``maxqualityval : float = 0``
 
       .. raw:: html
 
@@ -4759,7 +4695,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``maxqualitythr : Percentage = -nan%``
+   ``maxqualitythr : Percentage = inf%``
 
       .. raw:: html
 
@@ -4927,13 +4863,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``minq : float (bounded) = -nan [min: inf; max: -inf]``
+   ``minq : float (bounded) = 0 [min: 0; max: 0]``
 
       .. raw:: html
 
          <i>Min Quality</i>: Minimum acceptable quality value
 
-   ``maxq : float (bounded) = -nan [min: inf; max: -inf]``
+   ``maxq : float (bounded) = 0 [min: 0; max: 0]``
 
       .. raw:: html
 
@@ -4955,13 +4891,13 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``minq : float (bounded) = -nan [min: inf; max: -inf]``
+   ``minq : float (bounded) = 0 [min: 0; max: 0]``
 
       .. raw:: html
 
          <i>Min Quality</i>: Minimum acceptable quality value
 
-   ``maxq : float (bounded) = -nan [min: inf; max: -inf]``
+   ``maxq : float (bounded) = 0 [min: 0; max: 0]``
 
       .. raw:: html
 
@@ -5108,7 +5044,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``threshold : float (bounded) = 0.0173205 [min: 0; max: 1.73205]``
+   ``threshold : float (bounded) = 0.00866025 [min: 0; max: 0.866025]``
 
       .. raw:: html
 
@@ -5360,7 +5296,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``textname : str = 'cube.png'``
+   ``textname : str = '/_tex.png.png'``
 
       .. raw:: html
 
@@ -5475,7 +5411,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``targetfacenum : int = 0``
+   ``targetfacenum : int = 6``
 
       .. raw:: html
 
@@ -5563,7 +5499,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``targetfacenum : int = 0``
+   ``targetfacenum : int = 6``
 
       .. raw:: html
 
@@ -6362,7 +6298,7 @@ apply_filter parameters
 
          <i>Max Dist Search</i>: Sample points for which we do not find anything within this distance are rejected and not considered for recovering data
 
-   ``textname : str = 'cube_tex.png'``
+   ``textname : str = '/_tex.png.png'``
 
       .. raw:: html
 
@@ -6408,7 +6344,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``textname : str = 'cube_tex.png'``
+   ``textname : str = '/_tex.png.png'``
 
       .. raw:: html
 
@@ -6993,19 +6929,19 @@ apply_filter parameters
 
          <i>Transformation:</i>: [XYZ translation] adds X,Y and Z offset to Layer transformation, [Center on BBox] moves Layer Origin to the Bounding Box center, [Set new Origin] moves Layer Origin to a specific point
 
-   ``axisx : float (bounded) = 0 [min: -17.3205; max: 17.3205]``
+   ``axisx : float (bounded) = 0 [min: -8.66025; max: 8.66025]``
 
       .. raw:: html
 
          <i>X Axis</i>: when using [XYZ translation], amount of translation along the X axis (in model units)
 
-   ``axisy : float (bounded) = 0 [min: -17.3205; max: 17.3205]``
+   ``axisy : float (bounded) = 0 [min: -8.66025; max: 8.66025]``
 
       .. raw:: html
 
          <i>Y Axis</i>: when using [XYZ translation], amount of translation along the Y axis (in model units)
 
-   ``axisz : float (bounded) = 0 [min: -17.3205; max: 17.3205]``
+   ``axisz : float (bounded) = 0 [min: -8.66025; max: 8.66025]``
 
       .. raw:: html
 
@@ -8047,8 +7983,10 @@ apply_filter parameters
 
          <i>BackDistance</i>: If true the mesh is colored according the distance from the frontier of the voonoi diagram induced by the VertexMesh seeds.
 
-load parameters
----------------
+.. _load_mesh_parameters:
+
+load mesh parameters
+--------------------
 
 Here are listed all the file formats that can be loaded usingthe functions :py:meth:`pmeshlab.MeshSet.load_new_mesh` and :py:meth:`pmeshlab.MeshSet.load_current_mesh`, with all the possible parameters that can be accepted by these functions.
 
@@ -8597,8 +8535,10 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
          <i>File Name</i>: The name of the file to load
 
-save parameters
----------------
+.. _save_mesh_parameters:
+
+save mesh parameters
+--------------------
 
 Here are listed all the file formats that can be saved usingthe function :py:meth:`pmeshlab.MeshSet.save_current_mesh`, with all the possible parameters that can be accepted by these functions.
 
@@ -8755,7 +8695,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>File Name</i>: The name of the file to save
 
-   ``position_val : numpy.ndarray[numpy.float64[3]] = [0, 0, -3.4641]``
+   ``position_val : numpy.ndarray[numpy.float64[3]] = [0, 0, -1.73205]``
 
       .. raw:: html
 
@@ -9085,7 +9025,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>File Name</i>: The name of the file to save
 
-   ``position_val : numpy.ndarray[numpy.float64[3]] = [0, 0, -3.4641]``
+   ``position_val : numpy.ndarray[numpy.float64[3]] = [0, 0, -1.73205]``
 
       .. raw:: html
 
@@ -9243,6 +9183,8 @@ Here are listed all the file formats that can be saved usingthe function :py:met
       .. raw:: html
 
          <i>Save Vertex Normal</i>: Save Vertex Normal
+
+.. _load_raster_parameters:
 
 load raster parameters
 ----------------------
