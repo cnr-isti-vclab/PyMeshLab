@@ -39,10 +39,12 @@ void pymeshlab::initMesh(py::module& m)
 	//constructor (could be empty)
 	meshClass.def(
 				py::init(&Mesh::createFromMatrices), doc::PYMESH_INIT,
-				py::arg("vertex_matrix") = Eigen::MatrixX3d(),
-				py::arg("face_matrix") = Eigen::MatrixX3i(),
+				py::arg("vertex_matrix")    = Eigen::MatrixX3d(),
+				py::arg("face_matrix")      = Eigen::MatrixX3i(),
 				py::arg("v_normals_matrix") = Eigen::MatrixX3d(),
-				py::arg("f_normals_matrix") = Eigen::MatrixX3d());
+				py::arg("f_normals_matrix") = Eigen::MatrixX3d(),
+				py::arg("v_quality_array")  = Eigen::VectorXd(),
+				py::arg("f_quality_array")  = Eigen::VectorXd());
 
 	meshClass.def("vertex_number", &CMeshO::VN, doc::PYMESH_VN);
 	meshClass.def("face_number", &CMeshO::FN, doc::PYMESH_FN);

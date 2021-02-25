@@ -27,11 +27,108 @@
 #include <vcg/../wrap/io_trimesh/import_obj.h>
 #include <common/mlexception.h>
 
-void loadMesh(CMeshO& m, std::string filename)
+CMeshO pymeshlab::Mesh::createFromMatrices(
+		const Eigen::MatrixX3d& vertices,
+		const Eigen::MatrixX3i& faces,
+		const Eigen::MatrixX3d& vertexNormals,
+		const Eigen::MatrixX3d& faceNormals,
+		const Eigen::VectorXd& vertexQuality,
+		const Eigen::VectorXd& faceQuality)
 {
-	vcg::tri::io::ImporterOBJ<CMeshO>::Info oi;
-	vcg::tri::io::ImporterOBJ<CMeshO>::Open(m, filename.c_str(), oi);
-	vcg::tri::UpdateBounding<CMeshO>::Box(m);
+	CMeshO m;
+	if (vertices.rows() > 0) {
+		//add vertices and their associated normals and quality if any
+		std::vector<CMeshO::VertexPointer> ivp(vertices.rows());
+
+		bool hasVNormals = vertexNormals.rows() > 0;
+		bool hasVQuality = vertexQuality.rows() > 0;
+		if (hasVNormals && (vertices.rows() != vertexNormals.size())) {
+			throw MLException(
+						"Error while creating mesh: the number of vertex normals "
+						"is different from the number of vertices.");
+		}
+		if (hasVQuality) {
+			if (vertices.rows() != vertexQuality.rows()) {
+				throw MLException(
+						"Error while creating mesh: the number of vertex quality "
+						"values is different from the number of vertices.");
+			}
+			m.vert.EnableQuality();
+		}
+		CMeshO::VertexIterator vi =
+				vcg::tri::Allocator<CMeshO>::AddVertices(m, vertices.rows());
+		for (unsigned int i = 0; i < vertices.rows(); ++i, ++vi) {
+			ivp[i] = &*vi;
+			vi->P() = CMeshO::CoordType(vertices(i,0), vertices(i,1), vertices(i,2));
+			if (hasVNormals) {
+				vi->N() = CMeshO::CoordType(
+							vertexNormals(i,0),
+							vertexNormals(i,1),
+							vertexNormals(i,2));
+			}
+			if (hasVQuality) {
+				vi->Q() = CMeshO::ScalarType(vertexQuality(i));
+			}
+		}
+
+		//add faces and their associated normals and quality if any
+
+		bool hasFNormals = faceNormals.rows() > 0;
+		bool hasFQuality = faceQuality.rows() > 0;
+		if (hasFNormals && (faces.rows() != faceNormals.rows())) {
+			throw MLException(
+						"Error while creating mesh: the number of face normals "
+						"is different from the number of faces.");
+		}
+		if (hasFQuality) {
+			if (faces.rows() != faceQuality.size()) {
+				throw MLException(
+						"Error while creating mesh: the number of face quality "
+						"values is different from the number of faces.");
+			}
+			m.face.EnableQuality();
+		}
+		CMeshO::FaceIterator fi =
+				vcg::tri::Allocator<CMeshO>::AddFaces(m, faces.rows());
+		for (unsigned int i = 0; i < faces.rows(); ++i, ++fi) {
+			for (unsigned int j = 0; j < 3; j++){
+				if ((unsigned int)faces(i,j) >= ivp.size()) {
+					throw MLException(
+								"Error while creating mesh: bad vertex index " +
+								QString::number(faces(i,j)) + " in face " +
+								QString::number(i) + "; vertex " + QString::number(j) + ".");
+				}
+			}
+			fi->V(0)=ivp[faces(i,0)];
+			fi->V(1)=ivp[faces(i,1)];
+			fi->V(2)=ivp[faces(i,2)];
+
+			if (hasFNormals){
+				fi->N() = CMeshO::CoordType(
+							faceNormals(i,0),
+							faceNormals(i,1),
+							faceNormals(i,2));
+			}
+			if (hasFQuality) {
+				fi->Q() = CMeshO::ScalarType(faceQuality(i));
+			}
+		}
+	}
+
+	return m;
+}
+
+bool pymeshlab::Mesh::isCompact(const CMeshO& mesh)
+{
+	return
+			mesh.vert.size() == (unsigned int)mesh.VN() &&
+			mesh.face.size() == (unsigned int)mesh.FN() &&
+			mesh.edge.size() == (unsigned int)mesh.EN();
+}
+
+Box3m pymeshlab::Mesh::boundingBox(const CMeshO& mesh)
+{
+	return mesh.bbox;
 }
 
 void pymeshlab::Mesh::updateBBox(CMeshO& mesh)
@@ -80,67 +177,6 @@ int pymeshlab::Mesh::selectedFaceNumber(const CMeshO& mesh)
 			counter++;
 	}
 	return counter;
-}
-
-CMeshO pymeshlab::Mesh::createFromMatrices(
-		const Eigen::MatrixX3d& vertices,
-		const Eigen::MatrixX3i& faces,
-		const Eigen::MatrixX3d& vertexNormals,
-		const Eigen::MatrixX3d& faceNormals)
-{
-	CMeshO m;
-	if (vertices.rows() > 0) {
-		CMeshO::VertexIterator vi =
-				vcg::tri::Allocator<CMeshO>::AddVertices(m, vertices.rows());
-		std::vector<CMeshO::VertexPointer> ivp(vertices.rows());
-
-		bool hasVNormals = vertexNormals.rows() == vertices.rows();
-		for (unsigned int i = 0; i < vertices.rows(); ++i, ++vi) {
-			ivp[i] = &*vi;
-			vi->P() = CMeshO::CoordType(vertices(i,0), vertices(i,1), vertices(i,2));
-			if (hasVNormals) {
-				vi->N() = CMeshO::CoordType(
-							vertexNormals(i,0),
-							vertexNormals(i,1),
-							vertexNormals(i,2));
-			}
-		}
-
-		CMeshO::FaceIterator fi =
-				vcg::tri::Allocator<CMeshO>::AddFaces(m, faces.rows());
-
-		bool hasFNormals = faceNormals.rows() == faces.rows();
-		for (unsigned int i = 0; i < faces.rows(); ++i, ++fi) {
-			//TODO manage error:
-			// ivp[faces(x,y)] could not exists
-			// if faces(x,y) >= ivp.size()
-			fi->V(0)=ivp[faces(i,0)];
-			fi->V(1)=ivp[faces(i,1)];
-			fi->V(2)=ivp[faces(i,2)];
-
-			if (hasFNormals){
-				fi->N() = CMeshO::CoordType(
-							faceNormals(i,0),
-							faceNormals(i,1),
-							faceNormals(i,2));
-			}
-		}
-	}
-
-	return m;
-}
-
-bool pymeshlab::Mesh::isCompact(const CMeshO& mesh)
-{
-	return
-			mesh.vert.size() == (unsigned int)mesh.VN() &&
-			mesh.face.size() == (unsigned int)mesh.FN() &&
-			mesh.edge.size() == (unsigned int)mesh.EN();
-}
-
-Box3m pymeshlab::Mesh::boundingBox(const CMeshO& mesh)
-{
-	return mesh.bbox;
 }
 
 Eigen::MatrixXd pymeshlab::Mesh::vertexMatrix(const CMeshO& mesh)

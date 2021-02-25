@@ -34,10 +34,12 @@ class Mesh
 public:
 	//constructor:
 	static CMeshO createFromMatrices(
-			const Eigen::MatrixX3d& vertices = Eigen::MatrixX3d(),
-			const Eigen::MatrixX3i& faces = Eigen::MatrixX3i(),
+			const Eigen::MatrixX3d& vertices =      Eigen::MatrixX3d(),
+			const Eigen::MatrixX3i& faces =         Eigen::MatrixX3i(),
 			const Eigen::MatrixX3d& vertexNormals = Eigen::MatrixX3d(),
-			const Eigen::MatrixX3d& faceNormals = Eigen::MatrixX3d());
+			const Eigen::MatrixX3d& faceNormals =   Eigen::MatrixX3d(),
+			const Eigen::VectorXd&  vertexQuality = Eigen::VectorXd(),
+			const Eigen::VectorXd&  faceQuality =   Eigen::VectorXd());
 
 	static bool isCompact(const CMeshO& mesh);
 
