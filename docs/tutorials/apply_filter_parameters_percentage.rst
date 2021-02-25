@@ -4,7 +4,7 @@
 Apply Filter Parameters: Percentage
 ===================================
 
-This example shows how to pass a Percentage as a parameter to a filter through the :py:meth:`pmeshlab.MeshSet.apply_filter` function.
+This example shows how to pass a Percentage as a parameter to a filter.
 This type of values can actually be passed in two different ways: as an absolute value or as a Percentage of something else.
 See :ref:`percentage` for more details.
 
