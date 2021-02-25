@@ -60,7 +60,6 @@ public:
 	bool meshIdExists(int id) const;
 	CMeshO& mesh(int id);
 
-	void printPythonFilterParameterList(const std::string& functionName) const;
 	void printFilterScript() const;
 
 	void loadNewMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());

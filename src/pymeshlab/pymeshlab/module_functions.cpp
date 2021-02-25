@@ -73,3 +73,31 @@ void pymeshlab::printFilterList()
 		std::cout << "\t" << fname << "\n";
 	}
 }
+
+/**
+ * @brief @brief given the function names, lists all its parameters that can be
+ * passed to the "apply_filter" function
+ */
+void pymeshlab::printFilterParameterList(const std::string& filterName)
+{
+	FunctionSet& fs = pymeshlab::functionSetInstance();
+	const Function& ff = fs.filterFunction(QString::fromStdString(filterName));
+	std::cout <<
+				"Please note: some parameters depend on the mesh(es) used as input of the \n"
+				"filter. Default values listed here are computed on a 1x1x1 cube \n"
+				"(pymeshlab/tests/sample/cube.obj), and they will be computed on the input mesh\n"
+				"if they are left as default.\n";
+
+	std::cout << filterName <<" filter - list of parameter names:\n";
+	if (ff.parametersNumber() == 0) {
+		std::cout << "\tNone.\n";
+	}
+	else {
+		for (const FunctionParameter& ffp : ff) {
+			std::cout << "\t" << ffp.pythonName().toStdString() << " : "
+					  << ffp.pythonTypeString().toStdString() << " = ";
+			ffp.printDefaultValue(std::cout);
+			std::cout << "\n";
+		}
+	}
+}

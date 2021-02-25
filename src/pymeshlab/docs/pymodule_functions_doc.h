@@ -49,6 +49,11 @@ const char* MODULE_PRINT_PLUGIN_LIST =
 //print_filter_list
 const char* MODULE_PRINT_FILTER_LIST =
 		"Prints the list of all the filters have been loaded in the pymeshlab session.";
+
+//print_filter_parameter_list
+const char* MODULE_PRINT_FILTER_PARAMETER_LIST =
+		"Prints the list of the parameters of the given filter, with their "
+		"default values.";
 }
 }
 

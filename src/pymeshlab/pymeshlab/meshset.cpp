@@ -102,34 +102,6 @@ CMeshO& pymeshlab::MeshSet::mesh(int id)
 }
 
 /**
- * @brief given the function names, lists all its parameters that can be 
- * passed to the "apply_filter" function
- * @param functionName
- */
-void pymeshlab::MeshSet::printPythonFilterParameterList(const std::string& functionName) const
-{
-	const Function& ff = functionSet.filterFunction(QString::fromStdString(functionName));
-	std::cout <<
-				"Please note: some parameters depend on the mesh(es) used as input of the \n"
-				"filter. Default values listed here are computed on a 1x1x1 cube \n"
-				"(pymeshlab/tests/sample/cube.obj), and they will be computed on the input mesh\n"
-				"if they are left as default.\n";
-
-	std::cout << functionName <<" filter - list of parameter names:\n";
-	if (ff.parametersNumber() == 0) {
-		std::cout << "\tNone.\n";
-	}
-	else {
-		for (const FunctionParameter& ffp : ff) {
-			std::cout << "\t" << ffp.pythonName().toStdString() << " : "
-					  << ffp.pythonTypeString().toStdString() << " = ";
-			ffp.printDefaultValue(std::cout);
-			std::cout << "\n";
-		}
-	}
-}
-
-/**
  * @brief prints all the filters (with their parameters) that have been applied on the current 
  * MeshSet. 
  */

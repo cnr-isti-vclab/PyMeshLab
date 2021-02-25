@@ -23,6 +23,8 @@
 #ifndef PYMESHLAB_MODULE_FUNCTIONS_H
 #define PYMESHLAB_MODULE_FUNCTIONS_H
 
+#include <string>
+
 namespace pymeshlab {
 
 void loadDefaultPlugins();
@@ -30,6 +32,7 @@ void printVersion();
 int numberPlugins();
 void printPluginList();
 void printFilterList();
+void printFilterParameterList(const std::string& filterName);
 
 }
 
