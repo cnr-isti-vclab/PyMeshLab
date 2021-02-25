@@ -114,7 +114,7 @@ const char* PYMS_LOAD_NEW_RASTER =
 		"format of the file is not known by PyMeshLab or if there was an error "
 		"while loading the file.";
 
-//MeshSet::save_mesh
+//MeshSet::add_mesh
 const char* PYMS_ADD_MESH =
 		"Adds a **copy** of the given mesh in the current MeshSet, with the given "
 		"name. By default, the added mesh will be set as the current mesh. "
