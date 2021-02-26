@@ -112,7 +112,7 @@ void pymeshlab::MeshSet::printFilterScript() const
 		std::cout << std::to_string(i) + ": " << computePythonName(p.filterName()).toStdString() <<
 					 "\n";
 		for (const RichParameter& par : p.second){
-			FunctionParameter ffp(computePythonName(par.name()), par);
+			FunctionParameter ffp(par);
 			std::cout << "\t" << ffp.pythonName().toStdString() << " : "
 					  << ffp.pythonTypeString().toStdString() << " = ";
 			ffp.printDefaultValue(std::cout);
