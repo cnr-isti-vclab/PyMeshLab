@@ -53,7 +53,6 @@ CMeshO pymeshlab::Mesh::createFromMatrices(
 						"Error while creating mesh: the number of vertex quality "
 						"values is different from the number of vertices.");
 			}
-			m.vert.EnableQuality();
 		}
 		CMeshO::VertexIterator vi =
 				vcg::tri::Allocator<CMeshO>::AddVertices(m, vertices.rows());
