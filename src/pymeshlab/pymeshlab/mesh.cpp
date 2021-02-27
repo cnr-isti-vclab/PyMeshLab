@@ -42,17 +42,15 @@ CMeshO pymeshlab::Mesh::createFromMatrices(
 
 		bool hasVNormals = vertexNormals.rows() > 0;
 		bool hasVQuality = vertexQuality.rows() > 0;
-		if (hasVNormals && (vertices.rows() != vertexNormals.size())) {
+		if (hasVNormals && (vertices.rows() != vertexNormals.rows())) {
 			throw MLException(
-						"Error while creating mesh: the number of vertex normals "
-						"is different from the number of vertices.");
+					"Error while creating mesh: the number of vertex normals "
+					"is different from the number of vertices.");
 		}
-		if (hasVQuality) {
-			if (vertices.rows() != vertexQuality.rows()) {
-				throw MLException(
-						"Error while creating mesh: the number of vertex quality "
-						"values is different from the number of vertices.");
-			}
+		if (hasVQuality && (vertices.rows() != vertexQuality.size())) {
+			throw MLException(
+					"Error while creating mesh: the number of vertex quality "
+					"values is different from the number of vertices.");
 		}
 		CMeshO::VertexIterator vi =
 				vcg::tri::Allocator<CMeshO>::AddVertices(m, vertices.rows());
@@ -76,8 +74,8 @@ CMeshO pymeshlab::Mesh::createFromMatrices(
 		bool hasFQuality = faceQuality.rows() > 0;
 		if (hasFNormals && (faces.rows() != faceNormals.rows())) {
 			throw MLException(
-						"Error while creating mesh: the number of face normals "
-						"is different from the number of faces.");
+					"Error while creating mesh: the number of face normals "
+					"is different from the number of faces.");
 		}
 		if (hasFQuality) {
 			if (faces.rows() != faceQuality.size()) {
@@ -93,9 +91,9 @@ CMeshO pymeshlab::Mesh::createFromMatrices(
 			for (unsigned int j = 0; j < 3; j++){
 				if ((unsigned int)faces(i,j) >= ivp.size()) {
 					throw MLException(
-								"Error while creating mesh: bad vertex index " +
-								QString::number(faces(i,j)) + " in face " +
-								QString::number(i) + "; vertex " + QString::number(j) + ".");
+							"Error while creating mesh: bad vertex index " +
+							QString::number(faces(i,j)) + " in face " +
+							QString::number(i) + "; vertex " + QString::number(j) + ".");
 				}
 			}
 			fi->V(0)=ivp[faces(i,0)];
