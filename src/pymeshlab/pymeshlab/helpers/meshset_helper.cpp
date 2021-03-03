@@ -316,12 +316,12 @@ pybind11::dict toPyDict(const std::map<std::string, QVariant>& qVariantMap)
 
 /** Filter name management **/
 
-FilterPluginInterface* pluginFromFilterName(
+FilterPlugin* pluginFromFilterName(
 		const QString& filterName, 
 		QAction*& action)
 {
 	PluginManager& pm = meshlab::pluginManagerInstance();
-	for (FilterPluginInterface* fp : pm.filterPluginIterator()){
+	for (FilterPlugin* fp : pm.filterPluginIterator()){
 		QList<QAction*> acts = fp->actions();
 		for (QAction* act : acts) {
 			if (filterName == fp->filterName(act)){
@@ -397,7 +397,7 @@ void loadMeshUsingPlugin(
 	else {
 		PluginManager& pm = meshlab::pluginManagerInstance();
 		if (pm.isInputMeshFormatSupported(extension)){
-			IOMeshPluginInterface* plugin = pm.inputMeshPlugin(extension);
+			IOMeshPlugin* plugin = pm.inputMeshPlugin(extension);
 			
 			bool justCreated = false;
 			if (mm == nullptr){
@@ -447,7 +447,7 @@ void loadMeshUsingPlugin(
 		PluginManager& pm = meshlab::pluginManagerInstance();
 		if (pm.isInputMeshFormatSupported(extension)){
 			const Function& ff = filterFunctionSet.loadMeshFunction(extension);
-			IOMeshPluginInterface* plugin = pm.inputMeshPlugin(extension);
+			IOMeshPlugin* plugin = pm.inputMeshPlugin(extension);
 			
 			bool justCreated = false;
 			if (mm == nullptr){
@@ -496,7 +496,7 @@ void loadRasterUsingPlugin(
 	else {
 		PluginManager& pm = meshlab::pluginManagerInstance();
 		if (pm.isInputRasterFormatSupported(extension)){
-			IORasterPluginInterface* plugin = pm.inputRasterPlugin(extension);
+			IORasterPlugin* plugin = pm.inputRasterPlugin(extension);
 			
 			bool justCreated = false;
 			if (rm == nullptr){
@@ -565,10 +565,10 @@ void saveMeshUsingPlugin(
 	QString extension = finfo.suffix().toLower();
 	PluginManager& pm = meshlab::pluginManagerInstance();
 	if (pm.isOutputMeshFormatSupported(extension)){
-		IOMeshPluginInterface* plugin = pm.outputMeshPlugin(extension);
+		IOMeshPlugin* plugin = pm.outputMeshPlugin(extension);
 		RichParameterList rps;
 		int capability = 0, defbits = 0, capabilityMesh;
-		plugin->GetExportMaskCapability(extension, capability, defbits);
+		plugin->exportMaskCapability(extension, capability, defbits);
 		plugin->initSaveParameter(extension, *mm, rps);
 
 		capabilityMesh = currentMeshIOCapabilityMask(mm);
@@ -599,7 +599,7 @@ void saveMeshUsingPlugin(
 	PluginManager& pm = meshlab::pluginManagerInstance();
 	if (pm.isOutputMeshFormatSupported(extension)){
 		const Function& ff = filterFunctionSet.saveMeshFunction(extension);
-		IOMeshPluginInterface* plugin = pm.outputMeshPlugin(extension);
+		IOMeshPlugin* plugin = pm.outputMeshPlugin(extension);
 		//int mask = 0; //todo: use this mask
 		RichParameterList rps;
 
@@ -609,7 +609,7 @@ void saveMeshUsingPlugin(
 		int capabilityMesh = 0;      //what can be saved of the current mesh
 		int userSettings = 0;        //what the user wants to be saved
 		
-		plugin->GetExportMaskCapability(extension, capabilityFormat, defaultSaveSettings);
+		plugin->exportMaskCapability(extension, capabilityFormat, defaultSaveSettings);
 
 		capabilityMesh = currentMeshIOCapabilityMask(mm);
 
@@ -786,7 +786,7 @@ public:
 	QGLWidget wid;
 };
 
-void initOpenGLContext(QAction* action, OpenGLContextData& data, FilterPluginInterface* fp, MeshSet& ms)
+void initOpenGLContext(QAction* action, OpenGLContextData& data, FilterPlugin* fp, MeshSet& ms)
 {
 	if (fp->glContext == nullptr){
 		fp->glContext = new MLPluginGLContext(QGLFormat::defaultFormat(), data.wid.context()->device(), data.sceneGLSharedDataContext);
@@ -799,7 +799,7 @@ void initOpenGLContext(QAction* action, OpenGLContextData& data, FilterPluginInt
 		atts[MLRenderingData::ATT_NAMES::ATT_VERTPOSITION] = true;
 		atts[MLRenderingData::ATT_NAMES::ATT_VERTNORMAL] = true;
 
-		if (fp->filterArity(action) == FilterPluginInterface::SINGLE_MESH) {
+		if (fp->filterArity(action) == FilterPlugin::SINGLE_MESH) {
 			MLRenderingData::PRIMITIVE_MODALITY pm = MLPoliciesStandAloneFunctions::bestPrimitiveModalityAccordingToMesh(ms.mm());
 			if ((pm != MLRenderingData::PR_ARITY) && (ms.mm() != nullptr)) {
 				dt.set(pm, atts);
@@ -829,7 +829,7 @@ void initOpenGLContext(QAction* action, OpenGLContextData& data, FilterPluginInt
 	}
 }
 
-void releaseOpenGLContext(FilterPluginInterface* fp)
+void releaseOpenGLContext(FilterPlugin* fp)
 {
 	delete fp->glContext;
 	fp->glContext = nullptr;
@@ -841,7 +841,7 @@ pybind11::dict applyFilterRPL(
 		const std::string& filtername, 
 		const QString& meshlabFilterName, 
 		QAction* action, 
-		FilterPluginInterface* fp, 
+		FilterPlugin* fp, 
 		const RichParameterList& rpl, 
 		bool verbose, 
 		FilterScript& filterScript,

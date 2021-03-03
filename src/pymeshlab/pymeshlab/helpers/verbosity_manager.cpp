@@ -60,7 +60,7 @@ bool VerbosityManager::filterCallBack(const int pos, const char* str)
 	lastPos=pos;
 	std::string s = std::string(str) + "    [ " + std::to_string(pos) +"% ]";
 	if (staticLogger)
-		staticLogger->Log(GLLogStream::FILTER, s);
+		staticLogger->log(GLLogStream::FILTER, s);
 	return true;
 }
 

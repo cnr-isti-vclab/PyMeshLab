@@ -31,7 +31,7 @@ class RichParameterList;
 class MeshDocument;
 class MeshModel;
 class RasterModel;
-class FilterPluginInterface;
+class FilterPlugin;
 class FilterScript;
 class QGLWidget;
 
@@ -71,7 +71,7 @@ pybind11::dict toPyDict(const std::map<std::string, QVariant>& qVariantMap);
 
 /** Filter name management **/
 
-FilterPluginInterface* pluginFromFilterName(
+FilterPlugin* pluginFromFilterName(
 		const QString& filterName,
 		QAction*& action);
 
@@ -142,7 +142,7 @@ pybind11::dict applyFilterRPL(
 		const std::string& filtername,
 		const QString& meshlabFilterName,
 		QAction* action,
-		FilterPluginInterface* fp,
+		FilterPlugin* fp,
 		const RichParameterList& rpl,
 		bool verbose,
 		FilterScript& filterScript,

@@ -238,7 +238,7 @@ void pymeshlab::MeshSet::applyFilterScript()
 		QString meshlabFilterName = p.first;
 		std::string filtername = computePythonName(meshlabFilterName).toStdString();
 		QAction* action = nullptr;
-		FilterPluginInterface* fp = meshsethelper::pluginFromFilterName(meshlabFilterName, action);
+		FilterPlugin* fp = meshsethelper::pluginFromFilterName(meshlabFilterName, action);
 		RichParameterList rpl;
 		fp->initParameterList(action, *this, rpl);
 		meshsethelper::updateRichParameterList(filtername, p.second, rpl);
@@ -256,7 +256,7 @@ pybind11::dict pymeshlab::MeshSet::applyFilter(const std::string& filtername, py
 		QString meshlabFilterName = f.meshlabFunctionName();
 		
 		QAction* action = nullptr;
-		FilterPluginInterface* fp = meshsethelper::pluginFromFilterName(meshlabFilterName, action);
+		FilterPlugin* fp = meshsethelper::pluginFromFilterName(meshlabFilterName, action);
 		RichParameterList rpl;
 		fp->initParameterList(action, *this, rpl);
 		meshsethelper::updateRichParameterListFromKwargs(f, kwargs, this, rpl);
@@ -295,7 +295,7 @@ pybind11::dict pymeshlab::MeshSet::filterParameterValues(
 		QString meshlabFilterName = f.meshlabFunctionName();
 		
 		QAction* action = nullptr;
-		FilterPluginInterface* fp = meshsethelper::pluginFromFilterName(meshlabFilterName, action);
+		FilterPlugin* fp = meshsethelper::pluginFromFilterName(meshlabFilterName, action);
 		RichParameterList rpl;
 		fp->initParameterList(action, *this, rpl);
 		meshsethelper::updateRichParameterListFromKwargs(f, kwargs, this, rpl);
