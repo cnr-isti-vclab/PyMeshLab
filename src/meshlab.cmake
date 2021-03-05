@@ -2,10 +2,8 @@
 # Copyright 2019, 2020, Visual Computing Lab, ISTI - Italian National Research Council
 # SPDX-License-Identifier: BSL-1.0
 
-# Prefer GLVND
-if(POLICY CMP0072)
-	cmake_policy(SET CMP0072 NEW)
-endif()
+include(${MESHLAB_SRC_DIR}/cmake/meshlab_global_settings.cmake)
+include(${MESHLAB_SRC_DIR}/cmake/meshlab_tools.cmake)
 
 ### Build options
 option(BUILD_STRICT "Strictly enforce resolution of all symbols" ON)
@@ -15,10 +13,6 @@ option(BUILD_DEBUG_MESHLAB_FILTERS_ONLY "Build just a small set of filters for d
 ### Dependencies
 message(STATUS "Searching for required components")
 #find_package(OpenGL REQUIRED)
-
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTORCC ON)
 
 message(STATUS "Searching for optional components")
 find_package(Lib3ds)
@@ -44,26 +38,6 @@ set(MESHLAB_LIB_OUTPUT_DIR ${MESHLAB_BUILD_DISTRIB_DIR})
 
 ### Build settings
 include_directories(${MESHLAB_SRC_DIR})
-set(CMAKE_CXX_STANDARD 11)
-#set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-
-### Settings needed for both "external" and internal code
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-
-### Build Settings
-if(WIN32)
-	add_definitions(-DNOMINMAX)
-	if(MSVC)
-		add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
-	endif()
-endif()
-
-if(BUILD_STRICT AND NOT MSVC AND NOT APPLE)
-	# Make sure that our shared libraries were appropriately linked
-	set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-undefined")
-	set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--no-undefined")
-endif()
 
 ### Install directories
 MESSAGE( STATUS "CMAKE_INSTALL_PREFIX: " ${CMAKE_INSTALL_PREFIX} )

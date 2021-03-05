@@ -876,25 +876,20 @@ pybind11::dict applyFilterRPL(
 		md.meshDocStateData().create(md);
 		md.setBusy(true);
 		unsigned int postConditionMask = MeshModel::MM_UNKNOWN;
-		std::map<std::string, QVariant> outputValues;
-		bool res = fp->applyFilter(action, md, outputValues, postConditionMask, rpl, &VerbosityManager::filterCallBack);
+		std::map<std::string, QVariant> outputValues =
+				fp->applyFilter(action, rpl, md, postConditionMask, &VerbosityManager::filterCallBack);
 		md.setBusy(false);
-		if (res){
-			VerbosityManager::filterCallBack(100, (filtername + " applied!").c_str());
-			if (md.mm() != nullptr) {
-				md.mm()->cm.svn = int(vcg::tri::UpdateSelection<CMeshO>::VertexCount(md.mm()->cm));
-				md.mm()->cm.sfn = int(vcg::tri::UpdateSelection<CMeshO>::FaceCount(md.mm()->cm));
-			}
-			if (updateFilterScript) {
-				FilterNameParameterValuesPair pair;
-				pair.first = meshlabFilterName; pair.second = rpl;
-				filterScript.append(pair);
-			}
-			outputDict = toPyDict(outputValues);
+		VerbosityManager::filterCallBack(100, (filtername + " applied!").c_str());
+		if (md.mm() != nullptr) {
+			md.mm()->cm.svn = int(vcg::tri::UpdateSelection<CMeshO>::VertexCount(md.mm()->cm));
+			md.mm()->cm.sfn = int(vcg::tri::UpdateSelection<CMeshO>::FaceCount(md.mm()->cm));
 		}
-		else {
-			throw MLException(fp->errorMsg());
+		if (updateFilterScript) {
+			FilterNameParameterValuesPair pair;
+			pair.first = meshlabFilterName; pair.second = rpl;
+			filterScript.append(pair);
 		}
+		outputDict = toPyDict(outputValues);
 		if (fp->requiresGLContext(action)){
 			releaseOpenGLContext(fp);
 			delete data;
