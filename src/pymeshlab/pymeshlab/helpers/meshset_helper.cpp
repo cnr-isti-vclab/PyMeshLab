@@ -36,6 +36,7 @@
 #include <wrap/io_trimesh/alnParser.h>
 
 #include <QApplication>
+#include <QDir>
 
 #include "common.h"
 #include "verbosity_manager.h"
@@ -322,8 +323,7 @@ FilterPlugin* pluginFromFilterName(
 {
 	PluginManager& pm = meshlab::pluginManagerInstance();
 	for (FilterPlugin* fp : pm.filterPluginIterator()){
-		QList<QAction*> acts = fp->actions();
-		for (QAction* act : acts) {
+		for (QAction* act : fp->actions()) {
 			if (filterName == fp->filterName(act)){
 				action = act;
 				return fp;

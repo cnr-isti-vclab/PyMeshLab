@@ -21,16 +21,22 @@
 *                                                                           *
 ****************************************************************************/
 #include "module_functions.h"
+
+#include <QDir>
+
 #include <common/mlapplication.h>
 #include <common/plugins/plugin_manager.h>
 #include <common/python/function_set.h>
 #include <common/globals.h>
+
 #include "helpers/common.h"
+
+
 
 void pymeshlab::loadDefaultPlugins()
 {
 	PluginManager& pm = meshlab::pluginManagerInstance();
-	pm.loadPlugins(QString::fromStdString(getPluginsPath()));
+	pm.loadPlugins(QDir(QString::fromStdString(getPluginsPath())));
 }
 
 
