@@ -410,7 +410,7 @@ void loadMeshUsingPlugin(
 			}
 			
 			RichParameterList rps;
-			plugin->initPreOpenParameter(extension, QString::fromStdString(filename), rps);
+			plugin->initPreOpenParameter(extension, rps);
 			plugin->initOpenParameter(extension, *mm, rps);
 
 			int mask = 0;
@@ -460,7 +460,7 @@ void loadMeshUsingPlugin(
 			}
 			
 			RichParameterList rps;
-			plugin->initPreOpenParameter(extension, QString::fromStdString(filename), rps);
+			plugin->initPreOpenParameter(extension, rps);
 			plugin->initOpenParameter(extension, *mm, rps);
 
 			meshsethelper::updateRichParameterListFromKwargs(ff, kwargs, &md, rps, true);
