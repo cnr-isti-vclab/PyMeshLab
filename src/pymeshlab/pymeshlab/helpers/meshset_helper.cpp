@@ -413,15 +413,15 @@ void loadMeshUsingPlugin(
 			plugin->initPreOpenParameter(extension, rps);
 			plugin->initOpenParameter(extension, *mm, rps);
 
-			int mask = 0;
-			bool ok = plugin->open(extension, QString::fromStdString(filename), *mm, mask, rps);
-			if (!ok) {
+			try {
+				int mask = 0;
+				plugin->open(extension, QString::fromStdString(filename), *mm, mask, rps);
+				afterLoadOperations(*mm, mask);
+			}
+			catch (const MLException& e) {
 				if (justCreated)
 					md.delMesh(md.mm());
-				throw MLException("Unable to open file: " + QString::fromStdString(filename));
-			}
-			else {
-				afterLoadOperations(*mm, mask);
+				throw MLException("Unable to open file: " + QString::fromStdString(filename) + "\n" + e.what());
 			}
 		}
 		else {
@@ -465,15 +465,15 @@ void loadMeshUsingPlugin(
 
 			meshsethelper::updateRichParameterListFromKwargs(ff, kwargs, &md, rps, true);
 
-			int mask = 0;
-			bool ok = plugin->open(extension, QString::fromStdString(filename), *mm, mask, rps);
-			if (!ok) {
+			try {
+				int mask = 0;
+				plugin->open(extension, QString::fromStdString(filename), *mm, mask, rps);
+				afterLoadOperations(*mm, mask);
+			}
+			catch (const MLException& e) {
 				if (justCreated)
 					md.delMesh(md.mm());
-				throw MLException("Unable to open file: " + QString::fromStdString(filename));
-			}
-			else {
-				afterLoadOperations(*mm, mask);
+				throw MLException("Unable to open file: " + QString::fromStdString(filename) + "\n" + e.what());
 			}
 		}
 		else {
@@ -572,12 +572,9 @@ void saveMeshUsingPlugin(
 		plugin->initSaveParameter(extension, *mm, rps);
 
 		capabilityMesh = currentMeshIOCapabilityMask(mm);
-		bool ok = plugin->save(
+		plugin->save(
 					extension, QString::fromStdString(filename), *mm,
-					capabilityMesh & defbits, rps);
-		if (!ok){
-			throw MLException("Unable to save file: " + QString::fromStdString(filename) + ":\n" + plugin->errorMsg());
-		}
+					capabilityMesh & defbits, rps, &VerbosityManager::filterCallBack);
 		mm->setFileName(finfo.absoluteFilePath());
 	}
 	else {
@@ -621,12 +618,9 @@ void saveMeshUsingPlugin(
 
 		userSettings = computeSaveSettingsMaskFromKwargs(kwargs, defaultSaveSettings, capabilityMesh);
 
-		bool ok = plugin->save(
+		plugin->save(
 					extension, QString::fromStdString(filename), *mm,
-					userSettings, rps);
-		if (!ok){
-			throw MLException("Unable to save file: " + QString::fromStdString(filename) + ":\n" + plugin->errorMsg());
-		}
+					userSettings, rps, &VerbosityManager::filterCallBack);
 		mm->setFileName(finfo.absoluteFilePath());
 	}
 	else {
