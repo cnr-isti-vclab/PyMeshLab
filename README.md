@@ -2,9 +2,9 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4438750.svg)](https://doi.org/10.5281/zenodo.4438750)
 
-![Linux](https://github.com/cnr-isti-vclab/PyMeshLab/workflows/Linux/badge.svg)
-![MacOS](https://github.com/cnr-isti-vclab/PyMeshLab/workflows/MacOS/badge.svg)
-![Windows](https://github.com/cnr-isti-vclab/PyMeshLab/workflows/Windows/badge.svg)
+[![Linux](https://github.com/cnr-isti-vclab/PyMeshLab/actions/workflows/Linux.yml/badge.svg)](https://github.com/cnr-isti-vclab/PyMeshLab/actions/workflows/Linux.yml)
+[![MacOS](https://github.com/cnr-isti-vclab/PyMeshLab/actions/workflows/MacOS.yml/badge.svg)](https://github.com/cnr-isti-vclab/PyMeshLab/actions/workflows/MacOS.yml)
+[![Windows](https://github.com/cnr-isti-vclab/PyMeshLab/actions/workflows/Windows.yml/badge.svg)](https://github.com/cnr-isti-vclab/PyMeshLab/actions/workflows/Windows.yml)
 
 [![Documentation Status](https://readthedocs.org/projects/pymeshlab/badge/?version=latest)](https://pymeshlab.readthedocs.io/en/latest/?badge=latest)
 [![Downloads](https://pepy.tech/badge/pymeshlab)](https://pepy.tech/project/pymeshlab)
