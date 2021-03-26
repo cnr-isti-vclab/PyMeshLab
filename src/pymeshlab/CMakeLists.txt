@@ -102,7 +102,7 @@ target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE Qt5::OpenGL Qt5::Xml exte
 
 #vcg
 if (NOT BUILD_MESHLAB)
-	target_include_directories(${PYMESHLAB_MODULE_NAME} PUBLIC ${VCGDIR} ${EIGEN_INCLUDE_DIRS})
+	target_link_libraries(${PYMESHLAB_MODULE_NAME} PUBLIC vcglib)
 endif()
 
 #meshlab-common
