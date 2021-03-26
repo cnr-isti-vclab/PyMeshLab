@@ -14,8 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-      with:
-        submodules: true
     - name: Update PYML_VERSION
       run: |
         echo ${{ github.event.inputs.version }} | tr -d '\n'> PYML_VERSION
@@ -37,14 +35,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         ref: master
-        submodules: true
-    - name: checkout sub-submodule vcg
-      shell: bash
-      run: |
-        cd src/meshlab
-        auth_header="$(git config --local --get http.https://github.com/.extraheader)"
-        git submodule sync --recursive
-        git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+        submodules: recursive
     - name: Setup MSVC
       if: runner.os == 'Windows'
       uses: ilammy/msvc-dev-cmd@v1

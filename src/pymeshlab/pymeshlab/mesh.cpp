@@ -290,7 +290,7 @@ Eigen::MatrixXi pymeshlab::Mesh::faceFaceAdjacency(const CMeshO& mesh)
 Eigen::VectorXd pymeshlab::Mesh::vertexScalarAttributeArray(const CMeshO& mesh, const std::string& attributeName)
 {
 	vcg::tri::RequireVertexCompactness(mesh);
-	CMeshO::PerVertexAttributeHandle<Scalarm> attributeHandle = 
+	CMeshO::ConstPerVertexAttributeHandle<Scalarm> attributeHandle =
 			vcg::tri::Allocator<CMeshO>::GetPerVertexAttribute<Scalarm>(mesh, attributeName);
 	if (vcg::tri::Allocator<CMeshO>::IsValidHandle(mesh, attributeHandle)){
 		Eigen::VectorXd attrVector(mesh.VN());
@@ -307,7 +307,7 @@ Eigen::VectorXd pymeshlab::Mesh::vertexScalarAttributeArray(const CMeshO& mesh, 
 Eigen::MatrixX3d pymeshlab::Mesh::vertexVectorAttributeMatrix(const CMeshO& mesh, const std::string& attributeName)
 {
 	vcg::tri::RequireVertexCompactness(mesh);
-	CMeshO::PerVertexAttributeHandle<Point3m> attributeHandle = 
+	CMeshO::ConstPerVertexAttributeHandle<Point3m> attributeHandle =
 			vcg::tri::Allocator<CMeshO>::GetPerVertexAttribute<Point3m>(mesh, attributeName);
 	if (vcg::tri::Allocator<CMeshO>::IsValidHandle(mesh, attributeHandle)){
 		Eigen::MatrixX3d attrMatrix(mesh.VN(), 3);
@@ -329,7 +329,7 @@ Eigen::VectorXd pymeshlab::Mesh::faceScalarAttributeArray(
 		std::string& attributeName)
 {
 	vcg::tri::RequireFaceCompactness(mesh);
-	CMeshO::PerFaceAttributeHandle<Scalarm> attributeHandle = 
+	CMeshO::ConstPerFaceAttributeHandle<Scalarm> attributeHandle =
 			vcg::tri::Allocator<CMeshO>::GetPerFaceAttribute<Scalarm>(mesh, attributeName);
 	if (vcg::tri::Allocator<CMeshO>::IsValidHandle(mesh, attributeHandle)){
 		Eigen::VectorXd attrMatrix(mesh.FN());
@@ -346,7 +346,7 @@ Eigen::VectorXd pymeshlab::Mesh::faceScalarAttributeArray(
 Eigen::MatrixX3d pymeshlab::Mesh::faceVectorAttributeMatrix(const CMeshO& mesh, const std::string& attributeName)
 {
 	vcg::tri::RequireFaceCompactness(mesh);
-	CMeshO::PerFaceAttributeHandle<Point3m> attributeHandle = 
+	CMeshO::ConstPerFaceAttributeHandle<Point3m> attributeHandle =
 			vcg::tri::Allocator<CMeshO>::GetPerFaceAttribute<Point3m>(mesh, attributeName);
 	if (vcg::tri::Allocator<CMeshO>::IsValidHandle(mesh, attributeHandle)){
 		Eigen::MatrixX3d attrMatrix(mesh.FN(), 3);
