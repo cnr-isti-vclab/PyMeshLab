@@ -77,22 +77,24 @@ jobs:
       run: |
         cd src/meshlab
         echo  ::set-output name=meshlab_commit::$(git rev-parse --short HEAD)
-    - name: Set nightly MeshLab option
-      id: meshlab-nightly-option
+    - name: Set MeshLab options
+      id: meshlab-options
       shell: bash
-      if: ${{ github.event.inputs.meshlab_is_nightly }} == 'true'
       run: |
-        echo  ::set-output name=meshlab-nightly-option::"-n"
-    - name: Set RC MeshLab option
-      id: meshlab-rc-option
-      shell: bash
-      if: ${{ github.event.inputs.meshlab_is_rc }} == 'true'
-      run: |
-        echo  ::set-output name=meshlab-rc-option::"-rc"
+        if [ "${{ github.event.inputs.meshlab_is_nightly }}" == "true" ]; then
+          echo ::set-output name=meshlab-nightly-option::"-n"
+        else
+          echo ::set-output name=meshlab-nightly-option::""
+        fi
+        if [ "${{ github.event.inputs.meshlab_is_rc }}" == "true" ]; then
+          echo ::set-output name=meshlab-rc-option::"-rc"
+        else
+          echo ::set-output name=meshlab-rc-option::""
+        fi
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       shell: bash
       run: |
-        sh scripts/${{ runner.os }}/1_build.sh ${{steps.meshlab-rc-option.outputs.meshlab-rc-option}} ${{steps.meshlab-nightly-option.outputs.meshlab-nightly-option}}
+        sh scripts/${{ runner.os }}/1_build.sh ${{steps.meshlab-options.outputs.meshlab-rc-option}} ${{steps.meshlab-options.outputs.meshlab-nightly-option}}
     - name: Deploy PyMeshLab ${{ matrix.pyversion }}
       shell: bash
       run: |
