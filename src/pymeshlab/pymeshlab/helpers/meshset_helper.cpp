@@ -330,8 +330,7 @@ FilterPlugin* pluginFromFilterName(
 			}
 		}
 	}
-	assert(0);
-	//todo: manage python exception
+	throw MLException("Something really bad happened.\nPlease report this issue on https://github.com/cnr-isti-vclab/PyMeshLab/issues");
 	return nullptr;
 }
 

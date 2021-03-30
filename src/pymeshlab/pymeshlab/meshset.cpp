@@ -257,6 +257,10 @@ pybind11::dict pymeshlab::MeshSet::applyFilter(const std::string& filtername, py
 		
 		QAction* action = nullptr;
 		FilterPlugin* fp = meshsethelper::pluginFromFilterName(meshlabFilterName, action);
+		if (fp->filterArity(action) != FilterPlugin::NONE && size() == 0){
+			throw MLException(QString::fromStdString(filtername) +
+				" requires at least one mesh loaded in the MeshSet.");
+		}
 		RichParameterList rpl;
 		fp->initParameterList(action, *this, rpl);
 		meshsethelper::updateRichParameterListFromKwargs(f, kwargs, this, rpl);
@@ -296,6 +300,10 @@ pybind11::dict pymeshlab::MeshSet::filterParameterValues(
 		
 		QAction* action = nullptr;
 		FilterPlugin* fp = meshsethelper::pluginFromFilterName(meshlabFilterName, action);
+		if (fp->filterArity(action) != FilterPlugin::NONE && size() == 0){
+			throw MLException(QString::fromStdString(filtername) +
+				" requires at least one mesh loaded in the MeshSet.");
+		}
 		RichParameterList rpl;
 		fp->initParameterList(action, *this, rpl);
 		meshsethelper::updateRichParameterListFromKwargs(f, kwargs, this, rpl);
