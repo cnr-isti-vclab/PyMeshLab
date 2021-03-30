@@ -78,7 +78,7 @@ jobs:
         cd src/meshlab
         echo  ::set-output name=meshlab_commit::$(git rev-parse --short HEAD)
     - name: Cache MeshLab Build
-      if: ((runner.os != 'macOS') and (${{ github.event.inputs.use_meshlab_cache }} == 'true'))
+      if: ${{ (runner.os != 'macOS') && (${{ github.event.inputs.use_meshlab_cache }} == 'true') }}
       id: cache-meshlab-build
       uses: actions/cache@v2
       with:
@@ -86,7 +86,7 @@ jobs:
           src/build/distrib/pymeshlab/lib/
         key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
     - name: Cache MeshLab Build MacOS
-      if: ((runner.os == 'macOS') and (${{ github.event.inputs.use_meshlab_cache }} == 'true'))
+      if: ${{ (runner.os == 'macOS') && (${{ github.event.inputs.use_meshlab_cache }} == 'true') }}
       id: cache-meshlab-build-macos
       uses: actions/cache@v2
       with:
