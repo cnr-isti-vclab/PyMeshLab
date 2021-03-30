@@ -7,10 +7,10 @@ on:
         description: 'New PyMeshLab Version'
         required: true
         default: '0.1.2'
-      use_meshlab_cache:
-        description: 'Use cached meshlab build'
+      meshlab_is_nightly:
+        description: 'MeshLab version is nightly'
         required: true
-        default: 'true'
+        default: 'false'
       meshlab_is_rc:
         description: 'MeshLab version is RC'
         required: true
@@ -77,29 +77,12 @@ jobs:
       run: |
         cd src/meshlab
         echo  ::set-output name=meshlab_commit::$(git rev-parse --short HEAD)
-    - name: Cache MeshLab Build
-      if: ${{ (runner.os != 'macOS') && (${{ github.event.inputs.use_meshlab_cache }} == 'true') }}
-      id: cache-meshlab-build
-      uses: actions/cache@v2
-      with:
-        path: |
-          src/build/distrib/pymeshlab/lib/
-        key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
-    - name: Cache MeshLab Build MacOS
-      if: ${{ (runner.os == 'macOS') && (${{ github.event.inputs.use_meshlab_cache }} == 'true') }}
-      id: cache-meshlab-build-macos
-      uses: actions/cache@v2
-      with:
-        path: |
-          src/build/distrib/pymeshlab/dummybin.app/Contents/Frameworks
-          src/build/distrib/pymeshlab/dummybin.app/Contents/PlugIns
-        key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
-    - name: Set build MeshLab option
-      id: meshlab-build-option
+    - name: Set nightly MeshLab option
+      id: meshlab-nightly-option
       shell: bash
-      if: steps.cache-meshlab-build.outputs.cache-hit == 'true' || steps.cache-meshlab-build-macos.outputs.cache-hit == 'true'
+      if: ${{ github.event.inputs.meshlab_is_nightly }} == 'true'
       run: |
-        echo  ::set-output name=meshlab-build-option::"--no-build-meshlab"
+        echo  ::set-output name=meshlab-nightly-option::"-n"
     - name: Set RC MeshLab option
       id: meshlab-rc-option
       shell: bash
@@ -109,7 +92,7 @@ jobs:
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       shell: bash
       run: |
-        sh scripts/${{ runner.os }}/1_build.sh ${{steps.meshlab-build-option.outputs.meshlab-build-option}} ${{steps.meshlab-rc-option.outputs.meshlab-rc-option}}
+        sh scripts/${{ runner.os }}/1_build.sh ${{steps.meshlab-rc-option.outputs.meshlab-rc-option}} ${{steps.meshlab-nightly-option.outputs.meshlab-nightly-option}}
     - name: Deploy PyMeshLab ${{ matrix.pyversion }}
       shell: bash
       run: |
