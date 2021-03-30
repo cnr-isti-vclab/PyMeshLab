@@ -7,6 +7,14 @@ on:
         description: 'New PyMeshLab Version'
         required: true
         default: '0.1.2'
+      use_meshlab_cache:
+        description: 'Use cached meshlab build'
+        required: true
+        default: 'true'
+      meshlab_is_rc:
+        description: 'MeshLab version is RC'
+        required: true
+        default: 'false'
 
 jobs:
   update_version:
@@ -70,7 +78,7 @@ jobs:
         cd src/meshlab
         echo  ::set-output name=meshlab_commit::$(git rev-parse --short HEAD)
     - name: Cache MeshLab Build
-      if: runner.os != 'macOS'
+      if: (runner.os != 'macOS') && (${{ github.event.inputs.use_meshlab_cache }} == 'true')
       id: cache-meshlab-build
       uses: actions/cache@v2
       with:
@@ -78,7 +86,7 @@ jobs:
           src/build/distrib/pymeshlab/lib/
         key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
     - name: Cache MeshLab Build MacOS
-      if: runner.os == 'macOS'
+      if: (runner.os == 'macOS') && (${{ github.event.inputs.use_meshlab_cache }} == 'true')
       id: cache-meshlab-build-macos
       uses: actions/cache@v2
       with:
@@ -92,10 +100,16 @@ jobs:
       if: steps.cache-meshlab-build.outputs.cache-hit == 'true' || steps.cache-meshlab-build-macos.outputs.cache-hit == 'true'
       run: |
         echo  ::set-output name=meshlab-build-option::"--no-build-meshlab"
+    - name: Set RC MeshLab option
+      id: meshlab-rc-option
+      shell: bash
+      if: ${{ github.event.inputs.meshlab_is_rc }} == 'true'
+      run: |
+        echo  ::set-output name=meshlab-rc-option::"-rc"
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       shell: bash
       run: |
-        sh scripts/${{ runner.os }}/1_build.sh ${{steps.meshlab-build-option.outputs.meshlab-build-option}}
+        sh scripts/${{ runner.os }}/1_build.sh ${{steps.meshlab-build-option.outputs.meshlab-build-option}} ${{steps.meshlab-rc-option.outputs.meshlab-rc-option}}
     - name: Deploy PyMeshLab ${{ matrix.pyversion }}
       shell: bash
       run: |

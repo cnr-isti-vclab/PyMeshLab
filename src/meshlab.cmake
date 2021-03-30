@@ -10,6 +10,9 @@ option(BUILD_STRICT "Strictly enforce resolution of all symbols" ON)
 option(BUILD_MESHLABSERVER "Build meshlabserver" OFF)
 option(BUILD_DEBUG_MESHLAB_FILTERS_ONLY "Build just a small set of filters for debug" OFF)
 
+option(MESHLAB_IS_RELEASE_CANDIDATE_VERSION "" OFF)
+option(MESHLAB_IS_NIGHTLY_VERSION "" OFF)
+
 ### Dependencies
 message(STATUS "Searching for required components")
 #find_package(OpenGL REQUIRED)
