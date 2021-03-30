@@ -6,7 +6,7 @@ on:
       version:
         description: 'New PyMeshLab Version'
         required: true
-        default: '0.1.2'
+        default: '0.2.1'
       meshlab_is_nightly:
         description: 'MeshLab version is nightly'
         required: true
