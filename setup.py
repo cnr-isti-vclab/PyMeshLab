@@ -42,7 +42,7 @@ setup(
     description='A Python interface to MeshLab',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url=base_repo,
+    url='https://github.com/cnr-isti-vclab/PyMeshLab',
     author='Alessandro Muntoni, Paolo Cignoni',
     author_email='alessandro.muntoni@isti.cnr.it',
     license='GPL3',
