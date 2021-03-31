@@ -1,13 +1,10 @@
 from setuptools import setup
 import platform
-import sys
 import os
-import urllib.request
-import zipfile
-import shutil
 
-github_repo = 'cnr-isti-vclab/PyMeshLab'
-base_repo = 'https://github.com/' + github_repo
+# this setup.py assumes that pymeshlab has been already built,
+# installed in the pymeshlab directory of this repository
+# and then deployed. See the scritps directory for more info.
 
 # read the contents of README file
 from os import path
@@ -19,39 +16,6 @@ f = open("PYML_VERSION", "r")
 pymeshlabversion = f.read()
 
 install_requires = ['numpy']
-
-osused = platform.system()
-if osused == 'Darwin':
-    osused = 'macOS'
-
-if osused != 'Linux' and osused != 'Windows' and osused != 'macOS':
-    raise Exception("Operative System not supported")
-
-if sys.version_info[0] < 3 or (sys.version_info[0] == 3 and sys.version_info[1] < 6):
-    raise Exception("Must be using Python >= 3.6")
-if sys.version_info[0] > 3 or (sys.version_info[0] == 3 and sys.version_info[1] > 9):
-    raise Exception("Sorry, this Python version is still not supported!")
-
-pythonversion = str(sys.version_info[0]) + '.' + str(sys.version_info[1])
-
-
-baseurl = base_repo + '/releases/download/v' + pymeshlabversion + '/'
-filename = 'PyMeshLab_' + osused + '_python' + pythonversion + '.zip'
-url = baseurl + filename
-
-print('Downloading ' + url)
-try:
-    urllib.request.urlretrieve(url, this_directory + '/' + filename)
-except:
-    raise Exception("Cannot download " + url)
-
-shutil.rmtree('pymeshlab')
-os.mkdir('pymeshlab')
-
-with zipfile.ZipFile(filename, 'r') as zip_ref:
-    zip_ref.extractall('pymeshlab/')
-
-os.remove(this_directory + '/' + filename)
 
 try:
     from wheel.bdist_wheel import bdist_wheel as _bdist_wheel
