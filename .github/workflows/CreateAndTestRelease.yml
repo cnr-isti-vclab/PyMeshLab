@@ -137,6 +137,7 @@ jobs:
     - name: Run Tests ${{ matrix.pyversion }}
       run: |
         pip3 install pytest numpy
+        python -c 'import pymeshlab; pymeshlab.use_cpu_opengl()' #just for windows
         pytest --pyargs pymeshlab
 
   # ... and the wheel
