@@ -140,7 +140,7 @@ jobs:
         pytest --pyargs pymeshlab
 
   # ... and the wheel
-  test_wheel:
+  wheel_test:
     name: Test Wheel
     needs: build_pymeshlab
     runs-on: ${{ matrix.os }}
