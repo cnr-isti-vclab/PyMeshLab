@@ -57,9 +57,12 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-        path: |
-          pymeshlab
-          wheels/pymeshlab*.whl
+        path: pymeshlab
+    - name: Upload wheel ${{ runner.os }} python ${{ matrix.pyversion }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: pymeshlab_whl_${{ runner.os }}_python${{ matrix.pyversion }}
+        path: wheels/pymeshlab*.whl
 
   linux_test:
     name: Test PyMeshLab (Linux)
