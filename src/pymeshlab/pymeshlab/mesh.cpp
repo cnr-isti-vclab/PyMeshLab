@@ -160,8 +160,9 @@ int pymeshlab::Mesh::selectedVertexNumber(const CMeshO& mesh)
 {
 	int counter = 0;
 	for (int i = 0; i < mesh.VN(); i++){
-		if (!mesh.vert[i].IsD() && mesh.vert[i].IsS())
+		if (!mesh.vert[i].IsD() && mesh.vert[i].IsS()){
 			counter++;
+		}
 	}
 	return counter;
 }
@@ -170,8 +171,9 @@ int pymeshlab::Mesh::selectedFaceNumber(const CMeshO& mesh)
 {
 	int counter = 0;
 	for (int i = 0; i < mesh.FN(); i++){
-		if (!mesh.face[i].IsD() && mesh.face[i].IsS())
+		if (!mesh.face[i].IsD() && mesh.face[i].IsS()){
 			counter++;
+		}
 	}
 	return counter;
 }
@@ -184,9 +186,11 @@ Eigen::MatrixXd pymeshlab::Mesh::vertexMatrix(const CMeshO& mesh)
 	Eigen::MatrixXd vert(mesh.VN(), 3);
 
 	// copy vertices
-	for (int i = 0; i < mesh.VN(); i++)
-		for (int j = 0; j < 3; j++)
+	for (int i = 0; i < mesh.VN(); i++){
+		for (int j = 0; j < 3; j++){
 			vert(i,j) = mesh.vert[i].cP()[j];
+		}
+	}
 
 	return vert;
 }
@@ -199,9 +203,11 @@ Eigen::MatrixXi pymeshlab::Mesh::faceMatrix(const CMeshO& mesh)
 	Eigen::MatrixXi faces(mesh.FN(), 3);
 
 	// copy faces
-	for (int i = 0; i < mesh.FN(); i++)
-		for (int j = 0; j < 3; j++)
+	for (int i = 0; i < mesh.FN(); i++){
+		for (int j = 0; j < 3; j++){
 			faces(i,j) = (int)vcg::tri::Index(mesh,mesh.face[i].cV(j));
+		}
+	}
 
 	return faces;
 }
@@ -214,9 +220,11 @@ Eigen::MatrixXd pymeshlab::Mesh::vertexNormalMatrix(const CMeshO& mesh)
 	Eigen::MatrixXd vertexNormals(mesh.VN(), 3);
 
 	// per vertices normals
-	for (int i = 0; i < mesh.VN(); i++)
-		for (int j = 0; j < 3; j++)
+	for (int i = 0; i < mesh.VN(); i++){
+		for (int j = 0; j < 3; j++){
 			vertexNormals(i,j) = mesh.vert[i].cN()[j];
+		}
+	}
 
 	return vertexNormals;
 }
@@ -229,11 +237,71 @@ Eigen::MatrixXd pymeshlab::Mesh::faceNormalMatrix(const CMeshO& mesh)
 	Eigen::MatrixXd faceNormals(mesh.FN(), 3);
 
 	// per face normals
-	for (int i = 0; i < mesh.FN(); i++)
-		for (int j = 0; j < 3; j++)
+	for (int i = 0; i < mesh.FN(); i++){
+		for (int j = 0; j < 3; j++){
 			faceNormals(i,j) = mesh.face[i].cN()[j];
+		}
+	}
 
 	return faceNormals;
+}
+
+Eigen::MatrixXd pymeshlab::Mesh::vertexColorMatrix(const CMeshO& mesh)
+{
+	vcg::tri::RequireVertexCompactness(mesh);
+	Eigen::MatrixXd vertexColors(mesh.VN(), 4);
+
+	for (int i = 0; i < mesh.VN(); i++){
+		for (int j = 0; j < 4; j++){
+			vertexColors(i,j) = mesh.vert[i].C()[j] / 255.0;
+		}
+	}
+
+	return vertexColors;
+}
+
+Eigen::MatrixXd pymeshlab::Mesh::faceColorMatrix(const CMeshO& mesh)
+{
+	vcg::tri::RequireFaceCompactness(mesh);
+	vcg::tri::RequirePerFaceColor(mesh);
+
+	Eigen::MatrixXd faceColors(mesh.FN(), 4);
+
+	for (int i = 0; i < mesh.FN(); i++){
+		for (int j = 0; j < 4; j++){
+			faceColors(i,j) = mesh.face[i].C()[j] / 255.0;
+		}
+	}
+
+	return faceColors;
+}
+
+Eigen::Matrix<unsigned int, Eigen::Dynamic, 1> pymeshlab::Mesh::vertexColorArray(const CMeshO& mesh)
+{
+	vcg::tri::RequireVertexCompactness(mesh);
+	Eigen::Matrix<unsigned int, Eigen::Dynamic, 1> vertexColors(mesh.VN());
+
+	for (int i = 0; i < mesh.VN(); i++){
+		vertexColors(i) =
+			vcg::Color4<unsigned char>::ToUnsignedA8R8G8B8(mesh.vert[i].C());
+	}
+
+	return vertexColors;
+}
+
+Eigen::Matrix<unsigned int, Eigen::Dynamic, 1> pymeshlab::Mesh::faceColorArray(const CMeshO& mesh)
+{
+	vcg::tri::RequireFaceCompactness(mesh);
+	vcg::tri::RequirePerFaceColor(mesh);
+
+	Eigen::Matrix<unsigned int, Eigen::Dynamic, 1> faceColors(mesh.FN());
+
+	for (int i = 0; i < mesh.FN(); i++){
+		faceColors(i) =
+			vcg::Color4<unsigned char>::ToUnsignedA8R8G8B8(mesh.face[i].C());
+	}
+
+	return faceColors;
 }
 
 Eigen::VectorXd pymeshlab::Mesh::vertexQualityArray(const CMeshO& mesh)
@@ -277,10 +345,12 @@ Eigen::MatrixXi pymeshlab::Mesh::faceFaceAdjacency(const CMeshO& mesh)
 	for (int i = 0; i < mesh.FN(); i++) {
 		for (int j = 0; j < 3; j++) {
 			auto AdjF= mesh.face[i].cFFp(j);
-			if (AdjF==&mesh.face[i])
+			if (AdjF==&mesh.face[i]) {
 				faceFaceMatrix(i,j)=-1;
-			else
+			}
+			else{
 				faceFaceMatrix(i,j)=mesh.face[i].cFFi(j);
+			}
 		}
 	}
 
@@ -294,8 +364,9 @@ Eigen::VectorXd pymeshlab::Mesh::vertexScalarAttributeArray(const CMeshO& mesh, 
 			vcg::tri::Allocator<CMeshO>::GetPerVertexAttribute<Scalarm>(mesh, attributeName);
 	if (vcg::tri::Allocator<CMeshO>::IsValidHandle(mesh, attributeHandle)){
 		Eigen::VectorXd attrVector(mesh.VN());
-		for (unsigned int i = 0; i < (unsigned int) mesh.VN(); ++i)
+		for (unsigned int i = 0; i < (unsigned int) mesh.VN(); ++i){
 			attrVector[i] = attributeHandle[i];
+		}
 		return attrVector;
 	}
 	else {
@@ -333,8 +404,9 @@ Eigen::VectorXd pymeshlab::Mesh::faceScalarAttributeArray(
 			vcg::tri::Allocator<CMeshO>::GetPerFaceAttribute<Scalarm>(mesh, attributeName);
 	if (vcg::tri::Allocator<CMeshO>::IsValidHandle(mesh, attributeHandle)){
 		Eigen::VectorXd attrMatrix(mesh.FN());
-		for (unsigned int i = 0; i < (unsigned int) mesh.FN(); ++i)
+		for (unsigned int i = 0; i < (unsigned int) mesh.FN(); ++i){
 			attrMatrix[i] = attributeHandle[i];
+		}
 		return attrMatrix;
 	}
 	else {

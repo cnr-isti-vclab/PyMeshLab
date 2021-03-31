@@ -102,6 +102,34 @@ const char* PYMESH_FACE_NORM_MAT =
 		"Returns the face normal matrix of the mesh as a numpy array. "
 		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact.";
 
+//Mesh::vertex_color_matrix
+const char* PYMESH_VERT_COLOR_MAT =
+		"Returns the vertex color matrix as a numpy array of [NV x 4] floats, "
+		"where each component (RGBA) is in the interval [0, 1]. "
+		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact.";
+
+//Mesh::face_color_matrix
+const char* PYMESH_FACE_COLOR_MAT =
+		"Returns the face color matrix as a numpy array of [NF x 4] floats, "
+		"where each component (RGBA) is in the interval [0, 1]. "
+		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact. "
+		"Raises a :py:exc:`MissingComponentException` if the mesh has no face "
+		"color component.";
+
+//Mesh::vertex_color_array
+const char* PYMESH_VERT_COLOR_ARRAY =
+		"Returns the vertex color matrix as a numpy array of [NV] unsigned integers, "
+		"where the (ARGB) is packed in a 32bit unsigned int (8 bits per component)."
+		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact.";
+
+//Mesh::face_color_array
+const char* PYMESH_FACE_COLOR_ARRAY =
+		"Returns the face color matrix as a numpy array of [NF] unsigned integers, "
+		"where the (ARGB) is packed in a 32bit unsigned int (8 bits per component)."
+		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact. "
+		"Raises a :py:exc:`MissingComponentException` if the mesh has no face "
+		"color component.";
+
 //Mesh::vertex_quality_matrix
 const char* PYMESH_VERT_QUAL_ARRAY =
 		"Returns the vertex quality array of the mesh as a numpy array. "

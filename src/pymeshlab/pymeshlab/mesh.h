@@ -57,6 +57,10 @@ public:
 	static Eigen::MatrixXi faceMatrix(const CMeshO& mesh);
 	static Eigen::MatrixXd vertexNormalMatrix(const CMeshO& mesh);
 	static Eigen::MatrixXd faceNormalMatrix(const CMeshO& mesh);
+	static Eigen::MatrixXd vertexColorMatrix(const CMeshO& mesh);
+	static Eigen::MatrixXd faceColorMatrix(const CMeshO& mesh);
+	static Eigen::Matrix<unsigned int, Eigen::Dynamic, 1> vertexColorArray(const CMeshO& mesh);
+	static Eigen::Matrix<unsigned int, Eigen::Dynamic, 1> faceColorArray(const CMeshO& mesh);
 	static Eigen::VectorXd vertexQualityArray(const CMeshO& mesh);
 	static Eigen::VectorXd faceQualityArray(const CMeshO& mesh);
 
