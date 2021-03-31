@@ -47,14 +47,24 @@ jobs:
     - name: Deploy PyMeshLab ${{ matrix.pyversion }}
       run: |
         sh scripts/${{ runner.os }}/2_deploy.sh
+    - name: Build Wheel
+      shell: bash
+      run: |
+       pip install wheel
+       pip wheel . -w wheels/
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
         path: pymeshlab/
+    - name: Upload wheel ${{ runner.os }} python ${{ matrix.pyversion }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: pymeshlab_whl_${{ runner.os }}_python${{ matrix.pyversion }}
+        path: wheels/pymeshlab*.whl
 
   macos_tests:
-    name: Test PyMeshLab
+    name: Test PyMeshLab (MacOS)
     runs-on: macos-latest
     needs: macos_build_pymeshlab
     strategy:
@@ -79,3 +89,27 @@ jobs:
       with:
         name: PyMeshLabResults_${{ runner.os }}_python${{ matrix.pyversion }}
         path: pymeshlab/tests/sample_meshes/test_output
+
+  macos_test_wheel:
+    name: Test Wheel (MacOS)
+    needs: macos_build_pymeshlab
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        pyversion: [3.6, 3.7, 3.8, 3.9]
+    steps:
+    - name: Download pymeshlab_whl_${{ runner.os }}_python${{ matrix.pyversion }}
+      uses: actions/download-artifact@v2
+      with:
+        name: pymeshlab_whl_${{ runner.os }}_python${{ matrix.pyversion }}
+        path: .
+    - name: Install Python ${{ matrix.pyversion }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.pyversion }}
+    - name: Install and Test Wheel
+      shell: bash
+      run: |
+        pip install pytest
+        pip install pymeshlab*.whl
+        pytest --pyargs pymeshlab
