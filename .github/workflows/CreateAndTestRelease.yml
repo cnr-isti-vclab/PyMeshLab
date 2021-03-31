@@ -217,10 +217,10 @@ jobs:
         asset_name: PyMeshLab_${{ matrix.os }}_python${{ matrix.pyversion }}.zip
         asset_content_type: PyMeshLab ${{ matrix.pyversion }}
     #download wheel
-    - name: Download pymeshlab_whl_${{ runner.os }}_python${{ matrix.pyversion }}
+    - name: Download pymeshlab_whl_${{ matrix.os }}_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v2
       with:
-        name: pymeshlab_whl_${{ runner.os }}_python${{ matrix.pyversion }}
+        name: pymeshlab_whl_${{ matrix.os }}_python${{ matrix.pyversion }}
         path: .
     - name: Get Wheel Name
       id: wheel_name
