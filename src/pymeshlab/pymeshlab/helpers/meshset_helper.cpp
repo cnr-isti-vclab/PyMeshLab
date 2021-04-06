@@ -363,7 +363,7 @@ void afterLoadOperations(MeshModel& m, int mask)
 			vcg::tri::UpdateNormal<CMeshO>::PerVertexAngleWeighted(m.cm);
 	}
 	
-	vcg::tri::UpdateBounding<CMeshO>::Box(m.cm);					// updates bounding box
+	vcg::tri::UpdateBounding<CMeshO>::Box(m.cm); // updates bounding box
 	if(m.cm.fn==0 && m.cm.en==0) {
 		if(mask & vcg::tri::io::Mask::IOM_VERTNORMAL)
 			m.updateDataMask(MeshModel::MM_VERTNORMAL);
@@ -871,6 +871,10 @@ pybind11::dict applyFilterRPL(
 		unsigned int postConditionMask = MeshModel::MM_UNKNOWN;
 		std::map<std::string, QVariant> outputValues =
 				fp->applyFilter(action, rpl, md, postConditionMask, &VerbosityManager::filterCallBack);
+		for (MeshModel* mm : md.meshIterator()){
+			if (!mm)
+				vcg::tri::Allocator<CMeshO>::CompactEveryVector(mm->cm);
+		}
 		md.setBusy(false);
 		VerbosityManager::filterCallBack(100, (filtername + " applied!").c_str());
 		if (md.mm() != nullptr) {
