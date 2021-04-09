@@ -3,7 +3,7 @@ from sys import platform
 import os
 import pathlib
 
-print_pymeshlab_version()
+# print_pymeshlab_version()
 
 # for windows we need to tell which Qt libraries use
 this_path=str(pathlib.Path(__file__).parent.absolute())
