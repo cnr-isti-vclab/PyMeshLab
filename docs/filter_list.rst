@@ -2011,40 +2011,6 @@ apply_filter parameters
 
          <i>Projection Radius</i>: If non zero, this parameter specifies the desired radius of the reference cylinder used for the projection. Changing this parameter affect the <b>X</b> horizontal scaling of the resulting mesh. If zero (default) the average distance of the mesh from the axis is chosen.
 
-.. data:: gpu_filter_example_
-
-   *MeshLab filter name*: 'GPU Filter Example '
-
-   .. raw:: html
-
-      Small useless filter added only to show how to work with a gl render context inside a filter.</p>
-
-   **Parameters:**
-
-   ``imagebackgroundcolor : Color = [50; 50; 50; 255]``
-
-      .. raw:: html
-
-         <i>Image Background Color</i>: The color used as image background.
-
-   ``imagewidth : int = 512``
-
-      .. raw:: html
-
-         <i>Image Width</i>: The width in pixels of the produced image.
-
-   ``imageheight : int = 512``
-
-      .. raw:: html
-
-         <i>Image Height</i>: The height in pixels of the produced image.
-
-   ``imagefilename : str = 'gpu_generated_image.png'``
-
-      .. raw:: html
-
-         <i>Base Image File Name</i>: The file name used to save the image.
-
 .. data:: grid_generator
 
    *MeshLab filter name*: 'Grid Generator'
@@ -3316,7 +3282,7 @@ apply_filter parameters
 
    .. raw:: html
 
-      Builds a trivial triangle-by-triangle parametrization. <br> Two methods are provided, the first maps maps all triangles into equal sized triangles, while the second one adapt the size of the triangles in texture space to their original size.</p>
+      Builds a trivial triangle-by-triangle parametrization. <br> Two methods are provided, the first maps all triangles into equal sized triangles, while the second one adapt the size of the triangles in texture space to their original size.</p>
 
    **Parameters:**
 
@@ -4403,8 +4369,8 @@ apply_filter parameters
       Possible enum values:
 
          0. ``'Simple Average'``
-         1. ``'By Angle'``
-         2. ``'By Area'``
+         1. ``'By Area'``
+         2. ``'By Angle'``
          3. ``'As defined by N. Max'``
 
       .. raw:: html
@@ -4523,7 +4489,7 @@ apply_filter parameters
 
          <i>Crease Angle</i>: Minimum angle between faces of the original to consider the shared edge as a feature to be preserved.
 
-   ``checksurfdist : bool = True``
+   ``checksurfdist : bool = False``
 
       .. raw:: html
 
@@ -5651,6 +5617,40 @@ apply_filter parameters
 
          <i>UnifyVertices</i>: if true the snap vertices are weld together.
 
+.. data:: snapshot
+
+   *MeshLab filter name*: 'GPU Filter Example'
+
+   .. raw:: html
+
+      Small useless filter added only to show how to work with a gl render context inside a filter.</p>
+
+   **Parameters:**
+
+   ``imagebackgroundcolor : Color = [50; 50; 50; 255]``
+
+      .. raw:: html
+
+         <i>Image Background Color</i>: The color used as image background.
+
+   ``imagewidth : int = 512``
+
+      .. raw:: html
+
+         <i>Image Width</i>: The width in pixels of the produced image.
+
+   ``imageheight : int = 512``
+
+      .. raw:: html
+
+         <i>Image Height</i>: The height in pixels of the produced image.
+
+   ``imagefilename : str = 'gpu_generated_image.png'``
+
+      .. raw:: html
+
+         <i>Base Image File Name</i>: The file name used to save the image.
+
 .. data:: sphere
 
    *MeshLab filter name*: 'Sphere'
@@ -6228,6 +6228,30 @@ apply_filter parameters
    .. raw:: html
 
       Vertex to Face color transfer</p>
+
+.. data:: transfer_quality_face_to_vertex
+
+   *MeshLab filter name*: 'Transfer Quality: Face to Vertex'
+
+   .. raw:: html
+
+      Face to Vertex quality transfer</p>
+
+   **Parameters:**
+
+   ``areaweight : bool = True``
+
+      .. raw:: html
+
+         <i>Area Weighted</i>: If true the vertex quality is computed according to the surface of the involved faces.
+
+.. data:: transfer_quality_vertex_to_face
+
+   *MeshLab filter name*: 'Transfer Quality: Vertex to Face'
+
+   .. raw:: html
+
+      Vertex to Face quality transfer</p>
 
 .. data:: transfer_texture_to_vertex_color_1_or_2_meshes
 

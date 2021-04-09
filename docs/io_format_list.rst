@@ -25,6 +25,12 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
          <i>File Name</i>: The name of the file to load
 
+   ``separate_layers : bool = True``
+
+      .. raw:: html
+
+         <i>Separate layers</i>: Import each mesh contained in the file as a separate layer
+
 .. data:: apts
    :noindex:
 
@@ -990,12 +996,6 @@ Here are listed all the file formats that can be saved usingthe function :py:met
       .. raw:: html
 
          <i>Save Wedge Normal</i>: Save Wedge Normal
-
-   ``save_polygonal : bool = True``
-
-      .. raw:: html
-
-         <i>Save Polygonal</i>: Save Polygonal
 
 .. data:: stl
    :noindex:
