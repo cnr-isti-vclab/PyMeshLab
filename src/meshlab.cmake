@@ -60,6 +60,33 @@ endif()
 
 ### Enter subdirectories
 
+# VCGLib -- required
+if (VCGDIR) # VCGDIR exists - using custom user vcglib path
+	if(EXISTS ${VCGDIR})
+		add_subdirectory(${VCGDIR} {CMAKE_CURRENT_BINARY_DIR}/vcglib)
+		message(STATUS "- VCGLib - using custom VCGDIR path library")
+	else()
+		set(VCGDIR NOTFOUND)
+	endif()
+else()
+	get_filename_component(VCGDIR "${MESHLAB_SRC_DIR}/vcglib" ABSOLUTE)
+	if(EXISTS ${VCGDIR})
+		add_subdirectory(${VCGDIR})
+		message(STATUS "- VCGLib - using using bundled source")
+	else()
+		set(VCGDIR NOTFOUND)
+	endif()
+endif()
+set(VCGDIR "${VCGDIR}")
+
+if(NOT VCGDIR)
+	message(FATAL_ERROR "VCGLib not found. Please clone recursively the MeshLab repo.")
+endif()
+
+#external
+include(${EXTERNAL_DIR}/external_common.cmake)
+add_subdirectory(${EXTERNAL_DIR})
+
 add_subdirectory(${MESHLAB_SRC_DIR}/common)
 if(BUILD_MESHLABSERVER)
 	add_subdirectory(${MESHLAB_SRC_DIR}/meshlabserver)
