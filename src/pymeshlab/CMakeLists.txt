@@ -98,7 +98,7 @@ if (NOT WIN32 AND NOT APPLE)
 endif()
 
 #Qt
-target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE Qt5::OpenGL external-glew)
+target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE Qt5::OpenGL Qt5::Xml external-glew)
 
 #vcg
 if (NOT BUILD_MESHLAB)

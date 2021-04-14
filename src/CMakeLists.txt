@@ -74,16 +74,13 @@ find_package(GLEW)
 find_package(Eigen3)
 find_package(OpenMP)
 
-### Build settings
-set(CMAKE_C_STANDARD 99)
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_OSX_DEPLOYMENT_TARGET "10.11" CACHE STRING "Minimum OS X deployment version" FORCE)
+set(MESHLAB_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/meshlab/src")
 
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+### Build settings
+# general meshlab build settings that apply also in pymeshlab:
+include("${MESHLAB_SRC_DIR}/cmake/meshlab_global_settings.cmake")
 
 set(PYMESHLAB_BUILD_DISTRIB_DIR ${CMAKE_CURRENT_BINARY_DIR}/distrib/pymeshlab)
-
-set(MESHLAB_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/meshlab/src")
 
 list(APPEND CMAKE_MODULE_PATH "${MESHLAB_SRC_DIR}/cmake")
 add_definitions(-DMESHLAB_SCALAR=double)
