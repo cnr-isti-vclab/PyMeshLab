@@ -184,7 +184,6 @@ if (BUILD_MESHLAB)
 	)
 
 	add_subdirectory(meshlab/src)
-	#include(${CMAKE_CURRENT_SOURCE_DIR}/meshlab.cmake)
 else()
 	# VCGLib -- required
 	if (VCGDIR) # VCGDIR exists - using custom user vcglib path
