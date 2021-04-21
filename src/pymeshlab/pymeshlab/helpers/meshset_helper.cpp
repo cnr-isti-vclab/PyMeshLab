@@ -396,7 +396,7 @@ void loadMeshUsingPlugin(
 	else {
 		PluginManager& pm = meshlab::pluginManagerInstance();
 		if (pm.isInputMeshFormatSupported(extension)){
-			IOMeshPlugin* plugin = pm.inputMeshPlugin(extension);
+			IOPlugin* plugin = pm.inputMeshPlugin(extension);
 			
 			bool justCreated = false;
 			if (mm == nullptr){
@@ -446,7 +446,7 @@ void loadMeshUsingPlugin(
 		PluginManager& pm = meshlab::pluginManagerInstance();
 		if (pm.isInputMeshFormatSupported(extension)){
 			const Function& ff = filterFunctionSet.loadMeshFunction(extension);
-			IOMeshPlugin* plugin = pm.inputMeshPlugin(extension);
+			IOPlugin* plugin = pm.inputMeshPlugin(extension);
 			
 			bool justCreated = false;
 			if (mm == nullptr){
@@ -495,8 +495,8 @@ void loadRasterUsingPlugin(
 	else {
 		PluginManager& pm = meshlab::pluginManagerInstance();
 		if (pm.isInputRasterFormatSupported(extension)){
-			IORasterPlugin* plugin = pm.inputRasterPlugin(extension);
-			
+			IOPlugin* plugin = pm.inputRasterPlugin(extension);
+
 			bool justCreated = false;
 			if (rm == nullptr){
 				rm = md.addNewRaster();
@@ -505,12 +505,14 @@ void loadRasterUsingPlugin(
 			else {
 				rm->setLabel(finfo.fileName());
 			}
-			
-			bool ok = plugin->open(extension, QString::fromStdString(filename), *rm);
-			if (!ok) {
+
+			try {
+				plugin->openRaster(extension, QString::fromStdString(filename), *rm);
+			}
+			catch(const MLException& e){
 				if (justCreated)
 					md.delRaster(md.rm());
-				throw MLException("Unable to open file: " + QString::fromStdString(filename));
+				throw MLException("Unable to open file: " + QString::fromStdString(filename) + "\n" + e.what());
 			}
 		}
 		else {
@@ -564,7 +566,7 @@ void saveMeshUsingPlugin(
 	QString extension = finfo.suffix().toLower();
 	PluginManager& pm = meshlab::pluginManagerInstance();
 	if (pm.isOutputMeshFormatSupported(extension)){
-		IOMeshPlugin* plugin = pm.outputMeshPlugin(extension);
+		IOPlugin* plugin = pm.outputMeshPlugin(extension);
 		RichParameterList rps;
 		int capability = 0, defbits = 0, capabilityMesh;
 		plugin->exportMaskCapability(extension, capability, defbits);
@@ -595,7 +597,7 @@ void saveMeshUsingPlugin(
 	PluginManager& pm = meshlab::pluginManagerInstance();
 	if (pm.isOutputMeshFormatSupported(extension)){
 		const Function& ff = filterFunctionSet.saveMeshFunction(extension);
-		IOMeshPlugin* plugin = pm.outputMeshPlugin(extension);
+		IOPlugin* plugin = pm.outputMeshPlugin(extension);
 		//int mask = 0; //todo: use this mask
 		RichParameterList rps;
 

@@ -58,17 +58,13 @@ void pymeshlab::MeshSet::setVerbosity(bool verbose)
 	if (verbose){
 		for (auto p : pm.filterPluginIterator())
 			p->setLog(&Log);
-		for (auto p : pm.ioMeshPluginIterator())
-			p->setLog(&Log);
-		for (auto p : pm.ioRasterPluginIterator())
+		for (auto p : pm.ioPluginIterator())
 			p->setLog(&Log);
 	}
 	else {
 		for (auto p : pm.filterPluginIterator())
 			p->setLog(nullptr);
-		for (auto p : pm.ioMeshPluginIterator())
-			p->setLog(nullptr);
-		for (auto p : pm.ioRasterPluginIterator())
+		for (auto p : pm.ioPluginIterator())
 			p->setLog(nullptr);
 	}
 }

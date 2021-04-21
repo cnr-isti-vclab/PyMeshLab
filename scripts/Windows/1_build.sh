@@ -4,7 +4,6 @@ SCRIPTS_PATH="$(dirname "$(realpath "$0")")"
 SOURCE_PATH=$SCRIPTS_PATH/../../src
 BUILD_PATH=$SOURCE_PATH/build
 INSTALL_PATH=$SOURCE_PATH/../pymeshlab
-CORES="-j4"
 BUILD_MESHLAB_OPTION=""
 BUILD_OPTION="-DCMAKE_BUILD_TYPE=MinSizeRel"
 NIGHTLY_OPTION=""
@@ -20,10 +19,6 @@ case $i in
         ;;
     -i=*|--install_path=*)
         INSTALL_PATH="${i#*=}"
-        shift # past argument=value
-        ;;
-    -j*)
-        CORES=$i
         shift # past argument=value
         ;;
     --no-build-meshlab)
@@ -64,6 +59,6 @@ BUILD_PATH=$(realpath $BUILD_PATH)
 INSTALL_PATH=$(realpath $INSTALL_PATH)
 
 cd $BUILD_PATH
-cmake -G "NMake Makefiles" $BUILD_OPTION -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $BUILD_MESHLAB_OPTION $NIGHTLY_OPTION $RC_OPTION $SOURCE_PATH
-jom $CORES
-nmake install
+cmake -GNinja $BUILD_OPTION -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $BUILD_MESHLAB_OPTION $NIGHTLY_OPTION $RC_OPTION $SOURCE_PATH
+ninja
+ninja install
