@@ -328,9 +328,9 @@ Eigen::VectorXd pymeshlab::Mesh::faceQualityArray(const CMeshO& mesh)
 	return qf;
 }
 
-Eigen::Matrix<CMeshO::ScalarType, -1, -1> pymeshlab::Mesh::vertexTexCoordMatrix(const CMeshO& mesh)
+Eigen::MatrixXd pymeshlab::Mesh::vertexTexCoordMatrix(const CMeshO& mesh)
 {
-	Eigen::Matrix<CMeshO::ScalarType, -1, -1> m;
+	Eigen::MatrixXd m;
 	vcg::tri::MeshToMatrix<CMeshO>::GetUVData(mesh, m);
 	return m;
 }

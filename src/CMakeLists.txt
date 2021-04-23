@@ -207,7 +207,7 @@ else()
 	endif()
 
 	#external
-	include(${EXTERNAL_DIR}/external_common.cmake)
+	set(ALLOW_OPTIONAL_EXTERNAL_MESHLAB_LIBRARIES OFF)
 	add_subdirectory(${EXTERNAL_DIR})
 endif()
 

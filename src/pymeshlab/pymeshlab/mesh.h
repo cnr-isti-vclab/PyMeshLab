@@ -64,7 +64,8 @@ public:
 	static Eigen::VectorXd vertexQualityArray(const CMeshO& mesh);
 	static Eigen::VectorXd faceQualityArray(const CMeshO& mesh);
 
-	static Eigen::Matrix<CMeshO::ScalarType, -1, -1> vertexTexCoordMatrix(const CMeshO& mesh);
+	static Eigen::MatrixXd vertexTexCoordMatrix(const CMeshO& mesh);
+
 	static Eigen::MatrixXi faceFaceAdjacency(const CMeshO& mesh);
 	
 	static Eigen::VectorXd vertexScalarAttributeArray(
