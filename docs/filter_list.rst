@@ -6155,6 +6155,52 @@ apply_filter parameters
 
          <i>RecoverColor</i>: The generated point cloud has the current texture color
 
+.. data:: texture_map_defragmentation
+
+   *MeshLab filter name*: 'Texture Map Defragmentation'
+
+   .. raw:: html
+
+      Reduces the texture fragmentation by merging atlas charts. 		               The used algorithm is: <br><b>Texture Defragmentation for Photo-Reconstructed 3D Models</b><br> 		               <i>Andrea Maggiordomo, Paolo Cignoni and Marco Tarini</i> <br>		               Eurographics 2021</p>
+
+   **Parameters:**
+
+   ``matchingthreshold : float = 2``
+
+      .. raw:: html
+
+         <i>Matching Error Threshold</i>: Threshold on the seam alignment error. Using a higher threshold can reduce the fragmentation but increase runtime and distortion.
+
+   ``boundarytolerance : float = 0.2``
+
+      .. raw:: html
+
+         <i>Seam to chart-boundary-length tolerance</i>: Cutoff on the minimum fractional seam length. Seams with lower fractional length (relative to the chart perimeter) are not merged to keep the chart borders compact.
+
+   ``distortiontolerance : float = 0.5``
+
+      .. raw:: html
+
+         <i>Local ARAP distortion tolerance</i>: Local UV-optimization distortion tolerance when merging a seam. If the local energy is higher than this value, the operation is reverted.
+
+   ``globaldistortiontolerance : float = 0.025``
+
+      .. raw:: html
+
+         <i>Global ARAP distortion tolerance</i>: Global ARAP distortion tolerance when merging a seam. If the global atlas energy is higher than this value, the operation is reverted.
+
+   ``offsetfactor : float = 5``
+
+      .. raw:: html
+
+         <i>Local expansion coefficient</i>: Coefficient used to control the extension of the UV-optimization area. Larger values can increase the efficacy of the defragmentation, but increase the cost of the geometric optimization and the algorithm runtime.
+
+   ``timelimit : float = 0``
+
+      .. raw:: html
+
+         <i>Time limit (seconds)</i>: Time limit for the defragmentation process (zero means unlimited).
+
 .. data:: torus
 
    *MeshLab filter name*: 'Torus'

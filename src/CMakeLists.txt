@@ -141,9 +141,6 @@ if (BUILD_MESHLAB)
 		meshlabplugins/io_u3d
 		meshlabplugins/io_x3d
 
-		# IORaster plugins
-		meshlabplugins/ioraster_base
-
 		# Filter plugins
 		meshlabplugins/filter_sample
 		meshlabplugins/filter_sample_dyn
@@ -178,6 +175,7 @@ if (BUILD_MESHLAB)
 		meshlabplugins/filter_sketchfab
 		meshlabplugins/filter_ssynth
 		meshlabplugins/filter_texture
+		meshlabplugins/filter_texture_defragmentation
 		meshlabplugins/filter_trioptimize
 		meshlabplugins/filter_unsharp
 		meshlabplugins/filter_voronoi
