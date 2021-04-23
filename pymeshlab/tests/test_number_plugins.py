@@ -13,6 +13,6 @@ def test_number_plugins():
 
     # tmp on windows: missing FilterSketchFab
     if platform == "win32":
-        assert(n_plugins == 47)
-    else:
         assert(n_plugins == 48)
+    else:
+        assert(n_plugins == 49)
