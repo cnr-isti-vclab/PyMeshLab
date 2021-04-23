@@ -873,10 +873,10 @@ pybind11::dict applyFilterRPL(
 		unsigned int postConditionMask = MeshModel::MM_UNKNOWN;
 		std::map<std::string, QVariant> outputValues =
 				fp->applyFilter(action, rpl, md, postConditionMask, &VerbosityManager::filterCallBack);
-		//for (MeshModel* mm : md.meshIterator()){
-		//	if (mm)
-		//		vcg::tri::Allocator<CMeshO>::CompactEveryVector(mm->cm);
-		//}
+		for (MeshModel* mm : md.meshIterator()){
+			if (mm)
+				vcg::tri::Allocator<CMeshO>::CompactEveryVector(mm->cm);
+		}
 		md.setBusy(false);
 		VerbosityManager::filterCallBack(100, (filtername + " applied!").c_str());
 		if (md.mm() != nullptr) {
