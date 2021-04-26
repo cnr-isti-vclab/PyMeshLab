@@ -186,8 +186,7 @@ void updateRichParameterFromKwarg(
 	else if (meshlabType == MESHLAB_TYPE_MESH) {
 		RichMesh& rm = dynamic_cast<RichMesh&>(par);
 		rm.meshdoc = md;
-		rm.meshindex = py::cast<int>(k.second);
-		rm.setValue(MeshValue(rm.meshdoc, rm.meshindex));
+		rm.setValue(MeshValue(py::cast<int>(k.second)));
 	}
 	else if (meshlabType.contains("still_unsupported")){
 		std::cerr << "Warning: parameter type still not supported";
@@ -229,7 +228,7 @@ pybind11::dict pydictFromRichParameterList(
 		if (v.isColor())
 			kw[pname.c_str()] = v.getColor();
 		if (v.isMesh())
-			kw[pname.c_str()] = v.getMesh()->id();
+			kw[pname.c_str()] = v.getMeshId();
 		if (v.isFileName())
 			kw[pname.c_str()] = v.getFileName().toStdString();
 	}
