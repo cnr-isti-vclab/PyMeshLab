@@ -75,6 +75,30 @@ void pymeshlab::printPluginList()
 	}
 }
 
+void pymeshlab::printPluginFilterList(const std::string& pluginName)
+{
+	PluginManager& pm = meshlab::pluginManagerInstance();
+	bool found = false;
+	FilterPlugin* fp = nullptr;
+	for (const auto& p : pm.pluginIterator()){
+		if (p->pluginName().toStdString() == pluginName){
+			fp = dynamic_cast<FilterPlugin*>(p);
+			if (fp) {
+				found = true;
+			}
+		}
+	}
+	if (found){
+		std::cout << pluginName + " plugin - list of filter names:\n";
+		for(QAction *a: fp->actions()){
+			std::cout << "\t" << fp->pythonFilterName(fp->ID(a)).toStdString() << "\n";
+		}
+	}
+	else {
+		throw MLException("Impossible to find a plugin called " + QString::fromStdString(pluginName));
+	}
+}
+
 void pymeshlab::printFilterList()
 {
 	FunctionSet& fs = pymeshlab::functionSetInstance();
@@ -86,7 +110,7 @@ void pymeshlab::printFilterList()
 }
 
 /**
- * @brief @brief given the function names, lists all its parameters that can be
+ * @brief given the function names, lists all its parameters that can be
  * passed to the "apply_filter" function
  */
 void pymeshlab::printFilterParameterList(const std::string& filterName)
@@ -110,5 +134,26 @@ void pymeshlab::printFilterParameterList(const std::string& filterName)
 			ffp.printDefaultValue(std::cout);
 			std::cout << "\n";
 		}
+	}
+}
+
+void pymeshlab::loadPlugin(const std::string& filename)
+{
+	MeshLabPluginType type = PluginManager::checkPlugin(QString::fromStdString(filename));
+	if (!(type.isIOPlugin() || type.isFilterPlugin())){
+		throw MLException("Error while loading plugin: PyMeshLab only supports IO or Filter plugins.");
+	}
+	PluginManager& pm = meshlab::pluginManagerInstance();
+	FunctionSet& fs = pymeshlab::functionSetInstance();
+	MeshLabPlugin* ipf = pm.loadPlugin(QString::fromStdString(filename));
+	MeshLabPluginType tp(ipf);
+	if (tp.isFilterPlugin()) {
+		fs.loadFilterPlugin(dynamic_cast<FilterPlugin*>(ipf));
+	}
+	else if (tp.isIOPlugin()) {
+		fs.loadIOPlugin(dynamic_cast<IOPlugin*>(ipf));
+	}
+	else { //this should never happen
+		throw MLException("Error while loading plugin: Unknown plugin type.");
 	}
 }

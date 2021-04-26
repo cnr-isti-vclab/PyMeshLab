@@ -51,6 +51,10 @@ const char* MODULE_NUMBER_PLUGINS =
 const char* MODULE_PRINT_PLUGIN_LIST =
 		"Prints all the meshlab plugins loaded in the current session of PyMeshLab.";
 
+//print_plugin_filter_list
+const char* MODULE_PRINT_PLUGIN_FILTER_LIST =
+		"Prints the list of filters contained in the given plugin name.";
+
 //print_filter_list
 const char* MODULE_PRINT_FILTER_LIST =
 		"Prints the list of all the filters have been loaded in the current "
@@ -60,6 +64,12 @@ const char* MODULE_PRINT_FILTER_LIST =
 const char* MODULE_PRINT_FILTER_PARAMETER_LIST =
 		"Prints the list of the parameters of the given filter, with their "
 		"default values.";
+
+//load_plugin
+const char* MODULE_LOAD_PLUGIN =
+		"Allows to load an extra plugin into PyMeshLab, given the file name of "
+		"the MeshLab plugin. Throws a :py:exc:`PyMeshLabException` if the load "
+		"of the plugin fails.";
 }
 }
 

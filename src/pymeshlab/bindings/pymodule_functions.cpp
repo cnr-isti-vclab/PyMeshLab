@@ -33,6 +33,8 @@ void pymeshlab::initModuleFunctions(pybind11::module& m)
 	m.def("filter_list", &pymeshlab::filterList, doc::MODULE_FILTER_LIST);
 	m.def("number_plugins", &pymeshlab::numberPlugins, doc::MODULE_NUMBER_PLUGINS);
 	m.def("print_plugin_list", &pymeshlab::printPluginList, doc::MODULE_PRINT_PLUGIN_LIST);
+	m.def("print_plugin_filter_list", &pymeshlab::printPluginFilterList, doc::MODULE_PRINT_PLUGIN_FILTER_LIST);
 	m.def("print_filter_list", &pymeshlab::printFilterList, doc::MODULE_PRINT_FILTER_LIST);
 	m.def("print_filter_parameter_list", &pymeshlab::printFilterParameterList, doc::MODULE_PRINT_FILTER_PARAMETER_LIST);
+	m.def("load_plugin", &pymeshlab::loadPlugin, doc::MODULE_LOAD_PLUGIN);
 }

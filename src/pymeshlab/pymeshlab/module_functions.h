@@ -33,9 +33,10 @@ void printVersion();
 std::list<std::string> filterList();
 int numberPlugins();
 void printPluginList();
+void printPluginFilterList(const std::string& pluginName);
 void printFilterList();
 void printFilterParameterList(const std::string& filterName);
-
+void loadPlugin(const std::string& filename);
 }
 
 #endif // PYMESHLAB_MODULE_FUNCTIONS_H
