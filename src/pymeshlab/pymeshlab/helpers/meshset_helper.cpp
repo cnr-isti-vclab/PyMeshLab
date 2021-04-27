@@ -842,6 +842,14 @@ pybind11::dict applyFilterRPL(
 		bool updateFilterScript,
 		MeshSet& md)
 {
+	QStringList missingPreconditions;
+	if (!fp->isFilterApplicable(action, *md.mm(), missingPreconditions)) {
+		QString enstr = missingPreconditions.join(",");
+		throw MLException(
+			"Failed to apply filter:  '" + QString::fromStdString(filtername) + ". "
+			"Current mesh does not have " + enstr + ".");
+	}
+
 	py::dict outputDict;
 	OpenGLContextData* data = nullptr;
 	if (!verbose){

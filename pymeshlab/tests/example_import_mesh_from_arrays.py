@@ -22,7 +22,7 @@ def example_import_mesh_from_arrays():
         [0.5, 0.5, 0.5]])
 
     # create a numpy 12x3 array of faces
-    # every row represents a face (trianlge in this case)
+    # every row represents a face (triangle in this case)
     # for every triangle, the index of the vertex
     # in the vertex array
     faces = numpy.array([
