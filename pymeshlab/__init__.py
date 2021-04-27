@@ -1,4 +1,3 @@
-from .pmeshlab import *
 from sys import platform
 import sys
 import os
@@ -10,7 +9,11 @@ import pathlib
 this_path=str(pathlib.Path(__file__).parent.absolute())
 if platform == 'win32':
     os.environ['QT_PLUGIN_PATH']=this_path
-    sys.path.append(this_path)
+    os.environ['PATH'] = this_path + os.pathsep + os.environ['PATH']
+
+from .pmeshlab import *
+
+
 
 # load all the default plugins in the current PyMeshLab session
 try:
