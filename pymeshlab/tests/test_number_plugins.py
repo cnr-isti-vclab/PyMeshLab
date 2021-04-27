@@ -11,8 +11,4 @@ def test_number_plugins():
 
     ml.print_plugin_list()
 
-    # tmp on windows: missing FilterSketchFab
-    if platform == "win32":
-        assert(n_plugins == 48)
-    else:
-        assert(n_plugins == 49)
+    assert(n_plugins == 49)
