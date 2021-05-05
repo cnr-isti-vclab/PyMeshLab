@@ -276,7 +276,8 @@ Eigen::MatrixXd pymeshlab::Mesh::faceColorMatrix(const CMeshO& mesh)
 	return faceColors;
 }
 
-Eigen::Matrix<unsigned int, Eigen::Dynamic, 1> pymeshlab::Mesh::vertexColorArray(const CMeshO& mesh)
+Eigen::Matrix<unsigned int, Eigen::Dynamic, 1> pymeshlab::Mesh::vertexColorArray(
+		const CMeshO& mesh)
 {
 	vcg::tri::RequireVertexCompactness(mesh);
 	Eigen::Matrix<unsigned int, Eigen::Dynamic, 1> vertexColors(mesh.VN());
@@ -289,7 +290,8 @@ Eigen::Matrix<unsigned int, Eigen::Dynamic, 1> pymeshlab::Mesh::vertexColorArray
 	return vertexColors;
 }
 
-Eigen::Matrix<unsigned int, Eigen::Dynamic, 1> pymeshlab::Mesh::faceColorArray(const CMeshO& mesh)
+Eigen::Matrix<unsigned int, Eigen::Dynamic, 1> pymeshlab::Mesh::faceColorArray(
+		const CMeshO& mesh)
 {
 	vcg::tri::RequireFaceCompactness(mesh);
 	vcg::tri::RequirePerFaceColor(mesh);
@@ -335,6 +337,22 @@ Eigen::MatrixXd pymeshlab::Mesh::vertexTexCoordMatrix(const CMeshO& mesh)
 	return m;
 }
 
+Eigen::MatrixXd pymeshlab::Mesh::wedgeTexCoordMatrix(const CMeshO& mesh)
+{
+	vcg::tri::RequireFaceCompactness(mesh);
+	vcg::tri::RequirePerVertexTexCoord(mesh);
+	Eigen::MatrixXd m(mesh.FN()*3, 2);
+
+	for (int i = 0; i < mesh.FN(); i++) {
+		int base = i * 3;
+		for (int j = 0; j < 3; j++){
+			m(base+j, 0) = mesh.face[i].WT(j).u();
+			m(base+j, 1) = mesh.face[i].WT(j).v();
+		}
+	}
+	return m;
+}
+
 Eigen::MatrixXi pymeshlab::Mesh::faceFaceAdjacency(const CMeshO& mesh)
 {
 	vcg::tri::RequireFaceCompactness(mesh);
@@ -357,7 +375,9 @@ Eigen::MatrixXi pymeshlab::Mesh::faceFaceAdjacency(const CMeshO& mesh)
 	return faceFaceMatrix;
 }
 
-Eigen::VectorXd pymeshlab::Mesh::vertexScalarAttributeArray(const CMeshO& mesh, const std::string& attributeName)
+Eigen::VectorXd pymeshlab::Mesh::vertexScalarAttributeArray(
+		const CMeshO& mesh,
+		const std::string& attributeName)
 {
 	vcg::tri::RequireVertexCompactness(mesh);
 	CMeshO::ConstPerVertexAttributeHandle<Scalarm> attributeHandle =
@@ -375,7 +395,9 @@ Eigen::VectorXd pymeshlab::Mesh::vertexScalarAttributeArray(const CMeshO& mesh, 
 	}
 }
 
-Eigen::MatrixX3d pymeshlab::Mesh::vertexVectorAttributeMatrix(const CMeshO& mesh, const std::string& attributeName)
+Eigen::MatrixX3d pymeshlab::Mesh::vertexVectorAttributeMatrix(
+		const CMeshO& mesh,
+		const std::string& attributeName)
 {
 	vcg::tri::RequireVertexCompactness(mesh);
 	CMeshO::ConstPerVertexAttributeHandle<Point3m> attributeHandle =
@@ -415,7 +437,9 @@ Eigen::VectorXd pymeshlab::Mesh::faceScalarAttributeArray(
 	}
 }
 
-Eigen::MatrixX3d pymeshlab::Mesh::faceVectorAttributeMatrix(const CMeshO& mesh, const std::string& attributeName)
+Eigen::MatrixX3d pymeshlab::Mesh::faceVectorAttributeMatrix(
+		const CMeshO& mesh,
+		const std::string& attributeName)
 {
 	vcg::tri::RequireFaceCompactness(mesh);
 	CMeshO::ConstPerFaceAttributeHandle<Point3m> attributeHandle =

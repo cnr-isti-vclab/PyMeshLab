@@ -85,34 +85,34 @@ const char* PYMESH_COMPACT =
 //Mesh::vertex_matrix
 const char* PYMESH_VERT_MAT =
 		"Returns the vertex matrix of the mesh as a numpy array. "
-		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact.";
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
 
 //Mesh::face_matrix
 const char* PYMESH_FACE_MAT =
 		"Returns the face matrix of the mesh as a numpy array. "
-		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact.";
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
 
 //Mesh::vertex_normal_matrix
 const char* PYMESH_VERT_NORM_MAT =
 		"Returns the vertex normal matrix of the mesh as a numpy array. "
-		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact.";
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
 
 //Mesh::face_normal_matrix
 const char* PYMESH_FACE_NORM_MAT =
 		"Returns the face normal matrix of the mesh as a numpy array. "
-		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact.";
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
 
 //Mesh::vertex_color_matrix
 const char* PYMESH_VERT_COLOR_MAT =
 		"Returns the vertex color matrix as a numpy array of [NV x 4] floats, "
 		"where each component (RGBA) is in the interval [0, 1]. "
-		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact.";
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
 
 //Mesh::face_color_matrix
 const char* PYMESH_FACE_COLOR_MAT =
 		"Returns the face color matrix as a numpy array of [NF x 4] floats, "
 		"where each component (RGBA) is in the interval [0, 1]. "
-		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact. "
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
 		"Raises a :py:exc:`MissingComponentException` if the mesh has no face "
 		"color component.";
 
@@ -120,65 +120,77 @@ const char* PYMESH_FACE_COLOR_MAT =
 const char* PYMESH_VERT_COLOR_ARRAY =
 		"Returns the vertex color matrix as a numpy array of [NV] unsigned integers, "
 		"where the (ARGB) is packed in a 32bit unsigned int (8 bits per component)."
-		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact.";
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
 
 //Mesh::face_color_array
 const char* PYMESH_FACE_COLOR_ARRAY =
 		"Returns the face color matrix as a numpy array of [NF] unsigned integers, "
 		"where the (ARGB) is packed in a 32bit unsigned int (8 bits per component)."
-		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact. "
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
 		"Raises a :py:exc:`MissingComponentException` if the mesh has no face "
 		"color component.";
 
 //Mesh::vertex_quality_matrix
 const char* PYMESH_VERT_QUAL_ARRAY =
 		"Returns the vertex quality array of the mesh as a numpy array. "
-		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact. "
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
 		"Raises a :py:exc:`MissingComponentException` if the mesh has no vertex "
 		"quality component. ";
 
 //Mesh::face_quality_matrix
 const char* PYMESH_FACE_QUAL_ARRAY =
 		"Returns the face quality array of the mesh as a numpy array. "
-		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact. "
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
 		"Raises a :py:exc:`MissingComponentException` if the mesh has no face "
 		"quality component. ";
 
 //Mesh::vertex_tex_matrix
 const char* PYMESH_VERT_TEX_MAT =
 		"Returns the vertex texcoord matrix of the mesh as a numpy array. "
-		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact. "
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
+		"Raises a :py:exc:`MissingComponentException` if the mesh has no per-wedge "
+		"tex coordinates component. ";
+
+//Mesh::wedge_tex_matrix
+const char* PYMESH_WEDGE_TEX_MAT =
+		"Returns the per-wedge texcoord matrix of the mesh as a numpy array, "
+		"composed of NF*3 rows (triplets of wedges for each face) and 2 columns. "
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
 		"Raises a :py:exc:`MissingComponentException` if the mesh has no vertex "
 		"tex coordinates component. ";
 
 //Mesh::face_face_adjacecncy
 const char* PYMESH_FFADJ_MAT =
 		"Returns face-to-face adjacency matrix of the mesh as a numpy array. "
-		"Raises a :py:exc:`MissingCompactnessException` if the array is not compact. "
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
 		"Raises a :py:exc:`MissingComponentException` if the mesh has no face-to-face "
 		"adjacency component. ";
 
 const char* PYMESH_VERT_SCALAR_ATTR_ARRAY = 
 		"Returns a numpy array containing the scalar values of the given user defined "
 		"attribute name associated to the vertices of the mesh. "
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
 		"Raises a :py:exc:`PyMeshLabException` if the given name does not "
 		"represent a vertex scalar attribute in the mesh.";
 
 const char* PYMESH_VERT_VECTOR_ATTR_MATRIX = 
 		"Returns a numpy matrix containing the vector values of the given user defined "
 		"attribute name associated to the vertices of the mesh. "
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
 		"Raises a :py:exc:`PyMeshLabException` if the given name does not "
 		"represent a vertex vector attribute in the mesh.";
 
 const char* PYMESH_FACE_SCALAR_ATTR_ARRAY = 
 		"Returns a numpy array containing the scalar values of the given user defined "
 		"attribute name associated to the faces of the mesh. "
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
 		"Raises a :py:exc:`PyMeshLabException` if the given name does not "
 		"represent a face scalar attribute in the mesh.";
 
 const char* PYMESH_FACE_VECTOR_ATTR_MATRIX = 
 		"Returns a numpy matrix containing the vector values of the given user defined "
 		"attribute name associated to the faces of the mesh. "
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
 		"Raises a :py:exc:`PyMeshLabException` if the given name does not "
 		"represent a face vector attribute in the mesh.";
 }

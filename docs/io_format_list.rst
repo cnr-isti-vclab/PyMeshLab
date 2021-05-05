@@ -15,15 +15,21 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
    .. raw:: html
 
-      Load 3ds format.</p>
+      Load 3DS format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.3ds'``
+   ``file_name : str = 'file_name.3DS'``
 
       .. raw:: html
 
          <i>File Name</i>: The name of the file to load
+
+   ``load_in_a_single_layer : bool = False``
+
+      .. raw:: html
+
+         <i>Load in a single layer</i>: 3DS files may contain more than one mesh. If this parameter is set to false, all the meshes contained in the file will be merged in a single mesh.
 
 .. data:: apts
    :noindex:
@@ -45,11 +51,11 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
    .. raw:: html
 
-      Load asc format.</p>
+      Load ASC format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.asc'``
+   ``file_name : str = 'file_name.ASC'``
 
       .. raw:: html
 
@@ -72,11 +78,11 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
    .. raw:: html
 
-      Load bre format.</p>
+      Load BRE format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.bre'``
+   ``file_name : str = 'file_name.BRE'``
 
       .. raw:: html
 
@@ -88,22 +94,22 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
          <i>only import points</i>: Just import points, without triangulation
 
-   ``unify : bool = True``
+   ``unify_vertices : bool = True``
 
       .. raw:: html
 
-         <i>Unify Duplicated Vertices</i>: The STL format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
+         <i>Unify Duplicated Vertices in BRE files</i>: The BRE format is not an vertex-indexed format. Each triangle is composed by independent vertices, so, usually, duplicated vertices should be unified
 
 .. data:: ctm
    :noindex:
 
    .. raw:: html
 
-      Load ctm format.</p>
+      Load CTM format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.ctm'``
+   ``file_name : str = 'file_name.CTM'``
 
       .. raw:: html
 
@@ -114,11 +120,11 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
    .. raw:: html
 
-      Load dae format.</p>
+      Load DAE format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.dae'``
+   ``file_name : str = 'file_name.DAE'``
 
       .. raw:: html
 
@@ -129,11 +135,11 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
    .. raw:: html
 
-      Load es format.</p>
+      Load ES format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.es'``
+   ``file_name : str = 'file_name.ES'``
 
       .. raw:: html
 
@@ -168,11 +174,11 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
    .. raw:: html
 
-      Load fbx format.</p>
+      Load FBX format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.fbx'``
+   ``file_name : str = 'file_name.FBX'``
 
       .. raw:: html
 
@@ -183,11 +189,11 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
    .. raw:: html
 
-      Load obj format.</p>
+      Load OBJ format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.obj'``
+   ``file_name : str = 'file_name.OBJ'``
 
       .. raw:: html
 
@@ -198,11 +204,11 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
    .. raw:: html
 
-      Load off format.</p>
+      Load OFF format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.off'``
+   ``file_name : str = 'file_name.OFF'``
 
       .. raw:: html
 
@@ -213,11 +219,11 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
    .. raw:: html
 
-      Load pdb format.</p>
+      Load PDB format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.pdb'``
+   ``file_name : str = 'file_name.PDB'``
 
       .. raw:: html
 
@@ -270,11 +276,11 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
    .. raw:: html
 
-      Load ply format.</p>
+      Load PLY format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.ply'``
+   ``file_name : str = 'file_name.PLY'``
 
       .. raw:: html
 
@@ -300,11 +306,11 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
    .. raw:: html
 
-      Load ptx format.</p>
+      Load PTX format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.ptx'``
+   ``file_name : str = 'file_name.PTX'``
 
       .. raw:: html
 
@@ -357,11 +363,11 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
    .. raw:: html
 
-      Load qobj format.</p>
+      Load QOBJ format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.qobj'``
+   ``file_name : str = 'file_name.QOBJ'``
 
       .. raw:: html
 
@@ -372,17 +378,17 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
    .. raw:: html
 
-      Load stl format.</p>
+      Load STL format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.stl'``
+   ``file_name : str = 'file_name.STL'``
 
       .. raw:: html
 
          <i>File Name</i>: The name of the file to load
 
-   ``meshlabiostlunifyvertices : bool = True``
+   ``unify_vertices : bool = True``
 
       .. raw:: html
 
@@ -393,11 +399,11 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
    .. raw:: html
 
-      Load tri format.</p>
+      Load TRI format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.tri'``
+   ``file_name : str = 'file_name.TRI'``
 
       .. raw:: html
 
@@ -408,11 +414,11 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
    .. raw:: html
 
-      Load txt format.</p>
+      Load TXT format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.txt'``
+   ``file_name : str = 'file_name.TXT'``
 
       .. raw:: html
 
@@ -485,11 +491,11 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
    .. raw:: html
 
-      Load vmi format.</p>
+      Load VMI format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.vmi'``
+   ``file_name : str = 'file_name.VMI'``
 
       .. raw:: html
 
@@ -500,11 +506,11 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
    .. raw:: html
 
-      Load wrl format.</p>
+      Load WRL format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.wrl'``
+   ``file_name : str = 'file_name.WRL'``
 
       .. raw:: html
 
@@ -515,11 +521,11 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
    .. raw:: html
 
-      Load x3d format.</p>
+      Load X3D format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.x3d'``
+   ``file_name : str = 'file_name.X3D'``
 
       .. raw:: html
 
@@ -530,11 +536,11 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
    .. raw:: html
 
-      Load x3dv format.</p>
+      Load X3DV format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.x3dv'``
+   ``file_name : str = 'file_name.X3DV'``
 
       .. raw:: html
 
@@ -567,11 +573,11 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
    .. raw:: html
 
-      Save 3ds format.</p>
+      Save 3DS format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.3ds'``
+   ``file_name : str = 'file_name.3DS'``
 
       .. raw:: html
 
@@ -606,11 +612,11 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
    .. raw:: html
 
-      Save ctm format.</p>
+      Save CTM format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.ctm'``
+   ``file_name : str = 'file_name.CTM'``
 
       .. raw:: html
 
@@ -645,11 +651,11 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
    .. raw:: html
 
-      Save dae format.</p>
+      Save DAE format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.dae'``
+   ``file_name : str = 'file_name.DAE'``
 
       .. raw:: html
 
@@ -690,11 +696,11 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
    .. raw:: html
 
-      Save dxf format.</p>
+      Save DXF format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.dxf'``
+   ``file_name : str = 'file_name.DXF'``
 
       .. raw:: html
 
@@ -705,11 +711,11 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
    .. raw:: html
 
-      Save idtf format.</p>
+      Save IDTF format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.idtf'``
+   ``file_name : str = 'file_name.IDTF'``
 
       .. raw:: html
 
@@ -774,11 +780,11 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
    .. raw:: html
 
-      Save json format.</p>
+      Save JSON format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.json'``
+   ``file_name : str = 'file_name.JSON'``
 
       .. raw:: html
 
@@ -807,11 +813,11 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
    .. raw:: html
 
-      Save obj format.</p>
+      Save OBJ format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.obj'``
+   ``file_name : str = 'file_name.OBJ'``
 
       .. raw:: html
 
@@ -864,11 +870,11 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
    .. raw:: html
 
-      Save off format.</p>
+      Save OFF format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.off'``
+   ``file_name : str = 'file_name.OFF'``
 
       .. raw:: html
 
@@ -903,11 +909,11 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
    .. raw:: html
 
-      Save ply format.</p>
+      Save PLY format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.ply'``
+   ``file_name : str = 'file_name.PLY'``
 
       .. raw:: html
 
@@ -996,11 +1002,11 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
    .. raw:: html
 
-      Save stl format.</p>
+      Save STL format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.stl'``
+   ``file_name : str = 'file_name.STL'``
 
       .. raw:: html
 
@@ -1029,11 +1035,11 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
    .. raw:: html
 
-      Save u3d format.</p>
+      Save U3D format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.u3d'``
+   ``file_name : str = 'file_name.U3D'``
 
       .. raw:: html
 
@@ -1086,11 +1092,11 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
    .. raw:: html
 
-      Save wrl format.</p>
+      Save WRL format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.wrl'``
+   ``file_name : str = 'file_name.WRL'``
 
       .. raw:: html
 
@@ -1119,11 +1125,11 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
    .. raw:: html
 
-      Save x3d format.</p>
+      Save X3D format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.x3d'``
+   ``file_name : str = 'file_name.X3D'``
 
       .. raw:: html
 
@@ -1205,61 +1211,61 @@ load raster parameters
 
 Here are listed all the raster file formats that can be loaded usingthe functions :py:meth:`pmeshlab.MeshSet.load_new_raster`.
 
-.. data:: jpeg
+.. data:: JPEG
    :noindex:
 
    .. raw:: html
 
-      Load jpeg format.</p>
+      Load JPEG format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.jpeg'``
+   ``file_name : str = 'file_name.JPEG'``
 
       .. raw:: html
 
          <i>File Name</i>: The name of the file to load
 
-.. data:: jpg
+.. data:: JPG
    :noindex:
 
    .. raw:: html
 
-      Load jpg format.</p>
+      Load JPG format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.jpg'``
+   ``file_name : str = 'file_name.JPG'``
 
       .. raw:: html
 
          <i>File Name</i>: The name of the file to load
 
-.. data:: png
+.. data:: PNG
    :noindex:
 
    .. raw:: html
 
-      Load png format.</p>
+      Load PNG format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.png'``
+   ``file_name : str = 'file_name.PNG'``
 
       .. raw:: html
 
          <i>File Name</i>: The name of the file to load
 
-.. data:: xpm
+.. data:: XPM
    :noindex:
 
    .. raw:: html
 
-      Load xpm format.</p>
+      Load XPM format.</p>
 
    **Parameters:**
 
-   ``file_name : str = 'file_name.xpm'``
+   ``file_name : str = 'file_name.XPM'``
 
       .. raw:: html
 

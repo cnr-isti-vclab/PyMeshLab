@@ -4737,7 +4737,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Vertex Displacement Ratio</i>: When a vertex is split it is moved along the average vector going from its position to the baricyenter of the FF connected faces sharing it
+         <i>Vertex Displacement Ratio</i>: This parameter denote the ratio ⍺ of displacement of a vertex. When a vertex <i>v</i> is split, it is moved towards the barycenter <i>b</i> of the FF connected faces sharing it of a (<i>v</i>-<i>b</i>)*⍺. When ⍺ is zero vertex is not displaced. When ⍺ is 0.5 the new vertex is half away toward the barycenter of the face. Reasonable values are in the [0 .. 0.1] range. 
 
 .. data:: saturate_vertex_quality
 
@@ -5262,7 +5262,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``textname : str = '/_tex.png.png'``
+   ``textname : str = 'texture.png'``
 
       .. raw:: html
 
@@ -6368,7 +6368,7 @@ apply_filter parameters
 
          <i>Max Dist Search</i>: Sample points for which we do not find anything within this distance are rejected and not considered for recovering data
 
-   ``textname : str = '/_tex.png.png'``
+   ``textname : str = 'texture.png'``
 
       .. raw:: html
 
@@ -6414,7 +6414,7 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``textname : str = '/_tex.png.png'``
+   ``textname : str = 'texture.png'``
 
       .. raw:: html
 
