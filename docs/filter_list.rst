@@ -3,7 +3,7 @@
 List of Filters
 ===============
 
-Here are listed all the filter names that can be given as paramter to the function :py:meth:`pmeshlab.MeshSet.apply_filter`.
+Here are listed all the filter names that can be given as a parameter to the function :py:meth:`pmeshlab.MeshSet.apply_filter`.
 
 Each filter accepts a list of parameters, that can be semantically classified as follows:
 
