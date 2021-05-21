@@ -8,6 +8,7 @@ IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   SET(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/../pymeshlab" 
 	  CACHE PATH "default pymeshlab install directory" FORCE)
 ENDIF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+set(CMAKE_POLICY_DEFAULT_CMP0077 NEW)
 
 ######
 # Option to not build meshlab-common and all the plugins
