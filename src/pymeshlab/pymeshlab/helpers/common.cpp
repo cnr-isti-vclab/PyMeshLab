@@ -156,7 +156,7 @@ std::string pymeshlab::filterListRSTDocumentation()
 	doc += ".. _filter_list:\n\nList of Filters\n===============\n\n";
 
 	doc +=
-			"Here are listed all the filter names that can be given as paramter "
+			"Here are listed all the filter names that can be given as a paramter "
 			"to the function :py:meth:`pmeshlab.MeshSet.apply_filter`.\n\n"
 
 			"Each filter accepts a list of parameters, that can be semantically classified as follows:\n\n"

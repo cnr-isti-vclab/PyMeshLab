@@ -235,8 +235,7 @@ void pymeshlab::MeshSet::applyFilterScript()
 		std::string filtername = computePythonName(meshlabFilterName).toStdString();
 		QAction* action = nullptr;
 		FilterPlugin* fp = meshsethelper::pluginFromFilterName(meshlabFilterName, action);
-		RichParameterList rpl;
-		fp->initParameterList(action, *this, rpl);
+		RichParameterList rpl = fp->initParameterList(action, *this);
 		meshsethelper::updateRichParameterList(filtername, p.second, rpl);
 		meshsethelper::applyFilterRPL(
 				filtername, meshlabFilterName, action, fp, rpl,
@@ -257,8 +256,7 @@ pybind11::dict pymeshlab::MeshSet::applyFilter(const std::string& filtername, py
 			throw MLException(QString::fromStdString(filtername) +
 				" requires at least one mesh loaded in the MeshSet.");
 		}
-		RichParameterList rpl;
-		fp->initParameterList(action, *this, rpl);
+		RichParameterList rpl= fp->initParameterList(action, *this);
 		meshsethelper::updateRichParameterListFromKwargs(f, kwargs, this, rpl);
 		outputValues = meshsethelper::applyFilterRPL(
 				filtername, meshlabFilterName, action, fp, rpl,
@@ -300,8 +298,7 @@ pybind11::dict pymeshlab::MeshSet::filterParameterValues(
 			throw MLException(QString::fromStdString(filtername) +
 				" requires at least one mesh loaded in the MeshSet.");
 		}
-		RichParameterList rpl;
-		fp->initParameterList(action, *this, rpl);
+		RichParameterList rpl = fp->initParameterList(action, *this);
 		meshsethelper::updateRichParameterListFromKwargs(f, kwargs, this, rpl);
 		outputValues = meshsethelper::pydictFromRichParameterList(rpl);
 	}
