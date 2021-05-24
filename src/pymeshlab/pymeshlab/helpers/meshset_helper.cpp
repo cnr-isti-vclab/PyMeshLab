@@ -902,8 +902,9 @@ pybind11::dict applyFilterRPL(
 	}
 	catch(const std::exception& e) {
 		if (data != nullptr){
-			delete data;
 			releaseOpenGLContext(fp);
+			delete data;
+			data = nullptr;
 		}
 		throw MLException(
 					"Failed to apply filter: " + QString::fromStdString(filtername) + "\n" +

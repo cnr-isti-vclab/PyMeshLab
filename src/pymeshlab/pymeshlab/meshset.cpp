@@ -136,6 +136,7 @@ void pymeshlab::MeshSet::saveCurrentMesh(const std::string& filename, pybind11::
 {
 	if (mm() == nullptr)
 		throw MLException("MeshSet has no selected Mesh.");
+	std::setlocale(LC_ALL, "en_US.UTF-8");
 	meshsethelper::saveMeshUsingPlugin(filename, mm(), kwargs, *this, functionSet);
 }
 
