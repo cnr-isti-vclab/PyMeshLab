@@ -6,13 +6,9 @@ on:
       version:
         description: 'New PyMeshLab Version'
         required: true
-        default: '0.2.1'
+        default: '0.2.2'
       meshlab_is_nightly:
         description: 'MeshLab version is nightly'
-        required: true
-        default: 'false'
-      meshlab_is_rc:
-        description: 'MeshLab version is RC'
         required: true
         default: 'false'
 
@@ -82,15 +78,10 @@ jobs:
         else
           echo ::set-output name=meshlab-nightly-option::""
         fi
-        if [ "${{ github.event.inputs.meshlab_is_rc }}" == "true" ]; then
-          echo ::set-output name=meshlab-rc-option::"-rc"
-        else
-          echo ::set-output name=meshlab-rc-option::""
-        fi
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       shell: bash
       run: |
-        sh scripts/${{ runner.os }}/1_build.sh ${{steps.meshlab-options.outputs.meshlab-rc-option}} ${{steps.meshlab-options.outputs.meshlab-nightly-option}}
+        sh scripts/${{ runner.os }}/1_build.sh ${{steps.meshlab-options.outputs.meshlab-nightly-option}}
     - name: Deploy PyMeshLab ${{ matrix.pyversion }}
       shell: bash
       run: |

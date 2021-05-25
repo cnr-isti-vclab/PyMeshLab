@@ -8,7 +8,6 @@ CORES="-j4"
 BUILD_MESHLAB_OPTION=""
 BUILD_OPTION="-DCMAKE_BUILD_TYPE=MinSizeRel"
 NIGHTLY_OPTION=""
-RC_OPTION=""
 
 #check parameters
 for i in "$@"
@@ -38,10 +37,6 @@ case $i in
         NIGHTLY_OPTION="-DMESHLAB_IS_NIGHTLY_VERSION=ON"
         shift # past argument=value
         ;;
-    -rc|--release_candidate)
-        RC_OPTION="-DMESHLAB_IS_RELEASE_CANDIDATE_VERSION=ON"
-        shift # past argument=value
-        ;;
     *)
         # unknown option
     ;;
@@ -64,6 +59,6 @@ BUILD_PATH=$(realpath $BUILD_PATH)
 INSTALL_PATH=$(realpath $INSTALL_PATH)
 
 cd $BUILD_PATH
-cmake $BUILD_OPTION -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $BUILD_MESHLAB_OPTION $NIGHTLY_OPTION $RC_OPTION $SOURCE_PATH 
+cmake $BUILD_OPTION -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $BUILD_MESHLAB_OPTION $NIGHTLY_OPTION $SOURCE_PATH
 make $CORES
 make install
