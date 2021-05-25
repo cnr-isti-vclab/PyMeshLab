@@ -1,7 +1,7 @@
 # Copyright 2019 Collabora, Ltd.
 # SPDX-License-Identifier: BSL-1.0
 
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.10)
 project(PyMeshLab)
 
 IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
