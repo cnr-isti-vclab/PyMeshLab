@@ -39,6 +39,8 @@ jobs:
       with:
         path: |
           src/build/distrib/pymeshlab/lib/
+          src/build/distrib/pymeshlab/libgmp*
+          src/build/distrib/pymeshlab/libmpfr*
         key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
     - name: Download external libraries
       if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
