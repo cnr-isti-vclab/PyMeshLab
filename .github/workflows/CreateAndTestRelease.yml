@@ -52,17 +52,18 @@ jobs:
     - name: Install Linux dependencies
       if: runner.os == 'Linux'
       run: |
-        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev libgmp-dev
+        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev libgmp-dev libcgal-dev libboost-all-dev
         #needed by qt 5.15 on linux
         sudo apt-get install libxcb-icccm4-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-render-util0-dev libxcb-xinerama0-dev
     - name: Install MacOS dependencies
       if: runner.os == 'macOS'
       run: |
-        brew install libomp
+        brew install libomp cgal
     - name: Install Windows dependencies
       if: runner.os == 'Windows'
       run: |
         echo "name=VCINSTALLDIR::C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC" >> $GITHUB_ENV
+        echo "C:\msys64\usr\bin\" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
     - name: Environment variables
       id: envs
       shell: bash
@@ -78,6 +79,11 @@ jobs:
         else
           echo ::set-output name=meshlab-nightly-option::""
         fi
+    - name: Download external libraries
+      if: runner.os == 'Windows' && steps.cache-meshlab-build.outputs.cache-hit == 'false'
+      shell: bash
+      run: |
+        bash src/meshlab/scripts/${{ runner.os }}/0_download_ext.sh
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       shell: bash
       run: |

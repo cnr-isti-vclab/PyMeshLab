@@ -35,7 +35,7 @@ jobs:
         key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
     - name: Install MacOS dependencies
       run: |
-        brew install libomp
+        brew install libomp cgal
     - name: Set build MeshLab option
       id: meshlab-build-option
       if: steps.cache-meshlab-build.outputs.cache-hit == 'true'

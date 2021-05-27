@@ -154,7 +154,6 @@ if (BUILD_MESHLAB)
 		meshlabplugins/filter_color_projection
 		meshlabplugins/filter_colorproc
 		meshlabplugins/filter_create
-		meshlabplugins/filter_csg
 		meshlabplugins/filter_dirt
 		meshlabplugins/filter_fractal
 		meshlabplugins/filter_func
@@ -162,6 +161,7 @@ if (BUILD_MESHLAB)
 		meshlabplugins/filter_isoparametrization
 		meshlabplugins/filter_layer
 		meshlabplugins/filter_measure
+		meshlabplugins/filter_mesh_booleans
 		meshlabplugins/filter_meshing
 		meshlabplugins/filter_mls
 		meshlabplugins/filter_mutualglobal

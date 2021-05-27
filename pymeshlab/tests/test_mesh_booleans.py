@@ -2,7 +2,7 @@ import pymeshlab as ml
 from . import samples_common
 
 
-def test_csg():
+def test_mesh_booleans():
     print('\n')
     base_path = samples_common.samples_absolute_path()
     output_path = samples_common.test_output_path()
@@ -12,6 +12,6 @@ def test_csg():
     ms.load_new_mesh(base_path + "bone.ply")  # id: 1, just for test id on mesh parameter
     ms.load_new_mesh(base_path + "airplane.obj")  # id: 2
 
-    ms.csg_operation(firstmesh=0, secondmesh=2, operator='Union')
+    ms.mesh_boolean_union(first_mesh=0, second_mesh=2)
 
     ms.save_current_mesh(output_path + 'cow_with_wings.obj')

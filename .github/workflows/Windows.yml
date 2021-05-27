@@ -30,6 +30,9 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.pyversion }}
+    - name: Expand PATH for wget
+      run: |
+        echo "C:\msys64\usr\bin\" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
     - name: Cache MeshLab Build
       id: cache-meshlab-build
       uses: actions/cache@v2
@@ -37,6 +40,11 @@ jobs:
         path: |
           src/build/distrib/pymeshlab/lib/
         key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
+    - name: Download external libraries
+      if: steps.cache-meshlab-build.outputs.cache-hit == 'false'
+      shell: bash
+      run: |
+        bash src/meshlab/scripts/${{ runner.os }}/0_download_ext.sh
     - name: Set build meshlab option
       shell: bash
       id: meshlab-build-option
