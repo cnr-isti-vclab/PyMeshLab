@@ -24,8 +24,8 @@ You can list all the available filters and theirs parameters:
 
 .. code-block:: python
 
-   ms.print_filter_list()
-   ms.print_filter_parameter_list('surface_reconstruction_screened_poisson')
+   pymeshlab.print_filter_list()
+   pymeshlab.print_filter_parameter_list('surface_reconstruction_screened_poisson')
 
 And apply filters with your parameters:
 
