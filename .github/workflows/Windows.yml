@@ -41,7 +41,7 @@ jobs:
           src/build/distrib/pymeshlab/lib/
         key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
     - name: Download external libraries
-      if: steps.cache-meshlab-build.outputs.cache-hit == 'false'
+      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       shell: bash
       run: |
         bash src/meshlab/scripts/${{ runner.os }}/0_download_ext.sh

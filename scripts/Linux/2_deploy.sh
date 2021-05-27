@@ -30,10 +30,10 @@ do
 done
 
 # libOpenGL.so is not deployed by linuxdeployqt
-if [ -f /usr/lib/x86_64-linux-gnu/libOpenGL.so.0 ]
-then
-    cp "$(readlink -f /usr/lib/x86_64-linux-gnu/libOpenGL.so.0)" $BUNDLE_PATH/lib/libOpenGL.so.0
-fi
+#if [ -f /usr/lib/x86_64-linux-gnu/libOpenGL.so.0 ]
+#then
+#    cp "$(readlink -f /usr/lib/x86_64-linux-gnu/libOpenGL.so.0)" $BUNDLE_PATH/lib/libOpenGL.so.0
+#fi
 
 $LINUXDEPLOYQT_PATH/linuxdeployqt $BUNDLE_PATH/pmeshlab* \
   -bundle-non-qt-libs \

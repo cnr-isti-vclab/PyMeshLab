@@ -1063,52 +1063,6 @@ apply_filter parameters
 
          <i>Cross Type</i>: 
 
-.. data:: csg_operation
-
-   *MeshLab filter name*: 'CSG Operation'
-
-   .. raw:: html
-
-      Constructive Solid Geometry operation filter.<br>For more details see: <br><i>C. Rocchini, P. Cignoni, F. Ganovelli, C. Montani, P. Pingi and R.Scopigno, </i><br><b>'Marching Intersections: an Efficient Resampling Algorithm for Surface Management'</b><br>In Proceedings of Shape Modeling International (SMI) 2001</p>
-
-   **Parameters:**
-
-   ``firstmesh : int = 0``
-
-      .. raw:: html
-
-         <i>First Mesh</i>: The first operand of the CSG operation
-
-   ``secondmesh : int = 0``
-
-      .. raw:: html
-
-         <i>Second Mesh</i>: The second operand of the CSG operation
-
-   ``delta : Percentage = 1%``
-
-      .. raw:: html
-
-         <i>Spacing between sampling lines</i>: This parameter controls the accuracy of the result and the speed of the computation.The time and memory needed to perform the operation usually scale as the reciprocal square of this value.For optimal results, this value should be at most half the the smallest feature (i.e. the highest frequency) you want to reproduce.
-
-   ``subdelta : int = 32``
-
-      .. raw:: html
-
-         <i>Discretization points per sample interval</i>: This is the number of points between the sampling lines to which the vertices can be rounded.Increasing this can marginally increase the precision and decrease the speed of the operation.
-
-   ``operator : str = 'Intersection' (or int = 0)``
-
-      Possible enum values:
-
-         0. ``'Intersection'``
-         1. ``'Union'``
-         2. ``'Difference'``
-
-      .. raw:: html
-
-         <i>Operator</i>: Intersection takes the volume shared between the two meshes; Union takes the volume included in at least one of the two meshes; Difference takes the volume included in the first mesh but not in the second one
-
 .. data:: curvature_flipping_optimization
 
    *MeshLab filter name*: 'Curvature flipping optimization'
@@ -2840,6 +2794,190 @@ apply_filter parameters
 
          <i>Merging Threshold</i>: All the per-wedge texture coords that are on the same vertex and are distant less then the given threshold are merged together. It can be used to remove the fake texture seams that arise from error. Distance is in texture space (the default, 1e-4, corresponds to one texel on a 10kx10x texture) 
 
+.. data:: mesh_boolean_difference
+
+   *MeshLab filter name*: 'Mesh Boolean: Difference'
+
+   .. raw:: html
+
+      This filter extecutes an exact boolean difference between two meshes. <br>The filter uses the original code provided in the <a href="https://libigl.github.io/">libigl library</a>.<br>The implementation refers to the following paper:<br><i>Qingnan Zhou, Eitan Grinspun, Denis Zorin, Alec Jacobson</i>,<br><b>"Mesh Arrangements for Solid Geometry"</b><br></p>
+
+   **Parameters:**
+
+   ``first_mesh : int = 0``
+
+      .. raw:: html
+
+         <i>First Mesh</i>: The first operand of the boolean operation
+
+   ``second_mesh : int = 0``
+
+      .. raw:: html
+
+         <i>Second Mesh</i>: The second operand of the boolean operation
+
+   ``transfer_face_color : bool = False``
+
+      .. raw:: html
+
+         <i>Transfer face color</i>: Save the color of the birth face to the faces of resulting mesh.
+
+   ``transfer_face_quality : bool = False``
+
+      .. raw:: html
+
+         <i>Transfer face quality</i>: Save the quality of the birth face to the faces of resulting mesh.
+
+   ``transfer_vert_color : bool = False``
+
+      .. raw:: html
+
+         <i>Transfer vertex color</i>: Save the color of the birth vertex to the faces of resulting mesh. For newly created vertices, a simple average of the neighbours is computed.
+
+   ``transfer_vert_quality : bool = False``
+
+      .. raw:: html
+
+         <i>Transfer vertex quality</i>: Save the quality of the birth vertex to the faces of resulting mesh.  For newly created vertices, a simple average of the neighbours is computed.
+
+.. data:: mesh_boolean_intersection
+
+   *MeshLab filter name*: 'Mesh Boolean: Intersection'
+
+   .. raw:: html
+
+      This filter extecutes an exact boolean intersection between two meshes. <br>The filter uses the original code provided in the <a href="https://libigl.github.io/">libigl library</a>.<br>The implementation refers to the following paper:<br><i>Qingnan Zhou, Eitan Grinspun, Denis Zorin, Alec Jacobson</i>,<br><b>"Mesh Arrangements for Solid Geometry"</b><br></p>
+
+   **Parameters:**
+
+   ``first_mesh : int = 0``
+
+      .. raw:: html
+
+         <i>First Mesh</i>: The first operand of the boolean operation
+
+   ``second_mesh : int = 0``
+
+      .. raw:: html
+
+         <i>Second Mesh</i>: The second operand of the boolean operation
+
+   ``transfer_face_color : bool = False``
+
+      .. raw:: html
+
+         <i>Transfer face color</i>: Save the color of the birth face to the faces of resulting mesh.
+
+   ``transfer_face_quality : bool = False``
+
+      .. raw:: html
+
+         <i>Transfer face quality</i>: Save the quality of the birth face to the faces of resulting mesh.
+
+   ``transfer_vert_color : bool = False``
+
+      .. raw:: html
+
+         <i>Transfer vertex color</i>: Save the color of the birth vertex to the faces of resulting mesh. For newly created vertices, a simple average of the neighbours is computed.
+
+   ``transfer_vert_quality : bool = False``
+
+      .. raw:: html
+
+         <i>Transfer vertex quality</i>: Save the quality of the birth vertex to the faces of resulting mesh.  For newly created vertices, a simple average of the neighbours is computed.
+
+.. data:: mesh_boolean_symmetric_difference_xor
+
+   *MeshLab filter name*: 'Mesh Boolean: Symmetric Difference (XOR)'
+
+   .. raw:: html
+
+      This filter extecutes an exact boolean symmetric difference (XOR) between two meshes. <br>The filter uses the original code provided in the <a href="https://libigl.github.io/">libigl library</a>.<br>The implementation refers to the following paper:<br><i>Qingnan Zhou, Eitan Grinspun, Denis Zorin, Alec Jacobson</i>,<br><b>"Mesh Arrangements for Solid Geometry"</b><br></p>
+
+   **Parameters:**
+
+   ``first_mesh : int = 0``
+
+      .. raw:: html
+
+         <i>First Mesh</i>: The first operand of the boolean operation
+
+   ``second_mesh : int = 0``
+
+      .. raw:: html
+
+         <i>Second Mesh</i>: The second operand of the boolean operation
+
+   ``transfer_face_color : bool = False``
+
+      .. raw:: html
+
+         <i>Transfer face color</i>: Save the color of the birth face to the faces of resulting mesh.
+
+   ``transfer_face_quality : bool = False``
+
+      .. raw:: html
+
+         <i>Transfer face quality</i>: Save the quality of the birth face to the faces of resulting mesh.
+
+   ``transfer_vert_color : bool = False``
+
+      .. raw:: html
+
+         <i>Transfer vertex color</i>: Save the color of the birth vertex to the faces of resulting mesh. For newly created vertices, a simple average of the neighbours is computed.
+
+   ``transfer_vert_quality : bool = False``
+
+      .. raw:: html
+
+         <i>Transfer vertex quality</i>: Save the quality of the birth vertex to the faces of resulting mesh.  For newly created vertices, a simple average of the neighbours is computed.
+
+.. data:: mesh_boolean_union
+
+   *MeshLab filter name*: 'Mesh Boolean: Union'
+
+   .. raw:: html
+
+      This filter extecutes an exact boolean union between two meshes. <br>The filter uses the original code provided in the <a href="https://libigl.github.io/">libigl library</a>.<br>The implementation refers to the following paper:<br><i>Qingnan Zhou, Eitan Grinspun, Denis Zorin, Alec Jacobson</i>,<br><b>"Mesh Arrangements for Solid Geometry"</b><br></p>
+
+   **Parameters:**
+
+   ``first_mesh : int = 0``
+
+      .. raw:: html
+
+         <i>First Mesh</i>: The first operand of the boolean operation
+
+   ``second_mesh : int = 0``
+
+      .. raw:: html
+
+         <i>Second Mesh</i>: The second operand of the boolean operation
+
+   ``transfer_face_color : bool = False``
+
+      .. raw:: html
+
+         <i>Transfer face color</i>: Save the color of the birth face to the faces of resulting mesh.
+
+   ``transfer_face_quality : bool = False``
+
+      .. raw:: html
+
+         <i>Transfer face quality</i>: Save the quality of the birth face to the faces of resulting mesh.
+
+   ``transfer_vert_color : bool = False``
+
+      .. raw:: html
+
+         <i>Transfer vertex color</i>: Save the color of the birth vertex to the faces of resulting mesh. For newly created vertices, a simple average of the neighbours is computed.
+
+   ``transfer_vert_quality : bool = False``
+
+      .. raw:: html
+
+         <i>Transfer vertex quality</i>: Save the quality of the birth vertex to the faces of resulting mesh.  For newly created vertices, a simple average of the neighbours is computed.
+
 .. data:: mesh_element_sampling
 
    *MeshLab filter name*: 'Mesh Element Sampling'
@@ -3848,7 +3986,7 @@ apply_filter parameters
 
    .. raw:: html
 
-      Create a new layer populated with a simplified version of the current point cloud.</p>
+      Create a new layer populated with a simplified version of the current point cloud. The simplification is performed by subsampling the original point cloud using a Poisson Disk strategy.</p>
 
    **Parameters:**
 
@@ -4489,7 +4627,7 @@ apply_filter parameters
 
          <i>Crease Angle</i>: Minimum angle between faces of the original to consider the shared edge as a feature to be preserved.
 
-   ``checksurfdist : bool = False``
+   ``checksurfdist : bool = True``
 
       .. raw:: html
 
