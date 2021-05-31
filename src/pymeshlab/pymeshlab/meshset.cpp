@@ -130,7 +130,7 @@ void pymeshlab::MeshSet::loadCurrentMesh(const std::string& filename, pybind11::
 {
 	if (mm() == nullptr)
 		throw MLException("MeshSet has no selected Mesh.");
-	mm()->Clear();
+	mm()->clear();
 	meshsethelper::loadMeshUsingPlugin(filename, mm(), kwargs, *this, functionSet);
 }
 
@@ -255,7 +255,7 @@ pybind11::dict pymeshlab::MeshSet::applyFilter(const std::string& filtername, py
 		
 		QAction* action = nullptr;
 		FilterPlugin* fp = meshsethelper::pluginFromFilterName(meshlabFilterName, action);
-		if (fp->filterArity(action) != FilterPlugin::NONE && size() == 0){
+		if (fp->filterArity(action) != FilterPlugin::NONE && meshNumber() == 0){
 			throw MLException(QString::fromStdString(filtername) +
 				" requires at least one mesh loaded in the MeshSet.");
 		}
@@ -278,7 +278,7 @@ pybind11::dict pymeshlab::MeshSet::applyFilter(const std::string& filtername, py
 
 void pymeshlab::MeshSet::printStatus() const
 {
-	std::cout << "Number meshes: " << size() << "\n";
+	std::cout << "Number meshes: " << meshNumber() << "\n";
 	for (const MeshModel* m : meshList){
 		std::cout << "\tMesh id: " << m->id() << "\n";
 		std::cout << "\tMesh label: " << m->label().toStdString() << "\n";
@@ -297,7 +297,7 @@ pybind11::dict pymeshlab::MeshSet::filterParameterValues(
 		
 		QAction* action = nullptr;
 		FilterPlugin* fp = meshsethelper::pluginFromFilterName(meshlabFilterName, action);
-		if (fp->filterArity(action) != FilterPlugin::NONE && size() == 0){
+		if (fp->filterArity(action) != FilterPlugin::NONE && meshNumber() == 0){
 			throw MLException(QString::fromStdString(filtername) +
 				" requires at least one mesh loaded in the MeshSet.");
 		}

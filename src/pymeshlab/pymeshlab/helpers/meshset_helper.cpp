@@ -671,11 +671,13 @@ void loadMLP(
 	if (!MeshDocumentFromXML(md, absfilename, (QString(fi.suffix()).toLower() == "mlb"), rendOpt)) {
 		throw MLException("Error:  Unable to open MeshLab Project file: " + absfilename);
 	}
-	for (int i=startingIndex; i<md.meshList.size(); i++) {
-		QString fullPath = md.meshList[i]->fullName();
-		Matrix44m trm = md.meshList[i]->cm.Tr;
-		meshsethelper::loadMeshUsingPlugin(fullPath.toStdString(), md.meshList[i], md);
-		md.mm()->cm.Tr = trm;
+	auto it = md.meshBegin();
+	std::advance(it, startingIndex);
+	for (; it != md.meshEnd(); ++it) {
+		QString fullPath = (*it)->fullName();
+		Matrix44m trm = (*it)->cm.Tr;
+		meshsethelper::loadMeshUsingPlugin(fullPath.toStdString(), (*it), md);
+		(*it)->cm.Tr = trm;
 	}
 
 	//restore current dir
@@ -804,8 +806,7 @@ void initOpenGLContext(QAction* action, OpenGLContextData& data, FilterPlugin* f
 			}
 		}
 		else {
-			for (int ii = 0; ii < ms.meshList.size(); ++ii) {
-				MeshModel* mm = ms.meshList[ii];
+			for (MeshModel* mm : ms.meshIterator()) {
 				MLRenderingData::PRIMITIVE_MODALITY pm = MLPoliciesStandAloneFunctions::bestPrimitiveModalityAccordingToMesh(mm);
 				if ((pm != MLRenderingData::PR_ARITY) && (mm != nullptr)) {
 					dt.set(pm, atts);
