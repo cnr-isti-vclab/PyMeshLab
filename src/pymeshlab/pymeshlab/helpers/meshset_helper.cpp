@@ -29,8 +29,7 @@
 #include <common/mlexception.h>
 #include <common/globals.h>
 #include <common/GLExtensionsManager.h>
-#include <common/meshlabdocumentxml.h>
-#include <common/meshlabdocumentbundler.h>
+#include <common/utilities/load_save.h>
 #include <common/python/function_set.h>
 #include <common/python/python_utils.h>
 #include <wrap/io_trimesh/alnParser.h>
@@ -407,8 +406,7 @@ void loadMeshUsingPlugin(
 				mm->setLabel(finfo.fileName());
 			}
 			
-			RichParameterList rps;
-			plugin->initPreOpenParameter(extension, rps);
+			RichParameterList rps = plugin->initPreOpenParameter(extension);
 
 			try {
 				int mask = 0;
@@ -456,8 +454,7 @@ void loadMeshUsingPlugin(
 				mm->setLabel(finfo.fileName());
 			}
 			
-			RichParameterList rps;
-			plugin->initPreOpenParameter(extension, rps);
+			RichParameterList rps = plugin->initPreOpenParameter(extension);
 
 			meshsethelper::updateRichParameterListFromKwargs(ff, kwargs, &md, rps, true);
 
@@ -491,8 +488,7 @@ void loadRasterUsingPlugin(
 	}
 	else {
 		PluginManager& pm = meshlab::pluginManagerInstance();
-		if (pm.isInputRasterFormatSupported(extension)){
-			IOPlugin* plugin = pm.inputRasterPlugin(extension);
+		if (pm.isInputImageFormatSupported(extension)){
 
 			bool justCreated = false;
 			if (rm == nullptr){
@@ -504,7 +500,7 @@ void loadRasterUsingPlugin(
 			}
 
 			try {
-				plugin->openRaster(extension, QString::fromStdString(filename), *rm);
+				meshlab::loadRaster(QString::fromStdString(filename), *rm, VerbosityManager::staticLogger, VerbosityManager::filterCallBack);
 			}
 			catch(const MLException& e){
 				if (justCreated)
@@ -564,10 +560,10 @@ void saveMeshUsingPlugin(
 	PluginManager& pm = meshlab::pluginManagerInstance();
 	if (pm.isOutputMeshFormatSupported(extension)){
 		IOPlugin* plugin = pm.outputMeshPlugin(extension);
-		RichParameterList rps;
+
 		int capability = 0, defbits = 0, capabilityMesh;
 		plugin->exportMaskCapability(extension, capability, defbits);
-		plugin->initSaveParameter(extension, *mm, rps);
+		RichParameterList rps= plugin->initSaveParameter(extension, *mm);
 
 		capabilityMesh = currentMeshIOCapabilityMask(mm);
 		plugin->save(
@@ -596,7 +592,7 @@ void saveMeshUsingPlugin(
 		const Function& ff = filterFunctionSet.saveMeshFunction(extension);
 		IOPlugin* plugin = pm.outputMeshPlugin(extension);
 		//int mask = 0; //todo: use this mask
-		RichParameterList rps;
+
 
 		//masks
 		int capabilityFormat = 0;    //what can be saved in the given format
@@ -608,7 +604,7 @@ void saveMeshUsingPlugin(
 
 		capabilityMesh = currentMeshIOCapabilityMask(mm);
 
-		plugin->initSaveParameter(extension, *mm, rps);
+		RichParameterList rps= plugin->initSaveParameter(extension, *mm);
 		meshsethelper::updateRichParameterListFromKwargs(ff, kwargs, &md, rps, true);
 
 		capabilityMesh = capabilityMesh & capabilityFormat;
@@ -624,139 +620,6 @@ void saveMeshUsingPlugin(
 	else {
 		throw MLException("Unknown format for save: " + extension);
 	}
-}
-
-/** Load/Save Project **/
-
-void loadALN(
-		const QString& fileName,
-		MeshDocument& md)
-{
-	QFileInfo fi(fileName);
-	QString absfilename = fi.absolutePath() + "/" + fi.fileName();
-	QDir currentDir = QDir::current();
-	// this change of dir is needed for subsequent textures/materials loading
-	QDir::setCurrent(fi.absoluteDir().absolutePath());
-
-	std::vector<RangeMap> rmv;
-	int retVal = ALNParser::ParseALN(rmv, qUtf8Printable(absfilename));
-	if(retVal != ALNParser::NoError) {
-		throw MLException("Error: Unable to open ALN file: " + absfilename);
-	}
-
-	bool openRes=true;
-	std::vector<RangeMap>::iterator ir;
-	for(ir=rmv.begin();ir!=rmv.end() && openRes;++ir) {
-		QString relativeToProj = fi.absoluteDir().absolutePath() + "/" + (*ir).filename.c_str();
-		loadMeshUsingPlugin(relativeToProj.toStdString(), nullptr, md);
-		md.mm()->cm.Tr = ir->transformation;
-	}
-
-	//restore current dir
-	QDir::setCurrent(currentDir.absolutePath());
-}
-
-void loadMLP(
-		const QString& fileName,
-		MeshDocument& md)
-{
-	QFileInfo fi(fileName);
-	QString absfilename = fi.absolutePath() + "/" + fi.fileName();
-	QDir currentDir = QDir::current();
-	// this change of dir is needed for subsequent textures/materials loading
-	QDir::setCurrent(fi.absolutePath());
-
-	std::map<int, MLRenderingData> rendOpt;
-	int startingIndex = md.meshList.size();
-	if (!MeshDocumentFromXML(md, absfilename, (QString(fi.suffix()).toLower() == "mlb"), rendOpt)) {
-		throw MLException("Error:  Unable to open MeshLab Project file: " + absfilename);
-	}
-	auto it = md.meshBegin();
-	std::advance(it, startingIndex);
-	for (; it != md.meshEnd(); ++it) {
-		QString fullPath = (*it)->fullName();
-		Matrix44m trm = (*it)->cm.Tr;
-		meshsethelper::loadMeshUsingPlugin(fullPath.toStdString(), (*it), md);
-		(*it)->cm.Tr = trm;
-	}
-
-	//restore current dir
-	QDir::setCurrent(currentDir.absolutePath());
-}
-
-void loadBundler(
-		const QString& fileName,
-		MeshDocument& md)
-{
-	QFileInfo fi(fileName);
-	QString cameras_filename = fi.absolutePath() + "/" + fi.fileName();
-	QString image_list_filename = fi.absolutePath() + "/list.txt";
-	QString model_filename;
-
-	QDir currentDir = QDir::current();
-	// this change of dir is needed for subsequent textures/materials loading
-	QDir::setCurrent(fi.absolutePath());
-
-	if(!MeshDocumentFromBundler(md, cameras_filename, image_list_filename, model_filename)){
-		throw MLException("Error:  Unable to open OUTs file: " + cameras_filename);
-	}
-
-	//restore current dir
-	QDir::setCurrent(currentDir.absolutePath());
-}
-
-void loadNVM(
-		const QString& fileName,
-		MeshDocument& md)
-{
-	QFileInfo fi(fileName);
-	QString cameras_filename = fi.absolutePath() + "/" + fi.fileName();
-	QString image_list_filename = fi.absolutePath() + "/list.txt";
-	QString model_filename;
-
-	QDir currentDir = QDir::current();
-	// this change of dir is needed for subsequent textures/materials loading
-	QDir::setCurrent(fi.absolutePath());
-
-	if(!MeshDocumentFromNvm(md, cameras_filename, model_filename)){
-		throw MLException("Error:  Unable to open NVMs file: " + cameras_filename);
-	}
-
-	//restore current dir
-	QDir::setCurrent(currentDir.absolutePath());
-}
-
-void saveMLP(
-		const QString& fileName,
-		MeshDocument& md)
-{
-	QFileInfo fi(fileName);
-	QString outdir = fi.absolutePath();
-	QString absfilename = outdir + "/" + fi.fileName();
-	QDir currentDir = QDir::current();
-	// this change of dir is needed for subsequent textures/materials loading
-	QDir::setCurrent(fi.absolutePath());
-
-	for(MeshModel* m : md.meshList) {
-		if (m != NULL) {
-			QString label = m->label().remove(" ");
-			int p = label.lastIndexOf('.');
-			if (p > 0)
-				label = label.left(p);
-			QString outfilename = outdir + "/" + label.remove(" ") + ".ply";
-			m->setFileName(outfilename);
-			QFileInfo of(outfilename);
-			m->setLabel(of.fileName());
-			meshsethelper::saveMeshUsingPlugin(outfilename.toStdString(), m);
-		}
-	}
-
-	bool ok = MeshDocumentToXMLFile(md, fileName, false, false, fi.suffix().toLower() == "mlb");
-	if (!ok){
-		throw MLException("Error:  Unable to save MeshLab Project file: " + absfilename);
-	}
-	//restore current dir
-	QDir::setCurrent(currentDir.absolutePath());
 }
 
 /** OpenGL context **/

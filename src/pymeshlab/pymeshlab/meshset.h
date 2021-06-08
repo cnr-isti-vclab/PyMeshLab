@@ -69,7 +69,7 @@ public:
 	
 	void loadNewRaster(const std::string& filename);
 
-	void loadProject(const std::string& filename);
+	void loadProject(const pybind11::object& filenames);
 	void saveProject(const std::string& filename);
 
 	void loadFilterScript(const std::string& filename);

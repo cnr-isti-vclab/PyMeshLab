@@ -27,7 +27,7 @@
 #include <pybind11/numpy.h>
 #include <pybind11/eigen.h>
 #include <common/mlexception.h>
-
+#include <common/utilities/load_save.h>
 #include <common/globals.h>
 #include <common/python/python_utils.h>
 #include "percentage.h"
@@ -158,56 +158,33 @@ void pymeshlab::MeshSet::loadNewRaster(const std::string& filename)
 	meshsethelper::loadRasterUsingPlugin(filename, nullptr, *this);
 }
 
-void pymeshlab::MeshSet::loadProject(const std::string& filename)
+void pymeshlab::MeshSet::loadProject(const py::object& filenames)
 {
-	QString fileName = QString::fromStdString(filename);
-	if (filename.empty())
-		throw MLException("file_name empty.");
-
-	QFileInfo fi(fileName);
-	if((fi.suffix().toLower()!="aln") &&
-			(fi.suffix().toLower()!="mlp")  &&
-			(fi.suffix().toLower() != "mlb") &&
-			(fi.suffix().toLower()!="out") &&
-			(fi.suffix().toLower()!="nvm")) {
-		throw MLException("Unknown project file extension: " + fi.suffix().toLower());
+	std::list<std::string> filenms;
+	if (py::isinstance<py::str>(filenames)){
+		filenms.push_back(py::str(filenames));
+	}
+	else if (py::isinstance<py::list>(filenames)){
+		py::list l = filenames;
+		for (const auto& names : l){
+			filenms.push_back(names.cast<std::string>());
+		}
 	}
 
-	setFileName(fileName);
-	setDocLabel(fileName);
+	QStringList fn;
+	for (const std::string& s : filenms)
+		fn.append(QString::fromStdString(s));
 
-	if (QString(fi.suffix()).toLower() == "aln") {
-		meshsethelper::loadALN(fileName, *this);
-	}
-
-	if (QString(fi.suffix()).toLower() == "mlp" || QString(fi.suffix()).toLower() == "mlb") {
-		meshsethelper::loadMLP(fileName, *this);
-	}
-
-	if (QString(fi.suffix()).toLower() == "out"){
-		meshsethelper::loadBundler(fileName, *this);
-	}
-
-	if (QString(fi.suffix()).toLower() == "nvm"){
-		meshsethelper::loadNVM(fileName, *this);
-	}
+	meshlab::loadProject(
+			fn, *this,
+			VerbosityManager::staticLogger, VerbosityManager::filterCallBack);
 }
 
 void pymeshlab::MeshSet::saveProject(const std::string& filename)
 {
-	QString fileName = QString::fromStdString(filename);
-	if (filename.empty())
-		throw MLException("file_name empty.");
-
-	QFileInfo fi(fileName);
-	if((fi.suffix().toLower()!="mlp")  &&
-			(fi.suffix().toLower() != "mlb")) {
-		throw MLException("Unknown project file extension: " + fi.suffix().toLower());
-	}
-
-	if (QString(fi.suffix()).toLower() == "mlp" || QString(fi.suffix()).toLower() == "mlb") {
-		meshsethelper::saveMLP(fileName, *this);
-	}
+	meshlab::saveProject(QString::fromStdString(filename),
+						 *this, true,
+						 std::vector<MLRenderingData>());
 }
 
 void pymeshlab::MeshSet::loadFilterScript(const std::string& filename)
@@ -279,7 +256,7 @@ pybind11::dict pymeshlab::MeshSet::applyFilter(const std::string& filtername, py
 void pymeshlab::MeshSet::printStatus() const
 {
 	std::cout << "Number meshes: " << meshNumber() << "\n";
-	for (const MeshModel* m : meshList){
+	for (const MeshModel* m : meshIterator()){
 		std::cout << "\tMesh id: " << m->id() << "\n";
 		std::cout << "\tMesh label: " << m->label().toStdString() << "\n";
 		std::cout << "\tFull name: " << m->fullName().toStdString() << "\n\n";
