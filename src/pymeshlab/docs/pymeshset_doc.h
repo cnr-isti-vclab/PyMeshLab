@@ -116,7 +116,10 @@ const char* PYMS_CLEAR =
 
 //MeshSet::load_project
 const char* PYMS_LOAD_PROJECT =
-		"Loads a project from the given file name and stores it in the MeshSet.";
+		"Loads a project from the given file name(s) and stores it in the MeshSet. "
+		"This function can accept a string as a single filename, or a list of "
+		"strings if the project is composed of more than one file. E.g. "
+		"``ms.load_project(['bundle.rd.out', 'cams.txt'])``.";
 
 //MeshSet::save_project
 const char* PYMS_SAVE_PROJECT =

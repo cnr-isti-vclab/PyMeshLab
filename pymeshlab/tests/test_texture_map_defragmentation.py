@@ -6,8 +6,8 @@ from sys import platform
 
 
 def test_texture_map_defragmentation():
-    #if platform == 'linux' or platform == 'win32':
-    #    pytest.skip("test_texture_map_defragmentation filter does not work through pytest on linux and windows; skipping")
+    if platform == 'linux' or platform == 'win32':
+        pytest.skip("test_texture_map_defragmentation filter does not work through pytest on linux and windows; skipping")
     print('\n')
     base_path = samples_common.samples_absolute_path()
     output_path = samples_common.test_output_path()
