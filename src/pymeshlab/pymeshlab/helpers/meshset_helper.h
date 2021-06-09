@@ -83,24 +83,14 @@ bool pythonFilterNameExists(
 
 void loadMeshUsingPlugin(
 		const std::string& filename,
-		MeshModel* mm,
-		MeshDocument& md);
-
-void loadMeshUsingPlugin(
-		const std::string& filename,
-		MeshModel* mm,
-		pybind11::kwargs kwargs, 
-		MeshDocument& md, 
+		pybind11::kwargs kwargs,
+		MeshDocument& md,
 		const FunctionSet& filterFunctionSet);
 
 void loadRasterUsingPlugin(
 		const std::string& filename,
 		RasterModel* rm,
 		MeshDocument& md);
-
-void saveMeshUsingPlugin(
-		const std::string& filename,
-		MeshModel* mm);
 
 void saveMeshUsingPlugin(
 		const std::string& filename,

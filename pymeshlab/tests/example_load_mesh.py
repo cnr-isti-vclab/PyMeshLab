@@ -38,11 +38,3 @@ def example_load_mesh():
     print(ms.current_mesh().vertex_number())
 
     assert ms.current_mesh().vertex_number() == 7017
-
-    # load a mesh and overwrite the current mesh of the MeshSet (id 1)
-    ms.load_current_mesh(base_path + "cube.obj")
-
-    # print the number of vertices of the current mesh
-    print(ms.current_mesh().vertex_number())
-
-    assert ms.current_mesh().vertex_number() == 8

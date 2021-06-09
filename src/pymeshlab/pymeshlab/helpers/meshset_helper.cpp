@@ -381,53 +381,7 @@ void afterLoadOperations(MeshModel& m, int mask)
 }
 
 void loadMeshUsingPlugin(
-		const std::string& filename,
-		MeshModel* mm,
-		MeshDocument& md)
-{
-	QFileInfo finfo(QString::fromStdString(filename));
-	QString extension = finfo.suffix().toLower();
-
-	if (!finfo.exists()){
-		throw MLException("File does not exists: " + QString::fromStdString(filename));
-	}
-	else {
-		PluginManager& pm = meshlab::pluginManagerInstance();
-		if (pm.isInputMeshFormatSupported(extension)){
-			IOPlugin* plugin = pm.inputMeshPlugin(extension);
-			
-			bool justCreated = false;
-			if (mm == nullptr){
-				mm = md.addNewMesh(finfo.filePath(), finfo.fileName());
-				justCreated = true;
-			}
-			else {
-				mm->setFileName(finfo.filePath());
-				mm->setLabel(finfo.fileName());
-			}
-			
-			RichParameterList rps = plugin->initPreOpenParameter(extension);
-
-			try {
-				int mask = 0;
-				plugin->open(extension, QString::fromStdString(filename), *mm, mask, rps);
-				afterLoadOperations(*mm, mask);
-			}
-			catch (const MLException& e) {
-				if (justCreated)
-					md.delMesh(md.mm());
-				throw MLException("Unable to open file: " + QString::fromStdString(filename) + "\n" + e.what());
-			}
-		}
-		else {
-			throw MLException("Unknown format for load: " + extension);
-		}
-	}
-}
-
-void loadMeshUsingPlugin(
 		const std::string& filename, 
-		MeshModel* mm, 
 		pybind11::kwargs kwargs,
 		MeshDocument& md,
 		const FunctionSet& filterFunctionSet)
@@ -444,28 +398,12 @@ void loadMeshUsingPlugin(
 			const Function& ff = filterFunctionSet.loadMeshFunction(extension);
 			IOPlugin* plugin = pm.inputMeshPlugin(extension);
 			
-			bool justCreated = false;
-			if (mm == nullptr){
-				mm = md.addNewMesh(finfo.filePath(), finfo.fileName());
-				justCreated = true;
-			}
-			else {
-				mm->setFileName(finfo.filePath());
-				mm->setLabel(finfo.fileName());
-			}
-			
 			RichParameterList rps = plugin->initPreOpenParameter(extension);
-
 			meshsethelper::updateRichParameterListFromKwargs(ff, kwargs, &md, rps, true);
-
 			try {
-				int mask = 0;
-				plugin->open(extension, QString::fromStdString(filename), *mm, mask, rps);
-				afterLoadOperations(*mm, mask);
+				meshlab::loadMeshWithStandardParameters(QString::fromStdString(filename), md, VerbosityManager::filterCallBack, rps);
 			}
 			catch (const MLException& e) {
-				if (justCreated)
-					md.delMesh(md.mm());
 				throw MLException("Unable to open file: " + QString::fromStdString(filename) + "\n" + e.what());
 			}
 		}
@@ -551,33 +489,6 @@ int computeSaveSettingsMaskFromKwargs(pybind11::kwargs kwargs, int startingMask,
 
 void saveMeshUsingPlugin(
 		const std::string& filename,
-		MeshModel* mm)
-{
-	if (mm == nullptr)
-		throw MLException("Input model is nullptr. This should never happen.\nPlease open an issue on GitHub!");
-	QFileInfo finfo(QString::fromStdString(filename));
-	QString extension = finfo.suffix().toLower();
-	PluginManager& pm = meshlab::pluginManagerInstance();
-	if (pm.isOutputMeshFormatSupported(extension)){
-		IOPlugin* plugin = pm.outputMeshPlugin(extension);
-
-		int capability = 0, defbits = 0, capabilityMesh;
-		plugin->exportMaskCapability(extension, capability, defbits);
-		RichParameterList rps= plugin->initSaveParameter(extension, *mm);
-
-		capabilityMesh = currentMeshIOCapabilityMask(mm);
-		plugin->save(
-					extension, QString::fromStdString(filename), *mm,
-					capabilityMesh & defbits, rps, &VerbosityManager::filterCallBack);
-		mm->setFileName(finfo.absoluteFilePath());
-	}
-	else {
-		throw MLException("Unknown format for save: " + extension);
-	}
-}
-
-void saveMeshUsingPlugin(
-		const std::string& filename,
 		MeshModel* mm,
 		pybind11::kwargs kwargs,
 		MeshDocument& md,
@@ -615,6 +526,7 @@ void saveMeshUsingPlugin(
 		plugin->save(
 					extension, QString::fromStdString(filename), *mm,
 					userSettings, rps, &VerbosityManager::filterCallBack);
+		mm->saveTextures(finfo.absolutePath(), 66);
 		mm->setFileName(finfo.absoluteFilePath());
 	}
 	else {

@@ -81,17 +81,6 @@ const char* PYMS_LOAD_NEW_MESH =
 		"format of the file is not known by PyMeshLab or if there was an error "
 		"while loading the file.";
 
-//MeshSet::load_current_mesh
-const char* PYMS_LOAD_CURRENT_MESH =
-		"Loads the mesh in the given filename and overwrites the current "
-		"selected mesh. The loaded mesh remains the current selected one. "
-		"This method accepts a list of parameters that depends on the format of "
-		"the file that is being loaded. The list of possible parameters is listed "
-		"in the :ref:`load_mesh_parameters` page."
-		"Raises a :py:exc:`PyMeshLabException` if the file is not found, if the "
-		"format of the file is not known by PyMeshLab or if there was an error "
-		"while loading the file.";
-
 //MeshSet::save_current_mesh
 const char* PYMS_SAVE_CURRENT_MESH =
 		"Saves the current selected mesh in the MeshSet in a file having the "

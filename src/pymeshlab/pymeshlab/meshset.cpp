@@ -123,15 +123,7 @@ void pymeshlab::MeshSet::printFilterScript() const
 
 void pymeshlab::MeshSet::loadNewMesh(const std::string& filename, py::kwargs kwargs)
 {
-	meshsethelper::loadMeshUsingPlugin(filename, nullptr, kwargs, *this, functionSet);
-}
-
-void pymeshlab::MeshSet::loadCurrentMesh(const std::string& filename, pybind11::kwargs kwargs)
-{
-	if (mm() == nullptr)
-		throw MLException("MeshSet has no selected Mesh.");
-	mm()->clear();
-	meshsethelper::loadMeshUsingPlugin(filename, mm(), kwargs, *this, functionSet);
+	meshsethelper::loadMeshUsingPlugin(filename, kwargs, *this, functionSet);
 }
 
 void pymeshlab::MeshSet::saveCurrentMesh(const std::string& filename, pybind11::kwargs kwargs)

@@ -63,7 +63,6 @@ public:
 	void printFilterScript() const;
 
 	void loadNewMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());
-	void loadCurrentMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());
 	void saveCurrentMesh(const std::string& filename, pybind11::kwargs kwargs = pybind11::kwargs());
 	void addMesh(const CMeshO& mesh, const std::string& name = "new_mesh", bool setAsCurrent = true);
 	
