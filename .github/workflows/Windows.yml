@@ -33,30 +33,30 @@ jobs:
     - name: Expand PATH for wget
       run: |
         echo "C:\msys64\usr\bin\" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-    - name: Cache MeshLab Build
-      id: cache-meshlab-build
-      uses: actions/cache@v2
-      with:
-        path: |
-          src/build/distrib/pymeshlab/lib/
-          src/build/distrib/pymeshlab/libgmp*
-          src/build/distrib/pymeshlab/libmpfr*
-        key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
+    #- name: Cache MeshLab Build
+    #  id: cache-meshlab-build
+    #  uses: actions/cache@v2
+    #  with:
+    #    path: |
+    #      src/build/distrib/pymeshlab/lib/
+    #      src/build/distrib/pymeshlab/libgmp*
+    #      src/build/distrib/pymeshlab/libmpfr*
+    #    key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
     - name: Download external libraries
-      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
+    #  if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
       shell: bash
       run: |
         bash src/meshlab/scripts/${{ runner.os }}/0_download_ext.sh
-    - name: Set build meshlab option
-      shell: bash
-      id: meshlab-build-option
-      if: steps.cache-meshlab-build.outputs.cache-hit == 'true'
-      run: |
-        echo  ::set-output name=meshlab-build-option::"--no-build-meshlab"
+    #- name: Set build meshlab option
+    #  shell: bash
+    #  id: meshlab-build-option
+    #  if: steps.cache-meshlab-build.outputs.cache-hit == 'true'
+    #  run: |
+    #    echo  ::set-output name=meshlab-build-option::"--no-build-meshlab"
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       shell: bash
       run: |
-        sh scripts/${{ runner.os }}/1_build.sh --nightly ${{steps.meshlab-build-option.outputs.meshlab-build-option}}
+        sh scripts/${{ runner.os }}/1_build.sh --nightly #${{steps.meshlab-build-option.outputs.meshlab-build-option}}
     - name: Deploy PyMeshLab ${{ matrix.pyversion }}
       shell: bash
       run: |

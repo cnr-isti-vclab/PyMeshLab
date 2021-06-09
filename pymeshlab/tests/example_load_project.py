@@ -11,11 +11,11 @@ def example_load_project():
     ms = pymeshlab.MeshSet()
 
     # load an ALN project
-    #ms.load_project(base_path + "sample_project.aln")
+    ms.load_project(base_path + "sample_project.aln")
 
-    #print(ms.number_meshes())  # the project contains two meshes
+    print(ms.number_meshes())  # the project contains two meshes
 
-    #assert ms.number_meshes() == 2
+    assert ms.number_meshes() == 2
 
     # load another project, but a MLP project
     ms.load_project(base_path + "sample_project.mlp")
@@ -24,4 +24,4 @@ def example_load_project():
     # contains 4 meshes.
     print(ms.number_meshes())
 
-    assert ms.number_meshes() == 2
+    assert ms.number_meshes() == 4
