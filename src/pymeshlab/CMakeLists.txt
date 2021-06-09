@@ -127,7 +127,9 @@ if (NOT BUILD_MESHLAB)
 			MESHLAB_SCALAR=${MESHLAB_SCALAR}
 		)
 endif()
-target_link_libraries(${PYMESHLAB_MODULE_NAME} PUBLIC meshlab-common)
+target_link_libraries(
+	${PYMESHLAB_MODULE_NAME}
+	PUBLIC meshlab-common external-exif)
 
 ### Build directories
 if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
