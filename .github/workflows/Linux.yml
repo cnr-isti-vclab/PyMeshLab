@@ -87,7 +87,7 @@ jobs:
     - name: Run Tests ${{ matrix.pyversion }}
       run: |
         pip3 install pytest numpy
-        pytest --pyargs pymeshlab
+        pytest --pyargs pymeshlab -m "not glcontext"
     - name: Upload PyMeshLab results
       uses: actions/upload-artifact@v2
       with:
@@ -119,4 +119,4 @@ jobs:
       run: |
         pip install pytest
         pip install pymeshlab*.whl
-        pytest --pyargs pymeshlab
+        pytest --pyargs pymeshlab -m "not glcontext"

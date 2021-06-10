@@ -5,6 +5,7 @@ import pytest
 from sys import platform
 
 
+@pytest.mark.glcontext
 def test_texture_map_defragmentation():
     print('\n')
     base_path = samples_common.samples_absolute_path()

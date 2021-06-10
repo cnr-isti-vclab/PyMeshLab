@@ -132,6 +132,12 @@ jobs:
       run: |
         sudo apt-get install -y libopengl0
     - name: Run Tests ${{ matrix.pyversion }}
+      if: runner.os == 'Linux'
+      run: |
+        pip3 install pytest numpy
+        pytest --pyargs pymeshlab -m "not glcontext"
+    - name: Run Tests ${{ matrix.pyversion }}
+      if: runner.os != 'Linux'
       run: |
         pip3 install pytest numpy
         python -c 'import pymeshlab; pymeshlab.use_cpu_opengl()' #just for windows
@@ -161,6 +167,14 @@ jobs:
       run: |
         sudo apt-get install -y libopengl0
     - name: Install and Test Wheel
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        pip install pytest
+        pip install pymeshlab*.whl
+        pytest --pyargs pymeshlab -m "not glcontext"
+    - name: Install and Test Wheel
+      if: runner.os != 'Linux'
       shell: bash
       run: |
         pip install pytest
