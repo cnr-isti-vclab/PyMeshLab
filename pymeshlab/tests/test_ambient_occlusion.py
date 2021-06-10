@@ -6,6 +6,8 @@ from sys import platform
 
 
 def test_ambient_occlusion():
+    if platform == 'linux':
+        pytest.skip("ambient_occlusion filter does not work through pytest on linux; skipping")
     print('\n')
     base_path = samples_common.samples_absolute_path()
     output_path = samples_common.test_output_path()
