@@ -80,6 +80,7 @@ set(MESHLAB_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/meshlab/src")
 ### Build settings
 # general meshlab build settings that apply also in pymeshlab:
 include("${MESHLAB_SRC_DIR}/cmake/meshlab_global_settings.cmake")
+set(CMAKE_POLICY_DEFAULT_CMP0077 NEW) #set options variables
 
 set(PYMESHLAB_BUILD_DISTRIB_DIR ${CMAKE_CURRENT_BINARY_DIR}/distrib/pymeshlab)
 

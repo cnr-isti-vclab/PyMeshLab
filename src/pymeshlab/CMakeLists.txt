@@ -67,8 +67,8 @@ if (BUILD_PYMESHLAB_DEBUG) #bin to debug pymeshlab
 	list(APPEND SOURCES debug_main.cpp)
 	add_executable(${PYMESHLAB_MODULE_NAME} ${SOURCES} ${HEADERS})
 	target_link_libraries(
-		${PYMESHLAB_MODULE_NAME} 
-		PUBLIC  
+		${PYMESHLAB_MODULE_NAME}
+		PUBLIC
 			meshlab-common
 			pybind11_headers
 			${PYTHON_LIBRARIES})
@@ -84,8 +84,8 @@ elseif(BUILD_PYMESHLAB_UPDATE_DOC) #bin to update doc
 	list(APPEND SOURCES doc_main.cpp)
 	add_executable(${PYMESHLAB_MODULE_NAME} ${SOURCES} ${HEADERS})
 	target_link_libraries(
-		${PYMESHLAB_MODULE_NAME} 
-		PUBLIC  
+		${PYMESHLAB_MODULE_NAME}
+		PUBLIC
 			meshlab-common)
 	set_property(TARGET ${PYMESHLAB_MODULE_NAME}
 		PROPERTY RUNTIME_OUTPUT_DIRECTORY ${PYMESHLAB_BUILD_DISTRIB_DIR})
@@ -115,14 +115,14 @@ if (NOT BUILD_MESHLAB)
 		#add_definitions(-DMESHLAB_VERSION=${MESHLAB_VERSION})
 		message(STATUS "MeshLab version: ${MESHLAB_VERSION}")
 	endif()
-	
+
 	if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
 		target_link_directories(${PYMESHLAB_MODULE_NAME} PUBLIC "${PYMESHLAB_BUILD_DISTRIB_DIR}/lib")
 	else()
 		target_link_directories(${PYMESHLAB_MODULE_NAME} PUBLIC "${PYMESHLAB_BUILD_DISTRIB_DIR}/dummybin.app/Contents/Frameworks")
 	endif()
 	target_compile_definitions(${PYMESHLAB_MODULE_NAME}
-		PUBLIC 
+		PUBLIC
 			MESHLAB_VERSION=${MESHLAB_VERSION}
 			MESHLAB_SCALAR=${MESHLAB_SCALAR}
 		)
@@ -133,12 +133,12 @@ target_link_libraries(
 
 ### Build directories
 if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
-	#set_property(TARGET ${PYMESHLAB_MODULE_NAME} 
+	#set_property(TARGET ${PYMESHLAB_MODULE_NAME}
 	#	PROPERTY RUNTIME_OUTPUT_DIRECTORY ${PYMESHLAB_BUILD_DISTRIB_DIR})
-	set_property(TARGET ${PYMESHLAB_MODULE_NAME} 
+	set_property(TARGET ${PYMESHLAB_MODULE_NAME}
 		PROPERTY LIBRARY_OUTPUT_DIRECTORY ${PYMESHLAB_BUILD_DISTRIB_DIR})
 else()
-	set_property(TARGET ${PYMESHLAB_MODULE_NAME} 
+	set_property(TARGET ${PYMESHLAB_MODULE_NAME}
 		PROPERTY LIBRARY_OUTPUT_DIRECTORY ${PYMESHLAB_BUILD_DISTRIB_DIR}/dummybin.app/Contents)
 endif()
 
@@ -159,7 +159,7 @@ else()
 endif()
 
 if (NOT APPLE)
-	set_target_properties(${PYMESHLAB_MODULE_NAME} PROPERTIES 
+	set_target_properties(${PYMESHLAB_MODULE_NAME} PROPERTIES
 		INSTALL_RPATH "\$ORIGIN/lib:${INSTALL_RPATH}")
 else()
 	set_target_properties(${PYMESHLAB_MODULE_NAME}
@@ -174,7 +174,12 @@ endif()
 ### Copy/install other files
 if (NOT BUILD_MESHLAB)
 	if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
-		install(DIRECTORY "${PYMESHLAB_BUILD_DISTRIB_DIR}/lib" DESTINATION ${CMAKE_INSTALL_PREFIX})
+		if (WIN32)
+			install(DIRECTORY "${PYMESHLAB_BUILD_DISTRIB_DIR}/lib" DESTINATION ${CMAKE_INSTALL_PREFIX}
+					  FILES_MATCHING PATTERN "*.lib" PATTERN "*.dll" PATTERN "*.exp")
+		else()
+			install(DIRECTORY "${PYMESHLAB_BUILD_DISTRIB_DIR}/lib" DESTINATION ${CMAKE_INSTALL_PREFIX})
+		endif()
 	else()
 		install(DIRECTORY "${PYMESHLAB_BUILD_DISTRIB_DIR}/dummybin.app/Contents/Frameworks" DESTINATION ${CMAKE_INSTALL_PREFIX}/dummybin.app/Contents/Frameworks)
 		install(DIRECTORY "${PYMESHLAB_BUILD_DISTRIB_DIR}/dummybin.app/Contents/PlugIns" DESTINATION ${CMAKE_INSTALL_PREFIX}/dummybin.app/Contents/PlugIns)
