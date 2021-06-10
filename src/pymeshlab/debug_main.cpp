@@ -11,7 +11,6 @@ int main(int , char *[])
 	pybind11::scoped_interpreter guard{};
 	pymeshlab::loadDefaultPlugins();
 	pymeshlab::MeshSet ms;
-	ms.loadNewMesh("/home/alessandro/Repositories/Projects/PyMeshLab/src/meshlab/sample/bunny10k_textured.obj");
 
 	//pybind11::kwargs kw;
 	//kw["param"] = 0.2;

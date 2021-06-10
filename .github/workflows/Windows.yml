@@ -126,7 +126,7 @@ jobs:
     - name: Install and Test Wheel
       shell: bash
       run: |
-        pip install pytest -m "not glcontext"
+        pip install pytest
         pip install pymeshlab*.whl
         python -c 'import pymeshlab; pymeshlab.use_cpu_opengl()' #just for windows
-        pytest --pyargs pymeshlab
+        pytest --pyargs pymeshlab -m "not glcontext"
