@@ -28,6 +28,7 @@
 #include <common/plugins/plugin_manager.h>
 #include <common/python/function_set.h>
 #include <common/globals.h>
+#include <common/GLExtensionsManager.h>
 
 #include "helpers/common.h"
 
@@ -35,6 +36,7 @@
 
 void pymeshlab::loadDefaultPlugins()
 {
+	GLExtensionsManager::init();
 	PluginManager& pm = meshlab::pluginManagerInstance();
 	pm.loadPlugins(QDir(QString::fromStdString(getPluginsPath())));
 }
