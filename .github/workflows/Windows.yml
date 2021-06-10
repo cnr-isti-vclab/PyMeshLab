@@ -99,7 +99,7 @@ jobs:
       run: |
         pip install pytest numpy
         python -c 'import pymeshlab; pymeshlab.use_cpu_opengl()'
-        pytest --pyargs pymeshlab
+        pytest --pyargs pymeshlab -m "not glcontext"
     - name: Upload PyMeshLab results
       uses: actions/upload-artifact@v2
       with:
@@ -126,7 +126,7 @@ jobs:
     - name: Install and Test Wheel
       shell: bash
       run: |
-        pip install pytest
+        pip install pytest -m "not glcontext"
         pip install pymeshlab*.whl
         python -c 'import pymeshlab; pymeshlab.use_cpu_opengl()' #just for windows
         pytest --pyargs pymeshlab

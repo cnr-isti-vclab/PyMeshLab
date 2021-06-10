@@ -132,16 +132,16 @@ jobs:
       run: |
         sudo apt-get install -y libopengl0
     - name: Run Tests ${{ matrix.pyversion }}
-      if: runner.os == 'Linux'
+      if: runner.os == 'macOS'
       run: |
         pip3 install pytest numpy
-        pytest --pyargs pymeshlab -m "not glcontext"
+        pytest --pyargs pymeshlab
     - name: Run Tests ${{ matrix.pyversion }}
-      if: runner.os != 'Linux'
+      if: runner.os != 'macOS'
       run: |
         pip3 install pytest numpy
         python -c 'import pymeshlab; pymeshlab.use_cpu_opengl()' #just for windows
-        pytest --pyargs pymeshlab
+        pytest --pyargs pymeshlab -m "not glcontext"
 
   # ... and the wheel
   wheel_test:
@@ -167,20 +167,20 @@ jobs:
       run: |
         sudo apt-get install -y libopengl0
     - name: Install and Test Wheel
-      if: runner.os == 'Linux'
+      if: runner.os == 'macOS'
       shell: bash
       run: |
         pip install pytest
         pip install pymeshlab*.whl
-        pytest --pyargs pymeshlab -m "not glcontext"
+        pytest --pyargs pymeshlab
     - name: Install and Test Wheel
-      if: runner.os != 'Linux'
+      if: runner.os != 'macOS'
       shell: bash
       run: |
         pip install pytest
         pip install pymeshlab*.whl
         python -c 'import pymeshlab; pymeshlab.use_cpu_opengl()' #just for windows
-        pytest --pyargs pymeshlab
+        pytest --pyargs pymeshlab -m "not glcontext"
 
   # after building and testing PyMeshLab for the three platforms, we create a release in github
   create_release:
