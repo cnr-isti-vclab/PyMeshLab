@@ -25,6 +25,8 @@
 #include <pybind11/eigen.h>
 #include "docs/pymesh_doc.h"
 
+#include <common/utilities/eigen_mesh_conversions.h>
+
 namespace py = pybind11;
 
 void pymeshlab::initMesh(py::module& m)
@@ -38,7 +40,7 @@ void pymeshlab::initMesh(py::module& m)
 
 	//constructor (could be empty)
 	meshClass.def(
-				py::init(&Mesh::createFromMatrices), doc::PYMESH_INIT,
+				py::init(&meshlab::meshFromMatrices), doc::PYMESH_INIT,
 				py::arg("vertex_matrix")    = Eigen::MatrixX3d(),
 				py::arg("face_matrix")      = Eigen::MatrixX3i(),
 				py::arg("v_normals_matrix") = Eigen::MatrixX3d(),
@@ -58,18 +60,18 @@ void pymeshlab::initMesh(py::module& m)
 	meshClass.def("update_topology", &Mesh::updateTopology, doc::PYMESH_UPDATE_TOPO);
 	meshClass.def("compact", &Mesh::compact, doc::PYMESH_COMPACT);
 
-	meshClass.def("vertex_matrix", &Mesh::vertexMatrix, doc::PYMESH_VERT_MAT);
-	meshClass.def("face_matrix", &Mesh::faceMatrix, doc::PYMESH_FACE_MAT);
-	meshClass.def("vertex_normal_matrix", &Mesh::vertexNormalMatrix, doc::PYMESH_VERT_NORM_MAT);
-	meshClass.def("face_normal_matrix", &Mesh::faceNormalMatrix, doc::PYMESH_FACE_NORM_MAT);
-	meshClass.def("vertex_color_matrix", &Mesh::vertexColorMatrix, doc::PYMESH_VERT_COLOR_MAT);
-	meshClass.def("vertex_color_array", &Mesh::vertexColorArray, doc::PYMESH_VERT_COLOR_ARRAY);
-	meshClass.def("face_color_matrix", &Mesh::faceColorMatrix, doc::PYMESH_FACE_COLOR_MAT);
-	meshClass.def("face_color_array", &Mesh::faceColorArray, doc::PYMESH_FACE_COLOR_ARRAY);
-	meshClass.def("vertex_quality_array", &Mesh::vertexQualityArray, doc::PYMESH_VERT_QUAL_ARRAY);
-	meshClass.def("face_quality_array", &Mesh::faceQualityArray, doc::PYMESH_FACE_QUAL_ARRAY);
-	meshClass.def("vertex_tex_coord_matrix", &Mesh::vertexTexCoordMatrix, doc::PYMESH_VERT_TEX_MAT);
-	meshClass.def("wedge_tex_coord_matrix", &Mesh::wedgeTexCoordMatrix, doc::PYMESH_WEDGE_TEX_MAT);
+	meshClass.def("vertex_matrix", &meshlab::vertexMatrix, doc::PYMESH_VERT_MAT);
+	meshClass.def("face_matrix", &meshlab::faceMatrix, doc::PYMESH_FACE_MAT);
+	meshClass.def("vertex_normal_matrix", &meshlab::vertexNormalMatrix, doc::PYMESH_VERT_NORM_MAT);
+	meshClass.def("face_normal_matrix", &meshlab::faceNormalMatrix, doc::PYMESH_FACE_NORM_MAT);
+	meshClass.def("vertex_color_matrix", &meshlab::vertexColorMatrix, doc::PYMESH_VERT_COLOR_MAT);
+	meshClass.def("vertex_color_array", &meshlab::vertexColorArray, doc::PYMESH_VERT_COLOR_ARRAY);
+	meshClass.def("face_color_matrix", &meshlab::faceColorMatrix, doc::PYMESH_FACE_COLOR_MAT);
+	meshClass.def("face_color_array", &meshlab::faceColorArray, doc::PYMESH_FACE_COLOR_ARRAY);
+	meshClass.def("vertex_quality_array", &meshlab::vertexQualityArray, doc::PYMESH_VERT_QUAL_ARRAY);
+	meshClass.def("face_quality_array", &meshlab::faceQualityArray, doc::PYMESH_FACE_QUAL_ARRAY);
+	meshClass.def("vertex_tex_coord_matrix", &meshlab::vertexTexCoordMatrix, doc::PYMESH_VERT_TEX_MAT);
+	meshClass.def("wedge_tex_coord_matrix", &meshlab::wedgeTexCoordMatrix, doc::PYMESH_WEDGE_TEX_MAT);
 
 	meshClass.def("face_face_adjacency_matrix", &Mesh::faceFaceAdjacency, doc::PYMESH_FFADJ_MAT);
 	

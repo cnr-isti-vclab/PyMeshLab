@@ -32,15 +32,6 @@ namespace pymeshlab {
 class Mesh
 {
 public:
-	//constructor:
-	static CMeshO createFromMatrices(
-			const Eigen::MatrixX3d& vertices =      Eigen::MatrixX3d(),
-			const Eigen::MatrixX3i& faces =         Eigen::MatrixX3i(),
-			const Eigen::MatrixX3d& vertexNormals = Eigen::MatrixX3d(),
-			const Eigen::MatrixX3d& faceNormals =   Eigen::MatrixX3d(),
-			const Eigen::VectorXd&  vertexQuality = Eigen::VectorXd(),
-			const Eigen::VectorXd&  faceQuality =   Eigen::VectorXd());
-
 	static bool isCompact(const CMeshO& mesh);
 
 	static Box3m boundingBox(const CMeshO& mesh);
@@ -52,20 +43,6 @@ public:
 
 	static int selectedVertexNumber(const CMeshO& mesh);
 	static int selectedFaceNumber(const CMeshO& mesh);
-
-	static Eigen::MatrixXd vertexMatrix(const CMeshO& mesh);
-	static Eigen::MatrixXi faceMatrix(const CMeshO& mesh);
-	static Eigen::MatrixXd vertexNormalMatrix(const CMeshO& mesh);
-	static Eigen::MatrixXd faceNormalMatrix(const CMeshO& mesh);
-	static Eigen::MatrixXd vertexColorMatrix(const CMeshO& mesh);
-	static Eigen::MatrixXd faceColorMatrix(const CMeshO& mesh);
-	static Eigen::Matrix<unsigned int, Eigen::Dynamic, 1> vertexColorArray(const CMeshO& mesh);
-	static Eigen::Matrix<unsigned int, Eigen::Dynamic, 1> faceColorArray(const CMeshO& mesh);
-	static Eigen::VectorXd vertexQualityArray(const CMeshO& mesh);
-	static Eigen::VectorXd faceQualityArray(const CMeshO& mesh);
-
-	static Eigen::MatrixXd vertexTexCoordMatrix(const CMeshO& mesh);
-	static Eigen::MatrixXd wedgeTexCoordMatrix(const CMeshO& mesh);
 
 	static Eigen::MatrixXi faceFaceAdjacency(const CMeshO& mesh);
 	
