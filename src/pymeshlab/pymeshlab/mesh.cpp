@@ -22,9 +22,6 @@
 ****************************************************************************/
 #include "mesh.h"
 
-#include <vcg/complex/algorithms/mesh_to_matrix.h>
-#include <vcg/complex/allocate.h>
-#include <vcg/../wrap/io_trimesh/import_obj.h>
 #include <common/mlexception.h>
 #include <common/utilities/eigen_mesh_conversions.h>
 
@@ -89,112 +86,6 @@ int pymeshlab::Mesh::selectedFaceNumber(const CMeshO& mesh)
 		}
 	}
 	return counter;
-}
-
-Eigen::MatrixXi pymeshlab::Mesh::faceFaceAdjacency(const CMeshO& mesh)
-{
-	vcg::tri::RequireFaceCompactness(mesh);
-	vcg::tri::RequireFFAdjacency(mesh);
-
-	Eigen::MatrixXi faceFaceMatrix(mesh.FN(),3);
-
-	for (int i = 0; i < mesh.FN(); i++) {
-		for (int j = 0; j < 3; j++) {
-			auto AdjF= mesh.face[i].cFFp(j);
-			if (AdjF==&mesh.face[i]) {
-				faceFaceMatrix(i,j)=-1;
-			}
-			else{
-				faceFaceMatrix(i,j)=mesh.face[i].cFFi(j);
-			}
-		}
-	}
-
-	return faceFaceMatrix;
-}
-
-Eigen::VectorXd pymeshlab::Mesh::vertexScalarAttributeArray(
-		const CMeshO& mesh,
-		const std::string& attributeName)
-{
-	vcg::tri::RequireVertexCompactness(mesh);
-	CMeshO::ConstPerVertexAttributeHandle<Scalarm> attributeHandle =
-			vcg::tri::Allocator<CMeshO>::GetPerVertexAttribute<Scalarm>(mesh, attributeName);
-	if (vcg::tri::Allocator<CMeshO>::IsValidHandle(mesh, attributeHandle)){
-		Eigen::VectorXd attrVector(mesh.VN());
-		for (unsigned int i = 0; i < (unsigned int) mesh.VN(); ++i){
-			attrVector[i] = attributeHandle[i];
-		}
-		return attrVector;
-	}
-	else {
-		throw MLException("No valid per vertex scalar attribute named " + 
-						  QString::fromStdString(attributeName) + " was found.");
-	}
-}
-
-Eigen::MatrixX3d pymeshlab::Mesh::vertexVectorAttributeMatrix(
-		const CMeshO& mesh,
-		const std::string& attributeName)
-{
-	vcg::tri::RequireVertexCompactness(mesh);
-	CMeshO::ConstPerVertexAttributeHandle<Point3m> attributeHandle =
-			vcg::tri::Allocator<CMeshO>::GetPerVertexAttribute<Point3m>(mesh, attributeName);
-	if (vcg::tri::Allocator<CMeshO>::IsValidHandle(mesh, attributeHandle)){
-		Eigen::MatrixX3d attrMatrix(mesh.VN(), 3);
-		for (unsigned int i = 0; i < (unsigned int) mesh.VN(); ++i){
-			attrMatrix(i,0) = attributeHandle[i][0];
-			attrMatrix(i,1) = attributeHandle[i][1];
-			attrMatrix(i,2) = attributeHandle[i][2];
-		}
-		return attrMatrix;
-	}
-	else {
-		throw MLException("No valid per vertex vector attribute named " + 
-						  QString::fromStdString(attributeName) + " was found.");
-	}
-}
-
-Eigen::VectorXd pymeshlab::Mesh::faceScalarAttributeArray(
-		const CMeshO& mesh, const 
-		std::string& attributeName)
-{
-	vcg::tri::RequireFaceCompactness(mesh);
-	CMeshO::ConstPerFaceAttributeHandle<Scalarm> attributeHandle =
-			vcg::tri::Allocator<CMeshO>::GetPerFaceAttribute<Scalarm>(mesh, attributeName);
-	if (vcg::tri::Allocator<CMeshO>::IsValidHandle(mesh, attributeHandle)){
-		Eigen::VectorXd attrMatrix(mesh.FN());
-		for (unsigned int i = 0; i < (unsigned int) mesh.FN(); ++i){
-			attrMatrix[i] = attributeHandle[i];
-		}
-		return attrMatrix;
-	}
-	else {
-		throw MLException("No valid per face scalar attribute named " + 
-						  QString::fromStdString(attributeName) + " was found.");
-	}
-}
-
-Eigen::MatrixX3d pymeshlab::Mesh::faceVectorAttributeMatrix(
-		const CMeshO& mesh,
-		const std::string& attributeName)
-{
-	vcg::tri::RequireFaceCompactness(mesh);
-	CMeshO::ConstPerFaceAttributeHandle<Point3m> attributeHandle =
-			vcg::tri::Allocator<CMeshO>::GetPerFaceAttribute<Point3m>(mesh, attributeName);
-	if (vcg::tri::Allocator<CMeshO>::IsValidHandle(mesh, attributeHandle)){
-		Eigen::MatrixX3d attrMatrix(mesh.FN(), 3);
-		for (unsigned int i = 0; i < (unsigned int) mesh.FN(); ++i){
-			attrMatrix(i,0) = attributeHandle[i][0];
-			attrMatrix(i,1) = attributeHandle[i][1];
-			attrMatrix(i,2) = attributeHandle[i][2];
-		}
-		return attrMatrix;
-	}
-	else {
-		throw MLException("No valid per face vector attribute named " + 
-						  QString::fromStdString(attributeName) + " was found.");
-	}
 }
 
 pymeshlab::Mesh::Mesh()

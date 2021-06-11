@@ -44,21 +44,6 @@ public:
 	static int selectedVertexNumber(const CMeshO& mesh);
 	static int selectedFaceNumber(const CMeshO& mesh);
 
-	static Eigen::MatrixXi faceFaceAdjacency(const CMeshO& mesh);
-	
-	static Eigen::VectorXd vertexScalarAttributeArray(
-			const CMeshO& mesh, 
-			const std::string& attributeName);
-	static Eigen::MatrixX3d vertexVectorAttributeMatrix(
-			const CMeshO& mesh, 
-			const std::string& attributeName);
-	static Eigen::VectorXd faceScalarAttributeArray(
-			const CMeshO& mesh, 
-			const std::string& attributeName);
-	static Eigen::MatrixX3d faceVectorAttributeMatrix(
-			const CMeshO& mesh, 
-			const std::string& attributeName);
-
 private:
 	Mesh();
 };

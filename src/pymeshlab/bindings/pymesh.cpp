@@ -73,10 +73,10 @@ void pymeshlab::initMesh(py::module& m)
 	meshClass.def("vertex_tex_coord_matrix", &meshlab::vertexTexCoordMatrix, doc::PYMESH_VERT_TEX_MAT);
 	meshClass.def("wedge_tex_coord_matrix", &meshlab::wedgeTexCoordMatrix, doc::PYMESH_WEDGE_TEX_MAT);
 
-	meshClass.def("face_face_adjacency_matrix", &Mesh::faceFaceAdjacency, doc::PYMESH_FFADJ_MAT);
-	
-	meshClass.def("vertex_scalar_attribute_array", &Mesh::vertexScalarAttributeArray, doc::PYMESH_VERT_SCALAR_ATTR_ARRAY);
-	meshClass.def("vertex_vector_attribute_matrix", &Mesh::vertexVectorAttributeMatrix, doc::PYMESH_VERT_VECTOR_ATTR_MATRIX);
-	meshClass.def("face_scalar_attribute_array", &Mesh::faceScalarAttributeArray, doc::PYMESH_FACE_SCALAR_ATTR_ARRAY);
-	meshClass.def("face_vector_attribute_matrix", &Mesh::faceVectorAttributeMatrix, doc::PYMESH_FACE_VECTOR_ATTR_MATRIX);
+	meshClass.def("face_face_adjacency_matrix", &meshlab::faceFaceAdjacencyMatrix, doc::PYMESH_FFADJ_MAT);
+
+	meshClass.def("vertex_scalar_attribute_array", &meshlab::vertexScalarAttributeArray, doc::PYMESH_VERT_SCALAR_ATTR_ARRAY);
+	meshClass.def("vertex_vector_attribute_matrix", &meshlab::vertexVectorAttributeMatrix, doc::PYMESH_VERT_VECTOR_ATTR_MATRIX);
+	meshClass.def("face_scalar_attribute_array", &meshlab::faceScalarAttributeArray, doc::PYMESH_FACE_SCALAR_ATTR_ARRAY);
+	meshClass.def("face_vector_attribute_matrix", &meshlab::faceVectorAttributeMatrix, doc::PYMESH_FACE_VECTOR_ATTR_MATRIX);
 }
