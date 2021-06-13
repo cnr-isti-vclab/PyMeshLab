@@ -193,6 +193,44 @@ const char* PYMESH_FACE_VECTOR_ATTR_MATRIX =
 		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
 		"Raises a :py:exc:`PyMeshLabException` if the given name does not "
 		"represent a face vector attribute in the mesh.";
+
+const char* PYMESH_ADD_VERT_SCALAR_ATTR =
+		"Adds a new user defined scalar attribute associated to the vertices of "
+		"the mesh. Takes as input numpy array of scalar having the same size of "
+		"the number of vertices of the mesh, and the name of the new attribute. "
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
+		"Raises a :py:exc:`PyMeshLabException` if the given array has a different "
+		"size from the vertex number of the mesh, or if the mesh already contains "
+		"a vertex scalar attribute with the given name.";
+
+const char* PYMESH_ADD_FACE_SCALAR_ATTR =
+		"Adds a new user defined scalar attribute associated to the faces of "
+		"the mesh. Takes as input numpy array of scalar having the same size of "
+		"the number of faces of the mesh, and the name of the new attribute. "
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
+		"Raises a :py:exc:`PyMeshLabException` if the given array has a different "
+		"size from the face number of the mesh, or if the mesh already contains "
+		"a face scalar attribute with the given name.";
+
+const char* PYMESH_ADD_VERT_VECTOR_ATTR =
+		"Adds a new user defined vector attribute associated to the vertices of "
+		"the mesh. Takes as input numpy array of vectors having 3 columns and the "
+		"number of rows equal to the number of vertices of the mesh, and the name of "
+		"the new attribute. "
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
+		"Raises a :py:exc:`PyMeshLabException` if the given array has not the correct "
+		"sizes, or if the mesh already contains a vertex vector attribute with the "
+		"given name.";
+
+const char* PYMESH_ADD_FACE_VECTOR_ATTR =
+		"Adds a new user defined vector attribute associated to the faces of "
+		"the mesh. Takes as input numpy array of vectors having 3 columns and the "
+		"number of rows equal to the number of faces of the mesh, and the name of "
+		"the new attribute. "
+		"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
+		"Raises a :py:exc:`PyMeshLabException` if the given array has not the correct "
+		"sizes, or if the mesh already contains a face vector attribute with the "
+		"given name.";
 }
 }
 

@@ -79,4 +79,17 @@ void pymeshlab::initMesh(py::module& m)
 	meshClass.def("vertex_vector_attribute_matrix", &meshlab::vertexVectorAttributeMatrix, doc::PYMESH_VERT_VECTOR_ATTR_MATRIX);
 	meshClass.def("face_scalar_attribute_array", &meshlab::faceScalarAttributeArray, doc::PYMESH_FACE_SCALAR_ATTR_ARRAY);
 	meshClass.def("face_vector_attribute_matrix", &meshlab::faceVectorAttributeMatrix, doc::PYMESH_FACE_VECTOR_ATTR_MATRIX);
+
+	meshClass.def(
+				"add_vertex_scalar_attribute", &meshlab::addVertexScalarAttribute, doc::PYMESH_ADD_VERT_SCALAR_ATTR,
+				py::arg("attribute_values"), py::arg("attribute_name"));
+	meshClass.def(
+				"add_face_scalar_attribute", &meshlab::addFaceScalarAttribute, doc::PYMESH_ADD_FACE_SCALAR_ATTR,
+				py::arg("attribute_values"), py::arg("attribute_name"));
+	meshClass.def(
+				"add_vertex_vector_attribute", &meshlab::addVertexVectorAttribute, doc::PYMESH_ADD_VERT_VECTOR_ATTR,
+				py::arg("attribute_values"), py::arg("attribute_name"));
+	meshClass.def(
+				"add_face_vector_attribute", &meshlab::addFaceVectorAttribute, doc::PYMESH_ADD_FACE_VECTOR_ATTR,
+				py::arg("attribute_values"), py::arg("attribute_name"));
 }
