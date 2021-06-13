@@ -37,6 +37,12 @@ void pymeshlab::initMeshSet(pybind11::module& m)
 	//constructor
 	meshSetClass.def(py::init<bool>(), doc::PYMS_INIT_VERB, py::arg("verbose") = false);
 
+	meshSetClass.def("__len__", &MeshSet::meshNumber, doc::PYMS_NUMBER_MESHES_DOC);
+	meshSetClass.def("__str__", &MeshSet::printStatus, doc::PYMS_PRINT_STATUS);
+	meshSetClass.def("__getitem__", &MeshSet::mesh, doc::PYMS_MESH, py::arg("id"), py::return_value_policy::reference);
+	//meshSetClass.def("__iter__", [](const MeshSet &s) { return py::make_iterator(s.meshBegin(), s.meshEnd()); },
+	//			py::keep_alive<0, 1>() /* Essential: keep object alive while iterator exists */);
+
 	meshSetClass.def("set_verbosity", &MeshSet::setVerbosity, doc::PYMS_SET_VERBOSITY_DOC, py::arg("verbosity"));
 	meshSetClass.def("number_meshes", &MeshSet::meshNumber, doc::PYMS_NUMBER_MESHES_DOC);
 	meshSetClass.def("number_rasters", &MeshSet::rasterNumber, doc::PYMS_NUMBER_RASTERS_DOC);
