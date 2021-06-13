@@ -14,14 +14,16 @@ def example_load_mesh():
     # the path of the mesh can be absolute or relative
     ms.load_new_mesh(base_path + "bone.ply")
 
-    print(ms.number_meshes())  # now ms contains 1 mesh
+    print(len(ms))  # now ms contains 1 mesh
+    # instead of len(ms) you can also use:
+    print(ms.number_meshes())
 
     # load a new mesh, and sets it as current mesh
     ms.load_new_mesh(base_path + "airplane.obj")
 
     print(ms.number_meshes())  # now ms contains 2 meshes
 
-    assert ms.number_meshes() == 2
+    assert len(ms) == 2
 
     # set the first mesh (id 0) as current mesh
     ms.set_current_mesh(0)
