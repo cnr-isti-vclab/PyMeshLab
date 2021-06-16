@@ -126,12 +126,16 @@ void pymeshlab::MeshSet::loadNewMesh(const std::string& filename, py::kwargs kwa
 	meshsethelper::loadMeshUsingPlugin(filename, kwargs, *this, functionSet);
 }
 
-void pymeshlab::MeshSet::saveCurrentMesh(const std::string& filename, pybind11::kwargs kwargs)
+void pymeshlab::MeshSet::saveCurrentMesh(
+		const std::string& filename,
+		bool saveTextures,
+		int qualityTextures,
+		pybind11::kwargs kwargs)
 {
 	if (mm() == nullptr)
 		throw MLException("MeshSet has no selected Mesh.");
 	std::setlocale(LC_ALL, "en_US.UTF-8");
-	meshsethelper::saveMeshUsingPlugin(filename, mm(), kwargs, *this, functionSet);
+	meshsethelper::saveMeshUsingPlugin(filename, mm(), saveTextures, qualityTextures, kwargs, *this, functionSet);
 }
 
 /**

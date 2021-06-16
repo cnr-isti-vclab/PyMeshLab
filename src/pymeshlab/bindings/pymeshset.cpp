@@ -52,7 +52,7 @@ void pymeshlab::initMeshSet(pybind11::module& m)
 	meshSetClass.def("mesh_id_exists", &MeshSet::meshIdExists, doc::PYMS_MESH_ID_EXISTS, py::arg("id"));
 	meshSetClass.def("mesh", &MeshSet::mesh, doc::PYMS_MESH, py::arg("id"), py::return_value_policy::reference);
 	meshSetClass.def("load_new_mesh", &MeshSet::loadNewMesh, doc::PYMS_LOAD_NEW_MESH, py::arg("file_name"));
-	meshSetClass.def("save_current_mesh", &MeshSet::saveCurrentMesh, doc::PYMS_SAVE_CURRENT_MESH, py::arg("file_name"));
+	meshSetClass.def("save_current_mesh", &MeshSet::saveCurrentMesh, doc::PYMS_SAVE_CURRENT_MESH, py::arg("file_name"), py::arg("save_textures") = true, py::arg("texture_quality") = -1);
 	meshSetClass.def("load_new_raster", &MeshSet::loadNewRaster, doc::PYMS_LOAD_NEW_RASTER, py::arg("file_name"));
 	meshSetClass.def("add_mesh", &MeshSet::addMesh, doc::PYMS_ADD_MESH, py::arg("mesh"), py::arg("mesh_name") = "", py::arg("set_as_current") = true);
 	meshSetClass.def("clear", &MeshSet::clear, doc::PYMS_CLEAR);

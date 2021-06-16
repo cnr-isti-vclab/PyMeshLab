@@ -95,6 +95,8 @@ void loadRasterUsingPlugin(
 void saveMeshUsingPlugin(
 		const std::string& filename,
 		MeshModel* mm,
+		bool saveTextures,
+		int qualityTextures,
 		pybind11::kwargs kwargs,
 		MeshDocument& md,
 		const FunctionSet& filterFunctionSet);

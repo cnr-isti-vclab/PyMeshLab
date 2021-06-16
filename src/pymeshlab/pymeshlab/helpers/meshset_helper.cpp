@@ -490,6 +490,8 @@ int computeSaveSettingsMaskFromKwargs(pybind11::kwargs kwargs, int startingMask,
 void saveMeshUsingPlugin(
 		const std::string& filename,
 		MeshModel* mm,
+		bool saveTextures,
+		int qualityTextures,
 		pybind11::kwargs kwargs,
 		MeshDocument& md,
 		const FunctionSet& filterFunctionSet)
@@ -526,7 +528,8 @@ void saveMeshUsingPlugin(
 		plugin->save(
 					extension, QString::fromStdString(filename), *mm,
 					userSettings, rps, &VerbosityManager::filterCallBack);
-		mm->saveTextures(finfo.absolutePath(), 66);
+		if (saveTextures)
+			mm->saveTextures(finfo.absolutePath(), qualityTextures);
 		mm->setFileName(finfo.absoluteFilePath());
 	}
 	else {
