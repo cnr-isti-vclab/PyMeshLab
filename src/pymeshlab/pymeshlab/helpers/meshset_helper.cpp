@@ -100,7 +100,7 @@ void updateRichParameterFromKwarg(
 			absvalue = py::cast<float>(k.second);
 		}
 
-		abs.setValue(AbsPercValue(absvalue));
+		abs.setValue(FloatValue(absvalue));
 	}
 	else if (meshlabType == MESHLAB_TYPE_COLOR) {
 		par.setValue(ColorValue(py::cast<QColor>(k.second)));
@@ -109,7 +109,7 @@ void updateRichParameterFromKwarg(
 		RichDynamicFloat& dyn = dynamic_cast<RichDynamicFloat&>(par);
 		float val = py::cast<float>(k.second);
 		if (val >= dyn.min && val <= dyn.max)
-			dyn.setValue(DynamicFloatValue(val));
+			dyn.setValue(FloatValue(val));
 		else
 			throw MLException(
 					"Parameter " + ffp.pythonName() + ": float value " + QString::number(val) +
@@ -170,22 +170,22 @@ void updateRichParameterFromKwarg(
 						"Enum " +std::to_string(value)+ " not valid. Must be a "
 						"value between 0 and " + std::to_string(en.enumvalues.size()));
 		}
-		en.setValue(EnumValue(value));
+		en.setValue(IntValue(value));
 	}
 	else if (meshlabType == MESHLAB_TYPE_OPENFILE){
 		RichOpenFile& of = dynamic_cast<RichOpenFile&>(par);
-		of.setValue(FileValue(
+		of.setValue(StringValue(
 					QString::fromStdString(py::cast<std::string>(k.second))));
 	}
 	else if (meshlabType == MESHLAB_TYPE_SAVEFILE){
 		RichSaveFile& sf = dynamic_cast<RichSaveFile&>(par);
-		sf.setValue(FileValue(
+		sf.setValue(StringValue(
 					QString::fromStdString(py::cast<std::string>(k.second))));
 	}
 	else if (meshlabType == MESHLAB_TYPE_MESH) {
 		RichMesh& rm = dynamic_cast<RichMesh&>(par);
 		rm.meshdoc = md;
-		rm.setValue(MeshValue(py::cast<int>(k.second)));
+		rm.setValue(IntValue(py::cast<int>(k.second)));
 	}
 	else if (meshlabType.contains("still_unsupported")){
 		std::cerr << "Warning: parameter type still not supported";
@@ -204,32 +204,32 @@ pybind11::dict pydictFromRichParameterList(
 	for (const RichParameter& par : rps){
 		std::string pname = computePythonName(par.name()).toStdString();
 		const Value& v = par.value();
-		if (v.isEnum())
-			kw[pname.c_str()] = v.getEnum();
-		if (v.isAbsPerc())
-			kw[pname.c_str()] = v.getAbsPerc();
-		if (v.isDynamicFloat())
-			kw[pname.c_str()] = v.getDynamicFloat();
-		if (v.isBool())
+		if (par.isOfType<RichBool>())
 			kw[pname.c_str()] = v.getBool();
-		if (v.isInt())
+		if (par.isOfType<RichInt>())
 			kw[pname.c_str()] = v.getInt();
-		if (v.isFloat())
+		if (par.isOfType<RichFloat>())
 			kw[pname.c_str()] = v.getFloat();
-		if (v.isString())
+		if (par.isOfType<RichString>())
 			kw[pname.c_str()] = v.getString().toStdString();
-		if (v.isMatrix44f())
+		if (par.isOfType<RichEnum>())
+			kw[pname.c_str()] = v.getInt();
+		if (par.isOfType<RichAbsPerc>())
+			kw[pname.c_str()] = v.getFloat();
+		if (par.isOfType<RichDynamicFloat>())
+			kw[pname.c_str()] = v.getFloat();
+		if (par.isOfType<RichMatrix44f>())
 			kw[pname.c_str()] = v.getMatrix44f().ToEigenMatrix<Eigen::Matrix4d>();
-		if (v.isPoint3f())
+		if (par.isOfType<RichPoint3f>())
 			kw[pname.c_str()] = v.getPoint3f().ToEigenVector<Eigen::Vector3d>();
-		if (v.isShotf())
+		if (par.isOfType<RichShotf>())
 			kw[pname.c_str()] = "still_unsupported";
-		if (v.isColor())
+		if (par.isOfType<RichColor>())
 			kw[pname.c_str()] = v.getColor();
-		if (v.isMesh())
-			kw[pname.c_str()] = v.getMeshId();
-		if (v.isFileName())
-			kw[pname.c_str()] = v.getFileName().toStdString();
+		if (par.isOfType<RichMesh>())
+			kw[pname.c_str()] = v.getInt();
+		if (par.isOfType<RichOpenFile>() || par.isOfType<RichSaveFile>())
+			kw[pname.c_str()] = v.getString().toStdString();
 	}
 	return kw;
 }

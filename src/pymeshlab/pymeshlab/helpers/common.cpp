@@ -114,7 +114,7 @@ std::string filterRSTDocumentation(
 
 		for (const pymeshlab::FunctionParameter& p : it){
 
-			if (! p.defaultValue().isEnum()){
+			if (! p.richParameter().isOfType<RichEnum>()){
 				doc += "   ``" + p.pythonName().toStdString() + " : " +
 						p.pythonTypeString().toStdString() +
 						" = " + p.defaultValueString().toStdString() + "``\n\n";
@@ -123,7 +123,7 @@ std::string filterRSTDocumentation(
 				doc += "   ``" + p.pythonName().toStdString() + " : " +
 						p.pythonTypeString().toStdString() +
 						" = " + p.defaultValueString().toStdString() +
-						" (or int = " + std::to_string(p.defaultValue().getEnum()) +
+						" (or int = " + std::to_string(p.defaultValue().getInt()) +
 						")``\n\n";
 				doc += "      Possible enum values:\n\n";
 
