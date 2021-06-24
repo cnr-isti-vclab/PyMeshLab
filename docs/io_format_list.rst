@@ -808,6 +808,240 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>Save Vertex Normal</i>: Save Vertex Normal
 
+.. data:: nxs
+   :noindex:
+
+   .. raw:: html
+
+      Save NXS format.</p>
+
+   **Parameters:**
+
+   ``file_name : str = 'file_name.NXS'``
+
+      .. raw:: html
+
+         <i>File Name</i>: The name of the file to save
+
+   ``node_faces : int = 32768``
+
+      .. raw:: html
+
+         <i>Node faces</i>: Number of faces per patch
+
+   ``top_node_faces : int = 4096``
+
+      .. raw:: html
+
+         <i>Top node faces</i>: Number of triangles in the top node
+
+   ``tex_quality : int = 100``
+
+      .. raw:: html
+
+         <i>Texture quality [0-100]</i>: jpg texture quality
+
+   ``ram : int = 2000``
+
+      .. raw:: html
+
+         <i>Ram buffer</i>: Max ram used (in MegaBytes)
+
+   ``skiplevels : int = 0``
+
+      .. raw:: html
+
+         <i>Skip levels</i>: Decimation skipped for n levels
+
+   ``origin : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
+
+      .. raw:: html
+
+         <i>Origin</i>: new origin for the model
+
+   ``center : bool = False``
+
+      .. raw:: html
+
+         <i>Center</i>: Set origin in the bounding box center
+
+   ``pow_2_textures : bool = False``
+
+      .. raw:: html
+
+         <i>Pow 2 textures</i>: Create textures to be power of 2
+
+   ``deepzoom : bool = False``
+
+      .. raw:: html
+
+         <i>Deepzoom</i>: Save each node and texture to a separated file
+
+   ``adaptive : float (bounded) = 0.333 [min: 0; max: 1]``
+
+      .. raw:: html
+
+         <i>Adaptive</i>: Split nodes adaptively
+
+   ``save_vertex_color : bool = True``
+
+      .. raw:: html
+
+         <i>Save Vertex Color</i>: Save Vertex Color
+
+   ``save_vertex_coord : bool = True``
+
+      .. raw:: html
+
+         <i>Save Vertex Coord</i>: Save Vertex Coord
+
+   ``save_vertex_normal : bool = True``
+
+      .. raw:: html
+
+         <i>Save Vertex Normal</i>: Save Vertex Normal
+
+.. data:: nxz
+   :noindex:
+
+   .. raw:: html
+
+      Save NXZ format.</p>
+
+   **Parameters:**
+
+   ``file_name : str = 'file_name.NXZ'``
+
+      .. raw:: html
+
+         <i>File Name</i>: The name of the file to save
+
+   ``node_faces : int = 32768``
+
+      .. raw:: html
+
+         <i>Node faces</i>: Number of faces per patch
+
+   ``top_node_faces : int = 4096``
+
+      .. raw:: html
+
+         <i>Top node faces</i>: Number of triangles in the top node
+
+   ``tex_quality : int = 100``
+
+      .. raw:: html
+
+         <i>Texture quality [0-100]</i>: jpg texture quality
+
+   ``ram : int = 2000``
+
+      .. raw:: html
+
+         <i>Ram buffer</i>: Max ram used (in MegaBytes)
+
+   ``skiplevels : int = 0``
+
+      .. raw:: html
+
+         <i>Skip levels</i>: Decimation skipped for n levels
+
+   ``origin : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
+
+      .. raw:: html
+
+         <i>Origin</i>: new origin for the model
+
+   ``center : bool = False``
+
+      .. raw:: html
+
+         <i>Center</i>: Set origin in the bounding box center
+
+   ``pow_2_textures : bool = False``
+
+      .. raw:: html
+
+         <i>Pow 2 textures</i>: Create textures to be power of 2
+
+   ``deepzoom : bool = False``
+
+      .. raw:: html
+
+         <i>Deepzoom</i>: Save each node and texture to a separated file
+
+   ``adaptive : float (bounded) = 0.333 [min: 0; max: 1]``
+
+      .. raw:: html
+
+         <i>Adaptive</i>: Split nodes adaptively
+
+   ``nxz_vertex_quantization : float = 0``
+
+      .. raw:: html
+
+         <i>NXZ Vertex quantization</i>: absolute side of quantization grid (uses quantization factor, instead)
+
+   ``vertex_bits : int = 0``
+
+      .. raw:: html
+
+         <i>Vertex bits</i>: number of bits in vertex coordinates when compressing (uses quantization factor, instead)
+
+   ``quantization_factor : float = 0.1``
+
+      .. raw:: html
+
+         <i>Quantization factor</i>: Quantization as a factor of error
+
+   ``luma_bits : int = 6``
+
+      .. raw:: html
+
+         <i>Luma bits</i>: Quantization of luma channel
+
+   ``chroma_bits : int = 6``
+
+      .. raw:: html
+
+         <i>Chroma bits</i>: Quantization of chroma channel
+
+   ``alpha_bits : int = 5``
+
+      .. raw:: html
+
+         <i>Alpha bits</i>: Quantization of alpha channel
+
+   ``normal_bits : int = 10``
+
+      .. raw:: html
+
+         <i>Normal bits</i>: Quantization of normals
+
+   ``textures_precision : float = 0.25``
+
+      .. raw:: html
+
+         <i>Textures precision</i>: Quantization of textures, precision in pixels per unit
+
+   ``save_vertex_color : bool = True``
+
+      .. raw:: html
+
+         <i>Save Vertex Color</i>: Save Vertex Color
+
+   ``save_vertex_coord : bool = True``
+
+      .. raw:: html
+
+         <i>Save Vertex Coord</i>: Save Vertex Coord
+
+   ``save_vertex_normal : bool = True``
+
+      .. raw:: html
+
+         <i>Save Vertex Normal</i>: Save Vertex Normal
+
 .. data:: obj
    :noindex:
 
@@ -1211,6 +1445,21 @@ load raster parameters
 
 Here are listed all the raster file formats that can be loaded usingthe functions :py:meth:`pmeshlab.MeshSet.load_new_raster`.
 
+.. data:: BMP
+   :noindex:
+
+   .. raw:: html
+
+      Load BMP format.</p>
+
+   **Parameters:**
+
+   ``file_name : str = 'file_name.BMP'``
+
+      .. raw:: html
+
+         <i>File Name</i>: The name of the file to load
+
 .. data:: JPEG
    :noindex:
 
@@ -1251,6 +1500,36 @@ Here are listed all the raster file formats that can be loaded usingthe function
    **Parameters:**
 
    ``file_name : str = 'file_name.PNG'``
+
+      .. raw:: html
+
+         <i>File Name</i>: The name of the file to load
+
+.. data:: TGA
+   :noindex:
+
+   .. raw:: html
+
+      Load TGA format.</p>
+
+   **Parameters:**
+
+   ``file_name : str = 'file_name.TGA'``
+
+      .. raw:: html
+
+         <i>File Name</i>: The name of the file to load
+
+.. data:: XBM
+   :noindex:
+
+   .. raw:: html
+
+      Load XBM format.</p>
+
+   **Parameters:**
+
+   ``file_name : str = 'file_name.XBM'``
 
       .. raw:: html
 

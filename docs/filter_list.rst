@@ -5396,7 +5396,7 @@ apply_filter parameters
 
    .. raw:: html
 
-      Set a texture associated with current mesh parametrization.<br>If the texture provided exists, then it will be simply associated to the current mesh; else a dummy texture will be created and saved in the same directory of the mesh if exists, or in the default system picture directory.</p>
+      Set a texture associated with current mesh parametrization.<br>If the texture provided exists, then it will be simply associated to the current mesh; else the filter will fail with no further actions.</p>
 
    **Parameters:**
 
@@ -5405,12 +5405,6 @@ apply_filter parameters
       .. raw:: html
 
          <i>Texture file</i>: If the file exists it will be associated to the mesh else a dummy one will be created
-
-   ``textdim : int = 1024``
-
-      .. raw:: html
-
-         <i>Texture Dimension (px)</i>: If the named texture doesn't exists the dummy one will be squared with this size
 
 .. data:: shape_diameter_function
 
@@ -6327,6 +6321,12 @@ apply_filter parameters
 
          <i>Global ARAP distortion tolerance</i>: Global ARAP distortion tolerance when merging a seam. If the global atlas energy is higher than this value, the operation is reverted.
 
+   ``uvreductionlimit : float (bounded) = 0 [min: 0; max: 100]``
+
+      .. raw:: html
+
+         <i>UV Length Target (percentage)</i>: Target UV length as percentage of the input length. The algorithm halts if the target UV length has be    en reached, or if no futher seams can be merged.
+
    ``offsetfactor : float = 5``
 
       .. raw:: html
@@ -6530,12 +6530,6 @@ apply_filter parameters
 
          <i>Overwrite Target Mesh Texture</i>: if target mesh has a texture will be overwritten (with provided texture dimension)
 
-   ``assign : bool = False``
-
-      .. raw:: html
-
-         <i>Assign Texture</i>: assign the newly created texture to target mesh
-
    ``pullpush : bool = True``
 
       .. raw:: html
@@ -6575,12 +6569,6 @@ apply_filter parameters
       .. raw:: html
 
          <i>Overwrite texture</i>: if current mesh has a texture will be overwritten (with provided texture dimension)
-
-   ``assign : bool = False``
-
-      .. raw:: html
-
-         <i>Assign texture</i>: assign the newly created texture
 
    ``pullpush : bool = True``
 
