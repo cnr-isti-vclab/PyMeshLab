@@ -184,6 +184,48 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
          <i>File Name</i>: The name of the file to load
 
+.. data:: glb
+   :noindex:
+
+   .. raw:: html
+
+      Load GLB format.</p>
+
+   **Parameters:**
+
+   ``file_name : str = 'file_name.GLB'``
+
+      .. raw:: html
+
+         <i>File Name</i>: The name of the file to load
+
+   ``load_in_a_single_layer : bool = False``
+
+      .. raw:: html
+
+         <i>Load in a single layer</i>: GLTF files may contain more than one mesh. If this parameter is set to false, all the meshes contained in the file will be merged in a single mesh.
+
+.. data:: gltf
+   :noindex:
+
+   .. raw:: html
+
+      Load GLTF format.</p>
+
+   **Parameters:**
+
+   ``file_name : str = 'file_name.GLTF'``
+
+      .. raw:: html
+
+         <i>File Name</i>: The name of the file to load
+
+   ``load_in_a_single_layer : bool = False``
+
+      .. raw:: html
+
+         <i>Load in a single layer</i>: GLTF files may contain more than one mesh. If this parameter is set to false, all the meshes contained in the file will be merged in a single mesh.
+
 .. data:: obj
    :noindex:
 
@@ -895,7 +937,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>Save Vertex Coord</i>: Save Vertex Coord
 
-   ``save_vertex_normal : bool = True``
+   ``save_vertex_normal : bool = False``
 
       .. raw:: html
 
@@ -1036,7 +1078,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>Save Vertex Coord</i>: Save Vertex Coord
 
-   ``save_vertex_normal : bool = True``
+   ``save_vertex_normal : bool = False``
 
       .. raw:: html
 
