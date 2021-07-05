@@ -2388,18 +2388,6 @@ apply_filter parameters
 
          <i>Double Step</i>: Use this bool to divide the parameterization in 2 steps. Double step makes the overall process faster and robust.<br> Consider to disable this bool in case the object has topologycal noise or small handles.
 
-   ``absloadname : str = ''``
-
-      .. raw:: html
-
-         <i>Load AM</i>: The filename of the abstract mesh that has to be loaded. If empty, the abstract mesh will be computed according to the above parameters (suggested extension '.abs').
-
-   ``abssavename : str = ''``
-
-      .. raw:: html
-
-         <i>Save AM</i>: The filename where the computed abstract mesh will be saved. If empty, nothing will be done.
-
 .. data:: iso_parametrization_remeshing
 
    *MeshLab filter name*: 'Iso Parametrization Remeshing'

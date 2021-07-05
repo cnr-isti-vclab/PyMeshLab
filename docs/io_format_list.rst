@@ -943,6 +943,12 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>Save Vertex Normal</i>: Save Vertex Normal
 
+   ``save_wedge_texcoord : bool = True``
+
+      .. raw:: html
+
+         <i>Save Wedge TexCoord</i>: Save Wedge TexCoord
+
 .. data:: nxz
    :noindex:
 
@@ -1083,6 +1089,12 @@ Here are listed all the file formats that can be saved usingthe function :py:met
       .. raw:: html
 
          <i>Save Vertex Normal</i>: Save Vertex Normal
+
+   ``save_wedge_texcoord : bool = True``
+
+      .. raw:: html
+
+         <i>Save Wedge TexCoord</i>: Save Wedge TexCoord
 
 .. data:: obj
    :noindex:
