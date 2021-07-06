@@ -525,6 +525,8 @@ void saveMeshUsingPlugin(
 
 		userSettings = computeSaveSettingsMaskFromKwargs(kwargs, defaultSaveSettings, capabilityMesh);
 
+		if (userSettings & vcg::tri::io::Mask::IOM_BITPOLYGONAL)
+			mm->updateDataMask(MeshModel::MM_FACEFACETOPO);
 		plugin->save(
 					extension, QString::fromStdString(filename), *mm,
 					userSettings, rps, &VerbosityManager::filterCallBack);
