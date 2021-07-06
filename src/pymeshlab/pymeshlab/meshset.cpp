@@ -146,7 +146,16 @@ void pymeshlab::MeshSet::saveCurrentMesh(
  */
 void pymeshlab::MeshSet::addMesh(const CMeshO& mesh, const std::string& name, bool setAsCurrent)
 {
-	this->addNewMesh(mesh, QString::fromStdString(name), setAsCurrent);
+	auto* m =this->addNewMesh(mesh, QString::fromStdString(name), setAsCurrent);
+
+	//todo: remove this and better management of polymesh
+	bool found = false;
+	for (unsigned int i = 0; i < mesh.face.size() && !found; ++i){
+		if (mesh.face[i].IsAnyF()) {
+			found = true;
+			m->enable(vcg::tri::io::Mask::IOM_BITPOLYGONAL);
+		}
+	}
 }
 
 void pymeshlab::MeshSet::loadNewRaster(const std::string& filename)

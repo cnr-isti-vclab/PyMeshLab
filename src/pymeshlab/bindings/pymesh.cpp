@@ -23,6 +23,7 @@
 #include "pymeshlab/mesh.h"
 #include "pymesh.h"
 #include <pybind11/eigen.h>
+#include <pybind11/stl.h>
 #include "docs/pymesh_doc.h"
 
 #include <common/utilities/eigen_mesh_conversions.h>
@@ -43,6 +44,15 @@ void pymeshlab::initMesh(py::module& m)
 				py::init(&meshlab::meshFromMatrices), doc::PYMESH_INIT,
 				py::arg("vertex_matrix")    = Eigen::MatrixX3d(),
 				py::arg("face_matrix")      = Eigen::MatrixX3i(),
+				py::arg("v_normals_matrix") = Eigen::MatrixX3d(),
+				py::arg("f_normals_matrix") = Eigen::MatrixX3d(),
+				py::arg("v_quality_array")  = Eigen::VectorXd(),
+				py::arg("f_quality_array")  = Eigen::VectorXd());
+
+	meshClass.def(
+				py::init(&meshlab::polyMeshFromMatrices), doc::PYMESH_INIT_POLY,
+				py::arg("vertex_matrix"),
+				py::arg("face_list_of_indices"),
 				py::arg("v_normals_matrix") = Eigen::MatrixX3d(),
 				py::arg("f_normals_matrix") = Eigen::MatrixX3d(),
 				py::arg("v_quality_array")  = Eigen::VectorXd(),

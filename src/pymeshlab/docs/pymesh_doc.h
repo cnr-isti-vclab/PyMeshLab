@@ -42,6 +42,12 @@ const char* PYMESH_INIT =
 		"Creates a mesh containing the data passed as input. If no "
 		"data is passed as argument, an empty mesh will be created.";
 
+//Mesh::__init__ (poly)
+const char* PYMESH_INIT_POLY =
+		"Creates a polygin mesh containing the data passed as input. "
+		"At least a numpy array of vertices and a list of numpy arrays of "
+		"face indices is required.";
+
 //Mesh::vertex_number
 const char* PYMESH_VN =
 		"Returns the number of vertices of the mesh.";
