@@ -44,9 +44,14 @@ const char* PYMESH_INIT =
 
 //Mesh::__init__ (poly)
 const char* PYMESH_INIT_POLY =
-		"Creates a polygin mesh containing the data passed as input. "
+		"Creates a polygon mesh containing the data passed as input. "
 		"At least a numpy array of vertices and a list of numpy arrays of "
-		"face indices is required.";
+		"face indices is required. Since MeshLab and PyMeshLab can store only "
+		"triangle meshes, the newly created mesh is actaully a triangle mesh "
+		"with some edges that are marked as 'faux'. "
+		"This constructor creates a custom per face scalar attribute called "
+		"`poly_birth_faces` that stores, for each face of the newly created "
+		"mesh, the index of the polygonal mesh that generated it.";
 
 //Mesh::vertex_number
 const char* PYMESH_VN =
