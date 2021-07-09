@@ -48,10 +48,13 @@ def example_import_poly_mesh_from_arrays():
 
     print(birth_faces)
 
+    # the birth face of triangle with id 5 is 2
+    assert(birth_faces[5] == 2)
+
     # create a new MeshSet
     ms = pymeshlab.MeshSet()
 
-    # add the mesh to the MeshSet
+    # add the mesh to the MeshSet (note: ms contains a *copy* of m)
     ms.add_mesh(m, "cube_mesh")
 
     # save the current mesh
