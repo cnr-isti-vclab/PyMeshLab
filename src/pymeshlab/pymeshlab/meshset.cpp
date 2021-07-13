@@ -261,10 +261,10 @@ pybind11::dict pymeshlab::MeshSet::applyFilter(const std::string& filtername, py
 void pymeshlab::MeshSet::printStatus() const
 {
 	std::cout << "Number meshes: " << meshNumber() << "\n";
-	for (const MeshModel* m : meshIterator()){
-		std::cout << "\tMesh id: " << m->id() << "\n";
-		std::cout << "\tMesh label: " << m->label().toStdString() << "\n";
-		std::cout << "\tFull name: " << m->fullName().toStdString() << "\n\n";
+	for (const MeshModel& m : meshIterator()){
+		std::cout << "\tMesh id: " << m.id() << "\n";
+		std::cout << "\tMesh label: " << m.label().toStdString() << "\n";
+		std::cout << "\tFull name: " << m.fullName().toStdString() << "\n\n";
 	}
 }
 

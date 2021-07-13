@@ -586,17 +586,15 @@ void initOpenGLContext(QAction* action, OpenGLContextData& data, FilterPlugin* f
 			}
 		}
 		else {
-			for (MeshModel* mm : ms.meshIterator()) {
-				MLRenderingData::PRIMITIVE_MODALITY pm = MLPoliciesStandAloneFunctions::bestPrimitiveModalityAccordingToMesh(mm);
-				if ((pm != MLRenderingData::PR_ARITY) && (mm != nullptr)) {
+			for (MeshModel& mm : ms.meshIterator()) {
+				MLRenderingData::PRIMITIVE_MODALITY pm = MLPoliciesStandAloneFunctions::bestPrimitiveModalityAccordingToMesh(&mm);
+				if (pm != MLRenderingData::PR_ARITY) {
 					dt.set(pm, atts);
-					fp->glContext->initPerViewRenderingData(mm->id(), dt);
+					fp->glContext->initPerViewRenderingData(mm.id(), dt);
 				}
 
-				if (mm != nullptr) {
-					mm->cm.svn = int(vcg::tri::UpdateSelection<CMeshO>::VertexCount(mm->cm));
-					mm->cm.sfn = int(vcg::tri::UpdateSelection<CMeshO>::FaceCount(mm->cm));
-				}
+				mm.cm.svn = int(vcg::tri::UpdateSelection<CMeshO>::VertexCount(mm.cm));
+				mm.cm.sfn = int(vcg::tri::UpdateSelection<CMeshO>::FaceCount(mm.cm));
 			}
 		}
 	}
@@ -659,9 +657,8 @@ pybind11::dict applyFilterRPL(
 		unsigned int postConditionMask = MeshModel::MM_UNKNOWN;
 		std::map<std::string, QVariant> outputValues =
 				fp->applyFilter(action, rpl, md, postConditionMask, &VerbosityManager::filterCallBack);
-		for (MeshModel* mm : md.meshIterator()){
-			if (mm)
-				vcg::tri::Allocator<CMeshO>::CompactEveryVector(mm->cm);
+		for (MeshModel& mm : md.meshIterator()){
+			vcg::tri::Allocator<CMeshO>::CompactEveryVector(mm.cm);
 		}
 		md.setBusy(false);
 		VerbosityManager::filterCallBack(100, (filtername + " applied!").c_str());
