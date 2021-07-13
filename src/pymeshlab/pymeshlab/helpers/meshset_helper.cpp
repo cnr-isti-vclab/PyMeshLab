@@ -415,7 +415,6 @@ void loadMeshUsingPlugin(
 
 void loadRasterUsingPlugin(
 		const std::string& filename, 
-		RasterModel* rm,
 		MeshDocument& md)
 {
 	QFileInfo finfo(QString::fromStdString(filename));
@@ -427,22 +426,13 @@ void loadRasterUsingPlugin(
 	else {
 		PluginManager& pm = meshlab::pluginManagerInstance();
 		if (pm.isInputImageFormatSupported(extension)){
-
-			bool justCreated = false;
-			if (rm == nullptr){
-				rm = md.addNewRaster();
-				justCreated = true;
-			}
-			else {
-				rm->setLabel(finfo.fileName());
-			}
+			RasterModel* rm = md.addNewRaster();
 
 			try {
 				meshlab::loadRaster(QString::fromStdString(filename), *rm, VerbosityManager::staticLogger, VerbosityManager::filterCallBack);
 			}
 			catch(const MLException& e){
-				if (justCreated)
-					md.delRaster(md.rm());
+				md.delRaster(md.rm()->id());
 				throw MLException("Unable to open file: " + QString::fromStdString(filename) + "\n" + e.what());
 			}
 		}

@@ -160,7 +160,7 @@ void pymeshlab::MeshSet::addMesh(const CMeshO& mesh, const std::string& name, bo
 
 void pymeshlab::MeshSet::loadNewRaster(const std::string& filename)
 {
-	meshsethelper::loadRasterUsingPlugin(filename, nullptr, *this);
+	meshsethelper::loadRasterUsingPlugin(filename, *this);
 }
 
 void pymeshlab::MeshSet::loadProject(const py::object& filenames)

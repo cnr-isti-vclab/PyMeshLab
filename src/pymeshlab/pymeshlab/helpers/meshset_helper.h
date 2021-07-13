@@ -89,7 +89,6 @@ void loadMeshUsingPlugin(
 
 void loadRasterUsingPlugin(
 		const std::string& filename,
-		RasterModel* rm,
 		MeshDocument& md);
 
 void saveMeshUsingPlugin(
