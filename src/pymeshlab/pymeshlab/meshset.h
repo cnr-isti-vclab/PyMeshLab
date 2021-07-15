@@ -40,7 +40,7 @@ namespace pymeshlab {
  * 
  * In addition to the members of the MeshDocument, the MeshSet contains:
  * - a reference to a PluginManager, which is managed within a singleton;
- * - a filterFunctionSet, an object containing all the bindings beteen
+ * - a filterFunctionSet, an object containing all the bindings between
  *   meshlab filter names (with their parameters) and their relative python names;
  * - a filterScript, equivalent of the filter script of meshlab, that stores 
  *   the history of applied filters in the meshset.

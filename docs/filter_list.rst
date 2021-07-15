@@ -629,7 +629,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Remove Unreferenced Vertices</i>: If selected, before starting the filter will remove anyy unreference vertex (for which curvature values are not defined)
+         <i>Remove Unreferenced Vertices</i>: If selected, before starting the filter will remove any unreference vertex (for which curvature values are not defined)
 
 .. data:: compute_geometric_measures
 
@@ -1021,7 +1021,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Face Prism Height</i>: The Height of the prism that is substitued with each face.
+         <i>Face Prism Height</i>: The Height of the prism that is substituted with each face.
 
    ``faceextinset : Percentage = 0.5%``
 
@@ -6313,7 +6313,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>UV Length Target (percentage)</i>: Target UV length as percentage of the input length. The algorithm halts if the target UV length has be    en reached, or if no futher seams can be merged.
+         <i>UV Length Target (percentage)</i>: Target UV length as percentage of the input length. The algorithm halts if the target UV length has be    en reached, or if no further seams can be merged.
 
    ``offsetfactor : float = 5``
 
@@ -6486,7 +6486,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Color Data Source</i>: Choose what attribute has to be transferred onto the target texture. You can choose bettween Per vertex attributes (color,normal,quality) or to transfer color information from source mesh texture
+         <i>Color Data Source</i>: Choose what attribute has to be transferred onto the target texture. You can choose between Per vertex attributes (color,normal,quality) or to transfer color information from source mesh texture
 
    ``upperbound : Percentage = 2%``
 
@@ -7279,7 +7279,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Absolute Distance</i>: If true a <b> not</b> signed distance field is computed. In this case you have to choose a not zero Offset and a double surface is built around the original surface, inside and outside. Is useful to convrt thin floating surfaces into <i> solid, thick meshes.</i>. t
+         <i>Absolute Distance</i>: If true a <b> not</b> signed distance field is computed. In this case you have to choose a not zero Offset and a double surface is built around the original surface, inside and outside. Is useful to convert thin floating surfaces into <i> solid, thick meshes.</i>. t
 
 .. data:: unsharp_mask_color
 

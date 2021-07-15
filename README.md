@@ -42,7 +42,7 @@ And apply filters with your parameters:
 ms.noisy_isosurface(resolution=128)
 ```
 
-You can find all the names and parameters of the filters in the [List of Filters](https://pymeshlab.readthedocs.io/en/latest/filter_list.html) page of the documentaiton.
+You can find all the names and parameters of the filters in the [List of Filters](https://pymeshlab.readthedocs.io/en/latest/filter_list.html) page of the documentation.
 
 To run the tests:
 ```
