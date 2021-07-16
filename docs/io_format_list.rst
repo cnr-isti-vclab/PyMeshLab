@@ -130,6 +130,21 @@ Here are listed all the file formats that can be loaded usingthe functions :py:m
 
          <i>File Name</i>: The name of the file to load
 
+.. data:: e57
+   :noindex:
+
+   .. raw:: html
+
+      Load E57 format.</p>
+
+   **Parameters:**
+
+   ``file_name : str = 'file_name.E57'``
+
+      .. raw:: html
+
+         <i>File Name</i>: The name of the file to load
+
 .. data:: es
    :noindex:
 
@@ -747,6 +762,39 @@ Here are listed all the file formats that can be saved usingthe function :py:met
       .. raw:: html
 
          <i>File Name</i>: The name of the file to save
+
+.. data:: e57
+   :noindex:
+
+   .. raw:: html
+
+      Save E57 format.</p>
+
+   **Parameters:**
+
+   ``file_name : str = 'file_name.E57'``
+
+      .. raw:: html
+
+         <i>File Name</i>: The name of the file to save
+
+   ``save_vertex_quality : bool = True``
+
+      .. raw:: html
+
+         <i>Save Vertex Quality</i>: Save Vertex Quality
+
+   ``save_vertex_color : bool = True``
+
+      .. raw:: html
+
+         <i>Save Vertex Color</i>: Save Vertex Color
+
+   ``save_vertex_normal : bool = True``
+
+      .. raw:: html
+
+         <i>Save Vertex Normal</i>: Save Vertex Normal
 
 .. data:: idtf
    :noindex:

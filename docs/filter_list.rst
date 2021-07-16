@@ -1723,7 +1723,7 @@ apply_filter parameters
 
          <i>Merge duplicate vertices</i>: Merge the vertices that are duplicated among different layers. <br><br>Very useful when the layers are spliced portions of a single big mesh.
 
-   ``alsounreferenced : bool = False``
+   ``alsounreferenced : bool = True``
 
       .. raw:: html
 

@@ -138,6 +138,7 @@ if (BUILD_MESHLAB)
 		meshlabplugins/io_bre
 		meshlabplugins/io_collada
 		meshlabplugins/io_ctm
+		meshlabplugins/io_e57
 		meshlabplugins/io_expe
 		meshlabplugins/io_json
 		meshlabplugins/io_gltf
