@@ -53,7 +53,7 @@ There are two additional options in the CMake configuration:
 
 ## Deploy PyMeshLab
 
-By executing the above instruction, the installed pymeshlab directory will not be a self-contained pymeshlab directorty (it will depend on Qt libs that are installed in the system). To make pymeshlab portable, we provide some scripts that you can find in the `scripts` directory in the root of this repo.
+By executing the above instruction, the installed pymeshlab directory will not be a self-contained pymeshlab directory (it will depend on Qt libs that are installed in the system). To make pymeshlab portable, we provide some scripts that you can find in the `scripts` directory in the root of this repo.
 
 ```
 sh scripts/[platform]/1_build.sh

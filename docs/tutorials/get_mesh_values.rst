@@ -4,7 +4,7 @@
 Get Mesh Values
 ===============
 
-This example shows how to extract informations like vertex coordinates or vertex index
+This example shows how to extract information like vertex coordinates or vertex index
 incident to a face from a Mesh contained in a MeshSet, through numpy arrays.
 
 This script can be executed by running the following command:

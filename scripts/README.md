@@ -13,7 +13,7 @@ For every platform there are two main scripts:
 * `1_build.sh`: this script will build PyMeshLab and then install int in the `pymeshlab` directory of the repository;
 * `2_deploy.sh`: this script will deploy PyMeshLab starting from the installed `pymeshlab` directory.
 
-At the end, the `pymeshlab` direcory will be a self contained python module.
+At the end, the `pymeshlab` directory will be a self contained python module.
 
 ### `1_build.sh`
 You can run this script in the following way:
@@ -26,7 +26,7 @@ The script accepts the following arguments (default directories are relative to 
 * `-b=buid/path` or `--build_path=build/path`: the path where PyMeshLab will be built. Default is `src/build`;
 * `-i=install/path` or `--install_path=install/path`: the path where PyMeshLab will be installed. Default is `pymeshlab`;
 * `-jX`: parameter used for multicore compilation, where `X` is the number of cores used to build PyMeshLab. Default is `-j4`;
-* `--no-build-meshla`: option used to just build PyMeshLab without building all the MeshLab libraries and plugins. When this option is selected, the build system will expect in the build directory to find all the MeshLab libraries and plugins already built and placed in the right positions (depending on the OS). This option is mainly used for fast compilation under developement, or to spped up automatic builds of PyMeshLab;
+* `--no-build-meshla`: option used to just build PyMeshLab without building all the MeshLab libraries and plugins. When this option is selected, the build system will expect in the build directory to find all the MeshLab libraries and plugins already built and placed in the right positions (depending on the OS). This option is mainly used for fast compilation under development, or to speed up automatic builds of PyMeshLab;
 * `--debug`: used to build PyMeshLab with debug symbols.
 
 ### `2_deploy.sh`
@@ -34,7 +34,7 @@ You can run this script in the following way:
 ```
 sh 2_deploy.sh
 ```
-The only argument that accepts the scirpt is the path on which PyMeshLab has been installed by the `1_build.sh` script (with no arguments, it will be the `pymeshlab` directory).
+The only argument that accepts the script is the path on which PyMeshLab has been installed by the `1_build.sh` script (with no arguments, it will be the `pymeshlab` directory).
 Example:
 ```
 sh 2_deploy.sh my/install/path

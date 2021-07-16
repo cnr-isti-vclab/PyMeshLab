@@ -4,7 +4,7 @@ import os
 
 # this setup.py assumes that pymeshlab has been already built,
 # installed in the pymeshlab directory of this repository
-# and then deployed. See the scritps directory for more info.
+# and then deployed. See the scripts directory for more info.
 
 # read the contents of README file
 from os import path
