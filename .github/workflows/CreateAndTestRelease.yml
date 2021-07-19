@@ -58,7 +58,7 @@ jobs:
     - name: Install MacOS dependencies
       if: runner.os == 'macOS'
       run: |
-        brew install libomp cgal
+        brew install libomp cgal xerces-c
     - name: Install Windows dependencies
       if: runner.os == 'Windows'
       run: |
