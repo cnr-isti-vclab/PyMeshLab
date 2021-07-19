@@ -11,4 +11,4 @@ def test_number_plugins():
 
     ml.print_plugin_list()
 
-    assert(n_plugins == 51)
+    assert(n_plugins == 52)

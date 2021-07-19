@@ -29,7 +29,8 @@ ${MACDEPLOYQT_EXE} $BUNDLE_PATH/dummybin.app \
     -executable=$BUNDLE_PATH/dummybin.app/Contents/PlugIns/libfilter_isoparametrization.so \
     -executable=$BUNDLE_PATH/dummybin.app/Contents/PlugIns/libfilter_mesh_booleans.so \
     -executable=$BUNDLE_PATH/dummybin.app/Contents/PlugIns/libfilter_screened_poisson.so \
-    -executable=$BUNDLE_PATH/dummybin.app/Contents/PlugIns/libfilter_sketchfab.so
+    -executable=$BUNDLE_PATH/dummybin.app/Contents/PlugIns/libfilter_sketchfab.so \
+    -executable=$BUNDLE_PATH/dummybin.app/Contents/PlugIns/libio_e57.so
 
 rsync -a $BUNDLE_PATH/dummybin.app/Contents/Frameworks/ $BUNDLE_PATH/Frameworks/
 rsync -a $BUNDLE_PATH/dummybin.app/Contents/PlugIns/ $BUNDLE_PATH/PlugIns/
