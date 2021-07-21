@@ -3,8 +3,6 @@ import sys
 import os
 import pathlib
 
-# print_pymeshlab_version()
-
 # for windows we need to tell which Qt libraries use
 this_path=str(pathlib.Path(__file__).parent.absolute())
 if platform == 'win32':
@@ -12,8 +10,6 @@ if platform == 'win32':
     os.environ['PATH'] = this_path + os.pathsep + os.environ['PATH']
 
 from .pmeshlab import *
-
-
 
 # load all the default plugins in the current PyMeshLab session
 try:
