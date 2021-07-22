@@ -2011,7 +2011,7 @@ apply_filter parameters
 
    .. raw:: html
 
-      Compute the Hausdorff Distance between two layers, sampling one of the two and finding for each sample the closest point over the other mesh.</p>
+      Compute the Hausdorff Distance between two layers, sampling one of the two and finding for each sample the closest point over the other mesh. Distance is stored in vertex quality of the sampled mesh.</p>
 
    **Parameters:**
 
@@ -2380,7 +2380,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Convergence Precision</i>: This parameter controls the convergence speed/precision of the optimization of the texture coordinates. Larger the number slower the processing and ,eventually, slightly better results
+         <i>Convergence Precision</i>: This parameter controls the convergence speed/precision of the optimization of the texture coordinates. Larger the number slower the processing and, eventually, slightly better results
 
    ``doublestep : bool = True``
 
