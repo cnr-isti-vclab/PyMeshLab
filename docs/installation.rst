@@ -9,6 +9,9 @@ You can easily install PyMeshLab using pip:
 
    pip3 install pymeshlab
 
+**Note**: if the installation fails, please double check that you are running
+a **64bit** Python version.
+
 Requirements
 ------------
 
