@@ -3244,6 +3244,164 @@ apply_filter parameters
 
       Normalize Vertex Normal Lengths to unit vectors.</p>
 
+.. data:: nxs_build
+
+   *MeshLab filter name*: 'NXS Build'
+
+   .. raw:: html
+
+      <a href="http://vcg.isti.cnr.it/nexus/">Nexus</a> is a collection of tools for streaming visualization of large 3D models in OpenGL.<br>This filter is the equivalent of calling <a href="http://vcg.isti.cnr.it/nexus/#nxsbuild">nxsbuild</a>: it creates a nxs file starting from a obj, ply or stl.</p>
+
+   **Parameters:**
+
+   ``input_file : str = ''``
+
+      .. raw:: html
+
+         <i>Input File</i>: The input file from which create the .nxs file.
+
+   ``input_mtl_file : str = ''``
+
+      .. raw:: html
+
+         <i>Input mtl File</i>: The input material file; required if loading an obj.
+
+   ``output_file : str = ''``
+
+      .. raw:: html
+
+         <i>Output File</i>: The name of the output nxs file.
+
+   ``node_faces : int = 32768``
+
+      .. raw:: html
+
+         <i>Node faces</i>: Number of faces per patch, (min ~1000, max 32768)<br>This parameter controls the granularity of the multiresolution: smaller values result in smaller changes (less 'pop').Small nodes are less efficient in rendering and compression.<br>Meshes with very large textures and few vertices benefit from small nodes.
+
+   ``top_node_faces : int = 4096``
+
+      .. raw:: html
+
+         <i>Top node faces</i>: Number of triangles in the top node. Controls the size of the smallest LOD. Higher values will delay the first rendering but with higher quality.
+
+   ``tex_quality : int = 95``
+
+      .. raw:: html
+
+         <i>JPEG texture quality [0-100]</i>: jpg texture quality
+
+   ``ram : int = 2000``
+
+      .. raw:: html
+
+         <i>Ram buffer</i>: Max ram used in MegaBytes (WARNING: just an approximation)
+
+   ``skiplevels : int = 0``
+
+      .. raw:: html
+
+         <i>Skip levels</i>: Decimation skipped for n levels. Use for meshes with large textures and very few vertices.
+
+   ``origin : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
+
+      .. raw:: html
+
+         <i>Origin</i>: new origin for the model
+
+   ``center : bool = False``
+
+      .. raw:: html
+
+         <i>Center</i>: Set origin in the bounding box center
+
+   ``pow_2_textures : bool = False``
+
+      .. raw:: html
+
+         <i>Pow 2 textures</i>: Create textures to be power of 2
+
+   ``deepzoom : bool = False``
+
+      .. raw:: html
+
+         <i>Deepzoom</i>: Save each node and texture to a separated file. Used for server which do not support http range requests (206). Will generate MANY files.
+
+   ``adaptive : float (bounded) = 0.333 [min: 0; max: 1]``
+
+      .. raw:: html
+
+         <i>Adaptive</i>: Split nodes adaptively. Different settings might help with very uneven distribution of geometry.
+
+.. data:: nxs_compress
+
+   *MeshLab filter name*: 'NXS Compress'
+
+   .. raw:: html
+
+      <a href="http://vcg.isti.cnr.it/nexus/">Nexus</a> is a collection of tools for streaming visualization of large 3D models in OpenGL.<br>This filter is the equivalent of calling nxscompress, whichcreates a nxz (compressed nexus) file starting from a nxs.</p>
+
+   **Parameters:**
+
+   ``input_file : str = ''``
+
+      .. raw:: html
+
+         <i>Input File</i>: The input nxs file to compress into an nxz file.
+
+   ``output_file : str = ''``
+
+      .. raw:: html
+
+         <i>Output File</i>: The name of the output nxz file.
+
+   ``nxz_vertex_quantization : float = 0``
+
+      .. raw:: html
+
+         <i>NXZ Vertex quantization</i>: absolute side of quantization grid (uses quantization factor, instead)
+
+   ``vertex_bits : int = 0``
+
+      .. raw:: html
+
+         <i>Vertex bits</i>: number of bits in vertex coordinates when compressing (uses quantization factor, instead)
+
+   ``quantization_factor : float = 0.1``
+
+      .. raw:: html
+
+         <i>Quantization factor</i>: Quantization as a factor of error
+
+   ``luma_bits : int = 6``
+
+      .. raw:: html
+
+         <i>Luma bits</i>: Quantization of luma channel
+
+   ``chroma_bits : int = 6``
+
+      .. raw:: html
+
+         <i>Chroma bits</i>: Quantization of chroma channel
+
+   ``alpha_bits : int = 5``
+
+      .. raw:: html
+
+         <i>Alpha bits</i>: Quantization of alpha channel
+
+   ``normal_bits : int = 10``
+
+      .. raw:: html
+
+         <i>Normal bits</i>: Quantization of normals
+
+   ``textures_precision : float = 0.25``
+
+      .. raw:: html
+
+         <i>Textures precision</i>: Quantization of textures, precision in pixels per unit
+
 .. data:: octahedron
 
    *MeshLab filter name*: 'Octahedron'
@@ -5388,11 +5546,11 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``textname : str = 'texture.png'``
+   ``textname : str = ''``
 
       .. raw:: html
 
-         <i>Texture file</i>: If the file exists it will be associated to the mesh else a dummy one will be created
+         <i>Texture file</i>: Sets the given input image as unique texture of the mesh.
 
 .. data:: shape_diameter_function
 
@@ -6534,11 +6692,11 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``textname : str = 'texture.png'``
+   ``textname : str = ''``
 
       .. raw:: html
 
-         <i>Texture file</i>: The texture file to be created
+         <i>Texture name</i>: The name of the texture to be created
 
    ``textw : int = 1024``
 

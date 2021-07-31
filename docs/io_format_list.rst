@@ -917,31 +917,31 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
       .. raw:: html
 
-         <i>Node faces</i>: Number of faces per patch
+         <i>Node faces</i>: Number of faces per patch, (min ~1000, max 32768)<br>This parameter controls the granularity of the multiresolution: smaller values result in smaller changes (less 'pop').Small nodes are less efficient in rendering and compression.<br>Meshes with very large textures and few vertices benefit from small nodes.
 
    ``top_node_faces : int = 4096``
 
       .. raw:: html
 
-         <i>Top node faces</i>: Number of triangles in the top node
+         <i>Top node faces</i>: Number of triangles in the top node. Controls the size of the smallest LOD. Higher values will delay the first rendering but with higher quality.
 
-   ``tex_quality : int = 100``
+   ``tex_quality : int = 95``
 
       .. raw:: html
 
-         <i>Texture quality [0-100]</i>: jpg texture quality
+         <i>JPEG texture quality [0-100]</i>: jpg texture quality
 
    ``ram : int = 2000``
 
       .. raw:: html
 
-         <i>Ram buffer</i>: Max ram used (in MegaBytes)
+         <i>Ram buffer</i>: Max ram used in MegaBytes (WARNING: just an approximation)
 
    ``skiplevels : int = 0``
 
       .. raw:: html
 
-         <i>Skip levels</i>: Decimation skipped for n levels
+         <i>Skip levels</i>: Decimation skipped for n levels. Use for meshes with large textures and very few vertices.
 
    ``origin : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
 
@@ -965,13 +965,13 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
       .. raw:: html
 
-         <i>Deepzoom</i>: Save each node and texture to a separated file
+         <i>Deepzoom</i>: Save each node and texture to a separated file. Used for server which do not support http range requests (206). Will generate MANY files.
 
    ``adaptive : float (bounded) = 0.333 [min: 0; max: 1]``
 
       .. raw:: html
 
-         <i>Adaptive</i>: Split nodes adaptively
+         <i>Adaptive</i>: Split nodes adaptively. Different settings might help with very uneven distribution of geometry.
 
    ``save_vertex_color : bool = True``
 
@@ -1016,31 +1016,31 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
       .. raw:: html
 
-         <i>Node faces</i>: Number of faces per patch
+         <i>Node faces</i>: Number of faces per patch, (min ~1000, max 32768)<br>This parameter controls the granularity of the multiresolution: smaller values result in smaller changes (less 'pop').Small nodes are less efficient in rendering and compression.<br>Meshes with very large textures and few vertices benefit from small nodes.
 
    ``top_node_faces : int = 4096``
 
       .. raw:: html
 
-         <i>Top node faces</i>: Number of triangles in the top node
+         <i>Top node faces</i>: Number of triangles in the top node. Controls the size of the smallest LOD. Higher values will delay the first rendering but with higher quality.
 
-   ``tex_quality : int = 100``
+   ``tex_quality : int = 95``
 
       .. raw:: html
 
-         <i>Texture quality [0-100]</i>: jpg texture quality
+         <i>JPEG texture quality [0-100]</i>: jpg texture quality
 
    ``ram : int = 2000``
 
       .. raw:: html
 
-         <i>Ram buffer</i>: Max ram used (in MegaBytes)
+         <i>Ram buffer</i>: Max ram used in MegaBytes (WARNING: just an approximation)
 
    ``skiplevels : int = 0``
 
       .. raw:: html
 
-         <i>Skip levels</i>: Decimation skipped for n levels
+         <i>Skip levels</i>: Decimation skipped for n levels. Use for meshes with large textures and very few vertices.
 
    ``origin : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
 
@@ -1064,13 +1064,13 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
       .. raw:: html
 
-         <i>Deepzoom</i>: Save each node and texture to a separated file
+         <i>Deepzoom</i>: Save each node and texture to a separated file. Used for server which do not support http range requests (206). Will generate MANY files.
 
    ``adaptive : float (bounded) = 0.333 [min: 0; max: 1]``
 
       .. raw:: html
 
-         <i>Adaptive</i>: Split nodes adaptively
+         <i>Adaptive</i>: Split nodes adaptively. Different settings might help with very uneven distribution of geometry.
 
    ``nxz_vertex_quantization : float = 0``
 
