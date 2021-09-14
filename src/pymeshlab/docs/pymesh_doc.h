@@ -39,18 +39,18 @@ const char* PYEXC_COMPONENT =
 // Mesh::__init__
 const char* PYMESH_INIT =
 	"Creates a mesh containing the data passed as input. If no data is passed as argument, an "
-	"empty mesh will be created.";
+	"empty mesh will be created. Color matrices have four columns (RGBA) and values are floats in "
+	"the range [0-1]. Values outside this range will result in undefined behaviour.";
 
 // Mesh::__init__ (poly)
 const char* PYMESH_INIT_POLY =
-	"Creates a polygon mesh containing the data passed as input. "
-	"At least a numpy array of vertices and a list of numpy arrays of "
-	"face indices is required. Since MeshLab and PyMeshLab can store only "
-	"triangle meshes, the newly created mesh is actually a triangle mesh "
-	"with some edges that are marked as 'faux'. "
-	"This constructor creates a custom per face scalar attribute called "
-	"`poly_birth_faces` that stores, for each face of the newly created "
-	"mesh, the index of the polygonal mesh that generated it.";
+	"Creates a polygon mesh containing the data passed as input. At least a numpy array of "
+	"vertices and a list of numpy arrays of face indices is required. Since MeshLab and PyMeshLab "
+	"can store only triangle meshes, the newly created mesh is actually a triangle mesh with some "
+	"edges that are marked as 'faux'. This constructor creates a custom per face scalar attribute "
+	"called `poly_birth_faces` that stores, for each face of the newly created mesh, the index of "
+	"the polygonal mesh that generated it.Color matrices have four columns (RGBA) and values are "
+	"floats in the range [0-1]. Values outside this range will result in undefined behaviour.";
 
 // Mesh::vertex_number
 const char* PYMESH_VN = "Returns the number of vertices of the mesh.";

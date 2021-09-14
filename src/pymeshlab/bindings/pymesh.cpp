@@ -50,7 +50,9 @@ void pymeshlab::initMesh(py::module& m)
 		py::arg("v_normals_matrix") = Eigen::MatrixX3d(),
 		py::arg("f_normals_matrix") = Eigen::MatrixX3d(),
 		py::arg("v_quality_array")  = Eigen::VectorXd(),
-		py::arg("f_quality_array")  = Eigen::VectorXd());
+		py::arg("f_quality_array")  = Eigen::VectorXd(),
+		py::arg("v_color_matrix")   = Eigen::MatrixX4d(),
+		py::arg("f_color_matrix")   = Eigen::MatrixX4d());
 
 	meshClass.def(
 		py::init(&meshlab::polyMeshFromMatrices),
@@ -60,7 +62,9 @@ void pymeshlab::initMesh(py::module& m)
 		py::arg("v_normals_matrix") = Eigen::MatrixX3d(),
 		py::arg("f_normals_matrix") = Eigen::MatrixX3d(),
 		py::arg("v_quality_array")  = Eigen::VectorXd(),
-		py::arg("f_quality_array")  = Eigen::VectorXd());
+		py::arg("f_quality_array")  = Eigen::VectorXd(),
+		py::arg("v_color_matrix")   = Eigen::MatrixX4d(),
+		py::arg("f_color_matrix")   = Eigen::MatrixX4d());
 
 	meshClass.def("vertex_number", &CMeshO::VN, doc::PYMESH_VN);
 	meshClass.def("face_number", &CMeshO::FN, doc::PYMESH_FN);

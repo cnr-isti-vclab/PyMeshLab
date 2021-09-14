@@ -95,4 +95,56 @@ def example_import_mesh_from_arrays():
     ms.colorize_by_face_quality()
 
     # save the mesh
-    ms.save_current_mesh(output_path + "colored_cube_from_array.ply")
+    ms.save_current_mesh(output_path + "quality_colored_cube_from_array.ply")
+
+    # create a numpy 8x4 array of vertex colors
+    # columns are the floating point color components (r, g, b, a)
+    # every row represents the color of the i-th vertex
+    vert_colors = numpy.array([
+        [1, 0, 0, 1],
+        [0, 1, 0, 1],
+        [0, 0, 1, 1],
+        [0.5, 0, 0, 1],
+        [0, 0.5, 0, 1],
+        [0, 0, 0.5, 1],
+        [0.5, 0, 0.5, 1],
+        [0, 0.5, 0.5, 1]])
+
+    # create a new mesh with the selected arrays
+    m2 = pymeshlab.Mesh(
+        vertex_matrix=verts,
+        face_matrix=faces,
+        v_color_matrix=vert_colors)
+
+    ms.add_mesh(m2, "cube_vcolor_mesh")
+
+    # save the mesh
+    ms.save_current_mesh(output_path + "vert_colored_cube_from_array.ply")
+
+    # create a numpy 12x4 array of face colors
+    # columns are the floating point color components (r, g, b, a)
+    # every row represents the color of the i-th face
+    face_colors = numpy.array([
+        [1, 0, 0, 1],
+        [0, 1, 0, 1],
+        [0, 0, 1, 1],
+        [0.5, 0, 0, 1],
+        [0, 0.5, 0, 1],
+        [0, 0, 0.5, 1],
+        [0.5, 0, 0.5, 1],
+        [0, 0.5, 0.5, 1],
+        [0.5, 0.5, 0, 1],
+        [0.5, 0.5, 0.5, 1],
+        [0, 0, 0, 1],
+        [0.8, 0.2, 0.4, 1]])
+
+    # create a new mesh with the selected arrays
+    m3 = pymeshlab.Mesh(
+        vertex_matrix=verts,
+        face_matrix=faces,
+        f_color_matrix=face_colors)
+
+    ms.add_mesh(m3, "cube_fcolor_mesh")
+
+    # save the mesh
+    ms.save_current_mesh(output_path + "face_colored_cube_from_array.ply")
