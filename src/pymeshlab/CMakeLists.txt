@@ -16,6 +16,7 @@ set(HEADERS
 	docs/pymeshset_doc.h
 	docs/pymodule_functions_doc.h
 	docs/pypercentage_doc.h
+	pymeshlab/bounding_box.h
 	pymeshlab/color.h
 	pymeshlab/exceptions.h
 	pymeshlab/mesh.h
@@ -37,6 +38,7 @@ set(SOURCES
 	bindings/pymeshset.cpp
 	bindings/pymodule_functions.cpp
 	bindings/pypercentage.cpp
+	pymeshlab/bounding_box.cpp
 	pymeshlab/color.cpp
 	pymeshlab/mesh.cpp
 	pymeshlab/meshset.cpp

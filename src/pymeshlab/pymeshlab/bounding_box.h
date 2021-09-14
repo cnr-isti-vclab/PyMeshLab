@@ -20,34 +20,23 @@
  * for more details.                                                         *
  *                                                                           *
  ****************************************************************************/
-#ifndef PYMESHLAB_PYBOUNDINGBOX_DOC_H
-#define PYMESHLAB_PYBOUNDINGBOX_DOC_H
+#ifndef PYMESHLAB_BOUNDINGBOX_H
+#define PYMESHLAB_BOUNDINGBOX_H
+
+#include <common/ml_document/base_types.h>
 
 namespace pymeshlab {
-namespace doc {
 
-// BoundingBox::__init__
-const char* PYBB_INIT = "Creates an invalid Bounding Box (min: [1,1,1], max:[-1,-1,-1]).";
+class BoundingBox
+{
+public:
+	static Eigen::Vector3d min(const Box3m& bbox);
+	static Eigen::Vector3d max(const Box3m& bbox);
 
-// BoundingBox::diagonal
-const char* PYBB_DIAGONAL = "Returns the diagonal of the Bounding Box.";
+private:
+	BoundingBox();
+};
 
-// BoundingBox::dim_x
-const char* PYBB_DIM_X = "Returns the X size of the Bounding Box.";
-
-// BoundingBox::dim_y
-const char* PYBB_DIM_Y = "Returns the Y size of the Bounding Box.";
-
-// BoundingBox::dim_z
-const char* PYBB_DIM_Z = "Returns the Z size of the Bounding Box.";
-
-// BoundingBox::min
-const char* PYBB_MIN = "Returns the min coordinate of the Bounding Box.";
-
-// BoundingBox::max
-const char* PYBB_MAX = "Returns the min coordinate of the Bounding Box.";
-
-} // namespace doc
 } // namespace pymeshlab
 
-#endif // PYMESHLAB_PYBOUNDINGBOX_DOC_H
+#endif // PYMESHLAB_BOUNDINGBOX_H
