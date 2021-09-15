@@ -96,6 +96,22 @@ void pymeshlab::initMesh(py::module& m)
 	meshClass.def(
 		"vertex_selection_array", &meshlab::vertexSelectionArray, doc::PYMESH_VERT_SEL_ARRAY);
 	meshClass.def("face_selection_array", &meshlab::faceSelectionArray, doc::PYMESH_FACE_SEL_ARRAY);
+	meshClass.def(
+		"vertex_curvature_principal_dir1_matrix",
+		&meshlab::vertexCurvaturePD1Matrix,
+		doc::PYMESH_VERT_CURV_PD1);
+	meshClass.def(
+		"vertex_curvature_principal_dir2_matrix",
+		&meshlab::vertexCurvaturePD2Matrix,
+		doc::PYMESH_VERT_CURV_PD2);
+	meshClass.def(
+		"face_curvature_principal_dir1_matrix",
+		&meshlab::faceCurvaturePD1Matrix,
+		doc::PYMESH_FACE_CURV_PD1);
+	meshClass.def(
+		"face_curvature_principal_dir2_matrix",
+		&meshlab::faceCurvaturePD2Matrix,
+		doc::PYMESH_FACE_CURV_PD2);
 
 	meshClass.def(
 		"face_face_adjacency_matrix", &meshlab::faceFaceAdjacencyMatrix, doc::PYMESH_FFADJ_MAT);

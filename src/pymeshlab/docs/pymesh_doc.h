@@ -171,6 +171,30 @@ const char* PYMESH_FACE_SEL_ARRAY =
 	"element is true if the corresponding face is selected, false otherwise. "
 	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. ";
 
+// Mesh::vertex_curvature_principal_dir1_matrix
+const char* PYMESH_VERT_CURV_PD1 =
+	"Returns the vertex curvature - principal direction 1 matrix of the mesh as a numpy array. "
+	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
+	"Raises a :py:exc:`MissingComponentException` if the mesh has no vertex curvature component.";
+
+// Mesh::vertex_curvature_principal_dir2_matrix
+const char* PYMESH_VERT_CURV_PD2 =
+	"Returns the vertex curvature - principal direction 2 matrix of the mesh as a numpy array. "
+	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
+	"Raises a :py:exc:`MissingComponentException` if the mesh has no vertex curvature component.";
+
+// Mesh::face_curvature_principal_dir1_matrix
+const char* PYMESH_FACE_CURV_PD1 =
+	"Returns the face curvature - principal direction 1 matrix of the mesh as a numpy array. "
+	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
+	"Raises a :py:exc:`MissingComponentException` if the mesh has no face curvature component.";
+
+// Mesh::face_curvature_principal_dir2_matrix
+const char* PYMESH_FACE_CURV_PD2 =
+	"Returns the face curvature - principal direction 2 matrix of the mesh as a numpy array. "
+	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
+	"Raises a :py:exc:`MissingComponentException` if the mesh has no face curvature component.";
+
 // Mesh::face_face_adjacecncy
 const char* PYMESH_FFADJ_MAT =
 	"Returns face-to-face adjacency matrix of the mesh as a numpy array. "

@@ -93,23 +93,6 @@ void saveMeshUsingPlugin(
 	MeshDocument&      md,
 	const FunctionSet& filterFunctionSet);
 
-/** Load/Save Project **/
-
-void loadALN(const QString& fileName, MeshDocument& md);
-
-void loadMLP(const QString& fileName, MeshDocument& md);
-
-void loadBundler(const QString& fileName, MeshDocument& md);
-
-void loadNVM(const QString& fileName, MeshDocument& md);
-
-void saveMLP(const QString& fileName, MeshDocument& md);
-
-/** OpenGL context **/
-
-// void initOpenGLContext(QAction* action, FilterPluginInterface* fp, QGLWidget*& wid, MeshSet& ms);
-// void releaseOpenGLContext(FilterPluginInterface* fp, QGLWidget*& wid);
-
 /** Apply Filter **/
 
 pybind11::dict applyFilterRPL(
