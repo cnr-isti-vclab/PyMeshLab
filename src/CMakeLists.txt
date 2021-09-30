@@ -55,6 +55,12 @@ if (APPLE)
 	option(BUILD_DUMMY_BIN_MAC_DEPLOY "Build a dummy binary necessary to deploy pymeshlab in MacOS" OFF)
 endif()
 
+# MeshLab directory
+set(MESHLAB_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/meshlab/src")
+
+# general meshlab build settings that apply also in pymeshlab:
+include("${MESHLAB_SRC_DIR}/cmake/meshlab_global_settings.cmake")
+
 ## Required libraries:
 # - OpenGL (ToDo: remove this)
 # - Qt5 - OpenGL, Xml
@@ -75,13 +81,7 @@ find_package(GLEW)
 find_package(Eigen3)
 find_package(OpenMP)
 
-set(MESHLAB_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/meshlab/src")
-
 ### Build settings
-# general meshlab build settings that apply also in pymeshlab:
-include("${MESHLAB_SRC_DIR}/cmake/meshlab_global_settings.cmake")
-set(CMAKE_POLICY_DEFAULT_CMP0077 NEW) #set options variables
-
 set(PYMESHLAB_BUILD_DISTRIB_DIR ${CMAKE_CURRENT_BINARY_DIR}/distrib/pymeshlab)
 
 list(APPEND CMAKE_MODULE_PATH "${MESHLAB_SRC_DIR}/cmake")
