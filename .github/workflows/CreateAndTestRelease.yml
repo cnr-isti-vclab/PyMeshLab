@@ -127,10 +127,6 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.pyversion }}
-    - name: Install dependencies #see https://github.com/probonopd/linuxdeployqt/issues/486
-      if: runner.os == 'Linux'
-      run: |
-        sudo apt-get install -y libopengl0
     - name: Run Tests ${{ matrix.pyversion }}
       if: runner.os == 'macOS'
       run: |
@@ -162,10 +158,6 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.pyversion }}
-    - name: Install dependencies #see https://github.com/probonopd/linuxdeployqt/issues/486
-      if: runner.os == 'Linux'
-      run: |
-        sudo apt-get install -y libopengl0
     - name: Install and Test Wheel
       if: runner.os == 'macOS'
       shell: bash
