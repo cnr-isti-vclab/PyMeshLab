@@ -80,6 +80,7 @@ void pymeshlab::initMesh(py::module& m)
 
 	meshClass.def("vertex_matrix", &meshlab::vertexMatrix, doc::PYMESH_VERT_MAT);
 	meshClass.def("face_matrix", &meshlab::faceMatrix, doc::PYMESH_FACE_MAT);
+	meshClass.def("polygonal_face_list", &meshlab::polygonalFaceList, doc::PYMESH_POLYGONAL_FACE_LIST);
 	meshClass.def("vertex_normal_matrix", &meshlab::vertexNormalMatrix, doc::PYMESH_VERT_NORM_MAT);
 	meshClass.def("face_normal_matrix", &meshlab::faceNormalMatrix, doc::PYMESH_FACE_NORM_MAT);
 	meshClass.def("vertex_color_matrix", &meshlab::vertexColorMatrix, doc::PYMESH_VERT_COLOR_MAT);

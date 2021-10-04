@@ -92,6 +92,12 @@ const char* PYMESH_FACE_MAT =
 	"Returns the face matrix of the mesh as a numpy array. "
 	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
 
+// Mesh::face_matrix
+const char* PYMESH_POLYGONAL_FACE_LIST =
+	"Returns a list of numpy arrays. Each numpy array contains the vertex indices "
+	"adjacent to the ith polygonal face. "
+	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
+
 // Mesh::vertex_normal_matrix
 const char* PYMESH_VERT_NORM_MAT =
 	"Returns the vertex normal matrix of the mesh as a numpy array. "
