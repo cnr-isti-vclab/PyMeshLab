@@ -135,27 +135,27 @@ void pymeshlab::initMesh(py::module& m)
 		doc::PYMESH_FACE_CUSTOM_POINT_ATTR_MATRIX);
 
 	meshClass.def(
-		"add_vertex_scalar_attribute",
+		"add_vertex_custom_scalar_attribute",
 		&meshlab::addVertexScalarAttribute,
-		doc::PYMESH_ADD_VERT_SCALAR_ATTR,
+		doc::PYMESH_ADD_VERT_CUSTOM_SCALAR_ATTR,
 		py::arg("attribute_values"),
 		py::arg("attribute_name"));
 	meshClass.def(
-		"add_face_scalar_attribute",
+		"add_face_custom_scalar_attribute",
 		&meshlab::addFaceScalarAttribute,
-		doc::PYMESH_ADD_FACE_SCALAR_ATTR,
+		doc::PYMESH_ADD_FACE_CUSTOM_SCALAR_ATTR,
 		py::arg("attribute_values"),
 		py::arg("attribute_name"));
 	meshClass.def(
-		"add_vertex_vector_attribute",
+		"add_vertex_custom_point_attribute",
 		&meshlab::addVertexVectorAttribute,
-		doc::PYMESH_ADD_VERT_VECTOR_ATTR,
+		doc::PYMESH_ADD_VERT_CUSTOM_POINT_ATTR,
 		py::arg("attribute_values"),
 		py::arg("attribute_name"));
 	meshClass.def(
-		"add_face_vector_attribute",
+		"add_face_custom_point_attribute",
 		&meshlab::addFaceVectorAttribute,
-		doc::PYMESH_ADD_FACE_VECTOR_ATTR,
+		doc::PYMESH_ADD_FACE_CUSTOM_POINT_ATTR,
 		py::arg("attribute_values"),
 		py::arg("attribute_name"));
 }

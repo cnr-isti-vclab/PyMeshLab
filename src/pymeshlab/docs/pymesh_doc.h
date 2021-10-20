@@ -236,7 +236,7 @@ const char* PYMESH_FACE_CUSTOM_POINT_ATTR_MATRIX =
 	"Raises a :py:exc:`PyMeshLabException` if the given name does not "
 	"represent a face vector attribute in the mesh.";
 
-const char* PYMESH_ADD_VERT_SCALAR_ATTR =
+const char* PYMESH_ADD_VERT_CUSTOM_SCALAR_ATTR =
 	"Adds a new user defined scalar attribute associated to the vertices of "
 	"the mesh. Takes as input numpy array of scalar having the same size of "
 	"the number of vertices of the mesh, and the name of the new attribute. "
@@ -245,7 +245,7 @@ const char* PYMESH_ADD_VERT_SCALAR_ATTR =
 	"size from the vertex number of the mesh, or if the mesh already contains "
 	"a vertex scalar attribute with the given name.";
 
-const char* PYMESH_ADD_FACE_SCALAR_ATTR =
+const char* PYMESH_ADD_FACE_CUSTOM_SCALAR_ATTR =
 	"Adds a new user defined scalar attribute associated to the faces of "
 	"the mesh. Takes as input numpy array of scalar having the same size of "
 	"the number of faces of the mesh, and the name of the new attribute. "
@@ -254,8 +254,8 @@ const char* PYMESH_ADD_FACE_SCALAR_ATTR =
 	"size from the face number of the mesh, or if the mesh already contains "
 	"a face scalar attribute with the given name.";
 
-const char* PYMESH_ADD_VERT_VECTOR_ATTR =
-	"Adds a new user defined vector attribute associated to the vertices of "
+const char* PYMESH_ADD_VERT_CUSTOM_POINT_ATTR =
+	"Adds a new user defined 3D point attribute associated to the vertices of "
 	"the mesh. Takes as input numpy array of vectors having 3 columns and the "
 	"number of rows equal to the number of vertices of the mesh, and the name of "
 	"the new attribute. "
@@ -264,8 +264,8 @@ const char* PYMESH_ADD_VERT_VECTOR_ATTR =
 	"sizes, or if the mesh already contains a vertex vector attribute with the "
 	"given name.";
 
-const char* PYMESH_ADD_FACE_VECTOR_ATTR =
-	"Adds a new user defined vector attribute associated to the faces of "
+const char* PYMESH_ADD_FACE_CUSTOM_POINT_ATTR =
+	"Adds a new user defined 3D point attribute associated to the faces of "
 	"the mesh. Takes as input numpy array of vectors having 3 columns and the "
 	"number of rows equal to the number of faces of the mesh, and the name of "
 	"the new attribute. "
