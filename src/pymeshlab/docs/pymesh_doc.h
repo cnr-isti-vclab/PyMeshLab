@@ -208,29 +208,29 @@ const char* PYMESH_FFADJ_MAT =
 	"Raises a :py:exc:`MissingComponentException` if the mesh has no face-to-face "
 	"adjacency component. ";
 
-const char* PYMESH_VERT_SCALAR_ATTR_ARRAY =
+const char* PYMESH_VERT_CUSTOM_SCALAR_ATTR_ARRAY =
 	"Returns a numpy array containing the scalar values of the given user defined "
 	"attribute name associated to the vertices of the mesh. "
 	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
 	"Raises a :py:exc:`PyMeshLabException` if the given name does not "
 	"represent a vertex scalar attribute in the mesh.";
 
-const char* PYMESH_VERT_VECTOR_ATTR_MATRIX =
-	"Returns a numpy matrix containing the vector values of the given user defined "
+const char* PYMESH_VERT_CUSTOM_POINT_ATTR_MATRIX =
+	"Returns a numpy matrix containing the 3D point values of the given user defined "
 	"attribute name associated to the vertices of the mesh. "
 	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
 	"Raises a :py:exc:`PyMeshLabException` if the given name does not "
 	"represent a vertex vector attribute in the mesh.";
 
-const char* PYMESH_FACE_SCALAR_ATTR_ARRAY =
+const char* PYMESH_FACE_CUSTOM_SCALAR_ATTR_ARRAY =
 	"Returns a numpy array containing the scalar values of the given user defined "
 	"attribute name associated to the faces of the mesh. "
 	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
 	"Raises a :py:exc:`PyMeshLabException` if the given name does not "
 	"represent a face scalar attribute in the mesh.";
 
-const char* PYMESH_FACE_VECTOR_ATTR_MATRIX =
-	"Returns a numpy matrix containing the vector values of the given user defined "
+const char* PYMESH_FACE_CUSTOM_POINT_ATTR_MATRIX =
+	"Returns a numpy matrix containing the 3D point values of the given user defined "
 	"attribute name associated to the faces of the mesh. "
 	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
 	"Raises a :py:exc:`PyMeshLabException` if the given name does not "

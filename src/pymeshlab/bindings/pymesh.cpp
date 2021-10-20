@@ -118,21 +118,21 @@ void pymeshlab::initMesh(py::module& m)
 		"face_face_adjacency_matrix", &meshlab::faceFaceAdjacencyMatrix, doc::PYMESH_FFADJ_MAT);
 
 	meshClass.def(
-		"vertex_scalar_attribute_array",
+		"vertex_custom_scalar_attribute_array",
 		&meshlab::vertexScalarAttributeArray,
-		doc::PYMESH_VERT_SCALAR_ATTR_ARRAY);
+		doc::PYMESH_VERT_CUSTOM_SCALAR_ATTR_ARRAY);
 	meshClass.def(
-		"vertex_vector_attribute_matrix",
+		"vertex_custom_point_attribute_matrix",
 		&meshlab::vertexVectorAttributeMatrix,
-		doc::PYMESH_VERT_VECTOR_ATTR_MATRIX);
+		doc::PYMESH_VERT_CUSTOM_POINT_ATTR_MATRIX);
 	meshClass.def(
-		"face_scalar_attribute_array",
+		"face_custom_scalar_attribute_array",
 		&meshlab::faceScalarAttributeArray,
-		doc::PYMESH_FACE_SCALAR_ATTR_ARRAY);
+		doc::PYMESH_FACE_CUSTOM_SCALAR_ATTR_ARRAY);
 	meshClass.def(
-		"face_vector_attribute_matrix",
+		"face_custom_point_attribute_matrix",
 		&meshlab::faceVectorAttributeMatrix,
-		doc::PYMESH_FACE_VECTOR_ATTR_MATRIX);
+		doc::PYMESH_FACE_CUSTOM_POINT_ATTR_MATRIX);
 
 	meshClass.def(
 		"add_vertex_scalar_attribute",

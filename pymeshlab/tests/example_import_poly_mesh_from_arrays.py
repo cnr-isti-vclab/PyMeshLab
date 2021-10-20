@@ -44,7 +44,7 @@ def example_import_poly_mesh_from_arrays():
     # when creating a mesh from a polymesh, a custom per face scalar attribute is added to the newly created mesh
     # storing the birth polygon faces for each triangle
     # get the birth polygon for each face of the mesh
-    birth_faces = m.face_scalar_attribute_array('poly_birth_faces')
+    birth_faces = m.face_custom_scalar_attribute_array('poly_birth_faces')
 
     print(birth_faces)
 
