@@ -168,50 +168,6 @@ apply_filter parameters
 
       Create a new Layer with an edge mesh composed only by the selected edges of the current mesh</p>
 
-.. data:: change_the_current_layer
-
-   *MeshLab filter name*: 'Change the current layer'
-
-   .. raw:: html
-
-      Change the current layer to a chosen one</p>
-
-   **Parameters:**
-
-   ``layer : int = 0``
-
-      .. raw:: html
-
-         <i>Layer Name</i>: The name of the current layer
-
-.. data:: change_visibility_of_layers
-
-   *MeshLab filter name*: 'Change Visibility of layer(s)'
-
-   .. raw:: html
-
-      Make layer(s) visible/invisible. Useful for scripting.</p>
-
-   **Parameters:**
-
-   ``layer : int = 0``
-
-      .. raw:: html
-
-         <i>Layer Name</i>: The name of the layer that has to change visibility. If second parameter is not empty, this parameter is ignored
-
-   ``lname : str = ''``
-
-      .. raw:: html
-
-         <i>Substring match</i>: Apply visibility to all layers with name substring matching the entered string. If not empty, the first parameter is ignored.
-
-   ``ismeshvisible : bool = True``
-
-      .. raw:: html
-
-         <i>Visible</i>: It makes the selected layer(s) visible or invisible.
-
 .. data:: clamp_vertex_quality
 
    *MeshLab filter name*: 'Clamp Vertex Quality'
@@ -459,12 +415,6 @@ apply_filter parameters
 
    **Parameters:**
 
-   ``selectiononly : bool = False``
-
-      .. raw:: html
-
-         <i>Selection only</i>: If checked, only selected vertices will be projected.
-
    ``filterscale : float = 2``
 
       .. raw:: html
@@ -489,6 +439,12 @@ apply_filter parameters
 
          <i>MLS - Spherical parameter</i>: Control the curvature of the fitted spheres: 0 is equivalent to a pure plane fit,1 to a pure spherical fit, values between 0 and 1 gives intermediate results,while other real values might give interesting results, but take care with extremesettings !
 
+   ``selectiononly : bool = False``
+
+      .. raw:: html
+
+         <i>Selection only</i>: If checked, only selected vertices will be projected.
+
    ``curvaturetype : str = 'Mean' (or int = 0)``
 
       Possible enum values:
@@ -512,12 +468,6 @@ apply_filter parameters
       Colorize the vertices of a mesh or point set using the curvature of the underlying surface.<br><br>This is the Robust Implicit MLS (RIMLS) variant which is an extension of Implicit MLS preserving sharp features using non linear regression. For more details see: <br>Oztireli, Guennebaud and Gross, 'Feature Preserving Point Set Surfaces based on Non-Linear Kernel Regression' Eurographics 2009.</p>
 
    **Parameters:**
-
-   ``selectiononly : bool = False``
-
-      .. raw:: html
-
-         <i>Selection only</i>: If checked, only selected vertices will be projected.
 
    ``filterscale : float = 2``
 
@@ -549,6 +499,12 @@ apply_filter parameters
 
          <i>MLS - Max fitting iterations</i>: Max number of fitting iterations. (0 or 1 is equivalent to the standard IMLS)
 
+   ``selectiononly : bool = False``
+
+      .. raw:: html
+
+         <i>Selection only</i>: If checked, only selected vertices will be projected.
+
    ``curvaturetype : str = 'Mean' (or int = 0)``
 
       Possible enum values:
@@ -561,22 +517,6 @@ apply_filter parameters
       .. raw:: html
 
          <i>Curvature type</i>: The type of the curvature to plot.
-
-.. data:: compact_faces
-
-   *MeshLab filter name*: 'Compact faces'
-
-   .. raw:: html
-
-      Compact all the faces that have been deleted and put them to the end of the vector</p>
-
-.. data:: compact_vertices
-
-   *MeshLab filter name*: 'Compact vertices'
-
-   .. raw:: html
-
-      Compact all the vertices that have been deleted and put them to the end of the vector</p>
 
 .. data:: compute_area_perimeter_of_selection
 
@@ -592,18 +532,19 @@ apply_filter parameters
 
    .. raw:: html
 
-      Compute the principal directions of curvature with several algorithms</p>
+      Compute the principal directions of curvature with different algorithms</p>
 
    **Parameters:**
 
-   ``method : str = 'Pseudoinverse Quadric Fitting' (or int = 3)``
+   ``method : str = 'Quadric Fitting' (or int = 3)``
 
       Possible enum values:
 
          0. ``'Taubin approximation'``
          1. ``'Principal Component Analysis'``
          2. ``'Normal Cycles'``
-         3. ``'Pseudoinverse Quadric Fitting'``
+         3. ``'Quadric Fitting'``
+         4. ``'Scale Dependent Quadric Fitting'``
 
       .. raw:: html
 
@@ -624,6 +565,12 @@ apply_filter parameters
       .. raw:: html
 
          <i>Quality/Color Mapping</i>: Choose the curvature that is mapped into quality and visualized as per vertex color.
+
+   ``scale : Percentage = 10%``
+
+      .. raw:: html
+
+         <i>Curvature Scale</i>: This parameter is used only for scale dependent methods: 'Scale Dependent Quadric Fitting' and 'PCA'. It specifies the scale at which the curvature is computed. e.g. for SDQF it specify how large is the patch where we fit the quadric used to compute curvature dirs.
 
    ``autoclean : bool = True``
 
@@ -1041,28 +988,6 @@ apply_filter parameters
 
          <i>Cylinder Side</i>: Number of sides of the cylinder (both edge and vertex).
 
-.. data:: cross_field_creation
-
-   *MeshLab filter name*: 'Cross Field Creation'
-
-   .. raw:: html
-
-      </p>
-
-   **Parameters:**
-
-   ``crosstype : str = 'Linear Y' (or int = 0)``
-
-      Possible enum values:
-
-         0. ``'Linear Y'``
-         1. ``'Radial'``
-         2. ``'Curvature'``
-
-      .. raw:: html
-
-         <i>Cross Type</i>: 
-
 .. data:: curvature_flipping_optimization
 
    *MeshLab filter name*: 'Curvature flipping optimization'
@@ -1113,17 +1038,51 @@ apply_filter parameters
 
          <i>Crease Angle (degree)</i>: If the angle between the normals of two adjacent faces is <b>larger</b> that this threshold the edge is considered a creased and the mesh is cut along it.
 
-.. data:: define_new_per_face_attribute
+.. data:: define_new_per_face_custom_point_attribute
 
-   *MeshLab filter name*: 'Define New Per Face Attribute'
+   *MeshLab filter name*: 'Define New Per Face Custom Point Attribute'
 
    .. raw:: html
 
-      Add a new Per-Face attribute to current mesh.<br>You can specify custom name and a function to generate attribute's value<br>It's possible to use per-face variables in the expression:<br>It's possible to use the following per-face variables, or variables associated to the three vertex of every face:<br><b>x0,y0,z0</b> for the first vertex position, <b>x1,y1,z1</b> for the second vertex position, <b>x2,y2,z2</b> for the third vertex position, <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> for vertex normals, <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> for vertex colors, <b>vi0, vi1, vi2</b> for vertex indices, <b>q0,q1,q2</b> for vertex quality, <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> for per-wedge texture coords, <b>ti</b> for face texture index, <b>vsel0,vsel1,vsel2</b> for vertex selection (1 yes, 0 no) <b>fi</b> for face index, <b>fr,fg,fb,fa</b> for face color, <b>fq</b> for face quality, <b>fnx,fny,fnz</b> for face normal, <b>fsel</b> face selection (1 yes, 0 no).<br><font color="#FF0000">The attribute name specified below can be used in other filter function</font></p>
+      Add a new Per-Face custom point attribute to current mesh.<br>You can specify custom name and a function to generate attribute's values<br>It's possible to use per-face variables in the expression:<br>It's possible to use the following per-face variables, or variables associated to the three vertex of every face:<br><b>x0,y0,z0</b> for the first vertex position, <b>x1,y1,z1</b> for the second vertex position, <b>x2,y2,z2</b> for the third vertex position, <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> for vertex normals, <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> for vertex colors, <b>vi0, vi1, vi2</b> for vertex indices, <b>q0,q1,q2</b> for vertex quality, <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> for per-wedge texture coords, <b>ti</b> for face texture index, <b>vsel0,vsel1,vsel2</b> for vertex selection (1 yes, 0 no) <b>fi</b> for face index, <b>fr,fg,fb,fa</b> for face color, <b>fq</b> for face quality, <b>fnx,fny,fnz</b> for face normal, <b>fsel</b> face selection (1 yes, 0 no).<br><font color="#FF0000">The attribute name specified below can be used in other filter function</font></p>
 
    **Parameters:**
 
-   ``name : str = 'Radiosity'``
+   ``name : str = 'Custom Attr Name'``
+
+      .. raw:: html
+
+         <i>Name</i>: the name of new attribute. you can access attribute in other filters through this name
+
+   ``x_expr : str = 'x0'``
+
+      .. raw:: html
+
+         <i>x coord function =</i>: function to calculate custom x coord of the point attribute value for each face
+
+   ``y_expr : str = 'y0'``
+
+      .. raw:: html
+
+         <i>y coord function =</i>: function to calculate custom y coord of the point attribute value for each face
+
+   ``z_expr : str = 'z0'``
+
+      .. raw:: html
+
+         <i>z coord function =</i>: function to calculate custom z coord of the point attribute value for each face
+
+.. data:: define_new_per_face_custom_scalar_attribute
+
+   *MeshLab filter name*: 'Define New Per Face Custom Scalar Attribute'
+
+   .. raw:: html
+
+      Add a new Per-Face custom scalar attribute to current mesh.<br>You can specify custom name and a function to generate attribute's values<br>It's possible to use per-face variables in the expression:<br>It's possible to use the following per-face variables, or variables associated to the three vertex of every face:<br><b>x0,y0,z0</b> for the first vertex position, <b>x1,y1,z1</b> for the second vertex position, <b>x2,y2,z2</b> for the third vertex position, <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> for vertex normals, <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> for vertex colors, <b>vi0, vi1, vi2</b> for vertex indices, <b>q0,q1,q2</b> for vertex quality, <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> for per-wedge texture coords, <b>ti</b> for face texture index, <b>vsel0,vsel1,vsel2</b> for vertex selection (1 yes, 0 no) <b>fi</b> for face index, <b>fr,fg,fb,fa</b> for face color, <b>fq</b> for face quality, <b>fnx,fny,fnz</b> for face normal, <b>fsel</b> face selection (1 yes, 0 no).<br><font color="#FF0000">The attribute name specified below can be used in other filter function</font></p>
+
+   **Parameters:**
+
+   ``name : str = 'Custom Attr Name'``
 
       .. raw:: html
 
@@ -1133,19 +1092,53 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Function =</i>: function to calculate custom attribute value for each face
+         <i>Scalar function =</i>: function to calculate custom scalar attribute value for each face
 
-.. data:: define_new_per_vertex_attribute
+.. data:: define_new_per_vertex_custom_point_attribute
 
-   *MeshLab filter name*: 'Define New Per Vertex Attribute'
+   *MeshLab filter name*: 'Define New Per Vertex Custom Point Attribute'
 
    .. raw:: html
 
-      Add a new Per-Vertex scalar attribute to current mesh and fill it with the defined function.<br>The name specified below can be used in other filter functionIt's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
+      Add a new Per-Vertex custom point attribute to current mesh and fill it with the defined function.<br>The name specified below can be used in other filter functionIt's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
 
    **Parameters:**
 
-   ``name : str = 'Radiosity'``
+   ``name : str = 'Custom Attr Name'``
+
+      .. raw:: html
+
+         <i>Name</i>: the name of new attribute. you can access attribute in other filters through this name
+
+   ``x_expr : str = 'x'``
+
+      .. raw:: html
+
+         <i>x coord function =</i>: function to calculate custom x coord of the point attribute value for each vertex
+
+   ``y_expr : str = 'y'``
+
+      .. raw:: html
+
+         <i>y coord function =</i>: function to calculate custom y coord of the point attribute value for each vertex
+
+   ``z_expr : str = 'z'``
+
+      .. raw:: html
+
+         <i>z coord function =</i>: function to calculate custom z coord of the point attribute value for each vertex
+
+.. data:: define_new_per_vertex_custom_scalar_attribute
+
+   *MeshLab filter name*: 'Define New Per Vertex Custom Scalar Attribute'
+
+   .. raw:: html
+
+      Add a new Per-Vertex custom scalar attribute to current mesh and fill it with the defined function.<br>The name specified below can be used in other filter functionIt's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
+
+   **Parameters:**
+
+   ``name : str = 'Custom Attr Name'``
 
       .. raw:: html
 
@@ -1155,15 +1148,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Function =</i>: function to calculate custom attribute value for each vertex
-
-.. data:: delaunay_triangulation
-
-   *MeshLab filter name*: 'Delaunay Triangulation'
-
-   .. raw:: html
-
-      Calculate the <b>Delaunay triangulation</b> with Qhull library (http://www.qhull.org/html/qdelaun.htm).<br><br>The Delaunay triangulation DT(P) of a set of points P in d-dimensional spaces is a triangulation of the convex hull such that no point in P is inside the circum-sphere of any simplex in DT(P).<br> </p>
+         <i>Scalar function =</i>: function to calculate custom scalar attribute value for each vertex
 
 .. data:: delete_all_faces
 
@@ -1324,38 +1309,27 @@ apply_filter parameters
 
       Dilate (expand) the current set of selected faces.</p>
 
-.. data:: directional_geom_preserv
+.. data:: directional_geometry_preservation
 
-   *MeshLab filter name*: 'Directional Geom. Preserv.'
+   *MeshLab filter name*: 'Directional Geometry Preservation'
 
    .. raw:: html
 
-      Store and Blend the current geometry with the result of another previous smoothing processing step. This is useful to limit the influence of any smoothing algorithm along the viewing direction. This is useful to cope with the biased distribution of measuring error in many scanning devices, because TOF scanners usually have very good <i>x,y</i>accuracy but suffer of greater depth errors.</p>
+      Blend through a given direction the geometry previously stored in a per vertex custom point attribute with the current geometry. This is useful to limit the influence of any smoothing algorithm along the viewing direction. This is useful to cope with the biased distribution of measuring error in many scanning devices, because TOF scanners usually have very good <i>x,y</i> accuracy but suffer of greater depth errors.</p>
 
    **Parameters:**
 
-   ``step : str = 'Store Vertex Position' (or int = 0)``
-
-      Possible enum values:
-
-         0. ``'Store Vertex Position'``
-         1. ``'Blend Vertex Position'``
+   ``attr_name : str = ''``
 
       .. raw:: html
 
-         <i>Step:</i>: The purpose of this filter is to <b>constrain</b> any smoothing algorithm to moving vertices only along a give line of sight.<br> First you should store current vertex position, than after applying  one of the many smoothing algorithms you should re start this filter and blend the original positions with the smoothed results.<br>Given a view point  <i>vp</i> , the smoothed vertex position <i>vs</i> and the original position  <i>v</i>, The new vertex position is computed as the projection of  <i>vs</i> on the line  connecting  <i>v</i>  and <i>vp</i>.
+         <i>Custom attribute name</i>: The name of the per vertex custom point attribute that contains the previous geometry.
 
    ``viewpoint : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
 
       .. raw:: html
 
          <i>Viewpoint</i>: The position of the view point that is used to get the constraint direction.
-
-   ``selected : bool = False``
-
-      .. raw:: html
-
-         <i>Affect only selected faces</i>: If checked the filter is performed only on the selected faces
 
 .. data:: discrete_curvatures
 
@@ -1593,7 +1567,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Export file name (the right extension will be added at the end)</i>: Name of the output file, it will be saved in the same folder as the project file
+         <i>Export file name (the right extension will be added at the end)</i>: Name of the output file, it will be saved in the same folder as the project file.
 
 .. data:: export_to_sketchfab
 
@@ -1709,13 +1683,13 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Merge Only Visible Layers</i>: If true, flatten only visible layers, otherwise, all layers are used
+         <i>Merge Only Visible Layers</i>: If true, flatten only visible layers, otherwise, all layers are used.
 
    ``deletelayer : bool = True``
 
       .. raw:: html
 
-         <i>Delete Layers </i>: Delete all the layers used as source in flattening. <br>If all layers are visible only a single layer will remain after the invocation of this filter
+         <i>Delete Layers </i>: Delete all the layers used as source in flattening. <br>If all layers are visible only a single layer will remain after the invocation of this filter.
 
    ``mergevertices : bool = True``
 
@@ -1727,7 +1701,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Keep unreferenced vertices</i>: Do not discard unreferenced vertices from source layers<br><br>Necessary for point-cloud layers
+         <i>Keep unreferenced vertices</i>: Do not discard unreferenced vertices from source layers<br><br>Necessary for point-cloud layers.
 
 .. data:: fractal_displacement
 
@@ -1965,6 +1939,94 @@ apply_filter parameters
 
          <i>Projection Radius</i>: If non zero, this parameter specifies the desired radius of the reference cylinder used for the projection. Changing this parameter affect the <b>X</b> horizontal scaling of the resulting mesh. If zero (default) the average distance of the mesh from the axis is chosen.
 
+.. data:: global_align_meshes
+
+   *MeshLab filter name*: 'Global Align Meshes'
+
+   .. raw:: html
+
+      Perform the global alignment process to align a set of visible meshes together. The alignment algorithm is implemented over the idea written by <i>Kari Pulli</i> in his paper: "Multiview Registration for Large Data Sets"</p>
+
+   **Parameters:**
+
+   ``basemesh : int = 0``
+
+      .. raw:: html
+
+         <i>Base Mesh</i>: The base mesh is the one who will stay fixed during the alignment process.
+
+   ``onlyvisiblemeshes : bool = False``
+
+      .. raw:: html
+
+         <i>Only visible meshes</i>: Apply the global alignment only to the visible meshes
+
+   ``ogsize : int = 50000``
+
+      .. raw:: html
+
+         <i>Occupancy Grid Size</i>: To compute the overlap between range maps we discretize them into voxel and count them (both for area and overlap); This parameter affect the resolution of the voxelization process. Using a too fine voxelization can...
+
+   ``arcthreshold : float = 0.3``
+
+      .. raw:: html
+
+         <i>Arc Area Thr.</i>: We run ICP on every pair of mesh with a relative overlap greater than this threshold. The relative overlap is computed as overlapArea / min(area1,area2)
+
+   ``recalcthreshold : float = 0.1``
+
+      .. raw:: html
+
+         <i>Recalc Fraction</i>: Every time we start process we discard the <recalc> fraction of all the arcs in order to recompute them and hopefully improve the final result. It corresponds to iteratively recalc the bad arcs.
+
+   ``samplenum : int = 2000``
+
+      .. raw:: html
+
+         <i>Sample Number</i>: Number of samples that we try to choose at each ICP iteration
+
+   ``mindistabs : float = 10``
+
+      .. raw:: html
+
+         <i>Minimal Starting Distance</i>: For all the chosen sample on one mesh we consider for ICP only the samples nearer than this value.If MSD is too large outliers could be included, if it is too small convergence will be very slow. A good guess is needed here, suggested values are in the range of 10-100 times of the device scanning error.This value is also dynamically changed by the 'Reduce Distance Factor'
+
+   ``trgdistabs : float = 0.005``
+
+      .. raw:: html
+
+         <i>Target Distance</i>: When 50% of the chosen samples are below this distance we consider the two mesh aligned. Usually it should be a value lower than the error of the scanning device.
+
+   ``maxiternum : int = 75``
+
+      .. raw:: html
+
+         <i>Max Iteration Num</i>: The maximum number of iteration that the ICP is allowed to perform.
+
+   ``samplemode : bool = True``
+
+      .. raw:: html
+
+         <i>Normal Equalized Sampling</i>: if true (default) the sample points of icp are chosen with a distribution uniform with respect to the normals of the surface. Otherwise they are distributed in a spatially uniform way.
+
+   ``reducefactorperc : float = 0.8``
+
+      .. raw:: html
+
+         <i>MSD Reduce Factor</i>: At each ICP iteration the Minimal Starting Distance is reduced to be 5 times the <Reduce Factor> percentile of the sample distances (e.g. if RF is 0.9 the new Minimal Starting Distance is 5 times the value <X> such that 90% of the sample lies at a distance lower than <X>.
+
+   ``passhifilter : float = 0.75``
+
+      .. raw:: html
+
+         <i>Sample Cut High</i>: At each ICP iteration all the sample that are farther than the <cuth high> percentile are discarded ( In practice we use only the <cut high> best results ).
+
+   ``matchmode : bool = True``
+
+      .. raw:: html
+
+         <i>Rigid matching</i>: If true the ICP is constrained to perform matching only through roto-translations (no scaling allowed). If false a more relaxed transformation matrix is allowed (scaling and shearing can appear).
+
 .. data:: grid_generator
 
    *MeshLab filter name*: 'Grid Generator'
@@ -2084,6 +2146,82 @@ apply_filter parameters
    .. raw:: html
 
       Create an Icosahedron</p>
+
+.. data:: icp_between_meshes
+
+   *MeshLab filter name*: 'ICP Between Meshes'
+
+   .. raw:: html
+
+      Perform the ICP algorithm to minimize the difference between two cloud of points.</p>
+
+   **Parameters:**
+
+   ``referencemesh : int = 0``
+
+      .. raw:: html
+
+         <i>Reference Mesh</i>: The Reference Mesh is the point cloud kept fixed during the ICP process.
+
+   ``sourcemesh : int = 1``
+
+      .. raw:: html
+
+         <i>Source Mesh</i>: The Source Mesh is the point cloud which will be roto-translated to match the Reference Mesh.
+
+   ``samplenum : int = 2000``
+
+      .. raw:: html
+
+         <i>Sample Number</i>: Number of samples that we try to choose at each ICP iteration
+
+   ``mindistabs : float = 10``
+
+      .. raw:: html
+
+         <i>Minimal Starting Distance</i>: For all the chosen sample on one mesh we consider for ICP only the samples nearer than this value.If MSD is too large outliers could be included, if it is too small convergence will be very slow. A good guess is needed here, suggested values are in the range of 10-100 times of the device scanning error.This value is also dynamically changed by the 'Reduce Distance Factor'
+
+   ``trgdistabs : float = 0.005``
+
+      .. raw:: html
+
+         <i>Target Distance</i>: When 50% of the chosen samples are below this distance we consider the two mesh aligned. Usually it should be a value lower than the error of the scanning device.
+
+   ``maxiternum : int = 75``
+
+      .. raw:: html
+
+         <i>Max Iteration Num</i>: The maximum number of iteration that the ICP is allowed to perform.
+
+   ``samplemode : bool = True``
+
+      .. raw:: html
+
+         <i>Normal Equalized Sampling</i>: if true (default) the sample points of icp are chosen with a distribution uniform with respect to the normals of the surface. Otherwise they are distributed in a spatially uniform way.
+
+   ``reducefactorperc : float = 0.8``
+
+      .. raw:: html
+
+         <i>MSD Reduce Factor</i>: At each ICP iteration the Minimal Starting Distance is reduced to be 5 times the <Reduce Factor> percentile of the sample distances (e.g. if RF is 0.9 the new Minimal Starting Distance is 5 times the value <X> such that 90% of the sample lies at a distance lower than <X>.
+
+   ``passhifilter : float = 0.75``
+
+      .. raw:: html
+
+         <i>Sample Cut High</i>: At each ICP iteration all the sample that are farther than the <cuth high> percentile are discarded ( In practice we use only the <cut high> best results ).
+
+   ``matchmode : bool = True``
+
+      .. raw:: html
+
+         <i>Rigid matching</i>: If true the ICP is constrained to perform matching only through roto-translations (no scaling allowed). If false a more relaxed transformation matrix is allowed (scaling and shearing can appear).
+
+   ``savelastiteration : bool = False``
+
+      .. raw:: html
+
+         <i>Save Last Iteration</i>: Toggle this checkbox in order to save the last iteration points in two layers.
 
 .. data:: image_alignment_mutual_information
 
@@ -2279,7 +2417,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Choose the camera file to be imported</i>: It's possible to import both Bundler .out and Agisoft .xml files. In both cases, distortion parameters won't be imported. In the case of Agisoft, it's necessary to undistort the images before exporting the xml file
+         <i>Choose the camera file to be imported</i>: It's possible to import both Bundler .out and Agisoft .xml files. In both cases, distortion parameters won't be imported. In the case of Agisoft, it's necessary to undistort the images before exporting the xml file.
 
 .. data:: invert_faces_orientation
 
@@ -3022,6 +3160,18 @@ apply_filter parameters
 
          <i>Selection only</i>: If checked, only selected vertices will be projected.
 
+   ``maxsubdivisions : int = 0``
+
+      .. raw:: html
+
+         <i>Refinement - Max subdivisions</i>: Max number of subdivisions.
+
+   ``thangleindegree : float = 2``
+
+      .. raw:: html
+
+         <i>Refinement - Crease angle (degree)</i>: Threshold angle between two faces controlling the refinement.
+
    ``filterscale : float = 2``
 
       .. raw:: html
@@ -3052,18 +3202,6 @@ apply_filter parameters
 
          <i>Accurate normals</i>: If checked, use the accurate MLS gradient instead of the local approximationto compute the normals.
 
-   ``maxsubdivisions : int = 0``
-
-      .. raw:: html
-
-         <i>Refinement - Max subdivisions</i>: Max number of subdivisions.
-
-   ``thangleindegree : float = 2``
-
-      .. raw:: html
-
-         <i>Refinement - Crease angle (degree)</i>: Threshold angle between two faces controlling the refinement.
-
 .. data:: mls_projection_rimls
 
    *MeshLab filter name*: 'MLS projection (RIMLS)'
@@ -3091,6 +3229,18 @@ apply_filter parameters
       .. raw:: html
 
          <i>Selection only</i>: If checked, only selected vertices will be projected.
+
+   ``maxsubdivisions : int = 0``
+
+      .. raw:: html
+
+         <i>Refinement - Max subdivisions</i>: Max number of subdivisions.
+
+   ``thangleindegree : float = 2``
+
+      .. raw:: html
+
+         <i>Refinement - Crease angle (degree)</i>: Threshold angle between two faces controlling the refinement.
 
    ``filterscale : float = 2``
 
@@ -3121,18 +3271,6 @@ apply_filter parameters
       .. raw:: html
 
          <i>MLS - Max fitting iterations</i>: Max number of fitting iterations. (0 or 1 is equivalent to the standard IMLS)
-
-   ``maxsubdivisions : int = 0``
-
-      .. raw:: html
-
-         <i>Refinement - Max subdivisions</i>: Max number of subdivisions.
-
-   ``thangleindegree : float = 2``
-
-      .. raw:: html
-
-         <i>Refinement - Crease angle (degree)</i>: Threshold angle between two faces controlling the refinement.
 
 .. data:: montecarlo_sampling
 
@@ -3194,7 +3332,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Delete original selection</i>: Deletes the original selected faces/vertices, thus splitting the mesh among layers. <br><br>if false, the selected faces/vertices are duplicated in the new layer
+         <i>Delete original selection</i>: Deletes the original selected faces/vertices, thus splitting the mesh among layers.<br><br>if false, the selected faces/vertices are duplicated in the new layer.
 
 .. data:: move_selected_vertices_to_another_layer
 
@@ -3210,7 +3348,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Delete original selection</i>: Deletes the original selected faces/vertices, thus splitting the mesh among layers. <br><br>if false, the selected faces/vertices are duplicated in the new layer
+         <i>Delete original selection</i>: Deletes the original selected faces/vertices, thus splitting the mesh among layers.<br><br>if false, the selected faces/vertices are duplicated in the new layer.
 
 .. data:: noisy_isosurface
 
@@ -3259,12 +3397,6 @@ apply_filter parameters
       .. raw:: html
 
          <i>Input File</i>: The input file from which create the .nxs file.
-
-   ``input_mtl_file : str = ''``
-
-      .. raw:: html
-
-         <i>Input mtl File</i>: The input material file; required if loading an obj.
 
    ``output_file : str = ''``
 
@@ -3409,6 +3541,22 @@ apply_filter parameters
    .. raw:: html
 
       Create an Octahedron</p>
+
+.. data:: overlapping_meshes
+
+   *MeshLab filter name*: 'Overlapping Meshes'
+
+   .. raw:: html
+
+      Use an occupancy grid to see which meshes overlap between themselves.</p>
+
+   **Parameters:**
+
+   ``ogsize : int = 50000``
+
+      .. raw:: html
+
+         <i>Occupancy Grid Size</i>: To compute the overlap between range maps we discretize them into voxel and count them (both for area and overlap); This parameter affect the resolution of the voxelization process. Using a too fine voxelization can...
 
 .. data:: parameterization__texturing_from_registered_rasters
 
@@ -4172,9 +4320,21 @@ apply_filter parameters
 
    .. raw:: html
 
-      Simulate the movement of a points cloud over a mesh</p>
+      Simulate the movement of a point cloud over a mesh</p>
 
    **Parameters:**
+
+   ``point_cloud : int = 0``
+
+      .. raw:: html
+
+         <i>Point cloud</i>: The point cloud that will be moved over the target mesh.
+
+   ``target_mesh : int = 0``
+
+      .. raw:: html
+
+         <i>Target mesh</i>: Target mesh on which the point cloud will be moved.
 
    ``gravity_dir : numpy.ndarray[numpy.float64[3]] = [0, -1, 0]``
 
@@ -4717,7 +4877,7 @@ apply_filter parameters
 
    .. raw:: html
 
-      The bbox is recursively partitioned in a octree style, center of bbox are considered, when the center is nearer to the surface than a given thr it is projected on it. It works also for building offsetted samples.</p>
+      The bounding box is recursively partitioned in a octree style, center of bbox are considered, when the center is nearer to the surface than a given threshold it is projected on it. It works also for building offsetted samples.</p>
 
    **Parameters:**
 
@@ -4883,37 +5043,26 @@ apply_filter parameters
 
          <i>Remove unfreferenced vertices</i>: if true, the unreferenced vertices remaining after the face deletion are removed.
 
-.. data:: remove_t_vertices_by_edge_collapse
+.. data:: remove_t_vertices
 
-   *MeshLab filter name*: 'Remove T-Vertices by Edge Collapse'
-
-   .. raw:: html
-
-      Delete t-vertices from the mesh by collapsing the shortest of the incident edges</p>
-
-   **Parameters:**
-
-   ``threshold : float = 40``
-
-      .. raw:: html
-
-         <i>Ratio</i>: Detects faces where the base/height ratio is lower than this value
-
-   ``repeat : bool = True``
-
-      .. raw:: html
-
-         <i>Iterate until convergence</i>: Iterates the algorithm until it reaches convergence
-
-.. data:: remove_t_vertices_by_edge_flip
-
-   *MeshLab filter name*: 'Remove T-Vertices by Edge Flip'
+   *MeshLab filter name*: 'Remove T-Vertices'
 
    .. raw:: html
 
-      Delete t-vertices by flipping the opposite edge on the degenerate face if the triangulation quality improves</p>
+      Delete t-vertices from the mesh by edge collapse (collapsing the shortest of the incident edges) or edge flip (flipping the opposite edge on the degenerate face if the triangulation quality improves).</p>
 
    **Parameters:**
+
+   ``method : str = 'Edge Collapse' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Edge Collapse'``
+         1. ``'Edge Flip'``
+
+      .. raw:: html
+
+         <i>Method</i>: Selects wether to remove t-vertices by edge collapse or edge flip.
 
    ``threshold : float = 40``
 
@@ -4973,7 +5122,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>New Label</i>: New Label for the mesh
+         <i>New Label</i>: New Label for the mesh.
 
 .. data:: rename_current_raster
 
@@ -4989,23 +5138,28 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>New Label</i>: New Label for the raster
+         <i>New Label</i>: New Label for the raster.
 
-.. data:: repair_non_manifold_edges_by_removing_faces
+.. data:: repair_non_manifold_edges
 
-   *MeshLab filter name*: 'Repair non Manifold Edges by removing faces'
-
-   .. raw:: html
-
-      For each non Manifold edge it iteratively deletes the smallest area face until it becomes 2-Manifold.</p>
-
-.. data:: repair_non_manifold_edges_by_splitting_vertices
-
-   *MeshLab filter name*: 'Repair non Manifold Edges by splitting vertices'
+   *MeshLab filter name*: 'Repair non Manifold Edges'
 
    .. raw:: html
 
-      Remove all non manifold edges splitting vertices. Each non manifold edges chain will become a border</p>
+      Remove non-manifold edges by removing faces (for each non Manifold edge it iteratively deletes the smallest area face until it becomes 2-Manifold) or by splitting vertices (each non manifold edges chain will become a border).</p>
+
+   **Parameters:**
+
+   ``method : str = 'Remove Faces' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'Remove Faces'``
+         1. ``'Split Vertices'``
+
+      .. raw:: html
+
+         <i>Method</i>: Selects wether to remove non manifold edges by removing faces or by splitting vertices.
 
 .. data:: repair_non_manifold_vertices_by_splitting
 
@@ -5021,7 +5175,7 @@ apply_filter parameters
 
       .. raw:: html
 
-         <i>Vertex Displacement Ratio</i>: This parameter denote the ratio ⍺ of displacement of a vertex. When a vertex <i>v</i> is split, it is moved towards the barycenter <i>b</i> of the FF connected faces sharing it of a (<i>v</i>-<i>b</i>)*⍺. When ⍺ is zero vertex is not displaced. When ⍺ is 0.5 the new vertex is half away toward the barycenter of the face. Reasonable values are in the [0 .. 0.1] range. 
+         <i>Vertex Displacement Ratio</i>: This parameter denote the ratio ⍺ of displacement of a vertex. When a vertex <i>v</i> is split, it is moved towards the barycenter <i>b</i> of the FF connected faces sharing it of a (<i>v</i>-<i>b</i>)*⍺. When ⍺ is zero vertex is not displaced. When ⍺ is 0.5 the new vertex is half away toward the barycenter of the face. Reasonable values are in the [0 .. 0.1] range.
 
 .. data:: saturate_vertex_quality
 
@@ -5167,6 +5321,46 @@ apply_filter parameters
 
       Expand the current face selection so that it includes all the faces in the connected components where there is at least a selected face.</p>
 
+.. data:: select_convex_hull_visible_points
+
+   *MeshLab filter name*: 'Select Convex Hull Visible Points'
+
+   .. raw:: html
+
+      Select the <b>visible points</b> in the convex hull of a point cloud, as viewed from a given viewpoint.<br>It uses the Qhull library (http://www.qhull.org/ <br><br>The algorithm used (Katz, Tal and Basri 2007) determines visibility without reconstructing a surface or estimating normals.A point is considered visible if its transformed point lies on the convex hull of a transformed points cloud from the original mesh points.</p>
+
+   **Parameters:**
+
+   ``radiusthreshold : float (bounded) = 0 [min: 0; max: 7]``
+
+      .. raw:: html
+
+         <i>radius threshold </i>: Bounds the radius of the sphere used to select visible points.It is used to adjust the radius of the sphere (calculated as distance between the center and the farthest point from it) according to the following equation: <br>radius = radius * pow(10,threshold); <br>As the radius increases more points are marked as visible.Use a big threshold for dense point clouds, a small one for sparse clouds.
+
+   ``usecamera : bool = False``
+
+      .. raw:: html
+
+         <i>Use ViewPoint from Mesh Camera</i>: Uses the ViewPoint from the camera associated to the current mesh<br> if there is no camera, an error occurs
+
+   ``viewpoint : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
+
+      .. raw:: html
+
+         <i>ViewPoint</i>: if UseCamera is true, this value is ignored
+
+   ``convex_hullfp : bool = False``
+
+      .. raw:: html
+
+         <i>Show Partial Convex Hull of flipped points</i>: Show Partial Convex Hull of the transformed point cloud
+
+   ``triangvp : bool = False``
+
+      .. raw:: html
+
+         <i>Show a triangulation of the visible points</i>: Show a triangulation of the visible points
+
 .. data:: select_crease_edges
 
    *MeshLab filter name*: 'Select Crease Edges'
@@ -5300,25 +5494,9 @@ apply_filter parameters
 
          <i>Edge Threshold</i>: All the faces with an edge <b>longer</b> than this threshold will be deleted. Useful for removing long skinny faces obtained by bad triangulation of range maps.
 
-.. data:: select_folded_faces
+.. data:: select_non_manifold_edges
 
-   *MeshLab filter name*: 'Select Folded Faces'
-
-   .. raw:: html
-
-      Select the folded faces created by the Quadric Edge Collapse decimation. The face is selected if the angle between the face normal and the normal of the best fitting plane of the neighbor vertices is above the selected threshold.</p>
-
-   **Parameters:**
-
-   ``anglethreshold : float (bounded) = 160 [min: 90; max: 180]``
-
-      .. raw:: html
-
-         <i>Angle Threshold</i>: Angle between the face and the best fitting plane of the neighbours vertices. If it is above the threshold the face is selected.
-
-.. data:: select_non_manifold_edges_
-
-   *MeshLab filter name*: 'Select non Manifold Edges '
+   *MeshLab filter name*: 'Select non Manifold Edges'
 
    .. raw:: html
 
@@ -5440,6 +5618,12 @@ apply_filter parameters
 
          <i>Select only non closed components</i>: 
 
+   ``nbneighbors : int = 16``
+
+      .. raw:: html
+
+         <i>Number of neighbors</i>: Number of neighbors used to estimate the local density. Larger values lead to smoother variations.
+
 .. data:: select_vertex_texture_seams
 
    *MeshLab filter name*: 'Select Vertex Texture Seams'
@@ -5463,46 +5647,6 @@ apply_filter parameters
       .. raw:: html
 
          <i>Strict Selection</i>: If true only the vertices with <b>all</b> the incident face selected are selected. Otherwise any vertex with at least one incident selected face will be selected.
-
-.. data:: select_visible_points
-
-   *MeshLab filter name*: 'Select Visible Points'
-
-   .. raw:: html
-
-      Select the <b>visible points</b> in a point cloud, as viewed from a given viewpoint.<br>It uses the Qhull library (http://www.qhull.org/ <br><br>The algorithm used (Katz, Tal and Basri 2007) determines visibility without reconstructing a surface or estimating normals.A point is considered visible if its transformed point lies on the convex hull of a transformed points cloud from the original mesh points.</p>
-
-   **Parameters:**
-
-   ``radiusthreshold : float (bounded) = 0 [min: 0; max: 7]``
-
-      .. raw:: html
-
-         <i>radius threshold </i>: Bounds the radius of the sphere used to select visible points.It is used to adjust the radius of the sphere (calculated as distance between the center and the farthest point from it) according to the following equation: <br>radius = radius * pow(10,threshold); <br>As the radius increases more points are marked as visible.Use a big threshold for dense point clouds, a small one for sparse clouds.
-
-   ``usecamera : bool = False``
-
-      .. raw:: html
-
-         <i>Use ViewPoint from Mesh Camera</i>: Uses the ViewPoint from the camera associated to the current mesh<br> if there is no camera, an error occurs
-
-   ``viewpoint : numpy.ndarray[numpy.float64[3]] = [0, 0, 0]``
-
-      .. raw:: html
-
-         <i>ViewPoint</i>: if UseCamera is true, this value is ignored
-
-   ``convex_hullfp : bool = False``
-
-      .. raw:: html
-
-         <i>Show Partial Convex Hull of flipped points</i>: Show Partial Convex Hull of the transformed point cloud
-
-   ``triangvp : bool = False``
-
-      .. raw:: html
-
-         <i>Show a triangulation of the visible points</i>: Show a triangulation of the visible points
 
 .. data:: set_mesh_camera
 
@@ -5981,6 +6125,14 @@ apply_filter parameters
 
       Split current Layer into many layers, one for each connected components</p>
 
+   **Parameters:**
+
+   ``delete_source_mesh : bool = False``
+
+      .. raw:: html
+
+         <i>Delete source mesh</i>: Deletes the source mesh after all the connected component meshes are generated.
+
 .. data:: stratified_triangle_sampling
 
    *MeshLab filter name*: 'Stratified Triangle Sampling'
@@ -6195,7 +6347,7 @@ apply_filter parameters
 
    .. raw:: html
 
-      Given a point cloud with normals it reconstructs a surface using the <b>Ball Pivoting Algorithm</b>.Starting with a seed triangle, the BPA algorithm  pivots a ball of the given radius around the already formed edgesuntil it touches another point, forming another triangle. The process continues until all reachable edges have been tried.This surface reconstruction algorithm uses the existing points without creating new ones. Works better with uniformly sampled point clouds. If needed first perform a poisson disk subsampling of the point cloud. <br>Bernardini F., Mittleman J., Rushmeier H., Silva C., Taubin G.<br><b>The ball-pivoting algorithm for surface reconstruction.</b><br>IEEE TVCG 1999</p>
+      Given a point cloud with normals it reconstructs a surface using the <b>Ball Pivoting Algorithm</b>.Starting with a seed triangle, the BPA algorithm  pivots a ball of the given radius around the already formed edges until it touches another point, forming another triangle. The process continues until all reachable edges have been tried. This surface reconstruction algorithm uses the existing points without creating new ones. Works better with uniformly sampled point clouds. If needed first perform a poisson disk subsampling of the point cloud. <br>Bernardini F., Mittleman J., Rushmeier H., Silva C., Taubin G.<br><b>The ball-pivoting algorithm for surface reconstruction.</b><br>IEEE TVCG 1999</p>
 
    **Parameters:**
 
@@ -7884,34 +8036,6 @@ apply_filter parameters
       .. raw:: html
 
          <i>All visible layers</i>: if true, apply to all visible layers
-
-.. data:: vertex_color_noise
-
-   *MeshLab filter name*: 'Vertex Color Noise'
-
-   .. raw:: html
-
-      Randomly add a small amount of a random base color to the mesh</p>
-
-   **Parameters:**
-
-   ``basecolor : Color = [0; 0; 0; 255]``
-
-      .. raw:: html
-
-         <i>BaseColor</i>: The base color that is added to the mesh.
-
-   ``percentage : float (bounded) = 0.5 [min: 0; max: 1]``
-
-      .. raw:: html
-
-         <i>Alpha</i>: The random color is blended with the current one with the specified alpha
-
-   ``frequency : float (bounded) = 20 [min: 1; max: 200]``
-
-      .. raw:: html
-
-         <i>Noisy Frequency</i>: The frequency of the Noise on the mesh. Higher numbers means smaller spots.
 
 .. data:: vertex_color_thresholding
 

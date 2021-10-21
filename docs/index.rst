@@ -28,6 +28,7 @@ Contents
    filter_list
    io_format_list
    tutorials
+   changelog
 
 References
 ==========

@@ -74,14 +74,14 @@ void pymeshlab::MeshSet::setVerbosity(bool verbose)
 CMeshO& pymeshlab::MeshSet::currentMesh()
 {
 	if (mm() == nullptr)
-		throw MLException("MeshSet has no selected Mesh.");
+		throw MLException("MeshSet has no current Mesh.");
 	return mm()->cm;
 }
 
 int pymeshlab::MeshSet::currentMeshId() const
 {
 	if (mm() == nullptr)
-		throw MLException("MeshSet has no selected Mesh.");
+		throw MLException("MeshSet has no current Mesh.");
 	return mm()->id();
 }
 
@@ -96,6 +96,36 @@ CMeshO& pymeshlab::MeshSet::mesh(int id)
 	if (tmp == nullptr)
 		throw MLException("Mesh ID " + QString::number(id) + " not found in MeshSet.");
 	return tmp->cm;
+}
+
+void pymeshlab::MeshSet::setCurrentMeshVisibility(bool visibility)
+{
+	if (mm() == nullptr)
+		throw MLException("MeshSet has no current Mesh.");
+	mm()->setVisible(visibility);
+}
+
+void pymeshlab::MeshSet::setMeshVisibility(int id, bool visibility)
+{
+	MeshModel* tmp = getMesh(id);
+	if (tmp == nullptr)
+		throw MLException("Mesh ID " + QString::number(id) + " not found in MeshSet.");
+	tmp->setVisible(visibility);
+}
+
+bool pymeshlab::MeshSet::isCurrentMeshVisible() const
+{
+	if (mm() == nullptr)
+		throw MLException("MeshSet has no current Mesh.");
+	return mm()->isVisible();
+}
+
+bool pymeshlab::MeshSet::isMeshVisible(int id) const
+{
+	const MeshModel* tmp = getMesh(id);
+	if (tmp == nullptr)
+		throw MLException("Mesh ID " + QString::number(id) + " not found in MeshSet.");
+	return tmp->isVisible();
 }
 
 /**

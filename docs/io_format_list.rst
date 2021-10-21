@@ -1622,6 +1622,36 @@ Here are listed all the raster file formats that can be loaded usingthe function
 
          <i>File Name</i>: The name of the file to load
 
+.. data:: TIF
+   :noindex:
+
+   .. raw:: html
+
+      Load TIF format.</p>
+
+   **Parameters:**
+
+   ``file_name : str = 'file_name.TIF'``
+
+      .. raw:: html
+
+         <i>File Name</i>: The name of the file to load
+
+.. data:: TIFF
+   :noindex:
+
+   .. raw:: html
+
+      Load TIFF format.</p>
+
+   **Parameters:**
+
+   ``file_name : str = 'file_name.TIFF'``
+
+      .. raw:: html
+
+         <i>File Name</i>: The name of the file to load
+
 .. data:: XBM
    :noindex:
 

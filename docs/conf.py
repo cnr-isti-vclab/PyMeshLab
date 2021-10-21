@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.abspath('../pymeshlab'))
 # -- Project information -----------------------------------------------------
 
 project = 'PyMeshLab'
-copyright = '2020, Alessandro Muntoni, Paolo Cignoni'
+copyright = '2021, Alessandro Muntoni, Paolo Cignoni'
 author = 'Alessandro Muntoni, Paolo Cignoni'
 
 
@@ -27,7 +27,7 @@ author = 'Alessandro Muntoni, Paolo Cignoni'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = [ 
+extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
     'sphinx.ext.autosummary',
