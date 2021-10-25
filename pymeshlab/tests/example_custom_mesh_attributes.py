@@ -1,7 +1,7 @@
 import pymeshlab
 
 
-def example_user_defined_mesh_attributes():
+def example_custom_mesh_attributes():
     # lines needed to run this specific example
     print('\n')
     from . import samples_common
