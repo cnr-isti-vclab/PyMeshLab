@@ -84,98 +84,98 @@ const char* PYMESH_COMPACT = "Compacts all the arrays of the mesh.";
 
 // Mesh::vertex_matrix
 const char* PYMESH_VERT_MAT =
-	"Returns the vertex matrix of the mesh as a numpy array. "
-	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
+	"Returns the vertex matrix of the mesh as a numpy array, which is a #V*3 matrix of vertex "
+	"coordinates. Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
+
+// Mesh::vertex_matrix
+const char* PYMESH_EDGE_MAT =
+	"Returns the edge matrix of the mesh as a numpy array, which is a #E*2 matrix of vertex "
+	"indices. Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
 
 // Mesh::face_matrix
 const char* PYMESH_FACE_MAT =
-	"Returns the face matrix of the mesh as a numpy array. "
-	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
+	"Returns the face matrix of the mesh as a numpy array, whic is a #F*3 matrix of vertex "
+	"indices. Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
 
 // Mesh::face_matrix
 const char* PYMESH_POLYGONAL_FACE_LIST =
-	"Returns a list of numpy arrays. Each numpy array contains the vertex indices "
-	"adjacent to the ith polygonal face. "
-	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
+	"Returns a list of numpy arrays. Each numpy array contains the vertex indices composing the "
+	"ith polygonal face. Raises a :py:exc:`MissingCompactnessException` if the mesh is not "
+	"compact.";
 
 // Mesh::vertex_normal_matrix
 const char* PYMESH_VERT_NORM_MAT =
-	"Returns the vertex normal matrix of the mesh as a numpy array. "
-	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
+	"Returns the vertex normal matrix of the mesh as a numpy array, which is a #V*3 matrix of "
+	"vertex normals. Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
 
 // Mesh::face_normal_matrix
 const char* PYMESH_FACE_NORM_MAT =
-	"Returns the face normal matrix of the mesh as a numpy array. "
-	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
+	"Returns the face normal matrix of the mesh as a numpy array, which is a #F*3 matrix of face "
+	"normals. Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
 
 // Mesh::vertex_color_matrix
 const char* PYMESH_VERT_COLOR_MAT =
-	"Returns the vertex color matrix as a numpy array of [NV x 4] floats, "
-	"where each component (RGBA) is in the interval [0, 1]. "
-	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
+	"Returns the vertex color matrix as a numpy array, which is a #V*4 matrix of floats, each "
+	"component (RGBA) is in the interval [0, 1]. Raises a :py:exc:`MissingCompactnessException` if "
+	"the mesh is not compact.";
 
 // Mesh::face_color_matrix
 const char* PYMESH_FACE_COLOR_MAT =
-	"Returns the face color matrix as a numpy array of [NF x 4] floats, "
-	"where each component (RGBA) is in the interval [0, 1]. "
-	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
-	"Raises a :py:exc:`MissingComponentException` if the mesh has no face "
+	"Returns the face color matrix as a numpy array, which is a #V*4 matrix of floats, each "
+	"component (RGBA) is in the interval [0, 1]. Raises a :py:exc:`MissingCompactnessException` if "
+	"the mesh is not compact. Raises a :py:exc:`MissingComponentException` if the mesh has no face "
 	"color component.";
 
 // Mesh::vertex_color_array
 const char* PYMESH_VERT_COLOR_ARRAY =
-	"Returns the vertex color matrix as a numpy array of [NV] unsigned integers, "
-	"where the (ARGB) is packed in a 32bit unsigned int (8 bits per component)."
-	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
+	"Returns the vertex color array as a numpy array, which is a #V array of unsigned integers, "
+	"each value is the ARGB packed in a 32bit unsigned int (8 bits per component).Raises a "
+	":py:exc:`MissingCompactnessException` if the mesh is not compact.";
 
 // Mesh::face_color_array
 const char* PYMESH_FACE_COLOR_ARRAY =
-	"Returns the face color matrix as a numpy array of [NF] unsigned integers, "
-	"where the (ARGB) is packed in a 32bit unsigned int (8 bits per component)."
-	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
-	"Raises a :py:exc:`MissingComponentException` if the mesh has no face "
-	"color component.";
+	"Returns the face color array as a numpy array, which is a #F array of unsigned integers, "
+	"each value is the ARGB packed in a 32bit unsigned int (8 bits per component). Raises a "
+	":py:exc:`MissingCompactnessException` if the mesh is not compact. Raises a "
+	":py:exc:`MissingComponentException` if the mesh has no face color component.";
 
 // Mesh::vertex_quality_matrix
 const char* PYMESH_VERT_QUAL_ARRAY =
-	"Returns the vertex quality array of the mesh as a numpy array. "
-	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
-	"Raises a :py:exc:`MissingComponentException` if the mesh has no vertex "
-	"quality component. ";
+	"Returns the vertex quality array of the mesh as a numpy array, which is a #V array of floats. "
+	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. Raises a "
+	":py:exc:`MissingComponentException` if the mesh has no vertex quality component. ";
 
 // Mesh::face_quality_matrix
 const char* PYMESH_FACE_QUAL_ARRAY =
-	"Returns the face quality array of the mesh as a numpy array. "
-	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
-	"Raises a :py:exc:`MissingComponentException` if the mesh has no face "
-	"quality component. ";
+	"Returns the face quality array of the mesh as a numpy array, which is a #F array of floats. "
+	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. Raises a "
+	":py:exc:`MissingComponentException` if the mesh has no face quality component. ";
 
 // Mesh::vertex_tex_matrix
 const char* PYMESH_VERT_TEX_MAT =
-	"Returns the vertex texcoord matrix of the mesh as a numpy array. "
-	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
-	"Raises a :py:exc:`MissingComponentException` if the mesh has no per-wedge "
-	"tex coordinates component. ";
+	"Returns the vertex texcoord matrix of the mesh as a numpy array, which is a #V*2 matrix of "
+	"uv texture coordinates. Raises a :py:exc:`MissingCompactnessException` if the mesh is not "
+	"compact. Raises a :py:exc:`MissingComponentException` if the mesh has no per-wedge tex "
+	"coordinates component. ";
 
 // Mesh::wedge_tex_matrix
 const char* PYMESH_WEDGE_TEX_MAT =
-	"Returns the per-wedge texcoord matrix of the mesh as a numpy array, "
-	"composed of NF*3 rows (triplets of wedges for each face) and 2 columns. "
-	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. "
-	"Raises a :py:exc:`MissingComponentException` if the mesh has no vertex "
-	"tex coordinates component. ";
+	"Returns the per-wedge texcoord matrix of the mesh as a numpy array, which is a #(F*3)*2 "
+	"matrix of uv texture coordinates (triplets of wedges texcoords for each face). Raises a "
+	":py:exc:`MissingCompactnessException` if the mesh is not compact. Raises a "
+	":py:exc:`MissingComponentException` if the mesh has no vertex tex coordinates component. ";
 
 // Mesh::vertex_selection_array
 const char* PYMESH_VERT_SEL_ARRAY =
-	"Returns the vertex selection array of the mesh as a numpy array of booleans, where each "
-	"element is true if the corresponding vertex is selected, false otherwise. "
-	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. ";
+	"Returns the vertex selection array of the mesh as a numpy array, which is a #V array of "
+	"booleans (true if the corresponding vertex is selected, false otherwise). Raises a "
+	":py:exc:`MissingCompactnessException` if the mesh is not compact. ";
 
 // Mesh::face_selection_array
 const char* PYMESH_FACE_SEL_ARRAY =
-	"Returns the face selection array of the mesh as a numpy array of booleans, where each "
-	"element is true if the corresponding face is selected, false otherwise. "
-	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. ";
+	"Returns the face selection array of the mesh as a numpy array,which is a #F array of booleans "
+	"(true if the corresponding face is selected, false otherwise). Raises a "
+	":py:exc:`MissingCompactnessException` if the mesh is not compact. ";
 
 // Mesh::vertex_curvature_principal_dir1_matrix
 const char* PYMESH_VERT_CURV_PD1 =

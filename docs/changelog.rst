@@ -13,6 +13,7 @@ Changelog
 
       * possibility to add custom point attributes to meshes
       * possibility to get polygonal faces
+      * possibility to get edges
       * possibility to get vertex and face curvature principal directions
       * possibility to add vertex and face colors from matrix
 

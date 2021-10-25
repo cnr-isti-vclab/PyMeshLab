@@ -24,5 +24,24 @@ def example_get_mesh_values():
     m = ms.current_mesh()
 
     # get numpy arrays of vertices and faces of the current mesh
-    vertex_array_matrix = m.vertex_matrix()
-    face_array_matrix = m.face_matrix()
+    v_matrix = m.vertex_matrix()
+    f_matrix = m.face_matrix()
+
+    # clear the MeshSet
+    ms.clear()
+
+    # create a mesh cube into the MeshSet
+    ms.box_cube()
+
+    # compute an edge mesh composed of a planar section of the mesh
+    # default values will use a plane with +X normal and passing into the origin
+    # a new mesh will be added into the MeshSet and will be the current one
+    ms.compute_planar_section()
+
+    # get a reference to the current edge mesh
+    m = ms.current_mesh()
+
+    # get numpy arrays of vertices, edges and faces of the current mesh
+    v_matrix = m.vertex_matrix()
+    e_matrix = m.edge_matrix()
+    f_matrix = m.face_matrix()
