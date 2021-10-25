@@ -1245,7 +1245,7 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
    .. raw:: html
 
-      Save PLY format.</p>
+      Save PLY format.</p></br> Ply exporter also support saving custom attributes. You'll need to add an additional boolean parameter for each one of that you want to save, and use only non-capital letters for parameter names. These parameters have a prefix for each type of custom attribute:</br><ul>   <li><code>__ca_vs__</code>: Custom Attribute Vertex Scalar;</li>   <li><code>__ca_vp__</code>: Custom Attribute Vertex Point;</li>   <li><code>__ca_fs__</code>: Custom Attribute Face Scalar;</li>   <li><code>__ca_fp__</code>: Custom Attribute Face Point;</li></ul>For example, if your mesh has a custom per vertex scalar attribute called <code>MyAttribute</code>, you can save it in a ply file by calling:</br><code>ms.save_current_mesh(file_name='myfile.ply', __ca_vs__myattribute=True)</code></br> You can check the parameters available on a mesh by calling the MeshSet method <code>MeshSet.filter_parameter_values</code>, with first parameter <code>'ply'</code>.</p>
 
    **Parameters:**
 

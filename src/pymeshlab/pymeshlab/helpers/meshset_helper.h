@@ -28,6 +28,7 @@
 #include <string>
 
 class RichParameterList;
+class RichParameter;
 class MeshDocument;
 class MeshModel;
 class RasterModel;
@@ -38,6 +39,7 @@ class QGLWidget;
 namespace pybind11 {
 class kwargs;
 class dict;
+class handle;
 } // namespace pybind11
 
 namespace pymeshlab {
@@ -55,10 +57,14 @@ void updateRichParameterList(
 	const RichParameterList& base,
 	RichParameterList&       toUpdate);
 
+//void updateRichParameterFromKwarg(
+//	RichParameter& p,
+//	const std::pair<pybind11::handle, pybind11::handle>& k);
+
 void updateRichParameterListFromKwargs(
 	const Function&         f,
 	const pybind11::kwargs& kwargs,
-	MeshDocument*           md,
+	const MeshDocument*     md,
 	RichParameterList&      rps,
 	bool                    ignoreFileName = false);
 
@@ -83,6 +89,9 @@ void loadMeshUsingPlugin(
 	const FunctionSet& filterFunctionSet);
 
 void loadRasterUsingPlugin(const std::string& filename, MeshDocument& md);
+
+int currentMeshIOCapabilityMask(const MeshModel* mm);
+int computeSaveSettingsMaskFromKwargs(pybind11::kwargs kwargs, int startingMask, int capabilityMask);
 
 void saveMeshUsingPlugin(
 	const std::string& filename,

@@ -20,6 +20,7 @@ Changelog
    * removed libopengl.so dependency on linux
    * get min and max from BoundingBox class
    * possibility to manage mesh visibility from MeshSet
+   * possibility to save custom attributed into ply files
    * new filters:
 
       * nxs_build

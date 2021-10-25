@@ -317,6 +317,19 @@ pybind11::dict pymeshlab::MeshSet::filterParameterValues(
 		meshsethelper::updateRichParameterListFromKwargs(f, kwargs, this, rpl);
 		outputValues = meshsethelper::pydictFromRichParameterList(rpl);
 	}
+	else if (functionSet.containsSaveMeshFunction(QString::fromStdString(filtername))) {
+		if (meshNumber() == 0) {
+			throw MLException(QString::fromStdString(filtername) +
+							  " requires at least one mesh loaded in the MeshSet.");
+		}
+		const Function& f = functionSet.saveMeshFunction(QString::fromStdString(filtername));
+		QString extension = QString::fromStdString(filtername);
+		IOPlugin*       plugin = pm.outputMeshPlugin(extension);
+
+		RichParameterList rps = plugin->initSaveParameter(extension, *this->mm());
+		meshsethelper::updateRichParameterListFromKwargs(f, kwargs, this, rps, true);
+		outputValues = meshsethelper::pydictFromRichParameterList(rps);
+	}
 	else {
 		throw MLException(
 					"Failed to get default falues of filter: " + QString::fromStdString(filtername) + "\n" +

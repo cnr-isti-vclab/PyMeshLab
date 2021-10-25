@@ -42,3 +42,12 @@ def example_custom_mesh_attributes():
     vp_attr = m.vertex_custom_point_attribute_matrix('vp_attr')
 
     print(vp_attr)
+
+    # save the cube in ply format, including also the 'v_attr' custom attribute
+    # custom attribute can be saved through boolean parameters named with lowercase names and with the prefix
+    # that depends on the type of custom attribute:
+    # - __ca_vs__: Custom Attribute Vertex Scalar;
+    # - __ca_vp__: Custom Attribute Vertex Point;
+    # - __ca_fs__: Custom Attribute Face Scalar;
+    # - __ca_fp__: Custom Attribute Face Point;
+    ms.save_current_mesh(output_path + 'cube_custom_attr.ply', binary=False, __ca_vs__v_attr=True)

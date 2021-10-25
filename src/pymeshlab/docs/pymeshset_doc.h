@@ -160,7 +160,10 @@ const char* PYMS_FILTER_PARAMETER_VALUES =
 	"given filter if the 'apply_filter' function is called in the current MeshSet. This function "
 	"is useful to check which default values are set with the current status of the MeshSet. It "
 	"takes also a (possibly empty) dictionary of parameters that could be set by the user: in this "
-	"case, the output value of these parameters should be the same as input.";
+	"case, the output value of these parameters should be the same as input. This function works "
+	"also for the 'save mesh' functions, just giving the format of the file as parameter instead "
+	"of the filter name. This is useful for example when saving into a format that supports "
+	"exporting custom parameters, which may have names that can be known only at runtime.";
 
 // MeshSet::print_filter_parameter_list
 const char* PYMS_PRINT_FILTER_PARAMETER_LIST =

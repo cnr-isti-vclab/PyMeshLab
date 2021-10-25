@@ -68,12 +68,11 @@ void updateRichParameterList(
 }
 
 void updateRichParameterFromKwarg(
-	RichParameter&                           par,
-	MeshDocument*                            md,
-	const FunctionParameter&                 ffp,
-	const std::pair<py::handle, py::handle>& k)
+	RichParameter& par,
+	const MeshDocument*                      md,
+	const std::pair<pybind11::handle, pybind11::handle>& k)
 {
-	QString meshlabType = ffp.meshlabTypeString();
+	QString meshlabType = par.stringType();
 	if (meshlabType == MESHLAB_TYPE_BOOL) {
 		par.setValue(BoolValue(py::cast<bool>(k.second)));
 	}
@@ -111,7 +110,7 @@ void updateRichParameterFromKwarg(
 			dyn.setValue(FloatValue(val));
 		else
 			throw MLException(
-				"Parameter " + ffp.pythonName() + ": float value " + QString::number(val) +
+				"Parameter " + par.pythonName() + ": float value " + QString::number(val) +
 				" out of bounds (min: " + QString::number(dyn.min) +
 				"; max: " + QString::number(dyn.max) + ").");
 	}
@@ -119,7 +118,7 @@ void updateRichParameterFromKwarg(
 		py::array_t<float> arr = py::cast<py::array_t<float>>(k.second);
 		if (arr.size() != 3) {
 			throw MLException(
-				"Parameter " + ffp.pythonName() +
+				"Parameter " + par.pythonName() +
 				": invalid array. Expected a numpy float32 array of 3 elements.");
 		}
 		else {
@@ -131,7 +130,7 @@ void updateRichParameterFromKwarg(
 		Eigen::Matrix4d arr = py::cast<Eigen::Matrix4d>(k.second);
 		if (arr.size() != 16) {
 			throw MLException(
-				"Parameter " + ffp.pythonName() +
+				"Parameter " + par.pythonName() +
 				": invalid array. Expected a numpy float32 array of 4x4 elements.");
 		}
 		else {
@@ -231,10 +230,24 @@ pybind11::dict pydictFromRichParameterList(const RichParameterList& rps)
 	return kw;
 }
 
+/**
+ * @brief updateRichParameterListFromKwargs
+ *
+ * Given a pymeshlab::Function (could be a filter or a load/save) and the kwargs passed to the
+ * called function, fills the **already initialized with default values** RichParameterList rps.
+ *
+ *
+ * @param f [in]: pymeshlab::Function called by the user
+ * @param kwargs [in]: arguments passed by the user to the function
+ * @param md [in]: current MeshDocument, needed to get references to Mesh parameters
+ * @param rps[in/out]: already initialized RichParameterList, will be updated with the user values
+ * @param ignoreFileName: if true, the "file_name" parameter will be ignored (needed for load/save
+ *                        functions)
+ */
 void updateRichParameterListFromKwargs(
 	const Function&         f,
 	const pybind11::kwargs& kwargs,
-	MeshDocument*           md,
+	const MeshDocument*     md,
 	RichParameterList&      rps,
 	bool                    ignoreFileName)
 {
@@ -247,15 +260,26 @@ void updateRichParameterListFromKwargs(
 						f.getFilterFunctionParameter(QString::fromStdString(key));
 					RichParameterList::iterator it = rps.findParameter(ffp.meshlabName());
 					if (it != rps.end()) {
-						updateRichParameterFromKwarg(*it, md, ffp, p);
+						updateRichParameterFromKwarg(*it, md, p);
 					}
 					// else: it happens only for save flags parameters,
 					// because these parameters are managed at pymeshlab level
 					// but not at meshlab level (e.g. no param in the RichParameterList)
 				}
 				else {
-					std::cerr << "Warning: parameter " << key << " not found\n";
-					// pybind has no bind for python runtime warnings.
+					// fallback: search the parameter into the rps
+					bool found = false;
+					for (auto& par : rps){
+						if (par.pythonName().toStdString() == key){
+							updateRichParameterFromKwarg(par, md, p);
+							found = true;
+							break;
+						}
+					}
+					if (!found) {
+						std::cerr << "Warning: parameter " << key << " not found\n";
+						// pybind has no bind for python runtime warnings.
+					}
 				}
 			}
 		}
