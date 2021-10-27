@@ -20,31 +20,23 @@
  * for more details.                                                         *
  *                                                                           *
  ****************************************************************************/
-#ifndef PYMESHLAB_PERCENTAGE_H
-#define PYMESHLAB_PERCENTAGE_H
-
-#include <exception>
-#include <string>
+#ifndef PYMESHLAB_PYABSOLUTE_VALUE_DOC_H
+#define PYMESHLAB_PYABSOLUTE_VALUE_DOC_H
 
 namespace pymeshlab {
+namespace doc {
 
-/**
- * @brief The Percentage class
- * Simple class that permits to discriminate between absolute values
- * values (see AbsoluteValue class) and percentage values
- */
-class Percentage
-{
-public:
-	Percentage(float value = 0);
+// Percentage::__init__
+const char* PYABS_INIT =
+	"Constructor of the :py:class:`AbsoluteValue` class. Takes as input a float "
+	"value (default: 0) and initializes the absolute value. ";
 
-	void  setValue(float v);
-	float value() const;
+// Percentage::value
+const char* PYABS_VALUE = "Returns the value of the absolute value.";
 
-private:
-	float val;
-};
-
+// Percentage::set_value
+const char* PYABS_SET_VALUE = "Sets the value of the absolute value.";
+} // namespace doc
 } // namespace pymeshlab
 
-#endif // PYMESHLAB_PERCENTAGE_H
+#endif // PYMESHLAB_PYABSOLUTE_VALUE_DOC_H

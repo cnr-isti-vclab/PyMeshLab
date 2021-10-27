@@ -24,6 +24,10 @@ def example_apply_filter_parameters_percentage():
     # of the diameter of the entire mesh
     ms.remove_isolated_pieces_wrt_diameter(mincomponentdiag=p)
 
+    # There is the possibility to use an AbsoluteValue instead of a Percentage:
+    #   av = pymeshlab.AbsoluteValue(0.5)
+    #   ms.remove_isolated_pieces_wrt_diameter(mincomponentdiag=av)
+
     assert ms.current_mesh().face_number() == 161606
 
     ms.save_current_mesh(output_path + 'face000_clean_by_diameter.ply')

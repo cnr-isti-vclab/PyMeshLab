@@ -1,6 +1,7 @@
 set(PYMESHLAB_MODULE_NAME "pmeshlab")
 
 set(HEADERS
+	bindings/pyabsolute_value.h
 	bindings/pycamera.h
 	bindings/pycolor.h
 	bindings/pyboundingbox.h
@@ -9,6 +10,7 @@ set(HEADERS
 	bindings/pymeshset.h
 	bindings/pymodule_functions.h
 	bindings/pypercentage.h
+	docs/pyabsolute_value_doc.h
 	docs/pyboundingbox_doc.h
 	docs/pycolor_doc.h
 	docs/pyexceptions_doc.h
@@ -16,6 +18,7 @@ set(HEADERS
 	docs/pymeshset_doc.h
 	docs/pymodule_functions_doc.h
 	docs/pypercentage_doc.h
+	pymeshlab/absolute_value.h
 	pymeshlab/bounding_box.h
 	pymeshlab/color.h
 	pymeshlab/exceptions.h
@@ -30,6 +33,7 @@ set(HEADERS
 
 set(SOURCES
 	main.cpp
+	bindings/pyabsolute_value.cpp
 	bindings/pycamera.cpp
 	bindings/pycolor.cpp
 	bindings/pyboundingbox.cpp
@@ -38,6 +42,7 @@ set(SOURCES
 	bindings/pymeshset.cpp
 	bindings/pymodule_functions.cpp
 	bindings/pypercentage.cpp
+	pymeshlab/absolute_value.cpp
 	pymeshlab/bounding_box.cpp
 	pymeshlab/color.cpp
 	pymeshlab/mesh.cpp

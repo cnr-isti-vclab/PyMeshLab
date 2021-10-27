@@ -20,31 +20,18 @@
  * for more details.                                                         *
  *                                                                           *
  ****************************************************************************/
-#ifndef PYMESHLAB_PERCENTAGE_H
-#define PYMESHLAB_PERCENTAGE_H
+#include "absolute_value.h"
 
-#include <exception>
-#include <string>
-
-namespace pymeshlab {
-
-/**
- * @brief The Percentage class
- * Simple class that permits to discriminate between absolute values
- * values (see AbsoluteValue class) and percentage values
- */
-class Percentage
+pymeshlab::AbsoluteValue::AbsoluteValue(float value) : val(value)
 {
-public:
-	Percentage(float value = 0);
+}
 
-	void  setValue(float v);
-	float value() const;
+void pymeshlab::AbsoluteValue::setValue(float v)
+{
+	val = v;
+}
 
-private:
-	float val;
-};
-
-} // namespace pymeshlab
-
-#endif // PYMESHLAB_PERCENTAGE_H
+float pymeshlab::AbsoluteValue::value() const
+{
+	return val;
+}

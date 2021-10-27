@@ -15,7 +15,7 @@ Each filter accepts a list of parameters, that can be semantically classified as
    * `Percentage`: represents a parameter that is relative to some other measure, specified in the documentation of the filter. This parameter can be of two different types:
 
      * :py:class:`pmeshlab.Percentage` (recommended): the parameter will be treated as relative percentage value; see the documentation of the :py:class:`pmeshlab.Percentage` for further info;
-     * ``float`` (not recommended): the parameter will be treated as absolute value;
+     * :py:class:`pmeshlab.AbsoluteValue`: the parameter will be treated as absolute value; see the documentation of the :py:class:`pmeshlab.AbsoluteValue` for further info;
 
    * `Enum`: represents a parameter that can accept just one of a limited set of possible values. These values type can be ``int`` or ``str``; see the documentation of the specific filter for further info;
    * `Color`: represents a color, and the parameter can be of type  :py:class:`pmeshlab.Color`; see the documentation of the  :py:class:`pmeshlab.Color` for further info;
@@ -29,7 +29,7 @@ The :py:meth:`pmeshlab.MeshSet.apply_filter` returns a dictionary that may conta
 
 **Please note**: some filter parameters depend on the mesh(es) used as input of the filter. Default values listed here are computed on a 1x1x1 cube (pymeshlab/tests/sample/cube.obj), but their value will be computed on the input mesh if they are left as default.
 
-apply_filter parameters
+Filter documentation:
 -----------------------
 
 .. data:: alpha_complex_shape
@@ -4899,7 +4899,7 @@ apply_filter parameters
 
    .. raw:: html
 
-      Perform a explicit remeshing of a triangular mesh, by repeatedly applying edge flip, collapse, relax and refine to improve aspect ratio (triangle quality) and topological regularity.</p>
+      Perform a explicit remeshing of a triangular mesh, by repeatedly applying edge flip, collapse, relax and refine operations to regularize size and aspect ration of the triangular meshing. Loosely inspired to:<br>Hugues Hoppe, Tony DeRose, Tom Duchamp, John McDonald, and Werner Stuetzle.<br>Mesh optimization<br>(SIGGRAPH '93). ACM, New York, NY, USA, 19–26. <a href='https://doi.org/10.1145/166117.166119'>DOI</a></p>
 
    **Parameters:**
 
@@ -5795,7 +5795,7 @@ apply_filter parameters
 
    .. raw:: html
 
-      Simplify a mesh using a Quadric based Edge Collapse Strategy; better than clustering but slower</p>
+      Simplify a mesh using a quadric based edge-collapse strategy. A variant of the well known Garland and Heckbert simplification algorithm with different weighting schemes to better cope with aspect ration andd planar/degenerate quadrics areas.<br> See: <br><i>M. Garland and P. Heckbert.</i> <br><b>Surface Simplification Using Quadric Error Metrics</b> (<a href='http://mgarland.org/papers/quadrics.pdf'>pdf</a>)<br>In Proceedings of SIGGRAPH 97.<br/><br/></p>
 
    **Parameters:**
 
@@ -5883,7 +5883,7 @@ apply_filter parameters
 
    .. raw:: html
 
-      Simplify a textured mesh using a Quadric based Edge Collapse Strategy preserving UV parametrization; better than clustering but slower</p>
+      Simplify a textured mesh using a Quadric based Edge Collapse Strategy preserving UV parametrization. Inspired in the QSLIM surface simplification algorithm by Michael Garland, which turned into the industry standar method for mesh simplification.<br> See: <br><i>M. Garland and P. Heckbert.</i> <br><b>Simplifying Surfaces with Color and Texture using Quadric Error Metrics</b> (<a href='http://mgarland.org/papers/quadric2.pdf'>pdf</a>)<br> In Proceedings of IEEE Visualization 98.<br/><br/></p>
 
    **Parameters:**
 

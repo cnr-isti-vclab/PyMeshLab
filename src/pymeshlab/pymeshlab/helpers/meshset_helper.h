@@ -57,10 +57,6 @@ void updateRichParameterList(
 	const RichParameterList& base,
 	RichParameterList&       toUpdate);
 
-//void updateRichParameterFromKwarg(
-//	RichParameter& p,
-//	const std::pair<pybind11::handle, pybind11::handle>& k);
-
 void updateRichParameterListFromKwargs(
 	const Function&         f,
 	const pybind11::kwargs& kwargs,

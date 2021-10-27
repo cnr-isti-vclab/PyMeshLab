@@ -7,6 +7,7 @@ PyMeshLab Classes
 .. toctree::
    :maxdepth: 2
 
+   classes/absolute_value
    classes/boundingbox
    classes/color
    classes/mesh

@@ -169,7 +169,7 @@ std::string pymeshlab::filterListRSTDocumentation()
 			"   * `Percentage`: represents a parameter that is relative to some other measure, specified in the documentation of the filter. This parameter can be of two different types:\n\n"
 
 			"     * :py:class:`pmeshlab.Percentage` (recommended): the parameter will be treated as relative percentage value; see the documentation of the :py:class:`pmeshlab.Percentage` for further info;\n"
-			"     * ``float`` (not recommended): the parameter will be treated as absolute value;\n\n"
+			"     * :py:class:`pmeshlab.AbsoluteValue`: the parameter will be treated as absolute value; see the documentation of the :py:class:`pmeshlab.AbsoluteValue` for further info;\n\n"
 
 			"   * `Enum`: represents a parameter that can accept just one of a limited set of possible values. These values type can be ``int`` or ``str``; see the documentation of the specific filter for further info;\n"
 			"   * `Color`: represents a color, and the parameter can be of type  :py:class:`pmeshlab.Color`; see the documentation of the  :py:class:`pmeshlab.Color` for further info;\n"
@@ -186,7 +186,7 @@ std::string pymeshlab::filterListRSTDocumentation()
 			"input of the filter. Default values listed here are computed on a 1x1x1 cube "
 			"(pymeshlab/tests/sample/cube.obj), but their value will be computed on the input mesh "
 			"if they are left as default.\n\n"
-			"apply_filter parameters\n-----------------------\n\n";
+			"Filter documentation:\n-----------------------\n\n";
 
 	/// apply_filter parameters
 	for (const Function& f : functionSet.filterFunctionIterator()) {

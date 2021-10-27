@@ -41,6 +41,7 @@
 #include "../exceptions.h"
 #include "../meshset.h"
 #include "../percentage.h"
+#include "../absolute_value.h"
 #include "common.h"
 #include "verbosity_manager.h"
 
@@ -88,16 +89,23 @@ void updateRichParameterFromKwarg(
 	else if (meshlabType == MESHLAB_TYPE_ABSPERC) {
 		RichAbsPerc& abs = dynamic_cast<RichAbsPerc&>(par);
 		float        absvalue;
-		try {
+		try { // first try for percentage
 			Percentage p = py::cast<Percentage>(k.second);
 			absvalue     = (abs.max - abs.min);
 			absvalue *= p.value() / 100;
 			absvalue += abs.min;
 		}
 		catch (const py::cast_error& err) {
-			absvalue = py::cast<float>(k.second);
+			try { // then try with Absolute Value
+				AbsoluteValue v;
+				v = py::cast<AbsoluteValue>(k.second);
+				absvalue = v.value();
+			}  catch (const py::cast_error& err) { // if not AbsoluteValue then throw
+				throw MLException(
+					"Parameter " + par.pythonName() + ": must be a pymeshlab.Percentage object or a"
+					"pymeshlab.AbsoluteValue object. Other type values are not accepted.");
+			}
 		}
-
 		abs.setValue(FloatValue(absvalue));
 	}
 	else if (meshlabType == MESHLAB_TYPE_COLOR) {

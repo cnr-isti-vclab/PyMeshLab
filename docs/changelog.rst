@@ -17,6 +17,7 @@ Changelog
       * possibility to get vertex and face curvature principal directions
       * possibility to add vertex and face colors from matrix
 
+   * Percentage parameters do not accept anymore float arguments anymore, but only objects of type `Percentage` or `AbsoluteValue`
    * removed libopengl.so dependency on linux
    * get min and max from BoundingBox class
    * possibility to manage mesh visibility from MeshSet
