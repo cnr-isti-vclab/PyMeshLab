@@ -1,1 +1,2 @@
 numpy
+docutils<0.18
