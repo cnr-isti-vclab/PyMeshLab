@@ -8,6 +8,7 @@ Changelog
 
 2021.10
 -------
+
    * based on MeshLab 2021.10
    * new methods to Mesh class:
 
