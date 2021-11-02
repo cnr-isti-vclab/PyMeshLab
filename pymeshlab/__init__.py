@@ -10,6 +10,7 @@ if platform == 'win32':
     os.environ['PATH'] = this_path + os.pathsep + os.environ['PATH']
 
 from .pmeshlab import *
+from .replacer import replace_pymeshlab_filter_names
 
 # load all the default plugins in the current PyMeshLab session
 try:
