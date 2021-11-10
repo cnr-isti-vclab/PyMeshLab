@@ -15,6 +15,6 @@ def example_apply_filter_parameters_check_default_values():
     # returns a dictionary which binds, for each parameter (a string with its name) the
     # default value that would be used if the given filter would be applied at the current
     # status of the MeshSet (e.g. current selected mesh)
-    default_params = ms.filter_parameter_values('per_vertex_quality_histogram')
+    default_params = ms.filter_parameter_values('get_scalar_histogram_per_vertex')
 
     print(default_params['histmax'])

@@ -18,14 +18,14 @@ def example_custom_mesh_attributes():
 
     # create a new per vertex custom scalar attribute called v_attr
     # each value is the sum of the x, y and z coords of the vertex
-    ms.define_new_per_vertex_custom_scalar_attribute(name="v_attr", expr="x+y+z")
+    ms.compute_new_custom_scalar_attribute_per_vertex(name="v_attr", expr="x+y+z")
 
     # save the values of the custom attribute v_attr in a numpy array
     v_attr = m.vertex_custom_scalar_attribute_array('v_attr')
 
     # create a new per face custom scalar attribute called f_attr
     # each value is the sum of the vertex indices that form the face
-    ms.define_new_per_face_custom_scalar_attribute(name="f_attr", expr="vi0+vi1+vi2")
+    ms.compute_new_custom_scalar_attribute_per_face(name="f_attr", expr="vi0+vi1+vi2")
 
     # save the values of the custom attribute f_attr in a numpy array
     f_attr = m.face_custom_scalar_attribute_array('f_attr')
@@ -36,7 +36,7 @@ def example_custom_mesh_attributes():
     # create a new per vertex custom point (3 scalars) attribute called vp_attr
     # values are the x, y and z coords of the vertex (useful to save coordinates
     # before some geometry processing)
-    ms.define_new_per_vertex_custom_point_attribute(name="vp_attr", x_expr="x", y_expr="y", z_expr="z")
+    ms.compute_new_custom_point_attribute_per_vertex(name="vp_attr", x_expr="x", y_expr="y", z_expr="z")
 
     # save the values of the custom attribute vp_attr in a numpy array
     vp_attr = m.vertex_custom_point_attribute_matrix('vp_attr')

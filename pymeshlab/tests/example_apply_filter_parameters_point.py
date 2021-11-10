@@ -20,7 +20,7 @@ def example_apply_filter_parameters_point():
     point = numpy.array([0.1784, 0.6335, -0.7529])
 
     # apply a filter, passing the point as parameter
-    ms.colorize_by_geodesic_distance_from_a_given_point(startpoint=point)
+    ms.compute_scalar_by_geodesic_distance_from_given_point_per_vertex(startpoint=point)
 
     # save the result of the filter
     ms.save_current_mesh(output_path + 'colored_airplane.ply')

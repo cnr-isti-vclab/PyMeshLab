@@ -7,8 +7,8 @@ def test_laplacian_smoothing():
     output_path = samples_common.test_output_path()
     ms = ml.MeshSet()
 
-    ms.noisy_isosurface()
+    ms.create_noisy_isosurface()
 
-    ms.laplacian_smooth()
+    ms.apply_coord_laplacian_smoothing()
 
     ms.save_current_mesh(output_path + 'smoothed_noisy_isosurface.ply')

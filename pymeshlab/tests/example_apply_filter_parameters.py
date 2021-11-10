@@ -11,10 +11,10 @@ def example_apply_filter_parameters():
     # create a new MeshSet
     ms = pymeshlab.MeshSet()
 
-    # apply the filter 'noisy_isosurface', with a resolution parameter of 128
+    # apply the filter 'create_noisy_isosurface', with a resolution parameter of 128
     # the parameter for this filter is an integer. Check the type of each parameter
     # in the Filter List page.
-    ms.noisy_isosurface(resolution=128)
+    ms.create_noisy_isosurface(resolution=128)
 
     # save the new current mesh created by the filter
-    ms.save_current_mesh(output_path + 'noisy_isosurface' + str(128) + '.ply')
+    ms.save_current_mesh(output_path + 'create_noisy_isosurface' + str(128) + '.ply')

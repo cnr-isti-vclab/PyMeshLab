@@ -186,7 +186,7 @@ std::string pymeshlab::filterListRSTDocumentation()
 			"input of the filter. Default values listed here are computed on a 1x1x1 cube "
 			"(pymeshlab/tests/sample/cube.obj), but their value will be computed on the input mesh "
 			"if they are left as default.\n\n"
-			"Filter documentation:\n-----------------------\n\n";
+			"Filter documentation\n----------------------\n\n";
 
 	/// apply_filter parameters
 	for (const Function& f : functionSet.filterFunctionIterator()) {

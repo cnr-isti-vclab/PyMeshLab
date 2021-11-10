@@ -14,6 +14,6 @@ def test_ambient_occlusion():
 
     ms.load_new_mesh(base_path + "bunny.obj")
 
-    ms.ambient_occlusion()
+    ms.compute_scalar_ambient_occlusion()
 
     ms.save_current_mesh(output_path + 'bunny_ao.ply')

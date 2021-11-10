@@ -14,11 +14,11 @@ def example_get_mesh_values():
     ms.load_new_mesh(base_path + 'chameleon.pts')
 
     # applying some filters...
-    ms.point_cloud_simplification()
-    ms.surface_reconstruction_ball_pivoting()
-    ms.parametrization_trivial_per_triangle(textdim=1024)
+    ms.generate_simplified_point_cloud()
+    ms.generate_surface_reconstruction_ball_pivoting()
+    ms.compute_texcoord_parametrization_triangle_trivial_per_wedge(textdim=1024)
     ms.save_current_mesh(output_path + 'chameleon_simplified.obj')
-    ms.transfer_vertex_color_to_texture(textname='chameleon_simplified.png')
+    ms.compute_texmap_from_color(textname='chameleon_simplified.png')
 
     # get a reference to the current mesh
     m = ms.current_mesh()
@@ -31,12 +31,12 @@ def example_get_mesh_values():
     ms.clear()
 
     # create a mesh cube into the MeshSet
-    ms.box_cube()
+    ms.create_cube()
 
     # compute an edge mesh composed of a planar section of the mesh
     # default values will use a plane with +X normal and passing into the origin
     # a new mesh will be added into the MeshSet and will be the current one
-    ms.compute_planar_section()
+    ms.generate_polyline_from_planar_section()
 
     # get a reference to the current edge mesh
     m = ms.current_mesh()

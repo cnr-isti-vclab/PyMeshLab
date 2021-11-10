@@ -15,12 +15,12 @@ def test_delete_small_components():
     assert ms.current_mesh().face_number() == 166259
 
     # select small disconnected component with a given face ratio
-    ms.select_small_disconnected_component(nbfaceratio=0.01)
+    ms.compute_selection_by_small_disconnected_components_per_face(nbfaceratio=0.01)
 
     assert ms.current_mesh().selected_face_number() == 485
 
     # delete selected faces
-    ms.delete_selected_faces()
+    ms.meshing_remove_selected_faces()
 
     assert ms.current_mesh().selected_face_number() == 0
 
@@ -29,7 +29,7 @@ def test_delete_small_components():
     assert ms.current_mesh().vertex_number() == 85849
 
     # remove unreferenced vertices
-    ms.remove_unreferenced_vertices()
+    ms.meshing_remove_unreferenced_vertices()
 
     assert ms.current_mesh().vertex_number() == 84777
 

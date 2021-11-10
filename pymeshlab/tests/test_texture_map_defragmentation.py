@@ -14,6 +14,6 @@ def test_texture_map_defragmentation():
 
     ms.load_new_mesh(base_path + "bunny10k_textured.obj")
 
-    ms.texture_map_defragmentation()
+    ms.apply_texmap_defragmentation()
 
     ms.save_current_mesh(output_path + "bunny_text_defrag.obj")

@@ -17,10 +17,10 @@ def example_filter_script_create_and_save():
     # applying some filter to the mesh...
     # every apply_filter saves in the filter script stored in the MeshSet
     # the applied filter with their parameters
-    ms.remeshing_isotropic_explicit_remeshing()
-    ms.remeshing_isotropic_explicit_remeshing()
-    ms.per_face_quality_according_to_triangle_shape_and_aspect_ratio()
-    ms.colorize_by_face_quality()
+    ms.meshing_isotropic_explicit_remeshing()
+    ms.meshing_isotropic_explicit_remeshing()
+    ms.compute_scalar_by_aspect_ratio_per_face()
+    ms.compute_color_from_scalar_per_face()
 
     # save the mesh
     ms.save_current_mesh(output_path + 'col_rem_cube.ply')

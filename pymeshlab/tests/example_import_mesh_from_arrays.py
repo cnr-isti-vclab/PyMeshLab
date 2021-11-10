@@ -91,8 +91,8 @@ def example_import_mesh_from_arrays():
     ms.add_mesh(m1, "cube_quality_mesh")
 
     # colorize the cube according to the per face and per vertex quality
-    ms.colorize_by_vertex_quality()
-    ms.colorize_by_face_quality()
+    ms.compute_color_from_scalar_per_vertex()
+    ms.compute_color_from_scalar_per_face()
 
     # save the mesh
     ms.save_current_mesh(output_path + "quality_colored_cube_from_array.ply")
