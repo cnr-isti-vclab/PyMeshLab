@@ -245,7 +245,7 @@ void pymeshlab::MeshSet::clearFilterScript()
 
 void pymeshlab::MeshSet::applyFilterScript()
 {
-	for (FilterNameParameterValuesPair p : filterScript){
+	for (const FilterNameParameterValuesPair& p : filterScript){
 		QString meshlabFilterName = p.first;
 		std::string filtername = computePythonName(meshlabFilterName).toStdString();
 		QAction* action = nullptr;
@@ -263,6 +263,12 @@ pybind11::dict pymeshlab::MeshSet::applyFilter(const std::string& filtername, py
 	py::dict outputValues;
 	if (functionSet.containsFilterFunction(QString::fromStdString(filtername))) {
 		const Function& f = functionSet.filterFunction(QString::fromStdString(filtername));
+
+		if (f.isDeprecated()){
+			py::module_ warn = py::module_::import("warnings");
+			warn.attr("warn")("Deprecated Filter Warning: " + f.deprecatedString());
+		}
+
 		QString meshlabFilterName = f.meshlabFunctionName();
 		
 		QAction* action = nullptr;
