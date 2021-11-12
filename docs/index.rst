@@ -18,6 +18,7 @@ Filters renaming
 ================
 
 Starting from version 202y.mm PyMeshLab filter names have been renamed in order to be more explanatory on the operation they perform.
+Old filter names have been deprecated and will be removed starting from the next version of PyMeshLab.
 To automatically rename the filters called in your python script, you can run the following lines:
 
 .. code-block:: python
