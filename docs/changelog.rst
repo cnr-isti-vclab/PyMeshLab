@@ -6,6 +6,13 @@
 Changelog
 =========
 
+202y.xx
+-------
+
+   * based on MeshLab 202y.xx
+   * all filters renamed, old filter names are now deprecated
+   * bugfixes
+
 2021.10
 -------
 

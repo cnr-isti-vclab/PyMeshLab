@@ -15,7 +15,7 @@ Here is a simple example of usage of the class:
 
    ms = pymeshlab.MeshSet()
    [...]
-   ms.uniform_mesh_resampling(cellsize=Percentage(2.0), offset=Percentage(2.0))
+   ms.generate_resampled_uniform_mesh(cellsize=Percentage(2.0), offset=Percentage(2.0))
 
 In this case the filter will make an uniform resampling of the input mesh using a grid with a cell size of 2% of the diagonal of the bounding box of the mesh.
 This class is necessary to distinguish between relative Percentage values and

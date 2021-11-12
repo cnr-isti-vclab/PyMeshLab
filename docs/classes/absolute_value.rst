@@ -14,7 +14,7 @@ Here is a simple example of usage of the class:
 
    ms = pymeshlab.MeshSet()
    [...]
-   ms.uniform_mesh_resampling(cellsize=AbsoluteValue(0.01), offset=1)
+   ms.generate_resampled_uniform_mesh(cellsize=AbsoluteValue(0.01), offset=AbsoluteValue(1))
 
 This class is necessary to distinguish between relative Percentage values and
 AbsoluteValue object. Before version 2021.10, instead of this class, the type

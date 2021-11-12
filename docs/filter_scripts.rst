@@ -19,7 +19,7 @@ In PyMeshLab, every :ref:`meshset` object stores internally a filter script: you
    import pymeshlab
    ms = pymeshlab.MeshSet()
    ms.load_new_mesh('input.obj')
-   ms.laplacian_smooth(stepsmoothnum=10)
+   ms.apply_coord_laplacian_smoothing(stepsmoothnum=10)
    #apply some other filters....
 
    #.. and then save the script
