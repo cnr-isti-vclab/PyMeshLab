@@ -285,8 +285,9 @@ void updateRichParameterListFromKwargs(
 						}
 					}
 					if (!found) {
-						std::cerr << "Warning: parameter " << key << " not found\n";
-						// pybind has no bind for python runtime warnings.
+						throw MLException(
+							"Parameter " + QString::fromStdString(key) + " not found for filter " +
+							f.pythonFunctionName() + ". Please check the documentation.");
 					}
 				}
 			}
