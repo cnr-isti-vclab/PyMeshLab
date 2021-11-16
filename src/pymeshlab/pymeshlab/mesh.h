@@ -53,9 +53,15 @@ public:
 		const EigenMatrixX4m&            vertexColor   = EigenMatrixX4m(),
 		const EigenMatrixX4m&            faceColor     = EigenMatrixX4m());
 
-	static bool isCompact(const CMeshO& mesh);
+	static unsigned int vertexNumber(const CMeshO& m);
+	static unsigned int faceNumber(const CMeshO& m);
+	static unsigned int edgeNumber(const CMeshO& m);
 
+	static bool  isCompact(const CMeshO& mesh);
 	static Box3m boundingBox(const CMeshO& mesh);
+
+	static int selectedVertexNumber(const CMeshO& mesh);
+	static int selectedFaceNumber(const CMeshO& mesh);
 
 	static void updateBBox(CMeshO& mesh);
 	static void updateTopology(CMeshO& mesh);
@@ -63,8 +69,63 @@ public:
 	static void compactVertices(CMeshO& mesh);
 	static void compactFaces(CMeshO& mesh);
 
-	static int selectedVertexNumber(const CMeshO& mesh);
-	static int selectedFaceNumber(const CMeshO& mesh);
+	static EigenMatrixX3m            vertexMatrix(const CMeshO& mesh);
+	static Eigen::MatrixX3i          faceMatrix(const CMeshO& mesh);
+	static Eigen::MatrixX2i          edgeMatrix(const CMeshO& mesh);
+	static std::list<EigenVectorXui> polygonalFaceList(const CMeshO& mesh);
+
+	static EigenMatrixX3m vertexNormalMatrix(const CMeshO& mesh);
+	static EigenMatrixX3m faceNormalMatrix(const CMeshO& mesh);
+
+	static EigenMatrixX4m vertexColorMatrix(const CMeshO& mesh);
+	static EigenMatrixX4m faceColorMatrix(const CMeshO& mesh);
+	static EigenVectorXui vertexColorArray(const CMeshO& mesh);
+	static EigenVectorXui faceColorArray(const CMeshO& mesh);
+
+	static EigenVectorXm vertexQualityArray(const CMeshO& mesh);
+	static EigenVectorXm faceQualityArray(const CMeshO& mesh);
+
+	static EigenMatrixX2m vertexTexCoordMatrix(const CMeshO& mesh);
+	static EigenMatrixX2m wedgeTexCoordMatrix(const CMeshO& mesh);
+
+	static EigenVectorXb vertexSelectionArray(const CMeshO& mesh);
+	static EigenVectorXb faceSelectionArray(const CMeshO& mesh);
+
+	static EigenMatrixX3m vertexCurvaturePD1Matrix(const CMeshO& mesh);
+	static EigenMatrixX3m vertexCurvaturePD2Matrix(const CMeshO& mesh);
+	static EigenMatrixX3m faceCurvaturePD1Matrix(const CMeshO& mesh);
+	static EigenMatrixX3m faceCurvaturePD2Matrix(const CMeshO& mesh);
+
+	static Eigen::MatrixX3i faceFaceAdjacencyMatrix(const CMeshO& mesh);
+
+	static EigenVectorXm
+	vertexScalarAttributeArray(const CMeshO& mesh, const std::string& attributeName);
+	static EigenMatrixX3m
+	vertexVectorAttributeMatrix(const CMeshO& mesh, const std::string& attributeName);
+	static EigenVectorXm
+	faceScalarAttributeArray(const CMeshO& mesh, const std::string& attributeName);
+	static EigenMatrixX3m
+	faceVectorAttributeMatrix(const CMeshO& mesh, const std::string& attributeName);
+
+	static void addVertexScalarAttribute(
+		CMeshO&              mesh,
+		const EigenVectorXm& attributeValues,
+		const std::string&   attributeName);
+
+	static void addVertexVectorAttribute(
+		CMeshO&               mesh,
+		const EigenMatrixX3m& attributeValues,
+		const std::string&    attributeName);
+
+	static void addFaceScalarAttribute(
+		CMeshO&              mesh,
+		const EigenVectorXm& attributeValues,
+		const std::string&   attributeName);
+
+	static void addFaceVectorAttribute(
+		CMeshO&               mesh,
+		const EigenMatrixX3m& attributeValues,
+		const std::string&    attributeName);
 
 private:
 	Mesh();

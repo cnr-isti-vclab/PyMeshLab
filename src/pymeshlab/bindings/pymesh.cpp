@@ -66,9 +66,9 @@ void pymeshlab::initMesh(py::module& m)
 		py::arg("v_color_matrix")   = Eigen::MatrixX4d(),
 		py::arg("f_color_matrix")   = Eigen::MatrixX4d());
 
-	meshClass.def("vertex_number", &CMeshO::VN, doc::PYMESH_VN);
-	meshClass.def("face_number", &CMeshO::FN, doc::PYMESH_FN);
-	meshClass.def("edge_number", &CMeshO::EN, doc::PYMESH_EN);
+	meshClass.def("vertex_number", &Mesh::vertexNumber, doc::PYMESH_VN);
+	meshClass.def("face_number", &Mesh::faceNumber, doc::PYMESH_FN);
+	meshClass.def("edge_number", &Mesh::edgeNumber, doc::PYMESH_EN);
 	meshClass.def("is_compact", &Mesh::isCompact, doc::PYMESH_IS_COMPACT);
 	meshClass.def("bounding_box", &Mesh::boundingBox, doc::PYMESH_BB);
 	meshClass.def("selected_vertex_number", &Mesh::selectedVertexNumber, doc::PYMESH_SEL_VN);
@@ -78,84 +78,84 @@ void pymeshlab::initMesh(py::module& m)
 	meshClass.def("update_topology", &Mesh::updateTopology, doc::PYMESH_UPDATE_TOPO);
 	meshClass.def("compact", &Mesh::compact, doc::PYMESH_COMPACT);
 
-	meshClass.def("vertex_matrix", &meshlab::vertexMatrix, doc::PYMESH_VERT_MAT);
-	meshClass.def("edge_matrix", &meshlab::edgeMatrix, doc::PYMESH_EDGE_MAT);
-	meshClass.def("face_matrix", &meshlab::faceMatrix, doc::PYMESH_FACE_MAT);
-	meshClass.def("polygonal_face_list", &meshlab::polygonalFaceList, doc::PYMESH_POLYGONAL_FACE_LIST);
-	meshClass.def("vertex_normal_matrix", &meshlab::vertexNormalMatrix, doc::PYMESH_VERT_NORM_MAT);
-	meshClass.def("face_normal_matrix", &meshlab::faceNormalMatrix, doc::PYMESH_FACE_NORM_MAT);
-	meshClass.def("vertex_color_matrix", &meshlab::vertexColorMatrix, doc::PYMESH_VERT_COLOR_MAT);
-	meshClass.def("vertex_color_array", &meshlab::vertexColorArray, doc::PYMESH_VERT_COLOR_ARRAY);
-	meshClass.def("face_color_matrix", &meshlab::faceColorMatrix, doc::PYMESH_FACE_COLOR_MAT);
-	meshClass.def("face_color_array", &meshlab::faceColorArray, doc::PYMESH_FACE_COLOR_ARRAY);
+	meshClass.def("vertex_matrix", &Mesh::vertexMatrix, doc::PYMESH_VERT_MAT);
+	meshClass.def("edge_matrix", &Mesh::edgeMatrix, doc::PYMESH_EDGE_MAT);
+	meshClass.def("face_matrix", &Mesh::faceMatrix, doc::PYMESH_FACE_MAT);
+	meshClass.def("polygonal_face_list", &Mesh::polygonalFaceList, doc::PYMESH_POLYGONAL_FACE_LIST);
+	meshClass.def("vertex_normal_matrix", &Mesh::vertexNormalMatrix, doc::PYMESH_VERT_NORM_MAT);
+	meshClass.def("face_normal_matrix", &Mesh::faceNormalMatrix, doc::PYMESH_FACE_NORM_MAT);
+	meshClass.def("vertex_color_matrix", &Mesh::vertexColorMatrix, doc::PYMESH_VERT_COLOR_MAT);
+	meshClass.def("vertex_color_array", &Mesh::vertexColorArray, doc::PYMESH_VERT_COLOR_ARRAY);
+	meshClass.def("face_color_matrix", &Mesh::faceColorMatrix, doc::PYMESH_FACE_COLOR_MAT);
+	meshClass.def("face_color_array", &Mesh::faceColorArray, doc::PYMESH_FACE_COLOR_ARRAY);
 	meshClass.def(
-		"vertex_quality_array", &meshlab::vertexQualityArray, doc::PYMESH_VERT_QUAL_ARRAY);
-	meshClass.def("face_quality_array", &meshlab::faceQualityArray, doc::PYMESH_FACE_QUAL_ARRAY);
+		"vertex_quality_array", &Mesh::vertexQualityArray, doc::PYMESH_VERT_QUAL_ARRAY);
+	meshClass.def("face_quality_array", &Mesh::faceQualityArray, doc::PYMESH_FACE_QUAL_ARRAY);
 	meshClass.def(
-		"vertex_tex_coord_matrix", &meshlab::vertexTexCoordMatrix, doc::PYMESH_VERT_TEX_MAT);
+		"vertex_tex_coord_matrix", &Mesh::vertexTexCoordMatrix, doc::PYMESH_VERT_TEX_MAT);
 	meshClass.def(
-		"wedge_tex_coord_matrix", &meshlab::wedgeTexCoordMatrix, doc::PYMESH_WEDGE_TEX_MAT);
+		"wedge_tex_coord_matrix", &Mesh::wedgeTexCoordMatrix, doc::PYMESH_WEDGE_TEX_MAT);
 	meshClass.def(
-		"vertex_selection_array", &meshlab::vertexSelectionArray, doc::PYMESH_VERT_SEL_ARRAY);
-	meshClass.def("face_selection_array", &meshlab::faceSelectionArray, doc::PYMESH_FACE_SEL_ARRAY);
+		"vertex_selection_array", &Mesh::vertexSelectionArray, doc::PYMESH_VERT_SEL_ARRAY);
+	meshClass.def("face_selection_array", &Mesh::faceSelectionArray, doc::PYMESH_FACE_SEL_ARRAY);
 	meshClass.def(
 		"vertex_curvature_principal_dir1_matrix",
-		&meshlab::vertexCurvaturePD1Matrix,
+		&Mesh::vertexCurvaturePD1Matrix,
 		doc::PYMESH_VERT_CURV_PD1);
 	meshClass.def(
 		"vertex_curvature_principal_dir2_matrix",
-		&meshlab::vertexCurvaturePD2Matrix,
+		&Mesh::vertexCurvaturePD2Matrix,
 		doc::PYMESH_VERT_CURV_PD2);
 	meshClass.def(
 		"face_curvature_principal_dir1_matrix",
-		&meshlab::faceCurvaturePD1Matrix,
+		&Mesh::faceCurvaturePD1Matrix,
 		doc::PYMESH_FACE_CURV_PD1);
 	meshClass.def(
 		"face_curvature_principal_dir2_matrix",
-		&meshlab::faceCurvaturePD2Matrix,
+		&Mesh::faceCurvaturePD2Matrix,
 		doc::PYMESH_FACE_CURV_PD2);
 
 	meshClass.def(
-		"face_face_adjacency_matrix", &meshlab::faceFaceAdjacencyMatrix, doc::PYMESH_FFADJ_MAT);
+		"face_face_adjacency_matrix", &Mesh::faceFaceAdjacencyMatrix, doc::PYMESH_FFADJ_MAT);
 
 	meshClass.def(
 		"vertex_custom_scalar_attribute_array",
-		&meshlab::vertexScalarAttributeArray,
+		&Mesh::vertexScalarAttributeArray,
 		doc::PYMESH_VERT_CUSTOM_SCALAR_ATTR_ARRAY);
 	meshClass.def(
 		"vertex_custom_point_attribute_matrix",
-		&meshlab::vertexVectorAttributeMatrix,
+		&Mesh::vertexVectorAttributeMatrix,
 		doc::PYMESH_VERT_CUSTOM_POINT_ATTR_MATRIX);
 	meshClass.def(
 		"face_custom_scalar_attribute_array",
-		&meshlab::faceScalarAttributeArray,
+		&Mesh::faceScalarAttributeArray,
 		doc::PYMESH_FACE_CUSTOM_SCALAR_ATTR_ARRAY);
 	meshClass.def(
 		"face_custom_point_attribute_matrix",
-		&meshlab::faceVectorAttributeMatrix,
+		&Mesh::faceVectorAttributeMatrix,
 		doc::PYMESH_FACE_CUSTOM_POINT_ATTR_MATRIX);
 
 	meshClass.def(
 		"add_vertex_custom_scalar_attribute",
-		&meshlab::addVertexScalarAttribute,
+		&Mesh::addVertexScalarAttribute,
 		doc::PYMESH_ADD_VERT_CUSTOM_SCALAR_ATTR,
 		py::arg("attribute_values"),
 		py::arg("attribute_name"));
 	meshClass.def(
 		"add_face_custom_scalar_attribute",
-		&meshlab::addFaceScalarAttribute,
+		&Mesh::addFaceScalarAttribute,
 		doc::PYMESH_ADD_FACE_CUSTOM_SCALAR_ATTR,
 		py::arg("attribute_values"),
 		py::arg("attribute_name"));
 	meshClass.def(
 		"add_vertex_custom_point_attribute",
-		&meshlab::addVertexVectorAttribute,
+		&Mesh::addVertexVectorAttribute,
 		doc::PYMESH_ADD_VERT_CUSTOM_POINT_ATTR,
 		py::arg("attribute_values"),
 		py::arg("attribute_name"));
 	meshClass.def(
 		"add_face_custom_point_attribute",
-		&meshlab::addFaceVectorAttribute,
+		&Mesh::addFaceVectorAttribute,
 		doc::PYMESH_ADD_FACE_CUSTOM_POINT_ATTR,
 		py::arg("attribute_values"),
 		py::arg("attribute_name"));
