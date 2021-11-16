@@ -43,7 +43,7 @@ void pymeshlab::initMesh(py::module& m)
 
 	// constructor (could be empty)
 	meshClass.def(
-		py::init(&meshlab::meshFromMatrices),
+		py::init(&Mesh::meshFromMatrices),
 		doc::PYMESH_INIT,
 		py::arg("vertex_matrix")    = Eigen::MatrixX3d(),
 		py::arg("face_matrix")      = Eigen::MatrixX3i(),
@@ -55,7 +55,7 @@ void pymeshlab::initMesh(py::module& m)
 		py::arg("f_color_matrix")   = Eigen::MatrixX4d());
 
 	meshClass.def(
-		py::init(&meshlab::polyMeshFromMatrices),
+		py::init(&Mesh::polyMeshFromMatrices),
 		doc::PYMESH_INIT_POLY,
 		py::arg("vertex_matrix"),
 		py::arg("face_list_of_indices"),

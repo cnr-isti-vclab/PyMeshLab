@@ -25,6 +25,48 @@
 #include <common/mlexception.h>
 #include <common/utilities/eigen_mesh_conversions.h>
 
+CMeshO pymeshlab::Mesh::meshFromMatrices(
+	const EigenMatrixX3m&   vertices,
+	const Eigen::MatrixX3i& faces,
+	const EigenMatrixX3m&   vertexNormals,
+	const EigenMatrixX3m&   faceNormals,
+	const EigenVectorXm&    vertexQuality,
+	const EigenVectorXm&    faceQuality,
+	const EigenMatrixX4m&   vertexColor,
+	const EigenMatrixX4m&   faceColor)
+{
+	return meshlab::meshFromMatrices(
+		vertices,
+		faces,
+		vertexNormals,
+		faceNormals,
+		vertexQuality,
+		faceQuality,
+		vertexColor,
+		faceColor);
+}
+
+CMeshO pymeshlab::Mesh::polyMeshFromMatrices(
+	const EigenMatrixX3m&            vertices,
+	const std::list<EigenVectorXui>& faces,
+	const EigenMatrixX3m&            vertexNormals,
+	const EigenMatrixX3m&            faceNormals,
+	const EigenVectorXm&             vertexQuality,
+	const EigenVectorXm&             faceQuality,
+	const EigenMatrixX4m&            vertexColor,
+	const EigenMatrixX4m&            faceColor)
+{
+	return meshlab::polyMeshFromMatrices(
+		vertices,
+		faces,
+		vertexNormals,
+		faceNormals,
+		vertexQuality,
+		faceQuality,
+		vertexColor,
+		faceColor);
+}
+
 bool pymeshlab::Mesh::isCompact(const CMeshO& mesh)
 {
 	return mesh.vert.size() == (unsigned int) mesh.VN() &&

@@ -25,6 +25,7 @@
 
 #include <Eigen/Core>
 #include <common/ml_document/cmesh.h>
+#include <common/utilities/eigen_mesh_conversions.h>
 #include <pybind11/eigen.h>
 
 namespace pymeshlab {
@@ -32,6 +33,26 @@ namespace pymeshlab {
 class Mesh
 {
 public:
+	static CMeshO meshFromMatrices(
+		const EigenMatrixX3m&   vertices,
+		const Eigen::MatrixX3i& faces         = Eigen::MatrixX3i(),
+		const EigenMatrixX3m&   vertexNormals = EigenMatrixX3m(),
+		const EigenMatrixX3m&   faceNormals   = EigenMatrixX3m(),
+		const EigenVectorXm&    vertexQuality = EigenVectorXm(),
+		const EigenVectorXm&    faceQuality   = EigenVectorXm(),
+		const EigenMatrixX4m&   vertexColor   = EigenMatrixX4m(),
+		const EigenMatrixX4m&   faceColor     = EigenMatrixX4m());
+
+	static CMeshO polyMeshFromMatrices(
+		const EigenMatrixX3m&            vertices,
+		const std::list<EigenVectorXui>& faces,
+		const EigenMatrixX3m&            vertexNormals = EigenMatrixX3m(),
+		const EigenMatrixX3m&            faceNormals   = EigenMatrixX3m(),
+		const EigenVectorXm&             vertexQuality = EigenVectorXm(),
+		const EigenVectorXm&             faceQuality   = EigenVectorXm(),
+		const EigenMatrixX4m&            vertexColor   = EigenMatrixX4m(),
+		const EigenMatrixX4m&            faceColor     = EigenMatrixX4m());
+
 	static bool isCompact(const CMeshO& mesh);
 
 	static Box3m boundingBox(const CMeshO& mesh);
