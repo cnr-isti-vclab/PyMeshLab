@@ -114,7 +114,8 @@ const char* PYMS_LOAD_NEW_RASTER =
 const char* PYMS_ADD_MESH =
 	"Adds a **copy** of the given mesh in the current MeshSet, with the given name. By default, "
 	"the added mesh will be set as the current mesh. This behaviour can be changed by setting the "
-	"arg ``set_as_current`` to ``False``.";
+	"arg ``set_as_current`` to ``False``. If the name argument is left empty, the newly added mesh "
+	"will have the same name of the mesh argument.";
 
 // MeshSet::clear
 const char* PYMS_CLEAR = "Clears the meshset, deleting all its content.";

@@ -32,7 +32,7 @@ namespace py = pybind11;
 
 void pymeshlab::initMesh(py::module& m)
 {
-	py::class_<CMeshO> meshClass(m, "Mesh");
+	py::class_<MeshModel> meshClass(m, "Mesh");
 
 	auto compactnessexc =
 		py::register_exception<vcg::MissingCompactnessException>(m, "MissingCompactnessException");
@@ -49,8 +49,8 @@ void pymeshlab::initMesh(py::module& m)
 		py::arg("face_matrix")      = Eigen::MatrixX3i(),
 		py::arg("v_normals_matrix") = Eigen::MatrixX3d(),
 		py::arg("f_normals_matrix") = Eigen::MatrixX3d(),
-		py::arg("v_quality_array")  = Eigen::VectorXd(),
-		py::arg("f_quality_array")  = Eigen::VectorXd(),
+		py::arg("v_scalar_array")   = Eigen::VectorXd(),
+		py::arg("f_scalar_array")   = Eigen::VectorXd(),
 		py::arg("v_color_matrix")   = Eigen::MatrixX4d(),
 		py::arg("f_color_matrix")   = Eigen::MatrixX4d());
 
@@ -61,8 +61,8 @@ void pymeshlab::initMesh(py::module& m)
 		py::arg("face_list_of_indices"),
 		py::arg("v_normals_matrix") = Eigen::MatrixX3d(),
 		py::arg("f_normals_matrix") = Eigen::MatrixX3d(),
-		py::arg("v_quality_array")  = Eigen::VectorXd(),
-		py::arg("f_quality_array")  = Eigen::VectorXd(),
+		py::arg("v_scalar_array")  = Eigen::VectorXd(),
+		py::arg("f_scalar_array")  = Eigen::VectorXd(),
 		py::arg("v_color_matrix")   = Eigen::MatrixX4d(),
 		py::arg("f_color_matrix")   = Eigen::MatrixX4d());
 
@@ -89,8 +89,8 @@ void pymeshlab::initMesh(py::module& m)
 	meshClass.def("face_color_matrix", &Mesh::faceColorMatrix, doc::PYMESH_FACE_COLOR_MAT);
 	meshClass.def("face_color_array", &Mesh::faceColorArray, doc::PYMESH_FACE_COLOR_ARRAY);
 	meshClass.def(
-		"vertex_quality_array", &Mesh::vertexQualityArray, doc::PYMESH_VERT_QUAL_ARRAY);
-	meshClass.def("face_quality_array", &Mesh::faceQualityArray, doc::PYMESH_FACE_QUAL_ARRAY);
+		"vertex_scalar_array", &Mesh::vertexQualityArray, doc::PYMESH_VERT_QUAL_ARRAY);
+	meshClass.def("face_scalar_array", &Mesh::faceQualityArray, doc::PYMESH_FACE_QUAL_ARRAY);
 	meshClass.def(
 		"vertex_tex_coord_matrix", &Mesh::vertexTexCoordMatrix, doc::PYMESH_VERT_TEX_MAT);
 	meshClass.def(

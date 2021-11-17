@@ -55,7 +55,7 @@ def example_import_mesh_from_arrays():
     ms.save_current_mesh(output_path + "saved_cube_from_array.ply")
 
     # create a 1D numpy array of 8 elements to store per vertex quality
-    vert_quality = numpy.array([
+    vert_scalar = numpy.array([
         1,
         2,
         3,
@@ -66,7 +66,7 @@ def example_import_mesh_from_arrays():
         8])
 
     # create a 1D numpy array of 12 elements to store per face quality
-    face_quality = numpy.array([
+    face_scalar = numpy.array([
         1,
         2,
         3,
@@ -84,8 +84,8 @@ def example_import_mesh_from_arrays():
     m1 = pymeshlab.Mesh(
         vertex_matrix=verts,
         face_matrix=faces,
-        v_quality_array=vert_quality,
-        f_quality_array=face_quality)
+        v_scalar_array=vert_scalar,
+        f_scalar_array=face_scalar)
 
     # add the mesh to the MeshSet
     ms.add_mesh(m1, "cube_quality_mesh")

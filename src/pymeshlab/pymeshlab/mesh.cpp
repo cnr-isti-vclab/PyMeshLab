@@ -25,7 +25,7 @@
 #include <common/mlexception.h>
 #include <common/utilities/eigen_mesh_conversions.h>
 
-CMeshO pymeshlab::Mesh::meshFromMatrices(
+MeshModel pymeshlab::Mesh::meshFromMatrices(
 	const EigenMatrixX3m&   vertices,
 	const Eigen::MatrixX3i& faces,
 	const EigenMatrixX3m&   vertexNormals,
@@ -35,7 +35,8 @@ CMeshO pymeshlab::Mesh::meshFromMatrices(
 	const EigenMatrixX4m&   vertexColor,
 	const EigenMatrixX4m&   faceColor)
 {
-	return meshlab::meshFromMatrices(
+	MeshModel m(0,"", "");
+	m.cm = meshlab::meshFromMatrices(
 		vertices,
 		faces,
 		vertexNormals,
@@ -44,9 +45,12 @@ CMeshO pymeshlab::Mesh::meshFromMatrices(
 		faceQuality,
 		vertexColor,
 		faceColor);
+	m.updateBoxAndNormals();
+	m.updateDataMask();
+	return m;
 }
 
-CMeshO pymeshlab::Mesh::polyMeshFromMatrices(
+MeshModel pymeshlab::Mesh::polyMeshFromMatrices(
 	const EigenMatrixX3m&            vertices,
 	const std::list<EigenVectorXui>& faces,
 	const EigenMatrixX3m&            vertexNormals,
@@ -56,7 +60,8 @@ CMeshO pymeshlab::Mesh::polyMeshFromMatrices(
 	const EigenMatrixX4m&            vertexColor,
 	const EigenMatrixX4m&            faceColor)
 {
-	return meshlab::polyMeshFromMatrices(
+	MeshModel m(0,"", "");
+	m.cm = meshlab::polyMeshFromMatrices(
 		vertices,
 		faces,
 		vertexNormals,
@@ -65,244 +70,247 @@ CMeshO pymeshlab::Mesh::polyMeshFromMatrices(
 		faceQuality,
 		vertexColor,
 		faceColor);
+	m.updateBoxAndNormals();
+	m.updateDataMask();
+	return m;
 }
 
-unsigned int pymeshlab::Mesh::vertexNumber(const CMeshO& m)
+unsigned int pymeshlab::Mesh::vertexNumber(const MeshModel& m)
 {
-	return m.VN();
+	return m.cm.VN();
 }
 
-unsigned int pymeshlab::Mesh::faceNumber(const CMeshO& m)
+unsigned int pymeshlab::Mesh::faceNumber(const MeshModel& m)
 {
-	return m.FN();
+	return m.cm.FN();
 }
 
-unsigned int pymeshlab::Mesh::edgeNumber(const CMeshO& m)
+unsigned int pymeshlab::Mesh::edgeNumber(const MeshModel& m)
 {
-	return m.EN();
+	return m.cm.EN();
 }
 
-bool pymeshlab::Mesh::isCompact(const CMeshO& mesh)
+bool pymeshlab::Mesh::isCompact(const MeshModel& mesh)
 {
-	return mesh.vert.size() == (unsigned int) mesh.VN() &&
-		   mesh.face.size() == (unsigned int) mesh.FN() &&
-		   mesh.edge.size() == (unsigned int) mesh.EN();
+	return mesh.cm.vert.size() == (unsigned int) mesh.cm.VN() &&
+		   mesh.cm.face.size() == (unsigned int) mesh.cm.FN() &&
+		   mesh.cm.edge.size() == (unsigned int) mesh.cm.EN();
 }
 
-Box3m pymeshlab::Mesh::boundingBox(const CMeshO& mesh)
+Box3m pymeshlab::Mesh::boundingBox(const MeshModel& mesh)
 {
-	return mesh.bbox;
+	return mesh.cm.bbox;
 }
 
-int pymeshlab::Mesh::selectedVertexNumber(const CMeshO& mesh)
+int pymeshlab::Mesh::selectedVertexNumber(const MeshModel& mesh)
 {
 	int counter = 0;
-	for (unsigned int i = 0; i < mesh.vert.size(); i++) {
-		if (!mesh.vert[i].IsD() && mesh.vert[i].IsS()) {
+	for (unsigned int i = 0; i < mesh.cm.vert.size(); i++) {
+		if (!mesh.cm.vert[i].IsD() && mesh.cm.vert[i].IsS()) {
 			counter++;
 		}
 	}
 	return counter;
 }
 
-int pymeshlab::Mesh::selectedFaceNumber(const CMeshO& mesh)
+int pymeshlab::Mesh::selectedFaceNumber(const MeshModel& mesh)
 {
 	int counter = 0;
-	for (unsigned int i = 0; i < mesh.face.size(); i++) {
-		if (!mesh.face[i].IsD() && mesh.face[i].IsS()) {
+	for (unsigned int i = 0; i < mesh.cm.face.size(); i++) {
+		if (!mesh.cm.face[i].IsD() && mesh.cm.face[i].IsS()) {
 			counter++;
 		}
 	}
 	return counter;
 }
 
-void pymeshlab::Mesh::updateBBox(CMeshO& mesh)
+void pymeshlab::Mesh::updateBBox(MeshModel& mesh)
 {
-	vcg::tri::UpdateBounding<CMeshO>::Box(mesh);
+	vcg::tri::UpdateBounding<CMeshO>::Box(mesh.cm);
 }
 
-void pymeshlab::Mesh::updateTopology(CMeshO& mesh)
+void pymeshlab::Mesh::updateTopology(MeshModel& mesh)
 {
-	vcg::tri::UpdateTopology<CMeshO>::FaceFace(mesh);
-	vcg::tri::UpdateTopology<CMeshO>::EdgeEdge(mesh);
-	vcg::tri::UpdateTopology<CMeshO>::VertexFace(mesh);
-	vcg::tri::UpdateTopology<CMeshO>::VertexEdge(mesh);
+	vcg::tri::UpdateTopology<CMeshO>::FaceFace(mesh.cm);
+	vcg::tri::UpdateTopology<CMeshO>::EdgeEdge(mesh.cm);
+	vcg::tri::UpdateTopology<CMeshO>::VertexFace(mesh.cm);
+	vcg::tri::UpdateTopology<CMeshO>::VertexEdge(mesh.cm);
 }
 
-void pymeshlab::Mesh::compact(CMeshO& mesh)
+void pymeshlab::Mesh::compact(MeshModel& mesh)
 {
-	vcg::tri::Allocator<CMeshO>::CompactEveryVector(mesh);
+	vcg::tri::Allocator<CMeshO>::CompactEveryVector(mesh.cm);
 }
 
-void pymeshlab::Mesh::compactVertices(CMeshO& mesh)
+void pymeshlab::Mesh::compactVertices(MeshModel& mesh)
 {
-	vcg::tri::Allocator<CMeshO>::CompactVertexVector(mesh);
+	vcg::tri::Allocator<CMeshO>::CompactVertexVector(mesh.cm);
 }
 
-void pymeshlab::Mesh::compactFaces(CMeshO& mesh)
+void pymeshlab::Mesh::compactFaces(MeshModel& mesh)
 {
-	vcg::tri::Allocator<CMeshO>::CompactFaceVector(mesh);
+	vcg::tri::Allocator<CMeshO>::CompactFaceVector(mesh.cm);
 }
 
-EigenMatrixX3m pymeshlab::Mesh::vertexMatrix(const CMeshO& mesh)
+EigenMatrixX3m pymeshlab::Mesh::vertexMatrix(const MeshModel& mesh)
 {
-	return meshlab::vertexMatrix(mesh);
+	return meshlab::vertexMatrix(mesh.cm);
 }
 
-Eigen::MatrixX3i pymeshlab::Mesh::faceMatrix(const CMeshO& mesh)
+Eigen::MatrixX3i pymeshlab::Mesh::faceMatrix(const MeshModel& mesh)
 {
-	return meshlab::faceMatrix(mesh);
+	return meshlab::faceMatrix(mesh.cm);
 }
 
-Eigen::MatrixX2i pymeshlab::Mesh::edgeMatrix(const CMeshO& mesh)
+Eigen::MatrixX2i pymeshlab::Mesh::edgeMatrix(const MeshModel& mesh)
 {
-	return meshlab::edgeMatrix(mesh);
+	return meshlab::edgeMatrix(mesh.cm);
 }
 
-std::list<EigenVectorXui> pymeshlab::Mesh::polygonalFaceList(const CMeshO& mesh)
+std::list<EigenVectorXui> pymeshlab::Mesh::polygonalFaceList(const MeshModel& mesh)
 {
-	return meshlab::polygonalFaceList(mesh);
+	return meshlab::polygonalFaceList(mesh.cm);
 }
 
-EigenMatrixX3m pymeshlab::Mesh::vertexNormalMatrix(const CMeshO& mesh)
+EigenMatrixX3m pymeshlab::Mesh::vertexNormalMatrix(const MeshModel& mesh)
 {
-	return meshlab::vertexNormalMatrix(mesh);
+	return meshlab::vertexNormalMatrix(mesh.cm);
 }
 
-EigenMatrixX3m pymeshlab::Mesh::faceNormalMatrix(const CMeshO& mesh)
+EigenMatrixX3m pymeshlab::Mesh::faceNormalMatrix(const MeshModel& mesh)
 {
-	return meshlab::faceNormalMatrix(mesh);
+	return meshlab::faceNormalMatrix(mesh.cm);
 }
 
-EigenMatrixX4m pymeshlab::Mesh::vertexColorMatrix(const CMeshO& mesh)
+EigenMatrixX4m pymeshlab::Mesh::vertexColorMatrix(const MeshModel& mesh)
 {
-	return meshlab::vertexColorMatrix(mesh);
+	return meshlab::vertexColorMatrix(mesh.cm);
 }
 
-EigenMatrixX4m pymeshlab::Mesh::faceColorMatrix(const CMeshO& mesh)
+EigenMatrixX4m pymeshlab::Mesh::faceColorMatrix(const MeshModel& mesh)
 {
-	return meshlab::faceColorMatrix(mesh);
+	return meshlab::faceColorMatrix(mesh.cm);
 }
 
-EigenVectorXui pymeshlab::Mesh::vertexColorArray(const CMeshO& mesh)
+EigenVectorXui pymeshlab::Mesh::vertexColorArray(const MeshModel& mesh)
 {
-	return meshlab::vertexColorArray(mesh);
+	return meshlab::vertexColorArray(mesh.cm);
 }
 
-EigenVectorXui pymeshlab::Mesh::faceColorArray(const CMeshO& mesh)
+EigenVectorXui pymeshlab::Mesh::faceColorArray(const MeshModel& mesh)
 {
-	return meshlab::faceColorArray(mesh);
+	return meshlab::faceColorArray(mesh.cm);
 }
 
-EigenVectorXm pymeshlab::Mesh::vertexQualityArray(const CMeshO& mesh)
+EigenVectorXm pymeshlab::Mesh::vertexQualityArray(const MeshModel& mesh)
 {
-	return meshlab::vertexQualityArray(mesh);
+	return meshlab::vertexQualityArray(mesh.cm);
 }
 
-EigenVectorXm pymeshlab::Mesh::faceQualityArray(const CMeshO& mesh)
+EigenVectorXm pymeshlab::Mesh::faceQualityArray(const MeshModel& mesh)
 {
-	return meshlab::faceQualityArray(mesh);
+	return meshlab::faceQualityArray(mesh.cm);
 }
 
-EigenMatrixX2m pymeshlab::Mesh::vertexTexCoordMatrix(const CMeshO& mesh)
+EigenMatrixX2m pymeshlab::Mesh::vertexTexCoordMatrix(const MeshModel& mesh)
 {
-	return meshlab::vertexTexCoordMatrix(mesh);
+	return meshlab::vertexTexCoordMatrix(mesh.cm);
 }
 
-EigenMatrixX2m pymeshlab::Mesh::wedgeTexCoordMatrix(const CMeshO& mesh)
+EigenMatrixX2m pymeshlab::Mesh::wedgeTexCoordMatrix(const MeshModel& mesh)
 {
-	return meshlab::wedgeTexCoordMatrix(mesh);
+	return meshlab::wedgeTexCoordMatrix(mesh.cm);
 }
 
-EigenVectorXb pymeshlab::Mesh::vertexSelectionArray(const CMeshO& mesh)
+EigenVectorXb pymeshlab::Mesh::vertexSelectionArray(const MeshModel& mesh)
 {
-	return meshlab::vertexSelectionArray(mesh);
+	return meshlab::vertexSelectionArray(mesh.cm);
 }
 
-EigenVectorXb pymeshlab::Mesh::faceSelectionArray(const CMeshO& mesh)
+EigenVectorXb pymeshlab::Mesh::faceSelectionArray(const MeshModel& mesh)
 {
-	return meshlab::faceSelectionArray(mesh);
+	return meshlab::faceSelectionArray(mesh.cm);
 }
 
-EigenMatrixX3m pymeshlab::Mesh::vertexCurvaturePD1Matrix(const CMeshO& mesh)
+EigenMatrixX3m pymeshlab::Mesh::vertexCurvaturePD1Matrix(const MeshModel& mesh)
 {
-	return meshlab::vertexCurvaturePD1Matrix(mesh);
+	return meshlab::vertexCurvaturePD1Matrix(mesh.cm);
 }
 
-EigenMatrixX3m pymeshlab::Mesh::vertexCurvaturePD2Matrix(const CMeshO& mesh)
+EigenMatrixX3m pymeshlab::Mesh::vertexCurvaturePD2Matrix(const MeshModel& mesh)
 {
-	return meshlab::vertexCurvaturePD2Matrix(mesh);
+	return meshlab::vertexCurvaturePD2Matrix(mesh.cm);
 }
 
-EigenMatrixX3m pymeshlab::Mesh::faceCurvaturePD1Matrix(const CMeshO& mesh)
+EigenMatrixX3m pymeshlab::Mesh::faceCurvaturePD1Matrix(const MeshModel& mesh)
 {
-	return meshlab::faceCurvaturePD1Matrix(mesh);
+	return meshlab::faceCurvaturePD1Matrix(mesh.cm);
 }
 
-EigenMatrixX3m pymeshlab::Mesh::faceCurvaturePD2Matrix(const CMeshO& mesh)
+EigenMatrixX3m pymeshlab::Mesh::faceCurvaturePD2Matrix(const MeshModel& mesh)
 {
-	return meshlab::faceCurvaturePD2Matrix(mesh);
+	return meshlab::faceCurvaturePD2Matrix(mesh.cm);
 }
 
-Eigen::MatrixX3i pymeshlab::Mesh::faceFaceAdjacencyMatrix(const CMeshO& mesh)
+Eigen::MatrixX3i pymeshlab::Mesh::faceFaceAdjacencyMatrix(const MeshModel& mesh)
 {
-	return meshlab::faceFaceAdjacencyMatrix(mesh);
-}
-
-EigenVectorXm
-pymeshlab::Mesh::vertexScalarAttributeArray(const CMeshO& mesh, const std::string& attributeName)
-{
-	return meshlab::vertexScalarAttributeArray(mesh, attributeName);
-}
-
-EigenMatrixX3m
-pymeshlab::Mesh::vertexVectorAttributeMatrix(const CMeshO& mesh, const std::string& attributeName)
-{
-	return meshlab::vertexVectorAttributeMatrix(mesh, attributeName);
+	return meshlab::faceFaceAdjacencyMatrix(mesh.cm);
 }
 
 EigenVectorXm
-pymeshlab::Mesh::faceScalarAttributeArray(const CMeshO& mesh, const std::string& attributeName)
+pymeshlab::Mesh::vertexScalarAttributeArray(const MeshModel& mesh, const std::string& attributeName)
 {
-	return meshlab::faceScalarAttributeArray(mesh, attributeName);
+	return meshlab::vertexScalarAttributeArray(mesh.cm, attributeName);
 }
 
 EigenMatrixX3m
-pymeshlab::Mesh::faceVectorAttributeMatrix(const CMeshO& mesh, const std::string& attributeName)
+pymeshlab::Mesh::vertexVectorAttributeMatrix(const MeshModel& mesh, const std::string& attributeName)
 {
-	return meshlab::faceVectorAttributeMatrix(mesh, attributeName);
+	return meshlab::vertexVectorAttributeMatrix(mesh.cm, attributeName);
+}
+
+EigenVectorXm
+pymeshlab::Mesh::faceScalarAttributeArray(const MeshModel& mesh, const std::string& attributeName)
+{
+	return meshlab::faceScalarAttributeArray(mesh.cm, attributeName);
+}
+
+EigenMatrixX3m
+pymeshlab::Mesh::faceVectorAttributeMatrix(const MeshModel& mesh, const std::string& attributeName)
+{
+	return meshlab::faceVectorAttributeMatrix(mesh.cm, attributeName);
 }
 
 void pymeshlab::Mesh::addVertexScalarAttribute(
-	CMeshO&              mesh,
+	MeshModel&              mesh,
 	const EigenVectorXm& attributeValues,
 	const std::string&   attributeName)
 {
-	return meshlab::addVertexScalarAttribute(mesh, attributeValues, attributeName);
+	return meshlab::addVertexScalarAttribute(mesh.cm, attributeValues, attributeName);
 }
 
 void pymeshlab::Mesh::addVertexVectorAttribute(
-	CMeshO&               mesh,
+	MeshModel&               mesh,
 	const EigenMatrixX3m& attributeValues,
 	const std::string&    attributeName)
 {
-	return meshlab::addVertexVectorAttribute(mesh, attributeValues, attributeName);
+	return meshlab::addVertexVectorAttribute(mesh.cm, attributeValues, attributeName);
 }
 
 void pymeshlab::Mesh::addFaceScalarAttribute(
-	CMeshO&              mesh,
+	MeshModel&              mesh,
 	const EigenVectorXm& attributeValues,
 	const std::string&   attributeName)
 {
-	return meshlab::addFaceScalarAttribute(mesh, attributeValues, attributeName);
+	return meshlab::addFaceScalarAttribute(mesh.cm, attributeValues, attributeName);
 }
 
 void pymeshlab::Mesh::addFaceVectorAttribute(
-	CMeshO&               mesh,
+	MeshModel&               mesh,
 	const EigenMatrixX3m& attributeValues,
 	const std::string&    attributeName)
 {
-	return meshlab::addFaceVectorAttribute(mesh, attributeValues, attributeName);
+	return meshlab::addFaceVectorAttribute(mesh.cm, attributeValues, attributeName);
 }
 
 pymeshlab::Mesh::Mesh()

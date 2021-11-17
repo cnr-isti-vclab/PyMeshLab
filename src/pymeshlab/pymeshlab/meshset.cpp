@@ -71,11 +71,11 @@ void pymeshlab::MeshSet::setVerbosity(bool verbose)
 	}
 }
 
-CMeshO& pymeshlab::MeshSet::currentMesh()
+MeshModel& pymeshlab::MeshSet::currentMesh()
 {
 	if (mm() == nullptr)
 		throw MLException("MeshSet has no current Mesh.");
-	return mm()->cm;
+	return *mm();
 }
 
 int pymeshlab::MeshSet::currentMeshId() const
@@ -90,12 +90,12 @@ bool pymeshlab::MeshSet::meshIdExists(int id) const
 	return getMesh(id) != nullptr;
 }
 
-CMeshO& pymeshlab::MeshSet::mesh(int id)
+MeshModel& pymeshlab::MeshSet::mesh(int id)
 {
 	MeshModel* tmp = getMesh(id);
 	if (tmp == nullptr)
 		throw MLException("Mesh ID " + QString::number(id) + " not found in MeshSet.");
-	return tmp->cm;
+	return *tmp;
 }
 
 void pymeshlab::MeshSet::setCurrentMeshVisibility(bool visibility)
@@ -174,14 +174,17 @@ void pymeshlab::MeshSet::saveCurrentMesh(
  * @param name
  * @param setAsCurrent: default value: true
  */
-void pymeshlab::MeshSet::addMesh(const CMeshO& mesh, const std::string& name, bool setAsCurrent)
+void pymeshlab::MeshSet::addMesh(const MeshModel& mesh, std::string name, bool setAsCurrent)
 {
-	auto* m =this->addNewMesh(mesh, QString::fromStdString(name), setAsCurrent);
+	if (name == "")
+		name = mesh.label().toStdString();
+
+	auto* m =this->addNewMesh(mesh.cm, QString::fromStdString(name), setAsCurrent);
 
 	//todo: remove this and better management of polymesh
 	bool found = false;
-	for (unsigned int i = 0; i < mesh.face.size() && !found; ++i){
-		if (mesh.face[i].IsAnyF()) {
+	for (unsigned int i = 0; i < mesh.cm.face.size() && !found; ++i){
+		if (mesh.cm.face[i].IsAnyF()) {
 			found = true;
 			m->enable(vcg::tri::io::Mask::IOM_BITPOLYGONAL);
 		}

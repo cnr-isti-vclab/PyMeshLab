@@ -141,13 +141,13 @@ const char* PYMESH_FACE_COLOR_ARRAY =
 
 // Mesh::vertex_quality_matrix
 const char* PYMESH_VERT_QUAL_ARRAY =
-	"Returns the vertex quality array of the mesh as a numpy array, which is a #V array of floats. "
+	"Returns the vertex scalar array of the mesh as a numpy array, which is a #V array of floats. "
 	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. Raises a "
 	":py:exc:`MissingComponentException` if the mesh has no vertex quality component. ";
 
 // Mesh::face_quality_matrix
 const char* PYMESH_FACE_QUAL_ARRAY =
-	"Returns the face quality array of the mesh as a numpy array, which is a #F array of floats. "
+	"Returns the face scalar array of the mesh as a numpy array, which is a #F array of floats. "
 	"Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. Raises a "
 	":py:exc:`MissingComponentException` if the mesh has no face quality component. ";
 
