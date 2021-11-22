@@ -61,6 +61,9 @@ const char* PYMESH_FN = "Returns the number of faces of the mesh.";
 // Mesh::edge_number
 const char* PYMESH_EN = "Returns the number of edges of the mesh.";
 
+// Mesh::texture_number
+const char* PYMESH_TN = "Returns the number of textures contained in the mesh.";
+
 // Mesh::id
 const char* PYMESH_ID =
 	"Returns the id of the mesh into a MeshSet. If the Mesh is not part of a MeshSet, the returned "
@@ -69,6 +72,14 @@ const char* PYMESH_ID =
 // Mesh::label
 const char* PYMESH_LABEL =
 	"Returns a the label associated to the Mesh.";
+
+// Mesh::texture
+const char* PYMESH_TEXTURE =
+	"Returns the texture of the Mesh at the given index.";
+
+// Mesh::texture
+const char* PYMESH_TEXTURE_FROM_NAME =
+	"Returns the texture of the Mesh with the given name.";
 
 // Mesh::is_compact
 const char* PYMESH_IS_COMPACT = "Returns true if all its arrays are compact.";
@@ -81,6 +92,11 @@ const char* PYMESH_SEL_VN = "Returns the number of selected vertices of the mesh
 
 // Mesh::selected_face_number
 const char* PYMESH_SEL_FN = "Returns the number of selected faces of the mesh.";
+
+// Mesh::textures
+const char* PYMESH_TEXTURES =
+	"Returns a dictionary with the texture names as keys and the texture images of the mesh as "
+	"values.";
 
 // Mesh::set_label
 const char* PYMESH_SET_LABEL = "Sets the label associated to the mesh.";

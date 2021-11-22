@@ -13,6 +13,7 @@ Changelog
    * all filters renamed, old filter names are now deprecated
    * throw exception when a parameter name is not found (was just a print before)
    * Mesh class now allows to access to id and label of the Mesh
+   * possibility to get textures from a Mesh
    * bugfixes
 
 2021.10

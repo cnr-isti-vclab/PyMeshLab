@@ -90,6 +90,11 @@ unsigned int pymeshlab::Mesh::edgeNumber(const MeshModel& m)
 	return m.cm.EN();
 }
 
+unsigned int pymeshlab::Mesh::textureNumber(const MeshModel& m)
+{
+	return m.cm.textures.size();
+}
+
 int pymeshlab::Mesh::id(const MeshModel& m)
 {
 	return m.id();
@@ -98,6 +103,28 @@ int pymeshlab::Mesh::id(const MeshModel& m)
 std::string pymeshlab::Mesh::label(const MeshModel& m)
 {
 	return m.label().toStdString();
+}
+
+QImage pymeshlab::Mesh::texture(const MeshModel& m, unsigned int i)
+{
+	if (i >= textureNumber(m)){
+		throw MLException("Mesh does not have texture with index " + QString::number(i));
+	}
+	return m.getTexture(m.cm.textures[i]);
+}
+
+QImage pymeshlab::Mesh::textureFromName(const MeshModel& m, const std::string& textName)
+{
+	auto it = m.getTextures().find(textName);
+	if (it == m.getTextures().end()) {
+		throw MLException("Mesh does not have texture with name " + QString::fromStdString(textName));
+	}
+	return it->second;
+}
+
+std::map<std::string, QImage> pymeshlab::Mesh::textures(const MeshModel& m)
+{
+	return m.getTextures();
 }
 
 bool pymeshlab::Mesh::isCompact(const MeshModel& mesh)

@@ -6,6 +6,7 @@ set(HEADERS
 	bindings/pycolor.h
 	bindings/pyboundingbox.h
 	bindings/pyexceptions.h
+	bindings/pyimage.h
 	bindings/pymesh.h
 	bindings/pymeshset.h
 	bindings/pymodule_functions.h
@@ -14,6 +15,7 @@ set(HEADERS
 	docs/pyboundingbox_doc.h
 	docs/pycolor_doc.h
 	docs/pyexceptions_doc.h
+	docs/pyimage_doc.h
 	docs/pymesh_doc.h
 	docs/pymeshset_doc.h
 	docs/pymodule_functions_doc.h
@@ -22,6 +24,7 @@ set(HEADERS
 	pymeshlab/bounding_box.h
 	pymeshlab/color.h
 	pymeshlab/exceptions.h
+	pymeshlab/image.h
 	pymeshlab/mesh.h
 	pymeshlab/meshset.h
 	pymeshlab/module_functions.h
@@ -38,6 +41,7 @@ set(SOURCES
 	bindings/pycolor.cpp
 	bindings/pyboundingbox.cpp
 	bindings/pyexceptions.cpp
+	bindings/pyimage.cpp
 	bindings/pymesh.cpp
 	bindings/pymeshset.cpp
 	bindings/pymodule_functions.cpp
@@ -45,6 +49,7 @@ set(SOURCES
 	pymeshlab/absolute_value.cpp
 	pymeshlab/bounding_box.cpp
 	pymeshlab/color.cpp
+	pymeshlab/image.cpp
 	pymeshlab/mesh.cpp
 	pymeshlab/meshset.cpp
 	pymeshlab/module_functions.cpp

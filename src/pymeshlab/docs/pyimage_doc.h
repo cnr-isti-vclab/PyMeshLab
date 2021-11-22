@@ -20,15 +20,28 @@
  * for more details.                                                         *
  *                                                                           *
  ****************************************************************************/
-#ifndef PYMESHLAB_PYCOLOR_H
-#define PYMESHLAB_PYCOLOR_H
-
-#include <pybind11/pybind11.h>
+#ifndef PYMESHLAB_PYIMAGE_DOC_H
+#define PYMESHLAB_PYIMAGE_DOC_H
 
 namespace pymeshlab {
+namespace doc {
 
-void initColor(pybind11::module& m);
+// Image::width
+const char* PYIMAGE_WIDTH =
+	"Get the width of the image.";
 
-} // namespace pymeshlab
+// Image::height
+const char* PYIMAGE_HEIGHT =
+	"Get the height of the image.";
 
-#endif // PYMESHLAB_PYCOLOR_H
+// Image::save
+const char* PYIMAGE_SAVE =
+	"Save the image to the given filename, deducing automatically the format from the file "
+	"name, and with a given quality with default value -1 (default setting of the save process). "
+	"Formats are the same supported by the QImage class. See the "
+	"`QImage<https://doc.qt.io/qt-5/qimage.html#save>`_ documentation for more details.";
+
+}
+}
+
+#endif // PYMESHLAB_PYIMAGE_DOC_H

@@ -23,6 +23,7 @@
 #include "bindings/pyabsolute_value.h"
 #include "bindings/pyboundingbox.h"
 #include "bindings/pycolor.h"
+#include "bindings/pyimage.h"
 #include "bindings/pymesh.h"
 #include "bindings/pymeshset.h"
 #include "bindings/pymodule_functions.h"
@@ -43,6 +44,7 @@ PYBIND11_MODULE(PYMESHLAB_MODULE_NAME, m)
 	pymeshlab::initAbsoluteValue(m); // AbsoluteValue Class
 	pymeshlab::initBoundingBox(m);   // BoundingBox Class
 	pymeshlab::initColor(m);         // Color Class
+	pymeshlab::initImage(m);         // Image Class
 	pymeshlab::initMesh(m);          // Mesh Class
 	pymeshlab::initMeshSet(m);       // MeshDocument Class
 	pymeshlab::initPercentage(m);    // Percentage Class

@@ -20,15 +20,24 @@
  * for more details.                                                         *
  *                                                                           *
  ****************************************************************************/
-#ifndef PYMESHLAB_PYCOLOR_H
-#define PYMESHLAB_PYCOLOR_H
+#ifndef PYMESHLAB_IMAGE_H
+#define PYMESHLAB_IMAGE_H
 
-#include <pybind11/pybind11.h>
+#include <pybind11/eigen.h>
+#include <Eigen/Core>
+#include <QImage>
 
 namespace pymeshlab {
 
-void initColor(pybind11::module& m);
+class Image
+{
+public:
+	static void save(const QImage& img, const std::string& filename, int quality = -1);
 
-} // namespace pymeshlab
+private:
+	Image();
+};
 
-#endif // PYMESHLAB_PYCOLOR_H
+}
+
+#endif // PYMESHLAB_IMAGE_H

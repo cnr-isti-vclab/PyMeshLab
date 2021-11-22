@@ -24,6 +24,7 @@
 #define PYMESHLAB_MESH_H
 
 #include <pybind11/eigen.h> // needs to be included before anything else
+#include <pybind11/stl.h>
 
 #include <Eigen/Core>
 #include <common/ml_document/mesh_model.h>
@@ -57,9 +58,13 @@ public:
 	static unsigned int vertexNumber(const MeshModel& m);
 	static unsigned int faceNumber(const MeshModel& m);
 	static unsigned int edgeNumber(const MeshModel& m);
+	static unsigned int textureNumber(const MeshModel& m);
 
 	static int id(const MeshModel& m);
 	static std::string label(const MeshModel& m);
+	static QImage texture(const MeshModel& m, unsigned int i);
+	static QImage textureFromName(const MeshModel& m, const std::string& textName);
+	static std::map<std::string, QImage> textures(const MeshModel& m);
 
 	static bool  isCompact(const MeshModel& mesh);
 	static Box3m boundingBox(const MeshModel& mesh);

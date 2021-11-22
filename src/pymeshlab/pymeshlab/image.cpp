@@ -20,15 +20,22 @@
  * for more details.                                                         *
  *                                                                           *
  ****************************************************************************/
-#ifndef PYMESHLAB_PYCOLOR_H
-#define PYMESHLAB_PYCOLOR_H
+#include "image.h"
 
-#include <pybind11/pybind11.h>
+#include <common/mlexception.h>
 
 namespace pymeshlab {
 
-void initColor(pybind11::module& m);
+void Image::save(const QImage& img, const std::string& filename, int quality)
+{
+	bool saved = img.save(QString::fromStdString(filename), nullptr, quality);
+	if (!saved){
+		throw MLException("Cannot save " + QString::fromStdString(filename));
+	}
+}
 
-} // namespace pymeshlab
+Image::Image()
+{
+}
 
-#endif // PYMESHLAB_PYCOLOR_H
+}
