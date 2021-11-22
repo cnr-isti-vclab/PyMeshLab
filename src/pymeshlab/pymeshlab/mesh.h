@@ -58,12 +58,16 @@ public:
 	static unsigned int faceNumber(const MeshModel& m);
 	static unsigned int edgeNumber(const MeshModel& m);
 
+	static int id(const MeshModel& m);
+	static std::string label(const MeshModel& m);
+
 	static bool  isCompact(const MeshModel& mesh);
 	static Box3m boundingBox(const MeshModel& mesh);
 
 	static int selectedVertexNumber(const MeshModel& mesh);
 	static int selectedFaceNumber(const MeshModel& mesh);
 
+	static void setLabel(MeshModel& mesh, const std::string& newLabel);
 	static void updateBBox(MeshModel& mesh);
 	static void updateTopology(MeshModel& mesh);
 	static void compact(MeshModel& mesh);

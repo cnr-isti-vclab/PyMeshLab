@@ -69,11 +69,16 @@ void pymeshlab::initMesh(py::module& m)
 	meshClass.def("vertex_number", &Mesh::vertexNumber, doc::PYMESH_VN);
 	meshClass.def("face_number", &Mesh::faceNumber, doc::PYMESH_FN);
 	meshClass.def("edge_number", &Mesh::edgeNumber, doc::PYMESH_EN);
+
+	meshClass.def("id", &Mesh::id, doc::PYMESH_ID);
+	meshClass.def("label", &Mesh::label, doc::PYMESH_LABEL);
+
 	meshClass.def("is_compact", &Mesh::isCompact, doc::PYMESH_IS_COMPACT);
 	meshClass.def("bounding_box", &Mesh::boundingBox, doc::PYMESH_BB);
 	meshClass.def("selected_vertex_number", &Mesh::selectedVertexNumber, doc::PYMESH_SEL_VN);
 	meshClass.def("selected_face_number", &Mesh::selectedFaceNumber, doc::PYMESH_SEL_FN);
 
+	meshClass.def("set_label", &Mesh::setLabel, doc::PYMESH_SET_LABEL);
 	meshClass.def("update_bounding_box", &Mesh::updateBBox, doc::PYMESH_UPDATE_BB);
 	meshClass.def("update_topology", &Mesh::updateTopology, doc::PYMESH_UPDATE_TOPO);
 	meshClass.def("compact", &Mesh::compact, doc::PYMESH_COMPACT);

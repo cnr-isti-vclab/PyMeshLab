@@ -12,6 +12,7 @@ Changelog
    * based on MeshLab 202y.xx
    * all filters renamed, old filter names are now deprecated
    * throw exception when a parameter name is not found (was just a print before)
+   * Mesh class now allows to access to id and label of the Mesh
    * bugfixes
 
 2021.10

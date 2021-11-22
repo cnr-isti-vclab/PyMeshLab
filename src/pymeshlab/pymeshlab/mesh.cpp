@@ -35,7 +35,7 @@ MeshModel pymeshlab::Mesh::meshFromMatrices(
 	const EigenMatrixX4m&   vertexColor,
 	const EigenMatrixX4m&   faceColor)
 {
-	MeshModel m(0,"", "");
+	MeshModel m(-1 ,"", "");
 	m.cm = meshlab::meshFromMatrices(
 		vertices,
 		faces,
@@ -60,7 +60,7 @@ MeshModel pymeshlab::Mesh::polyMeshFromMatrices(
 	const EigenMatrixX4m&            vertexColor,
 	const EigenMatrixX4m&            faceColor)
 {
-	MeshModel m(0,"", "");
+	MeshModel m(-1 ,"", "");
 	m.cm = meshlab::polyMeshFromMatrices(
 		vertices,
 		faces,
@@ -88,6 +88,16 @@ unsigned int pymeshlab::Mesh::faceNumber(const MeshModel& m)
 unsigned int pymeshlab::Mesh::edgeNumber(const MeshModel& m)
 {
 	return m.cm.EN();
+}
+
+int pymeshlab::Mesh::id(const MeshModel& m)
+{
+	return m.id();
+}
+
+std::string pymeshlab::Mesh::label(const MeshModel& m)
+{
+	return m.label().toStdString();
 }
 
 bool pymeshlab::Mesh::isCompact(const MeshModel& mesh)
@@ -122,6 +132,11 @@ int pymeshlab::Mesh::selectedFaceNumber(const MeshModel& mesh)
 		}
 	}
 	return counter;
+}
+
+void pymeshlab::Mesh::setLabel(MeshModel& mesh, const std::string& newLabel)
+{
+	mesh.setLabel(QString::fromStdString(newLabel));
 }
 
 void pymeshlab::Mesh::updateBBox(MeshModel& mesh)
