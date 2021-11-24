@@ -68,6 +68,7 @@ public:
 
 	static bool  isCompact(const MeshModel& mesh);
 	static Box3m boundingBox(const MeshModel& mesh);
+	static Eigen::Matrix4d transformMatrix(const MeshModel& mesh);
 
 	static int selectedVertexNumber(const MeshModel& mesh);
 	static int selectedFaceNumber(const MeshModel& mesh);

@@ -87,6 +87,9 @@ const char* PYMESH_IS_COMPACT = "Returns true if all its arrays are compact.";
 // Mesh::bounding_box
 const char* PYMESH_BB = "Returns the bounding box of the mesh.";
 
+// Mesh::transform_matrix
+const char* PYMESH_TR_MATRIX = "Returns the 4x4 trasform matrix associated to the mesh.";
+
 // Mesh::selected_vertex_number
 const char* PYMESH_SEL_VN = "Returns the number of selected vertices of the mesh.";
 

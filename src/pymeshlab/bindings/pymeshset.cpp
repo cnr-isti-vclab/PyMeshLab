@@ -45,9 +45,10 @@ void pymeshlab::initMeshSet(pybind11::module& m)
 		doc::PYMS_MESH,
 		py::arg("id"),
 		py::return_value_policy::reference);
-	// meshSetClass.def("__iter__", [](const MeshSet &s) { return py::make_iterator(s.meshBegin(),
-	// s.meshEnd()); },
-	// py::keep_alive<0, 1>() /* Essential: keep object alive while iterator exists*/);
+	meshSetClass.def(
+		"__iter__",
+		[](const MeshSet& s) { return py::make_iterator(s.meshBegin(), s.meshEnd()); },
+		py::keep_alive<0, 1>() /* Essential: keep object alive while iterator exists*/);
 
 	meshSetClass.def(
 		"set_verbosity", &MeshSet::setVerbosity, doc::PYMS_SET_VERBOSITY_DOC, py::arg("verbosity"));

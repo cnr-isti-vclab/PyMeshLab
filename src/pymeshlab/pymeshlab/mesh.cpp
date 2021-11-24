@@ -139,6 +139,11 @@ Box3m pymeshlab::Mesh::boundingBox(const MeshModel& mesh)
 	return mesh.cm.bbox;
 }
 
+Eigen::Matrix4d pymeshlab::Mesh::transformMatrix(const MeshModel& mesh)
+{
+	return mesh.cm.Tr.ToEigenMatrix<Eigen::Matrix4d>();
+}
+
 int pymeshlab::Mesh::selectedVertexNumber(const MeshModel& mesh)
 {
 	int counter = 0;

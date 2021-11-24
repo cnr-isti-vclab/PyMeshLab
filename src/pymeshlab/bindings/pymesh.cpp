@@ -79,6 +79,7 @@ void pymeshlab::initMesh(py::module& m)
 
 	meshClass.def("is_compact", &Mesh::isCompact, doc::PYMESH_IS_COMPACT);
 	meshClass.def("bounding_box", &Mesh::boundingBox, doc::PYMESH_BB);
+	meshClass.def("trasform_matrix", &Mesh::transformMatrix, doc::PYMESH_TR_MATRIX);
 	meshClass.def("selected_vertex_number", &Mesh::selectedVertexNumber, doc::PYMESH_SEL_VN);
 	meshClass.def("selected_face_number", &Mesh::selectedFaceNumber, doc::PYMESH_SEL_FN);
 

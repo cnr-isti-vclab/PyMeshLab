@@ -12,7 +12,8 @@ Changelog
    * based on MeshLab 202y.xx
    * all filters renamed, old filter names are now deprecated
    * throw exception when a parameter name is not found (was just a print before)
-   * Mesh class now allows to access to id and label of the Mesh
+   * possibility to iterate over a MeshSet
+   * Mesh class now allows to access to id, label and trasform matrix of the Mesh
    * possibility to get textures from a Mesh
    * bugfixes
 
