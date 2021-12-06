@@ -47,9 +47,23 @@ for filter_name in filter_list():
 
 def show_polyscope(self):
     import polyscope
+    import numpy
+
     polyscope.init()
     for m in self:
-        polyscope.register_surface_mesh(m.label(), m.vertex_matrix(), m.face_matrix())
+        psm = polyscope.register_surface_mesh(m.label(), m.vertex_matrix(), m.face_matrix())
+        if m.has_vertex_color():
+            vc = m.vertex_color_matrix()
+            vc = numpy.delete(vc, 3, 1)
+            psm.add_color_quantity('vertex_color', vc)
+        if m.has_vertex_scalar():
+            psm.add_scalar_quantity('vertex_scalar', m.vertex_scalar_array())
+        if m.has_face_color():
+            fc = m.face_color_matrix()
+            fc = numpy.delete(fc, 3, 1)
+            psm.add_color_quantity('face_color', fc, defined_on='faces')
+        if m.has_face_scalar():
+            psm.add_scalar_quantity('face_scalar', m.face_scalar_array(), defined_on='faces')
     polyscope.show()
 
 setattr(MeshSet, 'show_polyscope', show_polyscope)

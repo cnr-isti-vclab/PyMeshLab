@@ -101,6 +101,30 @@ const char* PYMESH_TEXTURES =
 	"Returns a dictionary with the texture names as keys and the texture images of the mesh as "
 	"values.";
 
+// Mesh::has_vertex_color
+const char* PYMESH_HAS_VERTEX_COLOR =
+	"Returns true if the mesh has the vertex color component, false otherwise.";
+
+// Mesh::has_vertex_scalar
+const char* PYMESH_HAS_VERTEX_SCALAR =
+	"Returns true if the mesh has the vertex scalar component, false otherwise.";
+
+// Mesh::has_vertex_color
+const char* PYMESH_HAS_VERTEX_TEX_COORD =
+	"Returns true if the mesh has the vertex texture coordinate component, false otherwise.";
+
+// Mesh::has_vertex_color
+const char* PYMESH_HAS_FACE_COLOR =
+	"Returns true if the mesh has the face color component, false otherwise.";
+
+// Mesh::has_vertex_scalar
+const char* PYMESH_HAS_FACE_SCALAR =
+	"Returns true if the mesh has the face scalar component, false otherwise.";
+
+// Mesh::has_vertex_color
+const char* PYMESH_HAS_WEDGE_TEX_COORD =
+	"Returns true if the mesh has the wedge texture coordinate component, false otherwise.";
+
 // Mesh::set_label
 const char* PYMESH_SET_LABEL = "Sets the label associated to the mesh.";
 

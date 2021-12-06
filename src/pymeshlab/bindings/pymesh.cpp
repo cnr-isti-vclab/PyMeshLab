@@ -77,6 +77,18 @@ void pymeshlab::initMesh(py::module& m)
 	meshClass.def("texture", &Mesh::textureFromName, doc::PYMESH_TEXTURE_FROM_NAME);
 	meshClass.def("textures", &Mesh::textures, doc::PYMESH_TEXTURES);
 
+	meshClass.def("has_vertex_color", &MeshModel::hasPerVertexColor, doc::PYMESH_HAS_VERTEX_COLOR);
+	meshClass.def(
+		"has_vertex_scalar", &MeshModel::hasPerVertexQuality, doc::PYMESH_HAS_VERTEX_SCALAR);
+	meshClass.def(
+		"has_vertex_tex_coord", &MeshModel::hasPerVertexTexCoord, doc::PYMESH_HAS_VERTEX_TEX_COORD);
+	meshClass.def("has_face_color", &MeshModel::hasPerFaceColor, doc::PYMESH_HAS_FACE_COLOR);
+	meshClass.def("has_face_scalar", &MeshModel::hasPerFaceQuality, doc::PYMESH_HAS_FACE_SCALAR);
+	meshClass.def(
+		"has_wedge_tex_coord",
+		&MeshModel::hasPerFaceWedgeTexCoords,
+		doc::PYMESH_HAS_WEDGE_TEX_COORD);
+
 	meshClass.def("is_compact", &Mesh::isCompact, doc::PYMESH_IS_COMPACT);
 	meshClass.def("bounding_box", &Mesh::boundingBox, doc::PYMESH_BB);
 	meshClass.def("trasform_matrix", &Mesh::transformMatrix, doc::PYMESH_TR_MATRIX);
