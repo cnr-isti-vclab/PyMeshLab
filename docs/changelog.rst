@@ -16,6 +16,7 @@ Changelog
    * Mesh class now allows to access to id, label and trasform matrix of the Mesh
    * possibility to get textures from a Mesh
    * bugfixes
+   * possibility to show a `polyscope <https://polyscope.run/py/>`_ gui of the content of the MeshSet
 
 2021.10
 -------
