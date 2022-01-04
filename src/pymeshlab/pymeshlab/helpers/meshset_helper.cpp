@@ -114,13 +114,9 @@ void updateRichParameterFromKwarg(
 	else if (meshlabType == MESHLAB_TYPE_DYNAMIC_FLOAT) {
 		RichDynamicFloat& dyn = dynamic_cast<RichDynamicFloat&>(par);
 		float             val = py::cast<float>(k.second);
-		if (val >= dyn.min && val <= dyn.max)
-			dyn.setValue(FloatValue(val));
-		else
-			throw MLException(
-				"Parameter " + par.pythonName() + ": float value " + QString::number(val) +
-				" out of bounds (min: " + QString::number(dyn.min) +
-				"; max: " + QString::number(dyn.max) + ").");
+		if (val < dyn.min) val = dyn.min;
+		if (val > dyn.max) val = dyn.max;
+		dyn.setValue(FloatValue(val));
 	}
 	else if (meshlabType == MESHLAB_TYPE_POSITION || meshlabType == MESHLAB_TYPE_DIRECTION) {
 		py::array_t<float> arr = py::cast<py::array_t<float>>(k.second);

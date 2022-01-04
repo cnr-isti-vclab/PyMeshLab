@@ -165,7 +165,7 @@ std::string pymeshlab::filterListRSTDocumentation()
 			"   * `Integer`: a classic ``int`` value;\n"
 			"   * `String`: a classic ``str`` value;\n"
 			"   * `Float`: a classic ``float`` value;\n"
-			"   * `Bounded Float`: a classic ``float`` that is expected to be bounded between a ``min`` and a ``max`` value; an out-of-bounds value will raise an exception;\n"
+			"   * `Bounded Float`: a classic ``float`` that is expected to be bounded between a ``min`` and a ``max`` value; an out-of-bounds value will be clamped in [min-max];\n"
 			"   * `Percentage`: represents a parameter that is relative to some other measure, specified in the documentation of the filter. This parameter can be of two different types:\n\n"
 
 			"     * :py:class:`pmeshlab.Percentage` (recommended): the parameter will be treated as relative percentage value; see the documentation of the :py:class:`pmeshlab.Percentage` for further info;\n"

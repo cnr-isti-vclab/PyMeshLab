@@ -15,6 +15,7 @@ Changelog
    * possibility to iterate over a MeshSet
    * Mesh class now allows to access to id, label and trasform matrix of the Mesh
    * possibility to get textures from a Mesh
+   * bounded floats arguments in filters now are clamped in the [min-max] interval
    * bugfixes
    * possibility to show a `polyscope <https://polyscope.run/py/>`_ gui of the content of the MeshSet
 
