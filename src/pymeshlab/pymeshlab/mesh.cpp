@@ -134,6 +134,11 @@ bool pymeshlab::Mesh::isCompact(const MeshModel& mesh)
 		   mesh.cm.edge.size() == (unsigned int) mesh.cm.EN();
 }
 
+bool pymeshlab::Mesh::isPointCloud(const MeshModel& mesh)
+{
+	return mesh.cm.FN() == 0;
+}
+
 Box3m pymeshlab::Mesh::boundingBox(const MeshModel& mesh)
 {
 	return mesh.cm.bbox;

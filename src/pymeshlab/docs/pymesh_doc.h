@@ -84,6 +84,9 @@ const char* PYMESH_TEXTURE_FROM_NAME =
 // Mesh::is_compact
 const char* PYMESH_IS_COMPACT = "Returns true if all its arrays are compact.";
 
+// Mesh::is_point_cloud
+const char* PYMESH_IS_POINT_CLOUD = "Returns true if the mesh has no faces (it is a point cloud)";
+
 // Mesh::bounding_box
 const char* PYMESH_BB = "Returns the bounding box of the mesh.";
 

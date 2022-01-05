@@ -66,7 +66,8 @@ public:
 	static QImage textureFromName(const MeshModel& m, const std::string& textName);
 	static std::map<std::string, QImage> textures(const MeshModel& m);
 
-	static bool  isCompact(const MeshModel& mesh);
+	static bool isCompact(const MeshModel& mesh);
+	static bool isPointCloud(const MeshModel& mesh);
 	static Box3m boundingBox(const MeshModel& mesh);
 	static Eigen::Matrix4d transformMatrix(const MeshModel& mesh);
 

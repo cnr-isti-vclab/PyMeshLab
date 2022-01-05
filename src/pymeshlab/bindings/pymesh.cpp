@@ -90,6 +90,7 @@ void pymeshlab::initMesh(py::module& m)
 		doc::PYMESH_HAS_WEDGE_TEX_COORD);
 
 	meshClass.def("is_compact", &Mesh::isCompact, doc::PYMESH_IS_COMPACT);
+	meshClass.def("is_point_cloud", &Mesh::isPointCloud, doc::PYMESH_IS_POINT_CLOUD);
 	meshClass.def("bounding_box", &Mesh::boundingBox, doc::PYMESH_BB);
 	meshClass.def("trasform_matrix", &Mesh::transformMatrix, doc::PYMESH_TR_MATRIX);
 	meshClass.def("selected_vertex_number", &Mesh::selectedVertexNumber, doc::PYMESH_SEL_VN);
