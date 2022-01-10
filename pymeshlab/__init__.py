@@ -51,6 +51,8 @@ for filter_name in filter_list():
 
 
 def show_polyscope(self):
+    # Shows a polyscope window (https://polyscope.run/py/) of the current MeshSet, rendering all the meshes contained
+    # in it. Requires the polyscope package (pip install polyscope).
     import polyscope
     import numpy
 

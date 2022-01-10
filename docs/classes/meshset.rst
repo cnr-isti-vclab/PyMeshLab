@@ -20,3 +20,9 @@ The behaviour is always the same of MeshLab.
 .. autoclass:: pmeshlab.MeshSet
    :special-members:
    :members:
+
+
+   .. py:method:: show_polyscope() -> None
+
+      Shows a polyscope window (https://polyscope.run/py/) of the current MeshSet, rendering all the meshes contained
+      in it. Requires the polyscope package (``pip install polyscope``).
