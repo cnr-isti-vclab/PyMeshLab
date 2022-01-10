@@ -10,6 +10,7 @@ if platform == 'win32':
 
 from .pmeshlab import *
 from .replacer import replace_pymeshlab_filter_names
+from .polyscope_functions import show_polyscope
 
 # load all the default plugins in the current PyMeshLab session
 try:
@@ -48,34 +49,5 @@ def bind_function(name):
 # for each filter loaded, create a method in the MeshSet class with that name that calls the apply_filter
 for filter_name in filter_list():
     setattr(MeshSet, filter_name, bind_function(filter_name))
-
-
-def show_polyscope(self):
-    # Shows a polyscope window (https://polyscope.run/py/) of the current MeshSet, rendering all the meshes contained
-    # in it. Requires the polyscope package (pip install polyscope).
-    import polyscope
-    import numpy
-
-    polyscope.init()
-    for m in self:
-        isEnabled = m.is_visible()
-        if m.is_point_cloud():
-            psm = polyscope.register_point_cloud(m.label(), m.vertex_matrix(), enabled=isEnabled)
-        else:
-            psm = polyscope.register_surface_mesh(m.label(), m.vertex_matrix(), m.face_matrix(), enabled=isEnabled)
-        if m.has_vertex_color():
-            vc = m.vertex_color_matrix()
-            vc = numpy.delete(vc, 3, 1)
-            psm.add_color_quantity('vertex_color', vc)
-        if m.has_vertex_scalar():
-            psm.add_scalar_quantity('vertex_scalar', m.vertex_scalar_array())
-        if not m.is_point_cloud() and m.has_face_color():
-            fc = m.face_color_matrix()
-            fc = numpy.delete(fc, 3, 1)
-            psm.add_color_quantity('face_color', fc, defined_on='faces')
-        if not m.is_point_cloud() and m.has_face_scalar():
-            psm.add_scalar_quantity('face_scalar', m.face_scalar_array(), defined_on='faces')
-    polyscope.show()
-
 
 setattr(MeshSet, 'show_polyscope', show_polyscope)
