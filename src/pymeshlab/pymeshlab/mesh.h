@@ -61,6 +61,7 @@ public:
 	static unsigned int textureNumber(const MeshModel& m);
 
 	static int id(const MeshModel& m);
+	static bool isVisible(const MeshModel& m);
 	static std::string label(const MeshModel& m);
 	static QImage texture(const MeshModel& m, unsigned int i);
 	static QImage textureFromName(const MeshModel& m, const std::string& textName);

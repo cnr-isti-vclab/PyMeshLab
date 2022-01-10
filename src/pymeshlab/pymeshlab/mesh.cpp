@@ -100,6 +100,11 @@ int pymeshlab::Mesh::id(const MeshModel& m)
 	return m.id();
 }
 
+bool pymeshlab::Mesh::isVisible(const MeshModel& m)
+{
+	return m.isVisible();
+}
+
 std::string pymeshlab::Mesh::label(const MeshModel& m)
 {
 	return m.label().toStdString();

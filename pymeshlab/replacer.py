@@ -5,10 +5,12 @@ import os
 from os import listdir
 from os.path import isfile, join, isdir
 
+
 def replace_all(text, dic):
     for i, j in dic.items():
         text = text.replace(i, j)
     return text
+
 
 # replaces all the old filter names with the new ones, using the file
 # keys.txt that contains the pairs {oldname, newname}
@@ -18,7 +20,7 @@ def replace_pymeshlab_filter_names(input_script):
     with open(this_dir + '/keys.txt') as f:
         for line in f:
             (key, val) = line.split()
-            # make sure that the keys are methods appied on an object
+            # make sure that the keys are methods applied on an object
             # (starting with '.' and ending with '(') or a parameter of a
             # function (the apply_filter function)
             keys['.' + key + '('] = '.' + val + '('
@@ -29,7 +31,8 @@ def replace_pymeshlab_filter_names(input_script):
     if isfile(input_script):
         file_list.append(input_script)
     elif isdir(input_script):
-        file_list = [join(input_script, f) for f in listdir(input_script) if isfile(join(input_script, f)) and (f.endswith('.py') or f.endswith('.ipynb'))]
+        file_list = [join(input_script, f) for f in listdir(input_script) if isfile(join(input_script, f)) and
+                     (f.endswith('.py') or f.endswith('.ipynb'))]
 
     for f in file_list:
         txt = Path(f).read_text()

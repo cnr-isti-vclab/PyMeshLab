@@ -72,6 +72,7 @@ void pymeshlab::initMesh(py::module& m)
 	meshClass.def("texture_number", &Mesh::textureNumber, doc::PYMESH_TN);
 
 	meshClass.def("id", &Mesh::id, doc::PYMESH_ID);
+	meshClass.def("is_visible", &Mesh::isVisible, doc::PYMESH_IS_VISIBLE);
 	meshClass.def("label", &Mesh::label, doc::PYMESH_LABEL);
 	meshClass.def("texture", &Mesh::texture, doc::PYMESH_TEXTURE);
 	meshClass.def("texture", &Mesh::textureFromName, doc::PYMESH_TEXTURE_FROM_NAME);

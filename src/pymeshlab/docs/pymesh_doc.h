@@ -69,6 +69,10 @@ const char* PYMESH_ID =
 	"Returns the id of the mesh into a MeshSet. If the Mesh is not part of a MeshSet, the returned "
 	"value is -1.";
 
+// Mesh::is_visible
+const char* PYMESH_IS_VISIBLE =
+	"Returns a boolean indicating wether the mesh is marked as visible or not.";
+
 // Mesh::label
 const char* PYMESH_LABEL =
 	"Returns a the label associated to the Mesh.";

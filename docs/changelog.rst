@@ -13,7 +13,7 @@ Changelog
    * all filters renamed, old filter names are now deprecated
    * throw exception when a parameter name is not found (was just a print before)
    * possibility to iterate over a MeshSet
-   * Mesh class now allows to access to id, label and trasform matrix of the Mesh
+   * Mesh class now allows to access to id, visibility, label and trasform matrix of the Mesh
    * possibility to get textures from a Mesh
    * bounded floats arguments in filters now are clamped in the [min-max] interval
    * bugfixes
