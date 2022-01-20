@@ -173,6 +173,7 @@ if (BUILD_MESHLAB)
 		meshlabplugins/filter_mls
 		meshlabplugins/filter_mutualglobal
 		meshlabplugins/filter_mutualinfo
+		meshlabplugins/filter_parametrization
 		meshlabplugins/filter_plymc
 		meshlabplugins/filter_qhull
 		meshlabplugins/filter_quality
