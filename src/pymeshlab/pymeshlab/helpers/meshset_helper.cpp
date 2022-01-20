@@ -38,12 +38,11 @@
 #include <QApplication>
 #include <QDir>
 
+#include "../absolute_value.h"
 #include "../exceptions.h"
 #include "../meshset.h"
 #include "../percentage.h"
-#include "../absolute_value.h"
 #include "common.h"
-#include "verbosity_manager.h"
 
 namespace py = pybind11;
 
@@ -69,8 +68,8 @@ void updateRichParameterList(
 }
 
 void updateRichParameterFromKwarg(
-	RichParameter& par,
-	const MeshDocument*                      md,
+	RichParameter&                                       par,
+	const MeshDocument*                                  md,
 	const std::pair<pybind11::handle, pybind11::handle>& k)
 {
 	QString meshlabType = par.stringType();
@@ -98,11 +97,13 @@ void updateRichParameterFromKwarg(
 		catch (const py::cast_error& err) {
 			try { // then try with Absolute Value
 				AbsoluteValue v;
-				v = py::cast<AbsoluteValue>(k.second);
+				v        = py::cast<AbsoluteValue>(k.second);
 				absvalue = v.value();
-			}  catch (const py::cast_error& err) { // if not AbsoluteValue then throw
+			}
+			catch (const py::cast_error& err) { // if not AbsoluteValue then throw
 				throw MLException(
-					"Parameter " + par.pythonName() + ": must be a pymeshlab.Percentage object or a"
+					"Parameter " + par.pythonName() +
+					": must be a pymeshlab.Percentage object or a"
 					"pymeshlab.AbsoluteValue object. Other type values are not accepted.");
 			}
 		}
@@ -114,8 +115,10 @@ void updateRichParameterFromKwarg(
 	else if (meshlabType == MESHLAB_TYPE_DYNAMIC_FLOAT) {
 		RichDynamicFloat& dyn = dynamic_cast<RichDynamicFloat&>(par);
 		float             val = py::cast<float>(k.second);
-		if (val < dyn.min) val = dyn.min;
-		if (val > dyn.max) val = dyn.max;
+		if (val < dyn.min)
+			val = dyn.min;
+		if (val > dyn.max)
+			val = dyn.max;
 		dyn.setValue(FloatValue(val));
 	}
 	else if (meshlabType == MESHLAB_TYPE_POSITION || meshlabType == MESHLAB_TYPE_DIRECTION) {
@@ -273,8 +276,8 @@ void updateRichParameterListFromKwargs(
 				else {
 					// fallback: search the parameter into the rps
 					bool found = false;
-					for (auto& par : rps){
-						if (par.pythonName().toStdString() == key){
+					for (auto& par : rps) {
+						if (par.pythonName().toStdString() == key) {
 							updateRichParameterFromKwarg(par, md, p);
 							found = true;
 							break;
@@ -566,7 +569,7 @@ class OpenGLContextData
 public:
 	OpenGLContextData(MeshSet& ms, int argc, char** argv) :
 			app(argc, argv),
-			gpumeminfo((std::ptrdiff_t) (350 * (float) (1024 * 1024))),
+			gpumeminfo((std::ptrdiff_t)(350 * (float) (1024 * 1024))),
 			sceneGLSharedDataContext(ms, gpumeminfo, true, 100000, 100000),
 			wid(nullptr, &sceneGLSharedDataContext)
 	{
@@ -639,7 +642,7 @@ pybind11::dict applyFilterRPL(
 	QAction*                 action,
 	FilterPlugin*            fp,
 	const RichParameterList& rpl,
-	bool                     verbose,
+	VerbosityManager&        verbose,
 	FilterScript&            filterScript,
 	bool                     updateFilterScript,
 	MeshSet&                 md)
@@ -648,17 +651,15 @@ pybind11::dict applyFilterRPL(
 	if (!fp->isFilterApplicable(action, *md.mm(), missingPreconditions)) {
 		QString enstr = missingPreconditions.join(",");
 		throw MLException(
-			"Failed to apply filter:  '" + QString::fromStdString(filtername) + ". Current mesh "
-			"does not have " + enstr + ".");
+			"Failed to apply filter:  '" + QString::fromStdString(filtername) +
+			". Current mesh "
+			"does not have " +
+			enstr + ".");
 	}
 
 	py::dict           outputDict;
 	OpenGLContextData* data = nullptr;
-	if (!verbose) {
-		VerbosityManager::disableVersbosity();
-		VerbosityManager::staticLogger = nullptr;
-	}
-	else {
+	if (verbose.isVerbosityEnabled()) {
 		VerbosityManager::staticLogger = &md.Log;
 		std::cout << "\nApplying filter " << filtername << " with the following parameters:\n";
 		py::dict params = meshsethelper::pydictFromRichParameterList(rpl);
@@ -714,7 +715,7 @@ pybind11::dict applyFilterRPL(
 			"Failed to apply filter: " + QString::fromStdString(filtername) + "\n" +
 			"Details: " + e.what());
 	}
-	VerbosityManager::enableVerbosity();
+	VerbosityManager::staticLogger = nullptr;
 	return outputDict;
 }
 

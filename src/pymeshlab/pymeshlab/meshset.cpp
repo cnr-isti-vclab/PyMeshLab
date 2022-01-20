@@ -34,7 +34,6 @@
 #include "exceptions.h"
 #include "helpers/common.h"
 #include "helpers/meshset_helper.h"
-#include "helpers/verbosity_manager.h"
 
 namespace py = pybind11;
 
@@ -43,11 +42,7 @@ pymeshlab::MeshSet::MeshSet(bool verbose) :
 	pm(meshlab::pluginManagerInstance()),
 	functionSet(pymeshlab::functionSetInstance())
 {
-	if (!verbose)
-		VerbosityManager::disableVersbosity();
 	setVerbosity(verbose);
-	if (!verbose)
-		VerbosityManager::enableVerbosity();
 }
 
 pymeshlab::MeshSet::~MeshSet()
@@ -56,14 +51,15 @@ pymeshlab::MeshSet::~MeshSet()
 
 void pymeshlab::MeshSet::setVerbosity(bool verbose)
 {
-	this->verbose = verbose;
 	if (verbose){
+		verbosityManager.enableVerbosity();
 		for (auto p : pm.filterPluginIterator())
 			p->setLog(&Log);
 		for (auto p : pm.ioPluginIterator())
 			p->setLog(&Log);
 	}
 	else {
+		verbosityManager.disableVersbosity();
 		for (auto p : pm.filterPluginIterator())
 			p->setLog(nullptr);
 		for (auto p : pm.ioPluginIterator())
@@ -227,13 +223,7 @@ void pymeshlab::MeshSet::saveProject(const std::string& filename)
 
 void pymeshlab::MeshSet::loadFilterScript(const std::string& filename)
 {
-	pymeshlab::QDebugRedirect* qdbr = nullptr;
-	if (!verbose)
-		qdbr = new pymeshlab::QDebugRedirect(); //redirect qdebug to null
-
 	filterScript.open(QString::fromStdString(filename));
-
-	delete qdbr;
 }
 
 void pymeshlab::MeshSet::saveFilterScript(const std::string& filename) const
@@ -257,7 +247,7 @@ void pymeshlab::MeshSet::applyFilterScript()
 		meshsethelper::updateRichParameterList(filtername, p.second, rpl);
 		meshsethelper::applyFilterRPL(
 				filtername, meshlabFilterName, action, fp, rpl,
-				verbose, filterScript, false, *this);
+				verbosityManager, filterScript, false, *this);
 	}
 }
 
@@ -284,9 +274,9 @@ pybind11::dict pymeshlab::MeshSet::applyFilter(const std::string& filtername, py
 		meshsethelper::updateRichParameterListFromKwargs(f, kwargs, this, rpl);
 		outputValues = meshsethelper::applyFilterRPL(
 				filtername, meshlabFilterName, action, fp, rpl,
-				verbose, filterScript, true, *this);
+				verbosityManager, filterScript, true, *this);
 		
-		if(verbose)
+		if(verbosityManager.isVerbosityEnabled())
 			std::cout << std::endl;
 	}
 	else {

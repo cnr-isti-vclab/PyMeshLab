@@ -29,6 +29,8 @@
 #include <common/plugins/plugin_manager.h>
 #include <common/python/function_set.h>
 
+#include "helpers/verbosity_manager.h"
+
 namespace pymeshlab {
 
 /**
@@ -95,8 +97,7 @@ private:
 	PluginManager& pm;
 	FunctionSet& functionSet;
 	FilterScript filterScript;
-
-	bool verbose;
+	VerbosityManager verbosityManager;
 };
 
 }

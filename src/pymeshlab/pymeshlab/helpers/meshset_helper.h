@@ -27,6 +27,8 @@
 #include <QString>
 #include <string>
 
+#include "verbosity_manager.h"
+
 class RichParameterList;
 class RichParameter;
 class MeshDocument;
@@ -87,7 +89,10 @@ void loadMeshUsingPlugin(
 void loadRasterUsingPlugin(const std::string& filename, MeshDocument& md);
 
 int currentMeshIOCapabilityMask(const MeshModel* mm);
-int computeSaveSettingsMaskFromKwargs(pybind11::kwargs kwargs, int startingMask, int capabilityMask);
+int computeSaveSettingsMaskFromKwargs(
+	pybind11::kwargs kwargs,
+	int              startingMask,
+	int              capabilityMask);
 
 void saveMeshUsingPlugin(
 	const std::string& filename,
@@ -106,7 +111,7 @@ pybind11::dict applyFilterRPL(
 	QAction*                 action,
 	FilterPlugin*            fp,
 	const RichParameterList& rpl,
-	bool                     verbose,
+	VerbosityManager&        verbose,
 	FilterScript&            filterScript,
 	bool                     updateFilterScript,
 	MeshSet&                 md);
