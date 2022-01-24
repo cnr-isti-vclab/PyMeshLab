@@ -18,6 +18,8 @@ Changelog
    * bounded floats arguments in filters now are clamped in the [min-max] interval
    * bugfixes
    * possibility to show a `polyscope <https://polyscope.run/py/>`_ gui of the content of the MeshSet
+   * new plugin filter parametrization for harmonic and lscm parametrization computation
+   * possibility to search for filters using ``pymeshlab.search()`` function
 
 2021.10
 -------

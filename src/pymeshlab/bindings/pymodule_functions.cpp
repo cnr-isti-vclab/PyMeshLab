@@ -36,5 +36,6 @@ void pymeshlab::initModuleFunctions(pybind11::module& m)
 	m.def("print_plugin_filter_list", &pymeshlab::printPluginFilterList, doc::MODULE_PRINT_PLUGIN_FILTER_LIST);
 	m.def("print_filter_list", &pymeshlab::printFilterList, doc::MODULE_PRINT_FILTER_LIST);
 	m.def("print_filter_parameter_list", &pymeshlab::printFilterParameterList, doc::MODULE_PRINT_FILTER_PARAMETER_LIST);
+	m.def("search", &pymeshlab::search, doc::MODULE_SEARCH);
 	m.def("load_plugin", &pymeshlab::loadPlugin, doc::MODULE_LOAD_PLUGIN);
 }
