@@ -43,6 +43,7 @@ void pymeshlab::loadDefaultPlugins()
 	ActionSearcher& as = meshlab::actionSearcherInstance();
 	for (const auto& p : pm.filterPluginIterator()) {
 		for (QAction* a : p->actions()) {
+			a->setToolTip(p->filterInfo(a));
 			as.addAction(a, true);
 		}
 	}
@@ -194,6 +195,7 @@ void pymeshlab::loadPlugin(const std::string& filename)
 		// add the newly added filters to the action searcher
 		ActionSearcher& as = meshlab::actionSearcherInstance();
 		for (QAction* a : fp->actions()) {
+			a->setToolTip(fp->filterInfo(a));
 			as.addAction(a);
 		}
 	}
