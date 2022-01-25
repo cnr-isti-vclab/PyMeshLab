@@ -103,6 +103,8 @@ void pymeshlab::initMesh(py::module& m)
 	meshClass.def("compact", &Mesh::compact, doc::PYMESH_COMPACT);
 
 	meshClass.def("vertex_matrix", &Mesh::vertexMatrix, doc::PYMESH_VERT_MAT);
+	meshClass.def(
+		"transformed_vertex_matrix", &Mesh::transformedVertexMatrix, doc::PYMESH_TR_VERT_MAT);
 	meshClass.def("edge_matrix", &Mesh::edgeMatrix, doc::PYMESH_EDGE_MAT);
 	meshClass.def("face_matrix", &Mesh::faceMatrix, doc::PYMESH_FACE_MAT);
 	meshClass.def("polygonal_face_list", &Mesh::polygonalFaceList, doc::PYMESH_POLYGONAL_FACE_LIST);

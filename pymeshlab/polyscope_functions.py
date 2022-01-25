@@ -8,9 +8,9 @@ def show_polyscope(self):
     for m in self:
         is_enabled = m.is_visible()
         if m.is_point_cloud():
-            psm = polyscope.register_point_cloud(m.label(), m.vertex_matrix(), enabled=is_enabled)
+            psm = polyscope.register_point_cloud(m.label(), m.transformed_vertex_matrix(), enabled=is_enabled)
         else:
-            psm = polyscope.register_surface_mesh(m.label(), m.vertex_matrix(), m.face_matrix(), enabled=is_enabled)
+            psm = polyscope.register_surface_mesh(m.label(), m.transformed_vertex_matrix(), m.face_matrix(), enabled=is_enabled)
         if m.has_vertex_color():
             vc = m.vertex_color_matrix()
             vc = numpy.delete(vc, 3, 1)

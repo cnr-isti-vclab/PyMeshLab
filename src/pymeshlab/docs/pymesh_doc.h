@@ -149,6 +149,12 @@ const char* PYMESH_VERT_MAT =
 	"Returns the vertex matrix of the mesh as a numpy array, which is a #V*3 matrix of vertex "
 	"coordinates. Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
 
+// Mesh::transformed_vertex_matrix
+const char* PYMESH_TR_VERT_MAT =
+	"Returns the vertex matrix of the mesh as a numpy array, which is a #V*3 matrix of vertex "
+	"coordinates. Coordinates are transformed w.r.t. the transformation matrix of the mesh. Raises "
+	"a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
+
 // Mesh::vertex_matrix
 const char* PYMESH_EDGE_MAT =
 	"Returns the edge matrix of the mesh as a numpy array, which is a #E*2 matrix of vertex "

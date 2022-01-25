@@ -214,6 +214,11 @@ EigenMatrixX3m pymeshlab::Mesh::vertexMatrix(const MeshModel& mesh)
 	return meshlab::vertexMatrix(mesh.cm);
 }
 
+EigenMatrixX3m pymeshlab::Mesh::transformedVertexMatrix(const MeshModel &mesh)
+{
+	return meshlab::transformedVertexMatrix(mesh.cm);
+}
+
 Eigen::MatrixX3i pymeshlab::Mesh::faceMatrix(const MeshModel& mesh)
 {
 	return meshlab::faceMatrix(mesh.cm);

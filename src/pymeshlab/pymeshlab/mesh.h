@@ -83,6 +83,7 @@ public:
 	static void compactFaces(MeshModel& mesh);
 
 	static EigenMatrixX3m            vertexMatrix(const MeshModel& mesh);
+	static EigenMatrixX3m            transformedVertexMatrix(const MeshModel& mesh);
 	static Eigen::MatrixX3i          faceMatrix(const MeshModel& mesh);
 	static Eigen::MatrixX2i          edgeMatrix(const MeshModel& mesh);
 	static std::list<EigenVectorXui> polygonalFaceList(const MeshModel& mesh);
