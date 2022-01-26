@@ -3,6 +3,13 @@
 About this Project
 ==================
 
+GitHub Repository
+-----------------
+
+The official repository, containing the all the source code of the library can be found at `this link`_.
+
+.. _this link: https://github.com/cnr-isti-vclab/PyMeshLab
+
 Contacts
 --------
 
