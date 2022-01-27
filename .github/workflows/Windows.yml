@@ -62,8 +62,11 @@ jobs:
     - name: Build Wheel
       shell: bash
       run: |
-       pip install wheel
-       pip wheel . -w wheels/
+        VER=$(date +%Y.%m)
+        GIT_SHA=$(git describe --match=NeVeRmAtCh --always --abbrev=7)
+        echo "${VER}_nightly_${GIT_SHA}" | tr -d '\n'> PYML_VERSION
+        pip install wheel
+        pip wheel . -w wheels/
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v2
       with:
@@ -98,11 +101,6 @@ jobs:
         pip install pytest numpy
         python -c 'import pymeshlab; pymeshlab.use_cpu_opengl()'
         pytest --pyargs pymeshlab -m "not glcontext"
-    - name: Upload PyMeshLab results
-      uses: actions/upload-artifact@v2
-      with:
-        name: PyMeshLabResults_${{ runner.os }}_python${{ matrix.pyversion }}
-        path: pymeshlab/tests/sample_meshes/test_output
 
   windows_test_wheel:
     name: Test Wheel (Windows)
