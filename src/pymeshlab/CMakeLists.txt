@@ -59,10 +59,26 @@ set(SOURCES
 	pymeshlab/helpers/verbosity_manager.cpp
 )
 
-if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../../PYML_VERSION")
-	file(READ "${CMAKE_CURRENT_SOURCE_DIR}/../../PYML_VERSION" PYMESHLAB_VERSION)
-	add_definitions(-DPYMESHLAB_VERSION=${PYMESHLAB_VERSION})
+#version management
+string(TIMESTAMP PYMESHLAB_VERSION "%Y.%m")
+if (MESHLAB_IS_NIGHTLY_VERSION)
+	# nightly version is in the form:
+	# YYYY.mm[d]_nightly_GIT_SHA1
+	# YYYY and mm are computed by cmake and not read from file
+	find_package(Git)
+	execute_process(COMMAND
+		"${GIT_EXECUTABLE}" describe --match=NeVeRmAtCh --always --abbrev=7
+		WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+		OUTPUT_VARIABLE GIT_SHA1
+		ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+	set(PYMESHLAB_VERSION "${PYMESHLAB_VERSION}_nightly_${GIT_SHA1}")
+else()
+	if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../../PYML_VERSION")
+		file(READ "${CMAKE_CURRENT_SOURCE_DIR}/../../PYML_VERSION" PYMESHLAB_VERSION)
+		add_definitions(-DPYMESHLAB_VERSION=${PYMESHLAB_VERSION})
+	endif()
 endif()
+message(STATUS "PyMeshLab version: ${PYMESHLAB_VERSION}")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${MESHLAB_SRC_DIR})
