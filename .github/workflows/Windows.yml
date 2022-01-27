@@ -62,9 +62,8 @@ jobs:
     - name: Build Wheel
       shell: bash
       run: |
-        VER=$(date +%Y.%m)
-        GIT_SHA=$(git describe --match=NeVeRmAtCh --always --abbrev=7)
-        echo "${VER}_nightly_${GIT_SHA}" | tr -d '\n'> PYML_VERSION
+        VER=$(+%Y.%m.%d)
+        echo "${VER}.dev0" | tr -d '\n'> PYML_VERSION
         pip install wheel
         pip wheel . -w wheels/
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
