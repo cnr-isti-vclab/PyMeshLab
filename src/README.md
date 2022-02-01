@@ -1,5 +1,10 @@
 ## Build PyMeshLab
 
+### Build scripts
+
+We provide a set of platform dependent scripts that should make easier to build PyMeshLab. Scripts can be found [here](../scripts/).
+Otherwise, if you want to build manually PyMeshLab, you can follow these instructions.
+
 ### Source code
 
 The source code of pymeshlab is contained inside the `src/pymeshlab` directory. To see how it is organized, see the contained [README.md](src/pymeshlab/README.md).
