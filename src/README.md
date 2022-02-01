@@ -9,14 +9,39 @@ Inside the src directory there are also two directories:
 
 ### Requirements
 
-To be built, PyMeshLab requires a C++11 compiler (gcc, clang and MSVC are supported), CMake >= 3.9, Python >= 3.6 and Qt >= 5.12.
+To be built, PyMeshLab requires a C++14 compiler (gcc, clang and MSVC are supported), CMake >= 3.9, Python >= 3.6 and Qt = 5.15.
 
 ### Clone
 
-Clone this repository with the `--recursive` flag, needed to clone also MeshLab and pybind11 repositories:
+Clone this repository with the `--recursive` flag, needed to clone also MeshLab, pybind11 and other external repositories:
 
 ```
 git clone --recursive https://github.com/cnr-isti-vclab/PyMeshLab.git
+```
+
+#### Other plugins
+
+To build some additional plugins, some libraries that are not bundled in the repository are required.
+Therefore, you'll need to install them separately.
+
+**linux**
+
+```
+sudo apt install libgmp-dev libcgal-dev libboost-all-dev
+```
+
+**macos**
+
+```
+brew install libomp cgal xerces-c
+```
+
+**windows**
+
+You can use the **bash** script that will download and extract automatically the `boost` and `cgal` libraries:
+
+```
+bash src/meshlab/scripts/windows/0_download_ext.sh
 ```
 
 ### Build

@@ -3,10 +3,10 @@
 This directory contains a set of scripts for automatically build and deploy pymeshlab.
 Before using them, be sure to install on your system:
 
-* GCC, Clang or MSVC
+* GCC, Clang or MSVC with c++14 support
 * CMake >= 3.9
 * Python >= 3.6
-* Qt >= 5.12
+* Qt = 5.15
 
 For every platform there are two main scripts:
 
