@@ -6,14 +6,15 @@
 Changelog
 =========
 
-202y.xx
+2022.2
 -------
 
-   * based on MeshLab 202y.xx
+   * based on MeshLab 2022.02
    * all filters renamed, old filter names are now deprecated
    * throw exception when a parameter name is not found (was just a print before)
    * possibility to iterate over a MeshSet
    * Mesh class now allows to access to id, visibility, label and trasform matrix of the Mesh
+   * possibility to construct a Mesh having edges
    * possibility to get textures from a Mesh
    * bounded floats arguments in filters now are clamped in the [min-max] interval
    * bugfixes

@@ -33,6 +33,14 @@ And apply filters with your parameters:
 
    ms.create_noisy_isosurface(resolution=128)
 
+You can search for a filter by using the provided function:
+
+.. code-block:: python
+
+   pymeshlab.search('poisson')
+
+It will list the filters (with a link to their documentation) that match the most with the given string keyword.
+
 Most of the MeshLab filters will change in some way the state of the MeshSet. The behaviour of how filters change the state is the same of what
 happens when applying the same filter in MeshLab.
 Some filters may return values, and these values are placed in a dictionary that is returned by the called method:

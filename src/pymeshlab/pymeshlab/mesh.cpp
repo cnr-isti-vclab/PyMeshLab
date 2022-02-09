@@ -28,6 +28,7 @@
 MeshModel pymeshlab::Mesh::meshFromMatrices(
 	const EigenMatrixX3m&   vertices,
 	const Eigen::MatrixX3i& faces,
+	const Eigen::MatrixX2i& edges,
 	const EigenMatrixX3m&   vertexNormals,
 	const EigenMatrixX3m&   faceNormals,
 	const EigenVectorXm&    vertexQuality,
@@ -39,6 +40,7 @@ MeshModel pymeshlab::Mesh::meshFromMatrices(
 	m.cm = meshlab::meshFromMatrices(
 		vertices,
 		faces,
+		edges,
 		vertexNormals,
 		faceNormals,
 		vertexQuality,

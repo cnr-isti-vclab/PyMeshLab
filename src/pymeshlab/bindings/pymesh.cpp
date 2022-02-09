@@ -47,6 +47,7 @@ void pymeshlab::initMesh(py::module& m)
 		doc::PYMESH_INIT,
 		py::arg("vertex_matrix")    = Eigen::MatrixX3d(),
 		py::arg("face_matrix")      = Eigen::MatrixX3i(),
+		py::arg("edge_matrix")      = Eigen::MatrixX2i(),
 		py::arg("v_normals_matrix") = Eigen::MatrixX3d(),
 		py::arg("f_normals_matrix") = Eigen::MatrixX3d(),
 		py::arg("v_scalar_array")   = Eigen::VectorXd(),
