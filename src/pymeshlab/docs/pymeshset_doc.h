@@ -33,7 +33,14 @@ const char* PYMS_INIT_VERB =
 // MeshSet::set_verbosity
 const char* PYMS_SET_VERBOSITY_DOC =
 	"Sets the verbosity when using the MeshSet class. When set to true, all the logs that usually "
-	"are printed in the bottom left of MeshLab, will be printed when filters are applied.";
+	"are printed in the bottom left of MeshLab, along with other messages, are printed when "
+	"filters are applied.";
+
+// MeshSet::set_parameter_verbosity
+const char* PYMS_SET_PAR_VERBOSITY_DOC =
+	"Sets the verbosity of the MeshSet, regarding only the print of the parameters when running a"
+	"filter. When set to true, only the parameters of the filter with their values will be printed "
+	"when a filter is executed. Other messages are not printed.";
 
 // MeshSet::number_meshes
 const char* PYMS_NUMBER_MESHES_DOC = "Returns the number of meshes contained in the MeshSet.";

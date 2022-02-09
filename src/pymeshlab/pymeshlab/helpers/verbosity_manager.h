@@ -38,7 +38,10 @@ public:
 	~VerbosityManager();
 	void disableVersbosity();
 	void enableVerbosity();
+	void enableParameterVerbosity();
+	void disableParameterVerbosity();
 	bool isVerbosityEnabled() const;
+	bool isParameterVerbosityEnabled() const;
 
 	static bool         filterCallBack(const int pos, const char* str);
 	static GLLogStream* staticLogger;
@@ -47,6 +50,7 @@ private:
 	CoutRedirect*   coutRed = nullptr;
 	CerrRedirect*   cerrRed = nullptr;
 	QDebugRedirect* qdebRed = nullptr;
+	bool parameterVerbosity = false;
 };
 
 } // namespace pymeshlab

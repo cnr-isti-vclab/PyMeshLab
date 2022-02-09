@@ -21,6 +21,7 @@ Changelog
    * possibility to show a `polyscope <https://polyscope.run/py/>`_ gui of the content of the MeshSet
    * new plugin filter parametrization for harmonic and lscm parametrization computation
    * possibility to search for filters using ``pymeshlab.search()`` function
+   * possibility to set verbosity just for printing parameters when executing a filter
 
 2021.10
 -------

@@ -67,6 +67,12 @@ void pymeshlab::MeshSet::setVerbosity(bool verbose)
 	}
 }
 
+void pymeshlab::MeshSet::setParameterVerbosity(bool verbose)
+{
+	if (verbose) verbosityManager.enableParameterVerbosity();
+	else verbosityManager.disableParameterVerbosity();
+}
+
 MeshModel& pymeshlab::MeshSet::currentMesh()
 {
 	if (mm() == nullptr)

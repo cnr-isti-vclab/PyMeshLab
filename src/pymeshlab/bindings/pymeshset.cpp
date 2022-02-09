@@ -52,6 +52,11 @@ void pymeshlab::initMeshSet(pybind11::module& m)
 
 	meshSetClass.def(
 		"set_verbosity", &MeshSet::setVerbosity, doc::PYMS_SET_VERBOSITY_DOC, py::arg("verbosity"));
+	meshSetClass.def(
+		"set_parameter_verbosity",
+		&MeshSet::setParameterVerbosity,
+		doc::PYMS_SET_PAR_VERBOSITY_DOC,
+		py::arg("verbosity"));
 	meshSetClass.def("number_meshes", &MeshSet::meshNumber, doc::PYMS_NUMBER_MESHES_DOC);
 	meshSetClass.def("number_rasters", &MeshSet::rasterNumber, doc::PYMS_NUMBER_RASTERS_DOC);
 	meshSetClass.def(

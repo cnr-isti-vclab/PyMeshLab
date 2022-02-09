@@ -47,10 +47,12 @@ void VerbosityManager::disableVersbosity()
 	coutRed = new CoutRedirect();
 	cerrRed = new CerrRedirect();
 	qdebRed = new QDebugRedirect();
+	parameterVerbosity = false;
 }
 
 void VerbosityManager::enableVerbosity()
 {
+	parameterVerbosity = true;
 	delete coutRed;
 	delete cerrRed;
 	delete qdebRed;
@@ -59,9 +61,24 @@ void VerbosityManager::enableVerbosity()
 	qdebRed = nullptr;
 }
 
+void VerbosityManager::enableParameterVerbosity()
+{
+	parameterVerbosity = true;
+}
+
+void VerbosityManager::disableParameterVerbosity()
+{
+	parameterVerbosity = false;
+}
+
 bool VerbosityManager::isVerbosityEnabled() const
 {
 	return coutRed == nullptr;
+}
+
+bool VerbosityManager::isParameterVerbosityEnabled() const
+{
+	return parameterVerbosity;
 }
 
 bool VerbosityManager::filterCallBack(const int pos, const char* str)

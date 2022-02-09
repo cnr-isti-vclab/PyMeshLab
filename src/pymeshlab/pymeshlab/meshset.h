@@ -55,6 +55,7 @@ public:
 	virtual ~MeshSet();
 
 	void setVerbosity(bool verbose);
+	void setParameterVerbosity(bool verbose);
 
 	MeshModel& currentMesh();
 	int currentMeshId() const;

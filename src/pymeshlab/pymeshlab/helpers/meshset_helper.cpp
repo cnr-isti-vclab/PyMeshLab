@@ -659,12 +659,22 @@ pybind11::dict applyFilterRPL(
 
 	py::dict           outputDict;
 	OpenGLContextData* data = nullptr;
-	if (verbose.isVerbosityEnabled()) {
-		VerbosityManager::staticLogger = &md.Log;
+	if (verbose.isParameterVerbosityEnabled()) {
+		bool v = verbose.isVerbosityEnabled();
+		if (v) // if global verbosity was already enabled, we want to print also logs
+			VerbosityManager::staticLogger = &md.Log;
+		else // we enable verbosity temporarily, to print parameters
+			verbose.enableVerbosity();
+
 		std::cout << "\nApplying filter " << filtername << " with the following parameters:\n";
 		py::dict params = meshsethelper::pydictFromRichParameterList(rpl);
 		py::print(params);
 		std::cout << "\n";
+
+		if (!v) { // if global verbosity was not enabled
+			verbose.disableVersbosity(); // disable again the verbosity...
+			verbose.enableParameterVerbosity(); // ... but enable again parameter verbosity
+		}
 	}
 	try {
 		int req = fp->getRequirements(action);
