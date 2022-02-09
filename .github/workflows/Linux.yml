@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        pyversion: [3.6, 3.7, 3.8, 3.9, "3.10"]
+        pyversion: [3.7, 3.8, 3.9, "3.10"]
     steps:
     - uses: actions/checkout@v2
       with:
@@ -72,7 +72,7 @@ jobs:
     needs: linux_build_pymeshlab
     strategy:
       matrix:
-        pyversion: [3.6, 3.7, 3.8, 3.9, "3.10"]
+        pyversion: [3.7, 3.8, 3.9, "3.10"]
     steps:
     - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v2
@@ -94,7 +94,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        pyversion: [3.6, 3.7, 3.8, 3.9, "3.10"]
+        pyversion: [3.7, 3.8, 3.9, "3.10"]
     steps:
     - name: Download pymeshlab_whl_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v2
