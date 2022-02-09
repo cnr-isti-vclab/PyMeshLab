@@ -17,6 +17,8 @@ MeshSet class except the methods associated to filters. For the list of these me
 please refer to the :ref:`filter_list` page. Sometimes, filters change the current mesh when applied, setting it to their output.
 The behaviour is always the same of MeshLab.
 
+Note that the MeshSet class is not thread safe: it is not safe to run multiple filters in parallel on the same MeshSet object.
+
 .. autoclass:: pmeshlab.MeshSet
    :special-members:
    :members:

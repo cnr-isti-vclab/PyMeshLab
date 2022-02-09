@@ -424,10 +424,13 @@ void loadMeshUsingPlugin(
 			RichParameterList rps = plugin->initPreOpenParameter(extension);
 			meshsethelper::updateRichParameterListFromKwargs(ff, kwargs, &md, rps, true);
 			try {
+				py::gil_scoped_release release;
 				meshlab::loadMeshWithStandardParameters(
 					QString::fromStdString(filename), md, VerbosityManager::filterCallBack, rps);
+				py::gil_scoped_acquire acquire;
 			}
 			catch (const MLException& e) {
+				py::gil_scoped_acquire acquire;
 				throw MLException(
 					"Unable to open file: " + QString::fromStdString(filename) + "\n" + e.what());
 			}
@@ -544,6 +547,7 @@ void saveMeshUsingPlugin(
 		userSettings =
 			computeSaveSettingsMaskFromKwargs(kwargs, defaultSaveSettings, capabilityMesh);
 
+		py::gil_scoped_release release;
 		if (userSettings & vcg::tri::io::Mask::IOM_BITPOLYGONAL)
 			mm->updateDataMask(MeshModel::MM_FACEFACETOPO);
 		plugin->save(
@@ -556,6 +560,7 @@ void saveMeshUsingPlugin(
 		if (saveTextures)
 			mm->saveTextures(finfo.absolutePath(), qualityTextures);
 		mm->setFileName(finfo.absoluteFilePath());
+		py::gil_scoped_acquire acquire;
 	}
 	else {
 		throw MLException("Unknown format for save: " + extension);
@@ -690,6 +695,7 @@ pybind11::dict applyFilterRPL(
 		md.meshDocStateData().clear();
 		md.meshDocStateData().create(md);
 		md.setBusy(true);
+		py::gil_scoped_release release;
 		unsigned int                    postConditionMask = MeshModel::MM_UNKNOWN;
 		std::map<std::string, QVariant> outputValues =
 			fp->applyFilter(action, rpl, md, postConditionMask, &VerbosityManager::filterCallBack);
@@ -708,6 +714,7 @@ pybind11::dict applyFilterRPL(
 			pair.second = rpl;
 			filterScript.append(pair);
 		}
+		py::gil_scoped_acquire acquire;
 		outputDict = toPyDict(outputValues);
 		if (fp->requiresGLContext(action)) {
 			releaseOpenGLContext(fp);
