@@ -33,13 +33,13 @@ python
 You can load, save meshes and apply MeshLab filters:
 ```
 ms.load_new_mesh('airplane.obj')
-ms.convex_hull()
+ms.generate_convex_hull()
 ms.save_current_mesh('convex_hull.ply')
 ```
 
 And apply filters with your parameters:
 ```
-ms.noisy_isosurface(resolution=128)
+ms.create_noisy_isosurface(resolution=128)
 ```
 
 You can find all the names and parameters of the filters in the [List of Filters](https://pymeshlab.readthedocs.io/en/latest/filter_list.html) page of the documentation.
