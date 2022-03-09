@@ -17,8 +17,8 @@ def example_apply_filter_parameters_percentage():
 
     assert ms.current_mesh().face_number() == 166259
 
-    # create a new object of type Percentage, with value 50%
-    p = pymeshlab.Percentage(50)
+    # create a new object of type PercentageValue, with value 50%
+    p = pymeshlab.PercentageValue(50)
 
     # apply the filter that will remove connected components having diameter less than 50%
     # of the diameter of the entire mesh

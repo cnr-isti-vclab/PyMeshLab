@@ -20,15 +20,15 @@
  * for more details.                                                         *
  *                                                                           *
  ****************************************************************************/
-#include "percentage.h"
+#include "percentage_value.h"
 #include "exceptions.h"
 
-pymeshlab::Percentage::Percentage(float value)
+pymeshlab::PercentageValue::PercentageValue(float value)
 {
 	setValue(value);
 }
 
-void pymeshlab::Percentage::setValue(float v)
+void pymeshlab::PercentageValue::setValue(float v)
 {
 	if (v > 100 || v < 0)
 		throw InvalidPercentageException(
@@ -38,7 +38,7 @@ void pymeshlab::Percentage::setValue(float v)
 	val = v;
 }
 
-float pymeshlab::Percentage::value() const
+float pymeshlab::PercentageValue::value() const
 {
 	return val;
 }

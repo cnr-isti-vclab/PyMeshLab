@@ -20,20 +20,15 @@
 * for more details.                                                         *
 *                                                                           *
 ****************************************************************************/
-#include "pypercentage.h"
+#ifndef PYMESHLAB_PYPERCENTAGE_VALUE_H
+#define PYMESHLAB_PYPERCENTAGE_VALUE_H
 
-#include "pymeshlab/percentage.h"
-#include "docs/pypercentage_doc.h"
+#include <pybind11/pybind11.h>
 
-namespace py = pybind11;
+namespace pymeshlab {
 
-void pymeshlab::initPercentage(pybind11::module& m)
-{
-	py::class_<pymeshlab::Percentage> percentageClass(m, "Percentage");
+void initPercentageValue(pybind11::module& m);
 
-	//constructor
-	percentageClass.def(py::init<float>(), doc::PYPER_INIT);
-
-	percentageClass.def("value", &Percentage::value, doc::PYPER_VALUE);
-	percentageClass.def("set_value", &Percentage::setValue, doc::PYPER_SET_VALUE);
 }
+
+#endif // PYMESHLAB_PYPERCENTAGE_VALUE_H

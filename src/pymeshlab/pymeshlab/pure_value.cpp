@@ -20,15 +20,18 @@
  * for more details.                                                         *
  *                                                                           *
  ****************************************************************************/
-#ifndef PYMESHLAB_PYABSOLUTE_VALUE_H
-#define PYMESHLAB_PYABSOLUTE_VALUE_H
+#include "pure_value.h"
 
-#include <pybind11/pybind11.h>
-
-namespace pymeshlab {
-
-void initAbsoluteValue(pybind11::module& m);
-
+pymeshlab::PureValue::PureValue(float value) : val(value)
+{
 }
 
-#endif // PYMESHLAB_PYABSOLUTE_VALUE_H
+void pymeshlab::PureValue::setValue(float v)
+{
+	val = v;
+}
+
+float pymeshlab::PureValue::value() const
+{
+	return val;
+}

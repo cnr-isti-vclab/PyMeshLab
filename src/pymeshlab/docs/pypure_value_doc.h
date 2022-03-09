@@ -20,18 +20,23 @@
  * for more details.                                                         *
  *                                                                           *
  ****************************************************************************/
-#include "absolute_value.h"
+#ifndef PYMESHLAB_PYABSOLUTE_VALUE_DOC_H
+#define PYMESHLAB_PYABSOLUTE_VALUE_DOC_H
 
-pymeshlab::AbsoluteValue::AbsoluteValue(float value) : val(value)
-{
-}
+namespace pymeshlab {
+namespace doc {
 
-void pymeshlab::AbsoluteValue::setValue(float v)
-{
-	val = v;
-}
+// Percentage::__init__
+const char* PYPUREVALUE_INIT =
+	"Constructor of the :py:class:`AbsoluteValue` class. Takes as input a float "
+	"value (default: 0) and initializes the absolute value. ";
 
-float pymeshlab::AbsoluteValue::value() const
-{
-	return val;
-}
+// Percentage::value
+const char* PYPUREVALUE_VALUE = "Returns the value of the absolute value.";
+
+// Percentage::set_value
+const char* PYPUREVALUE_SET_VALUE = "Sets the value of the absolute value.";
+} // namespace doc
+} // namespace pymeshlab
+
+#endif // PYMESHLAB_PYABSOLUTE_VALUE_DOC_H

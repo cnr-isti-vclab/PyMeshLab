@@ -20,20 +20,15 @@
  * for more details.                                                         *
  *                                                                           *
  ****************************************************************************/
-#include "pyabsolute_value.h"
+#ifndef PYMESHLAB_PYPURE_VALUE_H
+#define PYMESHLAB_PYPURE_VALUE_H
 
-#include "docs/pyabsolute_value_doc.h"
-#include "pymeshlab/absolute_value.h"
+#include <pybind11/pybind11.h>
 
-namespace py = pybind11;
+namespace pymeshlab {
 
-void pymeshlab::initAbsoluteValue(pybind11::module& m)
-{
-	py::class_<pymeshlab::AbsoluteValue> avClass(m, "AbsoluteValue");
+void initPureValue(pybind11::module& m);
 
-	// constructor
-	avClass.def(py::init<float>(), doc::PYABS_INIT);
-
-	avClass.def("value", &AbsoluteValue::value, doc::PYABS_VALUE);
-	avClass.def("set_value", &AbsoluteValue::setValue, doc::PYABS_SET_VALUE);
 }
+
+#endif // PYMESHLAB_PYPURE_VALUE_H

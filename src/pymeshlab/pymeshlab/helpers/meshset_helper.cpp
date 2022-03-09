@@ -38,10 +38,10 @@
 #include <QApplication>
 #include <QDir>
 
-#include "../absolute_value.h"
 #include "../exceptions.h"
 #include "../meshset.h"
-#include "../percentage.h"
+#include "../percentage_value.h"
+#include "../pure_value.h"
 #include "common.h"
 
 namespace py = pybind11;
@@ -89,15 +89,15 @@ void updateRichParameterFromKwarg(
 		RichAbsPerc& abs = dynamic_cast<RichAbsPerc&>(par);
 		float        absvalue;
 		try { // first try for percentage
-			Percentage p = py::cast<Percentage>(k.second);
+			PercentageValue p = py::cast<PercentageValue>(k.second);
 			absvalue     = (abs.max - abs.min);
 			absvalue *= p.value() / 100;
 			absvalue += abs.min;
 		}
 		catch (const py::cast_error& err) {
-			try { // then try with Absolute Value
-				AbsoluteValue v;
-				v        = py::cast<AbsoluteValue>(k.second);
+			try { // then try with Pure Value
+				PureValue v;
+				v        = py::cast<PureValue>(k.second);
 				absvalue = v.value();
 			}
 			catch (const py::cast_error& err) { // if not AbsoluteValue then throw

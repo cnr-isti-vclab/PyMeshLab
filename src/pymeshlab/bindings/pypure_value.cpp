@@ -20,31 +20,20 @@
  * for more details.                                                         *
  *                                                                           *
  ****************************************************************************/
-#ifndef PYMESHLAB_PERCENTAGE_H
-#define PYMESHLAB_PERCENTAGE_H
+#include "pypure_value.h"
 
-#include <exception>
-#include <string>
+#include "docs/pypure_value_doc.h"
+#include "pymeshlab/pure_value.h"
 
-namespace pymeshlab {
+namespace py = pybind11;
 
-/**
- * @brief The Percentage class
- * Simple class that permits to discriminate between absolute values
- * values (see AbsoluteValue class) and percentage values
- */
-class Percentage
+void pymeshlab::initPureValue(pybind11::module& m)
 {
-public:
-	Percentage(float value = 0);
+	py::class_<pymeshlab::PureValue> pvClass(m, "PureValue");
 
-	void  setValue(float v);
-	float value() const;
+	// constructor
+	pvClass.def(py::init<float>(), doc::PYPUREVALUE_INIT);
 
-private:
-	float val;
-};
-
-} // namespace pymeshlab
-
-#endif // PYMESHLAB_PERCENTAGE_H
+	pvClass.def("value", &PureValue::value, doc::PYPUREVALUE_VALUE);
+	pvClass.def("set_value", &PureValue::setValue, doc::PYPUREVALUE_SET_VALUE);
+}
