@@ -38,21 +38,15 @@ fi
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BUNDLE_PATH/lib
 
-#ARGUMENTS=""
-#for lib in $BUNDLE_PATH/lib/plugins/*.so
-#do
-#    ARGUMENTS="${ARGUMENTS} -executable=$lib"
-#done
-
-
 PMESHLAB_MODULE_PATH=$(ls -d $BUNDLE_PATH/pmeshlab*)
 $LINUXDEPLOY_PATH/linuxdeploy --executable=$PMESHLAB_MODULE_PATH \
   --appdir=$BUNDLE_PATH \
-  --plugin qt #\
-#  $ARGUMENTS
+  --plugin qt
 
-rm $BUNDLE_PATH/AppRun
-if [ -d "$BUNDLE_PATH/doc" ]
-then
-    rm -r $BUNDLE_PATH/doc
-fi
+rsync -av $BUNDLE_PATH/usr/lib $BUNDLE_PATH/
+rsync -av $BUNDLE_PATH/usr/plugins $BUNDLE_PATH/
+
+rm -rf $BUNDLE_PATH/usr/
+rm -rf $BUNDLE_PATH/apprun-hooks/
+
+patchelf --set-rpath '$ORIGIN/lib/' $PMESHLAB_MODULE_PATH
