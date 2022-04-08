@@ -44,7 +44,7 @@ $LINUXDEPLOY_PATH/linuxdeploy --executable=$PMESHLAB_MODULE_PATH \
   --plugin qt
 
 rsync -av $BUNDLE_PATH/usr/lib $BUNDLE_PATH/
-rsync -av $BUNDLE_PATH/usr/plugins $BUNDLE_PATH/
+#rsync -av $BUNDLE_PATH/usr/plugins $BUNDLE_PATH/lib/
 
 rm -rf $BUNDLE_PATH/usr/
 rm -rf $BUNDLE_PATH/apprun-hooks/
