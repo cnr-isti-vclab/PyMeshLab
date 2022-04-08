@@ -36,7 +36,10 @@ then
     export QMAKE=$QT_DIR/bin/qmake
 fi
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BUNDLE_PATH/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BUNDLE_PATH/usr/lib
+
+mkdir $BUNDLE_PATH/usr
+mv $BUNDLE_PATH/lib $BUNDLE_PATH/usr/lib
 
 PMESHLAB_MODULE_PATH=$(ls -d $BUNDLE_PATH/pmeshlab*)
 $LINUXDEPLOY_PATH/linuxdeploy --executable=$PMESHLAB_MODULE_PATH \
@@ -44,9 +47,13 @@ $LINUXDEPLOY_PATH/linuxdeploy --executable=$PMESHLAB_MODULE_PATH \
   --plugin qt
 
 rsync -av $BUNDLE_PATH/usr/lib $BUNDLE_PATH/
-#rsync -av $BUNDLE_PATH/usr/plugins $BUNDLE_PATH/lib/
 
 rm -rf $BUNDLE_PATH/usr/
 rm -rf $BUNDLE_PATH/apprun-hooks/
 
 patchelf --set-rpath '$ORIGIN/lib/' $PMESHLAB_MODULE_PATH
+
+#for plugin in $BUNDLE_PATH/lib/plugins/*.so
+#do
+#    patchelf --set-rpath '$ORIGIN/../' $plugin
+#done
