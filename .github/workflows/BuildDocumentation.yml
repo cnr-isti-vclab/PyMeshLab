@@ -6,7 +6,6 @@ on:
 jobs:
   unix_build_pymeshlab:
     name: Build PyMeshLab
-    #needs: merge_master_to_docs
     runs-on: ubuntu-18.04
     strategy:
       matrix:
@@ -14,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        ref: 'master'
+        ref: 'main'
         submodules: recursive
     - name: Remove old files
       run: |
@@ -62,7 +61,7 @@ jobs:
         sh scripts/${{ runner.os }}/2_deploy.sh
     - name: Modify README.md
       run: |
-        printf "# Do not use this branch\nThis branch is even with the master branch, except for the PyMeshLab module that is needed to build the documentation.\n" > README.md
+        printf "# Do not use this branch\nThis branch is even with the 'main' branch, except for the PyMeshLab module that is needed to build the documentation.\n" > README.md
     - name: Commit message
       id: commit_message
       run: |
