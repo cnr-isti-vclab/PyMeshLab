@@ -53,7 +53,7 @@ rm -rf $BUNDLE_PATH/apprun-hooks/
 
 patchelf --set-rpath '$ORIGIN/lib/' $PMESHLAB_MODULE_PATH
 
-#for plugin in $BUNDLE_PATH/lib/plugins/*.so
-#do
-#    patchelf --set-rpath '$ORIGIN/../' $plugin
-#done
+for plugin in $BUNDLE_PATH/lib/plugins/*.so
+do
+    patchelf --set-rpath '$ORIGIN/../' $plugin
+done
