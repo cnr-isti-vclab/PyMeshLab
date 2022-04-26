@@ -45,7 +45,7 @@ const char* PYBB_DIM_Z = "Returns the Z size of the Bounding Box.";
 const char* PYBB_MIN = "Returns the min coordinate of the Bounding Box.";
 
 // BoundingBox::max
-const char* PYBB_MAX = "Returns the min coordinate of the Bounding Box.";
+const char* PYBB_MAX = "Returns the max coordinate of the Bounding Box.";
 
 } // namespace doc
 } // namespace pymeshlab
