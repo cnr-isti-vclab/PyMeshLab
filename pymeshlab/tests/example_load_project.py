@@ -13,15 +13,15 @@ def example_load_project():
     # load an ALN project
     ms.load_project(base_path + "sample_project.aln")
 
-    print(ms.number_meshes())  # the project contains two meshes
+    print(ms.mesh_number())  # the project contains two meshes
 
-    assert ms.number_meshes() == 2
+    assert ms.mesh_number() == 2
 
     # load another project, but a MLP project
     ms.load_project(base_path + "sample_project.mlp")
 
     # also the second project contains two meshes, therefore right now the MeshSet
     # contains 4 meshes.
-    print(ms.number_meshes())
+    print(ms.mesh_number())
 
-    assert ms.number_meshes() == 4
+    assert ms.mesh_number() == 4

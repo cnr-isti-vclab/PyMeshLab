@@ -22,6 +22,9 @@
  ****************************************************************************/
 #include "module_functions.h"
 
+// todo - remove when remove warnings module
+#include <pybind11/pybind11.h>
+
 #include <QDir>
 
 #include <common/GLExtensionsManager.h>
@@ -72,10 +75,19 @@ std::list<std::string> pymeshlab::filterList()
 	return pymeshlab::functionSetInstance().pythonFilterFunctionNames();
 }
 
-int pymeshlab::numberPlugins()
+int pymeshlab::pluginNumber()
 {
 	PluginManager& pm = meshlab::pluginManagerInstance();
 	return pm.size();
+}
+
+// todo - remove this function
+
+int pymeshlab::numberPlugins()
+{
+	pybind11::module_ warn = pybind11::module_::import("warnings");
+	warn.attr("warn")("Deprecated Function Warning: use 'plugin_number()' instead.");
+	return pluginNumber();
 }
 
 void pymeshlab::printPluginList()

@@ -42,11 +42,17 @@ const char* PYMS_SET_PAR_VERBOSITY_DOC =
 	"filter. When set to true, only the parameters of the filter with their values will be printed "
 	"when a filter is executed. Other messages are not printed.";
 
+// MeshSet::mesh_number
+const char* PYMS_MESH_NUMBER_DOC = "Returns the number of meshes contained in the MeshSet.";
+
+// MeshSet::raster_number
+const char* PYMS_RASTER_NUMBER_DOC = "Returns the number of rasters contained in the MeshSet.";
+
 // MeshSet::number_meshes
-const char* PYMS_NUMBER_MESHES_DOC = "Returns the number of meshes contained in the MeshSet.";
+const char* PYMS_NUMBER_MESHES_DOC = "**This function is deprecated.** Returns the number of meshes contained in the MeshSet.";
 
 // MeshSet::number_rasters
-const char* PYMS_NUMBER_RASTERS_DOC = "Returns the number of rasters contained in the MeshSet.";
+const char* PYMS_NUMBER_RASTERS_DOC = "**This function is deprecated.** Returns the number of rasters contained in the MeshSet.";
 
 // MeshSet::set_current_mesh
 const char* PYMS_SET_CURRENT_MESH =

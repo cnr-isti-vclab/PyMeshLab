@@ -13,7 +13,7 @@ def example_apply_filter_parameters_percentage():
 
     ms.load_new_mesh(base_path + "rangemaps/face000.ply")
 
-    assert ms.number_meshes() == 1
+    assert ms.mesh_number() == 1
 
     assert ms.current_mesh().face_number() == 166259
 

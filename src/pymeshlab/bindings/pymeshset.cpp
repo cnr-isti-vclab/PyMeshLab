@@ -57,8 +57,11 @@ void pymeshlab::initMeshSet(pybind11::module& m)
 		&MeshSet::setParameterVerbosity,
 		doc::PYMS_SET_PAR_VERBOSITY_DOC,
 		py::arg("verbosity"));
-	meshSetClass.def("number_meshes", &MeshSet::meshNumber, doc::PYMS_NUMBER_MESHES_DOC);
-	meshSetClass.def("number_rasters", &MeshSet::rasterNumber, doc::PYMS_NUMBER_RASTERS_DOC);
+	meshSetClass.def("mesh_number", &MeshSet::meshNumber, doc::PYMS_MESH_NUMBER_DOC);
+	meshSetClass.def("raster_number", &MeshSet::rasterNumber, doc::PYMS_RASTER_NUMBER_DOC);
+	// todo - deprecated functions - to remove
+	meshSetClass.def("number_meshes", &MeshSet::numberMeshes, doc::PYMS_NUMBER_MESHES_DOC);
+	meshSetClass.def("number_rasters", &MeshSet::numberRasters, doc::PYMS_NUMBER_RASTERS_DOC);
 	meshSetClass.def(
 		"set_current_mesh",
 		&MeshSet::setCurrentMesh,
