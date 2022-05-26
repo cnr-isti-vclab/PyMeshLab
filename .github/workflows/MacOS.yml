@@ -30,8 +30,8 @@ jobs:
       uses: actions/cache@v2
       with:
         path: |
-          src/build/distrib/pymeshlab/dummybin.app/Contents/Frameworks
-          src/build/distrib/pymeshlab/dummybin.app/Contents/PlugIns
+          build/distrib/pymeshlab/dummybin.app/Contents/Frameworks
+          build/distrib/pymeshlab/dummybin.app/Contents/PlugIns
         key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
     - name: Install MacOS dependencies
       run: |
