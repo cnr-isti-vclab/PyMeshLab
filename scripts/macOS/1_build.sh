@@ -7,11 +7,11 @@ realpath() {
 
 SCRIPTS_PATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 SOURCE_PATH=$SCRIPTS_PATH/../../src
-BUILD_PATH=$SOURCE_PATH/build
+BUILD_PATH=$SOURCE_PATH/../build
 INSTALL_PATH=$SOURCE_PATH/../pymeshlab
 CORES="-j4"
 BUILD_MESHLAB_OPTION=""
-BUILD_OPTION="-DCMAKE_BUILD_TYPE=MinSizeRel"
+BUILD_OPTION="-DCMAKE_BUILD_TYPE=Release"
 NIGHTLY_OPTION=""
 
 #check parameters
