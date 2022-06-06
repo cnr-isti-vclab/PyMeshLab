@@ -3,6 +3,9 @@ name: Windows
 on:
   [push, pull_request]
 
+env:
+  QT_VERSION: 5.15.2
+
 jobs:
   windows_build_pymeshlab:
     name: Build PyMeshLab (Windows)
@@ -24,15 +27,24 @@ jobs:
         echo "::set-output name=meshlab_commit::$($var)"
     - name: Setup MSVC
       uses: ilammy/msvc-dev-cmd@v1
+    - name: Cache Qt
+      id: cache-qt
+      uses: actions/cache@v1
+      with:
+        path: ../Qt
+        key: ${{ runner.os }}-QtCache-${{ env.QT_VERSION }}
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
+      with:
+        cached: ${{ steps.cache-qt.outputs.cache-hit }}
+        version: ${{ env.QT_VERSION }}
     - name: Install Python ${{ matrix.pyversion }}
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.pyversion }}
     - name: Install wget
       run: |
-        $env:PATH = "C:\msys64\mingw64\bin;C:\msys64\usr\bin"
+        $env:PATH = "${{ env.PATH }};C:\msys64\mingw64\bin;C:\msys64\usr\bin"
         pacman.exe -S --noconfirm --noprogressbar wget unzip
     - name: Cache MeshLab Build
       id: cache-meshlab-build
@@ -59,7 +71,7 @@ jobs:
     - name: Deploy PyMeshLab ${{ matrix.pyversion }}
       shell: bash
       run: |
-        sh scripts/${{ runner.os }}/2_deploy.sh
+        sh scripts/${{ runner.os }}/2_deploy.sh -qt=${{ env.Qt5_DIR }}
     - name: Build Wheel
       shell: bash
       run: |

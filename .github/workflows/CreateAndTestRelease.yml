@@ -6,11 +6,10 @@ on:
       version:
         description: 'New PyMeshLab Version'
         required: true
-        default: '0.2.2'
-      meshlab_is_nightly:
-        description: 'MeshLab version is nightly'
-        required: true
-        default: 'false'
+        default: 'YYYY.MM'
+
+env:
+  QT_VERSION: 5.15.2
 
 jobs:
   update_version:
@@ -43,8 +42,17 @@ jobs:
     - name: Setup MSVC
       if: runner.os == 'Windows'
       uses: ilammy/msvc-dev-cmd@v1
+    - name: Cache Qt
+      id: cache-qt
+      uses: actions/cache@v1
+      with:
+        path: ../Qt
+        key: ${{ runner.os }}-QtCache-${{ env.QT_VERSION }}
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
+      with:
+        cached: ${{ steps.cache-qt.outputs.cache-hit }}
+        version: ${{ env.QT_VERSION }}
     - name: Install Python ${{ matrix.pyversion }}
       uses: actions/setup-python@v2
       with:
@@ -64,7 +72,7 @@ jobs:
       if: runner.os == 'Windows'
       run: |
         echo "name=VCINSTALLDIR::C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\VC" >> $GITHUB_ENV
-        $env:PATH = "C:\msys64\mingw64\bin;C:\msys64\usr\bin"
+        $env:PATH = "${{ env.PATH }};C:\msys64\mingw64\bin;C:\msys64\usr\bin"
         pacman.exe -S --noconfirm --noprogressbar wget unzip
     - name: Environment variables
       id: envs
@@ -72,15 +80,6 @@ jobs:
       run: |
         cd src/meshlab
         echo  ::set-output name=meshlab_commit::$(git rev-parse --short HEAD)
-    - name: Set MeshLab options
-      id: meshlab-options
-      shell: bash
-      run: |
-        if [ "${{ github.event.inputs.meshlab_is_nightly }}" == "true" ]; then
-          echo ::set-output name=meshlab-nightly-option::"-n"
-        else
-          echo ::set-output name=meshlab-nightly-option::""
-        fi
     - name: Download external libraries
       if: runner.os == 'Windows'
       shell: C:\shells\msys2bash.cmd {0}
@@ -89,11 +88,11 @@ jobs:
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       shell: bash
       run: |
-        sh scripts/${{ runner.os }}/1_build.sh ${{steps.meshlab-options.outputs.meshlab-nightly-option}}
+        sh scripts/${{ runner.os }}/1_build.sh
     - name: Deploy PyMeshLab ${{ matrix.pyversion }}
       shell: bash
       run: |
-        sh scripts/${{ runner.os }}/2_deploy.sh
+        sh scripts/${{ runner.os }}/2_deploy.sh -qt=${{ env.Qt5_DIR }}
     - name: Build Wheel
       shell: bash
       run: |
