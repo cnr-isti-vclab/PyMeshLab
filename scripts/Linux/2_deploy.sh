@@ -10,14 +10,14 @@
 SCRIPTS_PATH="$(dirname "$(realpath "$0")")"
 LINUXDEPLOY_PATH=$SCRIPTS_PATH/../../src/meshlab/resources/linux
 QT_DIR=""
-BUNDLE_PATH=$SCRIPTS_PATH/../../pymeshlab
+INSTALL_PATH=$SCRIPTS_PATH/../../pymeshlab
 
 #checking for parameters
 for i in "$@"
 do
 case $i in
     -i=*|--install_path=*)
-        BUNDLE_PATH="${i#*=}"
+        INSTALL_PATH="${i#*=}"
         shift # past argument=value
         ;;
     -qt=*|--qt_dir=*)
@@ -36,24 +36,24 @@ then
     export QMAKE=$QT_DIR/bin/qmake
 fi
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BUNDLE_PATH/usr/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_PATH/usr/lib
 
-mkdir $BUNDLE_PATH/usr
-mv $BUNDLE_PATH/lib $BUNDLE_PATH/usr/lib
+mkdir $INSTALL_PATH/usr
+mv $INSTALL_PATH/lib $INSTALL_PATH/usr/lib
 
-PMESHLAB_MODULE_PATH=$(ls -d $BUNDLE_PATH/pmeshlab*)
+PMESHLAB_MODULE_PATH=$(ls -d $INSTALL_PATH/pmeshlab*)
 $LINUXDEPLOY_PATH/linuxdeploy --executable=$PMESHLAB_MODULE_PATH \
-  --appdir=$BUNDLE_PATH \
+  --appdir=$INSTALL_PATH \
   --plugin qt
 
-rsync -av $BUNDLE_PATH/usr/lib $BUNDLE_PATH/
+rsync -av $INSTALL_PATH/usr/lib $INSTALL_PATH/
 
-rm -rf $BUNDLE_PATH/usr/
-rm -rf $BUNDLE_PATH/apprun-hooks/
+rm -rf $INSTALL_PATH/usr/
+rm -rf $INSTALL_PATH/apprun-hooks/
 
 patchelf --set-rpath '$ORIGIN/lib/' $PMESHLAB_MODULE_PATH
 
-for plugin in $BUNDLE_PATH/lib/plugins/*.so
+for plugin in $INSTALL_PATH/lib/plugins/*.so
 do
     patchelf --set-rpath '$ORIGIN/../' $plugin
 done

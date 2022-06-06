@@ -11,18 +11,30 @@
 # You can give as argument the path where you installed PyMeshLab.
 
 SCRIPTS_PATH="$(dirname "$(realpath "$0")")"
+QT_DIR=""
+INSTALL_PATH=$SCRIPTS_PATH/../../pymeshlab
 
 #checking for parameters
-if [ "$#" -eq 0 ]
-then
-    BUNDLE_PATH=$SCRIPTS_PATH/../../pymeshlab
-else
-    BUNDLE_PATH=$(realpath $1)
-fi
+for i in "$@"
+do
+case $i in
+    -i=*|--install_path=*)
+        INSTALL_PATH="${i#*=}"
+        shift # past argument=value
+        ;;
+    -qt=*|--qt_dir=*)
+        QT_DIR=${i#*=}/bin/
+        shift # past argument=value
+        ;;
+    *)
+        # unknown option
+        ;;
+esac
+done
 
-windeployqt --network --xml $BUNDLE_PATH/pmeshlab*
+${QT_DIR}windeployqt --network --xml $INSTALL_PATH/pmeshlab*
 
-rm $BUNDLE_PATH/d3dcompiler*
-if ls $BUNDLE_PATH/vc_redist* 1> /dev/null 2>&1; then
-    rm $BUNDLE_PATH/vc_redist*
+rm $INSTALL_PATH/d3dcompiler*
+if ls $INSTALL_PATH/vc_redist* 1> /dev/null 2>&1; then
+    rm $INSTALL_PATH/vc_redist*
 fi
