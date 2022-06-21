@@ -407,6 +407,7 @@ void loadMeshUsingPlugin(
 	const std::string& filename,
 	pybind11::kwargs   kwargs,
 	MeshDocument&      md,
+	VerbosityManager&  verbose,
 	const FunctionSet& filterFunctionSet)
 {
 	QFileInfo finfo(QString::fromStdString(filename));
@@ -423,6 +424,16 @@ void loadMeshUsingPlugin(
 
 			RichParameterList rps = plugin->initPreOpenParameter(extension);
 			meshsethelper::updateRichParameterListFromKwargs(ff, kwargs, &md, rps, true);
+			if (verbose.isParameterVerbosityEnabled() || verbose.isVerbosityEnabled()) {
+				std::cout << "\nLoading file " << filename << " with the following parameters:\n";
+				py::dict params = meshsethelper::pydictFromRichParameterList(rps);
+				py::print(params);
+				std::cout << "\n";
+			}
+			verbose.startVerbosityManager();
+			if (verbose.isVerbosityEnabled()) {
+				plugin->setLog(&md.Log);
+			}
 			try {
 				py::gil_scoped_release release;
 				meshlab::loadMeshWithStandardParameters(
@@ -431,9 +442,13 @@ void loadMeshUsingPlugin(
 			}
 			catch (const MLException& e) {
 				py::gil_scoped_acquire acquire;
+				verbose.endVerbosityManager();
+				plugin->setLog(nullptr);
 				throw MLException(
 					"Unable to open file: " + QString::fromStdString(filename) + "\n" + e.what());
 			}
+			verbose.endVerbosityManager();
+			plugin->setLog(nullptr);
 		}
 		else {
 			throw MLException("Unknown format for load: " + extension);
@@ -515,6 +530,7 @@ void saveMeshUsingPlugin(
 	int                qualityTextures,
 	pybind11::kwargs   kwargs,
 	MeshDocument&      md,
+	VerbosityManager&  verbose,
 	const FunctionSet& filterFunctionSet)
 {
 	if (mm == nullptr)
@@ -541,6 +557,17 @@ void saveMeshUsingPlugin(
 		RichParameterList rps = plugin->initSaveParameter(extension, *mm);
 		meshsethelper::updateRichParameterListFromKwargs(ff, kwargs, &md, rps, true);
 
+		if (verbose.isParameterVerbosityEnabled() || verbose.isVerbosityEnabled()) {
+			std::cout << "\nSaving file " << filename << " with the following parameters:\n";
+			py::dict params = meshsethelper::pydictFromRichParameterList(rps);
+			py::print(params);
+			std::cout << "\n";
+		}
+		verbose.startVerbosityManager();
+		if (verbose.isVerbosityEnabled()) {
+			plugin->setLog(&md.Log);
+		}
+
 		capabilityMesh = capabilityMesh & capabilityFormat;
 		defaultSaveSettings &= capabilityMesh;
 
@@ -561,6 +588,8 @@ void saveMeshUsingPlugin(
 			mm->saveTextures(finfo.absolutePath(), qualityTextures);
 		mm->setFileName(finfo.absoluteFilePath());
 		py::gil_scoped_acquire acquire;
+		verbose.endVerbosityManager();
+		plugin->setLog(nullptr);
 	}
 	else {
 		throw MLException("Unknown format for save: " + extension);
@@ -664,22 +693,16 @@ pybind11::dict applyFilterRPL(
 
 	py::dict           outputDict;
 	OpenGLContextData* data = nullptr;
-	if (verbose.isParameterVerbosityEnabled()) {
-		bool v = verbose.isVerbosityEnabled();
-		if (v) // if global verbosity was already enabled, we want to print also logs
-			VerbosityManager::staticLogger = &md.Log;
-		else // we enable verbosity temporarily, to print parameters
-			verbose.enableVerbosity();
-
+	VerbosityManager::staticLogger = &md.Log;
+	if (verbose.isParameterVerbosityEnabled() || verbose.isVerbosityEnabled()) {
 		std::cout << "\nApplying filter " << filtername << " with the following parameters:\n";
 		py::dict params = meshsethelper::pydictFromRichParameterList(rpl);
 		py::print(params);
 		std::cout << "\n";
-
-		if (!v) { // if global verbosity was not enabled
-			verbose.disableVersbosity(); // disable again the verbosity...
-			verbose.enableParameterVerbosity(); // ... but enable again parameter verbosity
-		}
+	}
+	verbose.startVerbosityManager();
+	if (verbose.isVerbosityEnabled()) {
+		fp->setLog(&md.Log);
 	}
 	try {
 		int req = fp->getRequirements(action);
@@ -727,12 +750,15 @@ pybind11::dict applyFilterRPL(
 			releaseOpenGLContext(fp);
 			delete data;
 			data = nullptr;
+			verbose.endVerbosityManager();
 		}
 		throw MLException(
 			"Failed to apply filter: " + QString::fromStdString(filtername) + "\n" +
 			"Details: " + e.what());
 	}
+	verbose.endVerbosityManager();
 	VerbosityManager::staticLogger = nullptr;
+	fp->setLog(nullptr);
 	return outputDict;
 }
 

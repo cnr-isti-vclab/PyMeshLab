@@ -42,23 +42,14 @@ VerbosityManager::~VerbosityManager()
 	}
 }
 
-void VerbosityManager::disableVersbosity()
-{
-	coutRed = new CoutRedirect();
-	cerrRed = new CerrRedirect();
-	qdebRed = new QDebugRedirect();
-	parameterVerbosity = false;
-}
-
 void VerbosityManager::enableVerbosity()
 {
-	parameterVerbosity = true;
-	delete coutRed;
-	delete cerrRed;
-	delete qdebRed;
-	coutRed = nullptr;
-	cerrRed = nullptr;
-	qdebRed = nullptr;
+	verbose = true;
+}
+
+void VerbosityManager::disableVersbosity()
+{
+	verbose = false;
 }
 
 void VerbosityManager::enableParameterVerbosity()
@@ -73,12 +64,33 @@ void VerbosityManager::disableParameterVerbosity()
 
 bool VerbosityManager::isVerbosityEnabled() const
 {
-	return coutRed == nullptr;
+	return verbose;
 }
 
 bool VerbosityManager::isParameterVerbosityEnabled() const
 {
 	return parameterVerbosity;
+}
+
+void VerbosityManager::startVerbosityManager()
+{
+	if (!verbose) {
+		coutRed = new CoutRedirect();
+		cerrRed = new CerrRedirect();
+		qdebRed = new QDebugRedirect();
+	}
+}
+
+void VerbosityManager::endVerbosityManager()
+{
+	if (!verbose) { // if not verbose, I had the redirectors enabled
+		delete coutRed;
+		delete cerrRed;
+		delete qdebRed;
+		coutRed = nullptr;
+		cerrRed = nullptr;
+		qdebRed = nullptr;
+	}
 }
 
 bool VerbosityManager::filterCallBack(const int pos, const char* str)
