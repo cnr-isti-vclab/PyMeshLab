@@ -53,17 +53,9 @@ void pymeshlab::MeshSet::setVerbosity(bool verbose)
 {
 	if (verbose){
 		verbosityManager.enableVerbosity();
-		for (auto p : pm.filterPluginIterator())
-			p->setLog(&Log);
-		for (auto p : pm.ioPluginIterator())
-			p->setLog(&Log);
 	}
 	else {
 		verbosityManager.disableVersbosity();
-		for (auto p : pm.filterPluginIterator())
-			p->setLog(nullptr);
-		for (auto p : pm.ioPluginIterator())
-			p->setLog(nullptr);
 	}
 }
 
@@ -155,7 +147,7 @@ void pymeshlab::MeshSet::printFilterScript() const
 
 void pymeshlab::MeshSet::loadNewMesh(const std::string& filename, py::kwargs kwargs)
 {
-	meshsethelper::loadMeshUsingPlugin(filename, kwargs, *this, functionSet);
+	meshsethelper::loadMeshUsingPlugin(filename, kwargs, *this, verbosityManager, functionSet);
 }
 
 void pymeshlab::MeshSet::saveCurrentMesh(
@@ -167,7 +159,15 @@ void pymeshlab::MeshSet::saveCurrentMesh(
 	if (mm() == nullptr)
 		throw MLException("MeshSet has no selected Mesh.");
 	std::setlocale(LC_ALL, "en_US.UTF-8");
-	meshsethelper::saveMeshUsingPlugin(filename, mm(), saveTextures, qualityTextures, kwargs, *this, functionSet);
+	meshsethelper::saveMeshUsingPlugin(
+		filename,
+		mm(),
+		saveTextures,
+		qualityTextures,
+		kwargs,
+		*this,
+		verbosityManager,
+		functionSet);
 }
 
 /**

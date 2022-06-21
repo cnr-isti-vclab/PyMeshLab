@@ -36,21 +36,27 @@ class VerbosityManager
 public:
 	VerbosityManager();
 	~VerbosityManager();
-	void disableVersbosity();
+
 	void enableVerbosity();
+	void disableVersbosity();
 	void enableParameterVerbosity();
 	void disableParameterVerbosity();
 	bool isVerbosityEnabled() const;
 	bool isParameterVerbosityEnabled() const;
 
+	void startVerbosityManager();
+	void endVerbosityManager();
+
 	static bool         filterCallBack(const int pos, const char* str);
 	static GLLogStream* staticLogger;
 
 private:
+	bool parameterVerbosity = false;
+	bool verbose = false;
+
 	CoutRedirect*   coutRed = nullptr;
 	CerrRedirect*   cerrRed = nullptr;
 	QDebugRedirect* qdebRed = nullptr;
-	bool parameterVerbosity = false;
 };
 
 } // namespace pymeshlab

@@ -84,6 +84,7 @@ void loadMeshUsingPlugin(
 	const std::string& filename,
 	pybind11::kwargs   kwargs,
 	MeshDocument&      md,
+	VerbosityManager&  verbose,
 	const FunctionSet& filterFunctionSet);
 
 void loadRasterUsingPlugin(const std::string& filename, MeshDocument& md);
@@ -101,6 +102,7 @@ void saveMeshUsingPlugin(
 	int                qualityTextures,
 	pybind11::kwargs   kwargs,
 	MeshDocument&      md,
+	VerbosityManager&  verbose,
 	const FunctionSet& filterFunctionSet);
 
 /** Apply Filter **/
