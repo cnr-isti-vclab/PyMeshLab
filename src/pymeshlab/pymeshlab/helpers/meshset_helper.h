@@ -96,7 +96,7 @@ int computeSaveSettingsMaskFromKwargs(
 	int              capabilityMask);
 
 void saveMeshUsingPlugin(
-	const std::string& filename,
+	std::string filename,
 	MeshModel*         mm,
 	bool               saveTextures,
 	int                qualityTextures,

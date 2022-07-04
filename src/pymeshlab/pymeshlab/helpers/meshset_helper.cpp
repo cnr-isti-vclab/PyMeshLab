@@ -524,7 +524,7 @@ int computeSaveSettingsMaskFromKwargs(pybind11::kwargs kwargs, int startingMask,
 }
 
 void saveMeshUsingPlugin(
-	const std::string& filename,
+	std::string        filename,
 	MeshModel*         mm,
 	bool               saveTextures,
 	int                qualityTextures,
@@ -536,8 +536,10 @@ void saveMeshUsingPlugin(
 	if (mm == nullptr)
 		throw MLException(
 			"Input model is nullptr. This should never happen.\nPlease open an issue on GitHub!");
-	QFileInfo      finfo(QString::fromStdString(filename));
-	QString        extension = finfo.suffix().toLower();
+	QFileInfo finfo(QString::fromStdString(filename));
+	filename          = finfo.absoluteFilePath().toStdString();
+	QString extension = finfo.suffix().toLower();
+
 	PluginManager& pm        = meshlab::pluginManagerInstance();
 	if (pm.isOutputMeshFormatSupported(extension)) {
 		const Function& ff     = filterFunctionSet.saveMeshFunction(extension);
