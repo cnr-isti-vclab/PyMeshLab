@@ -45,6 +45,10 @@ jobs:
       with:
         path: src/meshlab/src/external/downloads/*
         key: ${{ runner.os }}-external-libraries
+    - name: Ccache
+      uses: hendrikmuhs/ccache-action@v1.2
+      with:
+        key: ${{ runner.os }}-${{ github.ref }}
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       shell: bash
       run: |
