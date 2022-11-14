@@ -4,7 +4,6 @@ SCRIPTS_PATH="$(dirname "$(realpath "$0")")"
 SOURCE_PATH=$SCRIPTS_PATH/../../src
 BUILD_PATH=$SOURCE_PATH/../build
 INSTALL_PATH=$SOURCE_PATH/../pymeshlab
-BUILD_MESHLAB_OPTION=""
 BUILD_OPTION="-DCMAKE_BUILD_TYPE=Release"
 NIGHTLY_OPTION=""
 QT_DIR=""
@@ -19,10 +18,6 @@ case $i in
         ;;
     -i=*|--install_path=*)
         INSTALL_PATH="${i#*=}"
-        shift # past argument=value
-        ;;
-    --no-build-meshlab)
-        BUILD_MESHLAB_OPTION="-DBUILD_MESHLAB=OFF"
         shift # past argument=value
         ;;
     --debug)
@@ -64,6 +59,6 @@ then
     export Qt5_DIR=$QT_DIR
 fi
 
-cmake -GNinja $BUILD_OPTION -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $BUILD_MESHLAB_OPTION $NIGHTLY_OPTION $SOURCE_PATH
+cmake -GNinja $BUILD_OPTION -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $NIGHTLY_OPTION $SOURCE_PATH
 ninja
 ninja install

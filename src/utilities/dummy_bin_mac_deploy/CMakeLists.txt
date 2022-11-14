@@ -6,12 +6,6 @@ set(CMAKE_OSX_DEPLOYMENT_TARGET "10.11" CACHE STRING "Minimum OS X deployment ve
 add_executable(dummybin MACOSX_BUNDLE
 	${SOURCES})
 
-if (NOT BUILD_MESHLAB)
-	target_include_directories(dummybin PUBLIC ${VCGDIR} ${EIGEN_INCLUDE_DIRS})
-	target_link_directories(dummybin PUBLIC "${PYMESHLAB_BUILD_DISTRIB_DIR}/dummybin.app/Contents/Frameworks")
-	target_link_libraries(dummybin PUBLIC vcglib Qt5::Widgets external-glew)
-endif()
-
 target_link_libraries(dummybin PUBLIC meshlab-common)
 
 include_directories(${MESHLAB_SRC_DIR}/common)

@@ -127,37 +127,9 @@ endif()
 
 #Qt
 target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE Qt5::OpenGL Qt5::Xml external-glew)
-
-#vcg
-if (NOT BUILD_MESHLAB)
-	target_link_libraries(${PYMESHLAB_MODULE_NAME} PUBLIC vcglib)
-endif()
-
-#meshlab-common
-if (NOT BUILD_MESHLAB)
-	if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../meshlab/ML_VERSION")
-		file(READ "${CMAKE_CURRENT_SOURCE_DIR}/../meshlab/ML_VERSION" MESHLAB_VERSION)
-		if (BUILD_WITH_DOUBLE_SCALAR)
-			set(MESHLAB_VERSION "${MESHLAB_VERSION}d")
-		endif()
-		#add_definitions(-DMESHLAB_VERSION=${MESHLAB_VERSION})
-		message(STATUS "MeshLab version: ${MESHLAB_VERSION}")
-	endif()
-
-	if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
-		target_link_directories(${PYMESHLAB_MODULE_NAME} PUBLIC "${PYMESHLAB_BUILD_DISTRIB_DIR}/lib")
-	else()
-		target_link_directories(${PYMESHLAB_MODULE_NAME} PUBLIC "${PYMESHLAB_BUILD_DISTRIB_DIR}/dummybin.app/Contents/Frameworks")
-	endif()
-	target_compile_definitions(${PYMESHLAB_MODULE_NAME}
-		PUBLIC
-			MESHLAB_VERSION=${MESHLAB_VERSION}
-			MESHLAB_SCALAR=${MESHLAB_SCALAR}
-		)
-endif()
 target_link_libraries(
 	${PYMESHLAB_MODULE_NAME}
-	PUBLIC meshlab-common external-exif)
+	PUBLIC meshlab-common)
 
 ### Build directories
 if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
@@ -201,24 +173,6 @@ else()
 		TARGET ${PYMESHLAB_MODULE_NAME}
 		POST_BUILD COMMAND
 		${CMAKE_INSTALL_NAME_TOOL} -add_rpath "@loader_path/Frameworks" $<TARGET_FILE:${PYMESHLAB_MODULE_NAME}>)
-endif()
-
-### Copy/install other files
-if (NOT BUILD_MESHLAB)
-	if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
-		if (WIN32)
-			install(DIRECTORY "${PYMESHLAB_BUILD_DISTRIB_DIR}/lib/" DESTINATION ${CMAKE_INSTALL_PREFIX}
-					FILES_MATCHING PATTERN "*.lib" PATTERN "*.dll" PATTERN "*.exp"
-					PATTERN "plugins" EXCLUDE)
-			install(DIRECTORY "${PYMESHLAB_BUILD_DISTRIB_DIR}/lib/plugins" DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
-					FILES_MATCHING PATTERN "*.dll")
-		else()
-			install(DIRECTORY "${PYMESHLAB_BUILD_DISTRIB_DIR}/lib" DESTINATION ${CMAKE_INSTALL_PREFIX})
-		endif()
-	else()
-		install(DIRECTORY "${PYMESHLAB_BUILD_DISTRIB_DIR}/dummybin.app/Contents/Frameworks" DESTINATION ${CMAKE_INSTALL_PREFIX}/dummybin.app/Contents/Frameworks)
-		install(DIRECTORY "${PYMESHLAB_BUILD_DISTRIB_DIR}/dummybin.app/Contents/PlugIns" DESTINATION ${CMAKE_INSTALL_PREFIX}/dummybin.app/Contents/PlugIns)
-	endif()
 endif()
 
 if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
