@@ -79,7 +79,7 @@ jobs:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
         path: pymeshlab/
     - name: Install Python ${{ matrix.pyversion }}
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.pyversion }}
     - name: Run Tests ${{ matrix.pyversion }}
@@ -106,7 +106,7 @@ jobs:
         name: pymeshlab_whl_${{ runner.os }}_python${{ matrix.pyversion }}
         path: .
     - name: Install Python ${{ matrix.pyversion }}
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.pyversion }}
     - name: Install and Test Wheel
