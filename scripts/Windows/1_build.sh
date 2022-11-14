@@ -7,6 +7,7 @@ INSTALL_PATH=$SOURCE_PATH/../pymeshlab
 BUILD_OPTION="-DCMAKE_BUILD_TYPE=Release"
 NIGHTLY_OPTION=""
 QT_DIR=""
+CCACHE=""
 
 #check parameters
 for i in "$@"
@@ -30,6 +31,10 @@ case $i in
         ;;
     -qt=*|--qt_dir=*)
         QT_DIR=${i#*=}/bin/
+        shift # past argument=value
+        ;;
+    --ccache)
+        CCACHE="-DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache"
         shift # past argument=value
         ;;
     *)
@@ -59,6 +64,6 @@ then
     export Qt5_DIR=$QT_DIR
 fi
 
-cmake -GNinja $BUILD_OPTION -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $NIGHTLY_OPTION $SOURCE_PATH
+cmake -GNinja $BUILD_OPTION -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $CCACHE $NIGHTLY_OPTION $SOURCE_PATH
 ninja
 ninja install

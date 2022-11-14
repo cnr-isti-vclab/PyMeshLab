@@ -52,7 +52,7 @@ jobs:
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       shell: bash
       run: |
-        sh scripts/${{ runner.os }}/1_build.sh --nightly
+        sh scripts/${{ runner.os }}/1_build.sh --nightly --ccache
     - name: Deploy PyMeshLab ${{ matrix.pyversion }}
       shell: bash
       run: |

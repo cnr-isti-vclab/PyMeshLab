@@ -8,6 +8,7 @@ CORES="-j4"
 BUILD_OPTION="-DCMAKE_BUILD_TYPE=Release"
 NIGHTLY_OPTION=""
 QT_DIR=""
+CCACHE=""
 
 #check parameters
 for i in "$@"
@@ -37,6 +38,10 @@ case $i in
         QT_DIR=${i#*=}
         shift # past argument=value
         ;;
+    --ccache)
+        CCACHE="-DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache"
+        shift # past argument=value
+        ;;
     *)
         # unknown option
     ;;
@@ -64,6 +69,6 @@ then
     export Qt5_DIR=$QT_DIR
 fi
 
-cmake $BUILD_OPTION -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $NIGHTLY_OPTION $SOURCE_PATH
+cmake $BUILD_OPTION -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $CCACHE $NIGHTLY_OPTION $SOURCE_PATH
 make $CORES
 make install

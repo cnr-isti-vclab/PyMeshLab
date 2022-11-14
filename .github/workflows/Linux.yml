@@ -43,7 +43,7 @@ jobs:
         key: ${{ runner.os }}-${{ github.ref }}
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
-        sh scripts/${{ runner.os }}/1_build.sh --nightly
+        sh scripts/${{ runner.os }}/1_build.sh --nightly --ccache
     - name: Deploy PyMeshLab ${{ matrix.pyversion }}
       run: |
         sh scripts/${{ runner.os }}/2_deploy.sh
