@@ -12,7 +12,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        pyversion: [3.7, 3.8, 3.9, "3.10"]
+        pyversion: [3.7, 3.8, 3.9, '3.10', '3.11']
 
     steps:
     - uses: actions/checkout@v3
@@ -81,7 +81,7 @@ jobs:
     needs: windows_build_pymeshlab
     strategy:
       matrix:
-        pyversion: [3.7, 3.8, 3.9, "3.10"]
+        pyversion: [3.7, 3.8, 3.9, '3.10', '3.11']
     steps:
     - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v3
@@ -110,7 +110,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        pyversion: [3.7, 3.8, 3.9, "3.10"]
+        pyversion: [3.7, 3.8, 3.9, '3.10', '3.11']
     steps:
     - name: Download pymeshlab_whl_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v3
