@@ -36,7 +36,7 @@ ${QT_DIR}macdeployqt $INSTALL_PATH/dummybin.app \
     -executable=$MODULE_NAME \
     $ARGUMENTS
 
-rsync -a $INSTALL_PATH/dummybin.app/Contents/Frameworks/ $INSTALL_PATH/Frameworks/
-rsync -a $INSTALL_PATH/dummybin.app/Contents/PlugIns/ $INSTALL_PATH/PlugIns/
-mv $INSTALL_PATH/dummybin.app/Contents/pmeshlab* $INSTALL_PATH/
-rm -rf $INSTALL_PATH/dummybin.app
+#rsync -a $INSTALL_PATH/dummybin.app/Contents/Frameworks/ $INSTALL_PATH/Frameworks/
+#rsync -a $INSTALL_PATH/dummybin.app/Contents/PlugIns/ $INSTALL_PATH/PlugIns/
+#mv $INSTALL_PATH/dummybin.app/Contents/pmeshlab* $INSTALL_PATH/
+#rm -rf $INSTALL_PATH/dummybin.app
