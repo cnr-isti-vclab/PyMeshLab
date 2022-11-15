@@ -96,7 +96,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        pyversion: [3.7, 3.8, 3.9, "3.10"]
+        pyversion: [3.7, 3.8, 3.9]
     steps:
     - name: Download pymeshlab_whl_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v3
