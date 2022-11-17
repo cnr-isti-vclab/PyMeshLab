@@ -5,10 +5,10 @@ SOURCE_PATH=$SCRIPTS_PATH/../../src
 BUILD_PATH=$SOURCE_PATH/../build
 INSTALL_PATH=$SOURCE_PATH/../pymeshlab
 CORES="-j4"
-BUILD_MESHLAB_OPTION=""
 BUILD_OPTION="-DCMAKE_BUILD_TYPE=Release"
 NIGHTLY_OPTION=""
 QT_DIR=""
+CCACHE=""
 
 #check parameters
 for i in "$@"
@@ -26,10 +26,6 @@ case $i in
         CORES=$i
         shift # past argument=value
         ;;
-    --no-build-meshlab)
-        BUILD_MESHLAB_OPTION="-DBUILD_MESHLAB=OFF"
-        shift # past argument=value
-        ;;
     --debug)
         BUILD_OPTION="-DCMAKE_BUILD_TYPE=Debug"
         shift # past argument=value
@@ -40,6 +36,10 @@ case $i in
         ;;
     -qt=*|--qt_dir=*)
         QT_DIR=${i#*=}
+        shift # past argument=value
+        ;;
+    --ccache)
+        CCACHE="-DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache"
         shift # past argument=value
         ;;
     *)
@@ -69,6 +69,6 @@ then
     export Qt5_DIR=$QT_DIR
 fi
 
-cmake $BUILD_OPTION -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $BUILD_MESHLAB_OPTION $NIGHTLY_OPTION $SOURCE_PATH
+cmake $BUILD_OPTION -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $CCACHE $NIGHTLY_OPTION $SOURCE_PATH
 make $CORES
 make install
