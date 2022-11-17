@@ -56,6 +56,30 @@ jobs:
         rsync -a pymeshlab/dummybin.app/Contents/PlugIns/ pymeshlab/PlugIns/
         mv pymeshlab/dummybin.app/Contents/pmeshlab* pymeshlab/
         rm -rf pymeshlab/dummybin.app
+    - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+        path: pymeshlab/
+
+  macos_wheel_pymeshlab:
+    name: Build PyMeshLab Wheel (MacOS)
+    runs-on: macos-latest
+    needs: macos_build_pymeshlab
+    strategy:
+      matrix:
+        pyversion: ['3.7', '3.8', '3.9', '3.10', '3.11']
+    steps:
+    - uses: actions/checkout@v3
+    - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+      uses: actions/download-artifact@v3
+      with:
+        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+        path: pymeshlab/
+    - name: Install Python ${{ matrix.pyversion }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.pyversion }}
     - name: Build Wheel
       shell: bash
       run: |
@@ -63,11 +87,6 @@ jobs:
         echo "${VER}.dev0" | tr -d '\n'> PYML_VERSION
         pip install wheel
         pip wheel . -w wheels/
-    - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-      uses: actions/upload-artifact@v3
-      with:
-        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-        path: pymeshlab/
     - name: Upload wheel ${{ runner.os }} python ${{ matrix.pyversion }}
       uses: actions/upload-artifact@v3
       with:
@@ -102,8 +121,8 @@ jobs:
     #    path: pymeshlab/tests/sample_meshes/test_output
 
   macos_test_wheel:
-    name: Test Wheel (MacOS)
-    needs: macos_build_pymeshlab
+    name: Test PyMeshLab Wheel (MacOS)
+    needs: macos_wheel_pymeshlab
     runs-on: macos-latest
     strategy:
       matrix:
