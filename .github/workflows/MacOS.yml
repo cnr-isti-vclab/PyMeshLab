@@ -45,11 +45,6 @@ jobs:
     - name: Deploy PyMeshLab ${{ matrix.pyversion }}
       run: |
         sh scripts/${{ runner.os }}/2_deploy.sh
-    - name: TMP Upload DummyBin_${{ runner.os }}_python${{ matrix.pyversion }}
-      uses: actions/upload-artifact@v3
-      with:
-        name: DummyBin_${{ runner.os }}_python${{ matrix.pyversion }}
-        path: pymeshlab/dummybin.app
     - name: TMP make pymeshlab bundle
       run: |
         rsync -a pymeshlab/dummybin.app/Contents/Frameworks/ pymeshlab/Frameworks/
