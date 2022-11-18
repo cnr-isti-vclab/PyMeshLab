@@ -1,4 +1,4 @@
-name: MacOS
+name: BuildAndTest
 
 on:
   [push, pull_request]
@@ -7,16 +7,25 @@ env:
   QT_VERSION: 5.15.2
 
 jobs:
-  macos_build_pymeshlab:
-    name: Build PyMeshLab (MacOS)
-    runs-on: macos-latest
+  build_pymeshlab:
+    name: Build PyMeshLab
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         pyversion: ['3.7', '3.8', '3.9', '3.10', '3.11']
+        os: ['ubuntu-18.04', 'macos-latest', 'windows-latest']
     steps:
     - uses: actions/checkout@v3
       with:
         submodules: recursive
+    - name: Setup Windows env variables
+      if: runner.os == 'Windows'
+      run: |
+        echo "name=VCINSTALLDIR::C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\VC" >> $GITHUB_ENV
+    - name: Setup Windows MSVC
+      if: runner.os == 'Windows'
+      uses: ilammy/msvc-dev-cmd@v1
     - name: Install Qt
       uses: jurplel/install-qt-action@v3
       with:
@@ -26,9 +35,23 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.pyversion }}
+    - name: Install Ubuntu dependencies
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev patchelf libgmp-dev libmpfr-dev libxerces-c-dev
+        #needed by qt 5.15 on linux
+        sudo apt-get install libxcb-icccm4-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-render-util0-dev libxcb-xinerama0-dev
     - name: Install MacOS dependencies
+      if: runner.os == 'macOS'
       run: |
         brew install libomp cgal xerces-c
+    - name: Install Windows dependencies
+      if: runner.os == 'Windows'
+      shell: bash
+      run: |
+        choco install ccache
+        choco install ninja
+        choco install wget
     - name: Cache external libraries sources
       id: cache-ext-libs
       uses: actions/cache@v3
@@ -45,30 +68,21 @@ jobs:
     - name: Deploy PyMeshLab ${{ matrix.pyversion }}
       run: |
         sh scripts/${{ runner.os }}/2_deploy.sh
-    - name: TMP Upload DummyBin_${{ runner.os }}_python${{ matrix.pyversion }}
-      uses: actions/upload-artifact@v3
-      with:
-        name: DummyBin_${{ runner.os }}_python${{ matrix.pyversion }}
-        path: pymeshlab/dummybin.app
-    - name: TMP make pymeshlab bundle
-      run: |
-        rsync -a pymeshlab/dummybin.app/Contents/Frameworks/ pymeshlab/Frameworks/
-        rsync -a pymeshlab/dummybin.app/Contents/PlugIns/ pymeshlab/PlugIns/
-        mv pymeshlab/dummybin.app/Contents/pmeshlab* pymeshlab/
-        rm -rf pymeshlab/dummybin.app
     - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v3
       with:
         name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-        path: pymeshlab/
+        path: pymeshlab
 
-  macos_wheel_pymeshlab:
-    name: Build PyMeshLab Wheel (MacOS)
-    runs-on: macos-latest
-    needs: macos_build_pymeshlab
+  build_wheel:
+    name: Build PyMeshLab Wheel
+    runs-on: ${{ matrix.os }}
+    needs: build_pymeshlab
     strategy:
+      fail-fast: false
       matrix:
         pyversion: ['3.7', '3.8', '3.9', '3.10', '3.11']
+        os: ['ubuntu-18.04', 'macos-latest', 'windows-latest']
     steps:
     - uses: actions/checkout@v3
     - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
@@ -93,13 +107,15 @@ jobs:
         name: pymeshlab_whl_${{ runner.os }}_python${{ matrix.pyversion }}
         path: wheels/pymeshlab*.whl
 
-  macos_tests:
-    name: Test PyMeshLab (MacOS)
-    runs-on: macos-latest
-    needs: macos_build_pymeshlab
+  test_pymeshlab:
+    name: Test PyMeshLab
+    runs-on: ${{ matrix.os }}
+    needs: build_pymeshlab
     strategy:
+      fail-fast: false
       matrix:
         pyversion: ['3.7', '3.8', '3.9', '3.10', '3.11']
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
     steps:
     - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v3
@@ -110,23 +126,31 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.pyversion }}
-    - name: Run Tests ${{ matrix.pyversion }}
+    - name: Install dependencies
       run: |
         pip install pytest numpy
-        pytest --pyargs pymeshlab
+    - name: Set CPU opengl
+      if: runner.os == 'Windows'
+      run: |
+        python -c 'import pymeshlab; pymeshlab.use_cpu_opengl()' #just for windows
+    - name: Run tests
+      run: |
+        pytest --pyargs pymeshlab -m "not glcontext"
     #- name: Upload PyMeshLab results
     #  uses: actions/upload-artifact@v3
     #  with:
     #    name: PyMeshLabResults_${{ runner.os }}_python${{ matrix.pyversion }}
     #    path: pymeshlab/tests/sample_meshes/test_output
 
-  macos_test_wheel:
-    name: Test PyMeshLab Wheel (MacOS)
-    needs: macos_wheel_pymeshlab
-    runs-on: macos-latest
+  test_wheel:
+    name: Test Wheel
+    needs: build_wheel
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        pyversion: ['3.7', '3.8', '3.9', '3.10', '3.11'] 
+        pyversion: ['3.7', '3.8', '3.9', '3.10', '3.11']
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
     steps:
     - name: Download pymeshlab_whl_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v3
@@ -137,9 +161,15 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.pyversion }}
-    - name: Install and Test Wheel
+    - name: Install wheel and dependencies
       shell: bash
       run: |
-        pip install pytest
+        pip install pytest numpy
         pip install pymeshlab*.whl
-        pytest --pyargs pymeshlab
+    - name: Set CPU opengl
+      if: runner.os == 'Windows'
+      run: |
+        python -c 'import pymeshlab; pymeshlab.use_cpu_opengl()' #just for windows
+    - name: Run tests
+      run: |
+        pytest --pyargs pymeshlab -m "not glcontext"
