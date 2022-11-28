@@ -164,7 +164,7 @@ set(MESHLAB_PLUGINS
 	meshlabplugins/filter_voronoi
 )
 
-add_subdirectory(meshlab/src)
+add_subdirectory(meshlab)
 
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/pymeshlab)
