@@ -1,3 +1,3 @@
 #!/bin/bash
 
-choco install cmake ccache ninja wget
+choco install cmake ninja ccache wget

@@ -4,8 +4,6 @@ SCRIPTS_PATH="$(dirname "$(realpath "$0")")"
 SOURCE_PATH=$SCRIPTS_PATH/../../src
 BUILD_PATH=$SOURCE_PATH/../build
 INSTALL_PATH=$SOURCE_PATH/../pymeshlab
-CORES="-j4"
-BUILD_OPTION="-DCMAKE_BUILD_TYPE=Release"
 NIGHTLY_OPTION=""
 QT_DIR=""
 CCACHE=""
@@ -19,15 +17,7 @@ case $i in
         shift # past argument=value
         ;;
     -i=*|--install_path=*)
-        INSTALL_PATH="${i#*=}"/usr/
-        shift # past argument=value
-        ;;
-    -j*)
-        CORES=$i
-        shift # past argument=value
-        ;;
-    --debug)
-        BUILD_OPTION="-DCMAKE_BUILD_TYPE=Debug"
+        INSTALL_PATH="${i#*=}"
         shift # past argument=value
         ;;
     -n|--nightly)
@@ -63,12 +53,13 @@ fi
 BUILD_PATH=$(realpath $BUILD_PATH)
 INSTALL_PATH=$(realpath $INSTALL_PATH)
 
-cd $BUILD_PATH
 if [ ! -z "$QT_DIR" ]
 then
     export Qt5_DIR=$QT_DIR
 fi
 
-cmake $BUILD_OPTION -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $CCACHE $NIGHTLY_OPTION $SOURCE_PATH
-make $CORES
-make install
+cd $BUILD_PATH
+export NINJA_STATUS="[%p (%f/%t) ] "
+cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $CCACHE $NIGHTLY_OPTION $SOURCE_PATH
+ninja
+ninja install
