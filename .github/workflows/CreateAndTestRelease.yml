@@ -16,7 +16,7 @@ jobs:
     name: Update Version
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Update PYML_VERSION
       run: |
         echo ${{ github.event.inputs.version }} | tr -d '\n'> PYML_VERSION
