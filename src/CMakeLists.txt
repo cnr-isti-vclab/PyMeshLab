@@ -1,35 +1,6 @@
 # Copyright 2019 Collabora, Ltd.
 # SPDX-License-Identifier: BSL-1.0
 
-cmake_minimum_required(VERSION 3.10)
-project(PyMeshLab)
-
-if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-	set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/../pymeshlab"
-		CACHE PATH "default pymeshlab install directory" FORCE)
-endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-set(CMAKE_POLICY_DEFAULT_CMP0077 NEW)
-
-#####
-# Developing options:
-# - option to debug (call all the functions from c++ instead of python) -> debug_main.cpp
-# - option to update automatically the list of filters doc page -> doc_main.cpp
-#####
-option(BUILD_PYMESHLAB_DEBUG "Debug PyMeshLab from C++, using the src/pymeshlab/debug_main.cpp source" OFF)
-option(BUILD_PYMESHLAB_UPDATE_DOC "Config used to update the list of filters doc page" OFF)
-
-#####
-# Option used on macos to deploy pymeshlab.
-# Since macdeployqt needs an appbundle, this option puts the pymeshlab library
-# everything required to run it in an appbundle, creating also a dubby binary
-# needed by macdeployqt to deploy the Qt libraries.
-# The script scripts/macOS/2_deploy.sh will then take care to transform the
-# deployed appbundle in a proper pymeshlab python module.
-#####
-if (APPLE)
-	option(BUILD_DUMMY_BIN_MAC_DEPLOY "Build a dummy binary necessary to deploy pymeshlab in MacOS" OFF)
-endif()
-
 # MeshLab directory
 set(MESHLAB_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/meshlab/src")
 
@@ -65,7 +36,7 @@ set(MESHLAB_BUILD_WITH_DOUBLE_SCALAR ON)
 
 set(EXTERNAL_DIR ${MESHLAB_SRC_DIR}/external)
 
-if (APPLE AND BUILD_DUMMY_BIN_MAC_DEPLOY)
+if (APPLE AND PYMESHLAB_BUILD_DUMMY_BIN_MAC_DEPLOY)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/utilities/dummy_bin_mac_deploy)
 endif()
 
@@ -73,7 +44,7 @@ set(MESHLAB_BUILD_ONLY_LIBRARIES ON)
 set(MESHLAB_USE_DEFAULT_BUILD_AND_INSTALL_DIRS OFF)
 
 ### Build directories
-if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
+if (NOT PYMESHLAB_BUILD_DUMMY_BIN_MAC_DEPLOY)
 	set(MESHLAB_BUILD_DISTRIB_DIR ${PYMESHLAB_BUILD_DISTRIB_DIR}/lib)
 	if (NOT APPLE)
 		set(MESHLAB_PLUGIN_OUTPUT_DIR ${MESHLAB_BUILD_DISTRIB_DIR}/plugins)
@@ -96,7 +67,7 @@ elseif(NOT APPLE)
 	set(MESHLAB_LIB_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/lib)
 	set(MESHLAB_PLUGIN_INSTALL_DIR ${MESHLAB_LIB_INSTALL_DIR}/plugins)
 else(APPLE)
-	if(BUILD_DUMMY_BIN_MAC_DEPLOY)
+	if(PYMESHLAB_BUILD_DUMMY_BIN_MAC_DEPLOY)
 		set(MESHLAB_LIB_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/dummybin.app/Contents/Frameworks)
 		set(MESHLAB_PLUGIN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/dummybin.app/Contents/PlugIns)
 	else()

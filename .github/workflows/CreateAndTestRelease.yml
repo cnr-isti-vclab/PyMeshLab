@@ -101,8 +101,6 @@ jobs:
     - name: Build Wheel
       shell: bash
       run: |
-        VER=$(date +%Y.%m.%d)
-        echo "${VER}.dev0" | tr -d '\n'> PYML_VERSION
         pip install wheel
         pip wheel . -w wheels/
     - name: Upload wheel ${{ runner.os }} python ${{ matrix.pyversion }}

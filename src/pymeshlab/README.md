@@ -9,5 +9,5 @@ PyMeshLab is a C++ project, organized in the following directory tree:
 
 There are two additional cpp files (`doc_main.cpp` and `debug_main.cpp`) that can be built only enabiling two CMake configurations:
 
-- `BUILD_PYMESHLAB_DEBUG` (default: `OFF`): if set to `ON`, pymeshlab will be built in debug mode, and instead of building `pymeshlab/main.cpp`, the file `pymeshlab/debug_main.cpp` will be built . This file contains a `main` function set to call pymeshlab functions under C++ and therefore allows to debug pymeshlab under a full C++ environment;
-- `BUILD_PYMESHLAB_UPDATE_DOC` (default: `OFF`): if set to `ON`, pymeshlab will be built but with `pymeshlab/doc_main.cpp` instead of `pymeshlab/main.cpp`. This build system will generate an executable that will automatically update the file `docs/filter_list.rst`, containing the documentation of the pymeshlab filter.
+- `PYMESHLAB_BUILD_DEBUG` (default: `OFF`): if set to `ON`, pymeshlab will be built in debug mode, and instead of building `pymeshlab/main.cpp`, the file `pymeshlab/debug_main.cpp` will be built . This file contains a `main` function set to call pymeshlab functions under C++ and therefore allows to debug pymeshlab under a full C++ environment;
+- `PYMESHLAB_UPDATE_DOC` (default: `OFF`): if set to `ON`, pymeshlab will be built but with `pymeshlab/doc_main.cpp` instead of `pymeshlab/main.cpp`. This build system will generate an executable that will automatically update the file `docs/filter_list.rst`, containing the documentation of the pymeshlab filter.

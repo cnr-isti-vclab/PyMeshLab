@@ -85,12 +85,12 @@ include_directories(${MESHLAB_SRC_DIR})
 
 #pybind11
 add_subdirectory(pybind11)
-if ((NOT BUILD_PYMESHLAB_DEBUG) AND (NOT BUILD_PYMESHLAB_UPDATE_DOC))
+if ((NOT PYMESHLAB_BUILD_DEBUG) AND (NOT PYMESHLAB_UPDATE_DOC))
 	pybind11_add_module(${PYMESHLAB_MODULE_NAME} ${HEADERS} ${SOURCES})
 endif()
 
 ##### OTHER OPTIONS - debug or doc
-if (BUILD_PYMESHLAB_DEBUG) #bin to debug pymeshlab
+if (PYMESHLAB_BUILD_DEBUG) #bin to debug pymeshlab
 	add_definitions(-DPYMESHLAB_DEBUG)
 	list(APPEND SOURCES debug_main.cpp)
 	add_executable(${PYMESHLAB_MODULE_NAME} ${SOURCES} ${HEADERS})
@@ -106,7 +106,7 @@ if (BUILD_PYMESHLAB_DEBUG) #bin to debug pymeshlab
 			${PYTHON_INCLUDE_DIRS})
 	set_property(TARGET ${PYMESHLAB_MODULE_NAME}
 		PROPERTY RUNTIME_OUTPUT_DIRECTORY ${PYMESHLAB_BUILD_DISTRIB_DIR})
-elseif(BUILD_PYMESHLAB_UPDATE_DOC) #bin to update doc
+elseif(PYMESHLAB_UPDATE_DOC) #bin to update doc
 	add_definitions(-DPYMESHLAB_SRC_BASE_DIR=${CMAKE_CURRENT_SOURCE_DIR})
 	add_definitions(-DPYMESHLAB_DEBUG)
 	list(APPEND SOURCES doc_main.cpp)
@@ -132,7 +132,7 @@ target_link_libraries(
 	PUBLIC meshlab-common)
 
 ### Build directories
-if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
+if (NOT PYMESHLAB_BUILD_DUMMY_BIN_MAC_DEPLOY)
 	#set_property(TARGET ${PYMESHLAB_MODULE_NAME}
 	#	PROPERTY RUNTIME_OUTPUT_DIRECTORY ${PYMESHLAB_BUILD_DISTRIB_DIR})
 	set_property(TARGET ${PYMESHLAB_MODULE_NAME}
@@ -143,7 +143,7 @@ else()
 endif()
 
 #copy files on build
-if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
+if (NOT PYMESHLAB_BUILD_DUMMY_BIN_MAC_DEPLOY)
 	file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/../../pymeshlab/tests" DESTINATION ${PYMESHLAB_BUILD_DISTRIB_DIR})
 	file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/../../pymeshlab/__init__.py" DESTINATION ${PYMESHLAB_BUILD_DISTRIB_DIR})
 	file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/../../pymeshlab/polyscope_functions.py" DESTINATION ${PYMESHLAB_BUILD_DISTRIB_DIR})
@@ -156,7 +156,7 @@ else()
 endif()
 
 ### Install directories
-if (BUILD_DUMMY_BIN_MAC_DEPLOY)
+if (PYMESHLAB_BUILD_DUMMY_BIN_MAC_DEPLOY)
 	install(TARGETS ${PYMESHLAB_MODULE_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/dummybin.app/Contents)
 else()
 	install(TARGETS ${PYMESHLAB_MODULE_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX})
@@ -175,7 +175,7 @@ else()
 		${CMAKE_INSTALL_NAME_TOOL} -add_rpath "@loader_path/Frameworks" $<TARGET_FILE:${PYMESHLAB_MODULE_NAME}>)
 endif()
 
-if (NOT BUILD_DUMMY_BIN_MAC_DEPLOY)
+if (NOT PYMESHLAB_BUILD_DUMMY_BIN_MAC_DEPLOY)
 	install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../../pymeshlab/tests" DESTINATION ${CMAKE_INSTALL_PREFIX})
 	install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/../../pymeshlab/__init__.py" DESTINATION ${CMAKE_INSTALL_PREFIX})
 	install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/../../pymeshlab/polyscope_functions.py" DESTINATION ${CMAKE_INSTALL_PREFIX})

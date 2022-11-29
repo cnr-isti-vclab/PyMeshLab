@@ -1,9 +1,9 @@
 #!/bin/bash
 
 SCRIPTS_PATH="$(dirname "$(realpath "$0")")"
-SOURCE_PATH=$SCRIPTS_PATH/../../src
-BUILD_PATH=$SOURCE_PATH/../build
-INSTALL_PATH=$SOURCE_PATH/../pymeshlab
+SOURCE_PATH=$SCRIPTS_PATH/../..
+BUILD_PATH=$SOURCE_PATH/build
+INSTALL_PATH=$SOURCE_PATH/pymeshlab
 NIGHTLY_OPTION=""
 QT_DIR=""
 CCACHE=""
