@@ -3,17 +3,19 @@ name: BuildDocumentation
 on:
   workflow_dispatch
 
+env:
+  QT_VERSION: 5.15.2
+
 jobs:
-  unix_build_pymeshlab:
+  build_pymeshlab:
     name: Build PyMeshLab
     runs-on: ubuntu-18.04
     strategy:
       matrix:
         pyversion: [3.8]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
-        ref: 'main'
         submodules: recursive
     - name: Remove old files
       run: |
@@ -24,38 +26,33 @@ jobs:
     - name: PyMeshLab version
       id: version
       run: |
-        echo  ::set-output name=pyml_version::"$(cat PYML_VERSION)"
-
+        echo "pyml_version=$(cat PYML_VERSION)" >> $GITHUB_ENV
     - name: Install Qt
-      uses: jurplel/install-qt-action@v2
+      uses: jurplel/install-qt-action@v3
+      with:
+        cache: true
+        version: ${{ env.QT_VERSION }}
     - name: Install Python ${{ matrix.pyversion }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.pyversion }}
-    - name: Install Ubuntu dependencies
+    - name: Install dependencies
+      shell: bash
       run: |
-        sudo apt-get install -y mesa-common-dev libglu1-mesa-dev libgmp-dev libcgal-dev libboost-all-dev libxerces-c-dev
-        #needed by qt 5.15 on linux
-        sudo apt-get install libxcb-icccm4-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-render-util0-dev libxcb-xinerama0-dev
-    - name: Environment variables
-      id: envs
-      run: |
-        cd src/meshlab
-        echo  ::set-output name=meshlab_commit::$(git rev-parse --short HEAD)
-    - name: Cache MeshLab Build
-      id: cache-meshlab-build
-      uses: actions/cache@v2
+        sh scripts/${{ runner.os }}/0_setup_env.sh
+    - name: Cache external libraries sources
+      id: cache-ext-libs
+      uses: actions/cache@v3
       with:
-        path: src/build/distrib/pymeshlab/lib/
-        key: ${{ runner.os }}-meshlab_build-${{steps.envs.outputs.meshlab_commit}}
-    # not building meshlab -- we need to hit always cache
-    - name: Fail if cache not hit
-      if: steps.cache-meshlab-build.outputs.cache-hit != 'true'
-      run: |
-        exit 1
+        path: src/meshlab/src/external/downloads/*
+        key: ${{ runner.os }}-external-libraries
+    - name: Ccache
+      uses: hendrikmuhs/ccache-action@v1.2
+      with:
+        key: ${{ runner.os }}-${{ github.ref }}
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
-        sh scripts/${{ runner.os }}/1_build.sh --no-build-meshlab
+        sh scripts/${{ runner.os }}/1_build.sh --ccache
     - name: Deploy PyMeshLab ${{ matrix.pyversion }}
       run: |
         sh scripts/${{ runner.os }}/2_deploy.sh

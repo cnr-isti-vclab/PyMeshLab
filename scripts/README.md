@@ -46,7 +46,7 @@ sh 2_deploy.sh my/install/path
 The `2_deploy.sh` script can be run only on the "oldest supported linux distro", due to the usage of the tool [linuxdeployqt](https://github.com/probonopd/linuxdeployqt). For more deetails see [here](https://github.com/probonopd/linuxdeployqt/issues/340).
 
 #### MacOS
-The build script for MacOS will generate an appbundle called "dummybin.app" (the cmake option `BUILD_DUMMY_BIN_MAC_DEPLOY` is set to `ON`). This is necessary to deploy PyMeshLab, since the tool `macdeployqt` just works with appbundles. The deploy script will then move all the required files outside the `dummybin.app` package, and then delete it.
+The build script for MacOS will generate an appbundle called "dummybin.app" (the cmake option `PYMESHLAB_BUILD_DUMMY_BIN_MAC_DEPLOY` is set to `ON`). This is necessary to deploy PyMeshLab, since the tool `macdeployqt` just works with appbundles. The deploy script will then move all the required files outside the `dummybin.app` package, and then delete it.
 
 #### Windows
 Windows scripts are **bash scripts**. Be sure to run them in a linux subsystem.
