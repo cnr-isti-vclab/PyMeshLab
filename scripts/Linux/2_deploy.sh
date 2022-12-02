@@ -46,11 +46,14 @@ $LINUXDEPLOY_PATH/linuxdeploy --executable=$PMESHLAB_MODULE_PATH \
   --appdir=$INSTALL_PATH \
   --plugin qt
 
+# move lib directory outside usr
 rsync -av $INSTALL_PATH/usr/lib $INSTALL_PATH/
 
+# remove usr and unuseful files
 rm -rf $INSTALL_PATH/usr/
 rm -rf $INSTALL_PATH/apprun-hooks/
 
+# pymeshlab module looks for libs inside lib directory 
 patchelf --set-rpath '$ORIGIN/lib/' $PMESHLAB_MODULE_PATH
 
 for plugin in $INSTALL_PATH/lib/plugins/*.so
