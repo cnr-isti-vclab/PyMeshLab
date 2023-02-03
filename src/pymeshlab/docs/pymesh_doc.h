@@ -158,7 +158,11 @@ const char* PYMESH_TR_VERT_MAT =
 // Mesh::vertex_matrix
 const char* PYMESH_EDGE_MAT =
 	"Returns the edge matrix of the mesh as a numpy array, which is a #E*2 matrix of vertex "
-	"indices. Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
+	"indices. Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. **Note**: "
+	"The Edge Matrix, in VCGLib, MeshLab and PyMeshLab it is not related and has nothing to do with"
+	"the Mesh Faces. Edges are used to store polylines or simple collections of edges that are "
+	"unrelated with faces. Some filters that generate Edges in pymeshlab are "
+	"`generate_polyline_from_planar_section` and `generate_polyline_from_selection_perimeter`.";
 
 // Mesh::face_matrix
 const char* PYMESH_FACE_MAT =
