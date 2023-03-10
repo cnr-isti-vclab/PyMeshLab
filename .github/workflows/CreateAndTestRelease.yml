@@ -90,6 +90,8 @@ jobs:
         os: ['ubuntu-18.04', 'macos-latest', 'windows-latest']
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: main
     - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
       uses: actions/download-artifact@v3
       with:
