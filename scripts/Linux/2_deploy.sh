@@ -42,21 +42,25 @@ mkdir $INSTALL_PATH/usr
 mv $INSTALL_PATH/lib $INSTALL_PATH/usr/lib
 
 PMESHLAB_MODULE_PATH=$(ls -d $INSTALL_PATH/pmeshlab*)
-$LINUXDEPLOY_PATH/linuxdeploy --executable=$PMESHLAB_MODULE_PATH \
-  --appdir=$INSTALL_PATH \
-  --plugin qt
 
-# move lib directory outside usr
-rsync -av $INSTALL_PATH/usr/lib $INSTALL_PATH/
+if $LINUXDEPLOY_PATH/linuxdeploy --executable=$PMESHLAB_MODULE_PATH --appdir=$INSTALL_PATH --plugin qt; then
 
-# remove usr and unuseful files
-rm -rf $INSTALL_PATH/usr/
-rm -rf $INSTALL_PATH/apprun-hooks/
+    # move lib directory outside usr
+    rsync -av $INSTALL_PATH/usr/lib $INSTALL_PATH/
 
-# pymeshlab module looks for libs inside lib directory 
-patchelf --set-rpath '$ORIGIN/lib/' $PMESHLAB_MODULE_PATH
+    # remove usr and unuseful files
+    rm -rf $INSTALL_PATH/usr/
+    rm -rf $INSTALL_PATH/apprun-hooks/
 
-for plugin in $INSTALL_PATH/lib/plugins/*.so
-do
-    patchelf --set-rpath '$ORIGIN/../' $plugin
-done
+    # pymeshlab module looks for libs inside lib directory 
+    patchelf --set-rpath '$ORIGIN/lib/' $PMESHLAB_MODULE_PATH
+
+    for plugin in $INSTALL_PATH/lib/plugins/*.so
+    do
+        patchelf --set-rpath '$ORIGIN/../' $plugin
+    done
+
+else
+    echo "linuxdeploy failed with error code $?. Script was not completed successfully."
+    exit 1
+fi
