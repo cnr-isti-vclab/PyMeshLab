@@ -18,6 +18,7 @@ pymeshlabversion = f.read()
 install_requires = ['numpy']
 
 # if on windows, add msvc-runtime as dependency
+osused = platform.system()
 if osused == 'Windows':
     install_requires.append('msvc-runtime')
 
