@@ -23,7 +23,7 @@ sh 1_build.sh
 
 The script accepts the following arguments (default directories are relative to the root of the repository):
 
-* `-b=buid/path` or `--build_path=build/path`: the path where PyMeshLab will be built. Default is `src/build`;
+* `-b=build/path` or `--build_path=build/path`: the path where PyMeshLab will be built. Default is `src/build`;
 * `-i=install/path` or `--install_path=install/path`: the path where PyMeshLab will be installed. Default is `pymeshlab`;
 * `-jX`: parameter used for multicore compilation, where `X` is the number of cores used to build PyMeshLab. Default is `-j4`;
 * `--no-build-meshla`: option used to just build PyMeshLab without building all the MeshLab libraries and plugins. When this option is selected, the build system will expect in the build directory to find all the MeshLab libraries and plugins already built and placed in the right positions (depending on the OS). This option is mainly used for fast compilation under development, or to speed up automatic builds of PyMeshLab;

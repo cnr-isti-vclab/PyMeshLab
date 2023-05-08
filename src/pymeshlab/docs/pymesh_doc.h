@@ -71,7 +71,7 @@ const char* PYMESH_ID =
 
 // Mesh::is_visible
 const char* PYMESH_IS_VISIBLE =
-	"Returns a boolean indicating wether the mesh is marked as visible or not.";
+	"Returns a boolean indicating whether the mesh is marked as visible or not.";
 
 // Mesh::label
 const char* PYMESH_LABEL =
@@ -95,7 +95,7 @@ const char* PYMESH_IS_POINT_CLOUD = "Returns true if the mesh has no faces (it i
 const char* PYMESH_BB = "Returns the bounding box of the mesh.";
 
 // Mesh::transform_matrix
-const char* PYMESH_TR_MATRIX = "Returns the 4x4 trasform matrix associated to the mesh.";
+const char* PYMESH_TR_MATRIX = "Returns the 4x4 transform matrix associated to the mesh.";
 
 // Mesh::selected_vertex_number
 const char* PYMESH_SEL_VN = "Returns the number of selected vertices of the mesh.";
@@ -162,7 +162,7 @@ const char* PYMESH_EDGE_MAT =
 
 // Mesh::face_matrix
 const char* PYMESH_FACE_MAT =
-	"Returns the face matrix of the mesh as a numpy array, whic is a #F*3 matrix of vertex "
+	"Returns the face matrix of the mesh as a numpy array, which is a #F*3 matrix of vertex "
 	"indices. Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
 
 // Mesh::face_matrix

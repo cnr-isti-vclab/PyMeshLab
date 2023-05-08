@@ -13,7 +13,7 @@ Changelog
    * all filters renamed, old filter names are now deprecated
    * throw exception when a parameter name is not found (was just a print before)
    * possibility to iterate over a MeshSet
-   * Mesh class now allows to access to id, visibility, label and trasform matrix of the Mesh
+   * Mesh class now allows to access to id, visibility, label and transform matrix of the Mesh
    * possibility to construct a Mesh having edges
    * possibility to get textures from a Mesh
    * bounded floats arguments in filters now are clamped in the [min-max] interval
@@ -98,7 +98,7 @@ Changelog
    * based on MeshLab 2021.05
    * bugfixes
    * possibility to export per wedge texcoords from meshes
-   * possibility to laod MeshLab plugins at runtime with ``pymeshlab.load_plugin('<myplugin>')``
+   * possibility to load MeshLab plugins at runtime with ``pymeshlab.load_plugin('<myplugin>')``
 
 
 0.2
