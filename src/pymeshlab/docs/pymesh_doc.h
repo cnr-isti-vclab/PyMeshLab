@@ -40,7 +40,9 @@ const char* PYEXC_COMPONENT =
 const char* PYMESH_INIT =
 	"Creates a mesh containing the data passed as input. If no data is passed as argument, an "
 	"empty mesh will be created. Color matrices have four columns (RGBA) and values are floats in "
-	"the range [0-1]. Values outside this range will result in undefined behaviour.";
+	"the range [0-1]. Values outside this range will result in undefined behaviour. Wedge texture "
+	"coordinates must be a matrix of NF*3 rows ant two columns (a texture coordinate for each edge "
+	"of each triangle of the mesh).";
 
 // Mesh::__init__ (poly)
 const char* PYMESH_INIT_POLY =

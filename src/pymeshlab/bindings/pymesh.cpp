@@ -45,27 +45,30 @@ void pymeshlab::initMesh(py::module& m)
 	meshClass.def(
 		py::init(&Mesh::meshFromMatrices),
 		doc::PYMESH_INIT,
-		py::arg("vertex_matrix")    = Eigen::MatrixX3d(),
-		py::arg("face_matrix")      = Eigen::MatrixX3i(),
-		py::arg("edge_matrix")      = Eigen::MatrixX2i(),
-		py::arg("v_normals_matrix") = Eigen::MatrixX3d(),
-		py::arg("f_normals_matrix") = Eigen::MatrixX3d(),
-		py::arg("v_scalar_array")   = Eigen::VectorXd(),
-		py::arg("f_scalar_array")   = Eigen::VectorXd(),
-		py::arg("v_color_matrix")   = Eigen::MatrixX4d(),
-		py::arg("f_color_matrix")   = Eigen::MatrixX4d());
+		py::arg("vertex_matrix")       = Eigen::MatrixX3d(),
+		py::arg("face_matrix")         = Eigen::MatrixX3i(),
+		py::arg("edge_matrix")         = Eigen::MatrixX2i(),
+		py::arg("v_normals_matrix")    = Eigen::MatrixX3d(),
+		py::arg("f_normals_matrix")    = Eigen::MatrixX3d(),
+		py::arg("v_scalar_array")      = Eigen::VectorXd(),
+		py::arg("f_scalar_array")      = Eigen::VectorXd(),
+		py::arg("v_color_matrix")      = Eigen::MatrixX4d(),
+		py::arg("f_color_matrix")      = Eigen::MatrixX4d(),
+		py::arg("v_tex_coords_matrix") = Eigen::MatrixX2d(),
+		py::arg("w_tex_coords_matrix") = Eigen::MatrixX2d());
 
 	meshClass.def(
 		py::init(&Mesh::polyMeshFromMatrices),
 		doc::PYMESH_INIT_POLY,
 		py::arg("vertex_matrix"),
 		py::arg("face_list_of_indices"),
-		py::arg("v_normals_matrix") = Eigen::MatrixX3d(),
-		py::arg("f_normals_matrix") = Eigen::MatrixX3d(),
-		py::arg("v_scalar_array")  = Eigen::VectorXd(),
-		py::arg("f_scalar_array")  = Eigen::VectorXd(),
-		py::arg("v_color_matrix")   = Eigen::MatrixX4d(),
-		py::arg("f_color_matrix")   = Eigen::MatrixX4d());
+		py::arg("v_normals_matrix")    = Eigen::MatrixX3d(),
+		py::arg("f_normals_matrix")    = Eigen::MatrixX3d(),
+		py::arg("v_scalar_array")      = Eigen::VectorXd(),
+		py::arg("f_scalar_array")      = Eigen::VectorXd(),
+		py::arg("v_color_matrix")      = Eigen::MatrixX4d(),
+		py::arg("f_color_matrix")      = Eigen::MatrixX4d(),
+		py::arg("v_tex_coords_matrix") = Eigen::MatrixX2d());
 
 	meshClass.def("vertex_number", &Mesh::vertexNumber, doc::PYMESH_VN);
 	meshClass.def("face_number", &Mesh::faceNumber, doc::PYMESH_FN);

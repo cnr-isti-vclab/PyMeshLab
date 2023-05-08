@@ -34,7 +34,9 @@ MeshModel pymeshlab::Mesh::meshFromMatrices(
 	const EigenVectorXm&    vertexQuality,
 	const EigenVectorXm&    faceQuality,
 	const EigenMatrixX4m&   vertexColor,
-	const EigenMatrixX4m&   faceColor)
+	const EigenMatrixX4m&   faceColor,
+	const EigenMatrixX2m&   vertexTexCoords,
+	const EigenMatrixX2m&   wedgeTexCoords)
 {
 	MeshModel m(-1 ,"", "");
 	m.cm = meshlab::meshFromMatrices(
@@ -46,7 +48,9 @@ MeshModel pymeshlab::Mesh::meshFromMatrices(
 		vertexQuality,
 		faceQuality,
 		vertexColor,
-		faceColor);
+		faceColor,
+		vertexTexCoords,
+		wedgeTexCoords);
 	m.updateBoxAndNormals();
 	m.updateDataMask();
 	return m;
@@ -60,7 +64,8 @@ MeshModel pymeshlab::Mesh::polyMeshFromMatrices(
 	const EigenVectorXm&             vertexQuality,
 	const EigenVectorXm&             faceQuality,
 	const EigenMatrixX4m&            vertexColor,
-	const EigenMatrixX4m&            faceColor)
+	const EigenMatrixX4m&            faceColor,
+	const EigenMatrixX2m&            vertexTexCoords)
 {
 	MeshModel m(-1 ,"", "");
 	m.cm = meshlab::polyMeshFromMatrices(
@@ -71,7 +76,8 @@ MeshModel pymeshlab::Mesh::polyMeshFromMatrices(
 		vertexQuality,
 		faceQuality,
 		vertexColor,
-		faceColor);
+		faceColor,
+		vertexTexCoords);
 	m.updateBoxAndNormals();
 	m.updateDataMask();
 	return m;
