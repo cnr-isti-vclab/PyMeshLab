@@ -1,5 +1,5 @@
-# Copyright 2019 Collabora, Ltd.
-# SPDX-License-Identifier: BSL-1.0
+cmake_minimum_required(VERSION 3.18)
+project(PyMeshLab)
 
 # MeshLab directory
 set(MESHLAB_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/meshlab/src")
