@@ -48,7 +48,7 @@ if $LINUXDEPLOY_PATH/linuxdeploy --executable=$PMESHLAB_MODULE_PATH --appdir=$IN
     # move lib directory outside usr
     rsync -av $INSTALL_PATH/usr/lib $INSTALL_PATH/
 
-    # remove usr and unuseful files
+    # remove usr and useless files
     rm -rf $INSTALL_PATH/usr/
     rm -rf $INSTALL_PATH/apprun-hooks/
 
