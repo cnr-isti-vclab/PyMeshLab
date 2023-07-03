@@ -20,6 +20,11 @@ You can easily install PyMeshLab using pip:
 pip3 install pymeshlab
 ```
 
+### Note about Conda
+
+PyMeshLab has not been tested in a Conda environment, so we cannot provide support for it. If possible, please install PyMeshLab using `pip` outside of Conda.
+If you are a Conda developer and would like to contribute to making PyMeshLab compatible with Conda, pull requests are always appreciated :)
+
 ## Run PyMeshLab
 
 After installing PyMeshLab through pip:
