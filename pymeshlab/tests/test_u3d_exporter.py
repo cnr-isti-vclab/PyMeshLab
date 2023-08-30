@@ -5,7 +5,7 @@ import pytest
 from sys import platform
 
 
-def test_ambient_occlusion():
+def test_u3d_exporter():
     print('\n')
     base_path = samples_common.samples_absolute_path()
     output_path = samples_common.test_output_path()
