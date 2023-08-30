@@ -1,7 +1,7 @@
 import pymeshlab as ml
 
 
-def test_delete_small_components():
+def test_delete_mesh():
     print('\n')
 
     ms = ml.MeshSet()
