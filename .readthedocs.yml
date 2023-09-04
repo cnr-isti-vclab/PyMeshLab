@@ -6,11 +6,12 @@
 version: 2
 
 build:
+  os: "ubuntu-22.04"
   apt_packages:
     - libopengl0
 
 # Optionally set the version of Python and requirements required to build your docs
 python:
-  version: 3.8
+  version: "3.11"
   install:
     - requirements: requirements.txt
