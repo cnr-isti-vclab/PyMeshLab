@@ -9,6 +9,7 @@ PyMeshLab Classes
 
    classes/boundingbox
    classes/color
+   classes/image
    classes/mesh
    classes/meshset
    classes/percentage_value
