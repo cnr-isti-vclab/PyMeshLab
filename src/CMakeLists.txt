@@ -105,6 +105,7 @@ set(MESHLAB_PLUGINS
 	meshlabplugins/filter_colorproc
 	meshlabplugins/filter_create
 	meshlabplugins/filter_dirt
+	meshlabplugins/filter_embree
 	meshlabplugins/filter_fractal
 	meshlabplugins/filter_func
 	meshlabplugins/filter_icp
