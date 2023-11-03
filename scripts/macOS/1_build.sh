@@ -5,6 +5,7 @@ SOURCE_PATH=$SCRIPTS_PATH/../..
 BUILD_PATH=$SOURCE_PATH/build
 INSTALL_PATH=$SOURCE_PATH/pymeshlab
 NIGHTLY_OPTION=""
+USE_BREW_LLVM=false
 QT_DIR=""
 CCACHE=""
 
@@ -26,6 +27,10 @@ case $i in
         ;;
     -qt=*|--qt_dir=*)
         QT_DIR=${i#*=}
+        shift # past argument=value
+        ;;
+    --use_brew_llvm)
+        USE_BREW_LLVM=true
         shift # past argument=value
         ;;
     --ccache)
@@ -56,6 +61,16 @@ INSTALL_PATH=$(realpath $INSTALL_PATH)
 if [ ! -z "$QT_DIR" ]
 then
     export Qt5_DIR=$QT_DIR
+fi
+
+if [ "$USE_BREW_LLVM" = true ] ; then
+    export PATH="$(brew --prefix llvm)/bin:$PATH";
+    export CC=/usr/local/opt/llvm/bin/clang
+    export CXX=/usr/local/opt/llvm/bin/clang++
+    export COMPILER=${CXX}
+    export CFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
+    export CXXFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
+    export LDFLAGS="-L /usr/local/lib -L/usr/local/opt/llvm/lib"
 fi
 
 cd $BUILD_PATH
