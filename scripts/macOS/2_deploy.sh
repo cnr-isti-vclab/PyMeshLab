@@ -32,11 +32,17 @@ do
     ARGUMENTS="${ARGUMENTS} -executable=${plugin}"
 done
 
-${QT_DIR}macdeployqt $INSTALL_PATH/dummybin.app \
+if ${QT_DIR}macdeployqt $INSTALL_PATH/dummybin.app \
     -executable=$MODULE_NAME \
-    $ARGUMENTS
+    $ARGUMENTS; \
+then
+    rsync -a $INSTALL_PATH/dummybin.app/Contents/Frameworks/ $INSTALL_PATH/Frameworks/
+    rsync -a $INSTALL_PATH/dummybin.app/Contents/PlugIns/ $INSTALL_PATH/PlugIns/
+    mv $INSTALL_PATH/dummybin.app/Contents/pmeshlab* $INSTALL_PATH/
+    rm -rf $INSTALL_PATH/dummybin.app
+else
+    echo "macdeployqt failed with error code $?. Script was not completed successfully."
+    exit 1
+fi
 
-rsync -a $INSTALL_PATH/dummybin.app/Contents/Frameworks/ $INSTALL_PATH/Frameworks/
-rsync -a $INSTALL_PATH/dummybin.app/Contents/PlugIns/ $INSTALL_PATH/PlugIns/
-mv $INSTALL_PATH/dummybin.app/Contents/pmeshlab* $INSTALL_PATH/
-rm -rf $INSTALL_PATH/dummybin.app
+
