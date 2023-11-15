@@ -1,6 +1,7 @@
 from setuptools import setup
 import platform
 import os
+import sysconfig
 
 # this setup.py assumes that pymeshlab has been already built,
 # installed in the pymeshlab directory of this repository
@@ -33,9 +34,11 @@ try:
             if platform.system() == 'Windows':
                 platform_tag = 'win_amd64'
             elif platform.system() == 'Linux':
-                platform_tag = 'manylinux_2_31_x86_64'
+                arch = sysconfig.get_platform().split('-')[1]
+                platform_tag = 'manylinux_2_31_' + arch
             elif platform.system() == 'Darwin':
-                platform_tag = 'macosx_10_11_x86_64'
+                arch = sysconfig.get_platform().split('-')[2]
+                platform_tag = 'macosx_10_11_' + arch
             return a, b, platform_tag
 except ImportError:
     bdist_wheel = None

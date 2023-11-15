@@ -37,13 +37,13 @@ def do_not_use_cpu_opengl():
 
 # function that binds a name to a method of a class that calls the apply_filter function
 def bind_function(name):
-    def foo(self, **kwargs):  # Have to add self since this will become a method
+    def filter_function(self, **kwargs):  # Have to add self since this will become a method
         res_dict = self.apply_filter(name, **kwargs)
         if bool(res_dict):  # return the dictionary only if it is not empty
             return res_dict
 
-    foo.__name__ = name  # change the name of the function to the actual filter name
-    return foo
+    filter_function.__name__ = name  # change the name of the function to the actual filter name
+    return filter_function
 
 
 # for each filter loaded, create a method in the MeshSet class with that name that calls the apply_filter
