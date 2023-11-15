@@ -32,18 +32,24 @@ do
     ARGUMENTS="${ARGUMENTS} -executable=${plugin}"
 done
 
-if ${QT_DIR}macdeployqt $INSTALL_PATH/dummybin.app \
+# save in message the output of macdeployqt
+message=$(${QT_DIR}macdeployqt $INSTALL_PATH/dummybin.app \
     -executable=$MODULE_NAME \
-    $ARGUMENTS; \
-then
-    echo "macdeployqt completed successfully."
-    rsync -a $INSTALL_PATH/dummybin.app/Contents/Frameworks/ $INSTALL_PATH/Frameworks/
-    rsync -a $INSTALL_PATH/dummybin.app/Contents/PlugIns/ $INSTALL_PATH/PlugIns/
-    mv $INSTALL_PATH/dummybin.app/Contents/pmeshlab* $INSTALL_PATH/
-    rm -rf $INSTALL_PATH/dummybin.app
-else
-    echo "macdeployqt failed with error code $?. Script was not completed successfully."
+    $ARGUMENTS 2>&1)
+
+# if message contains "ERROR" then macdeployqt failed
+if [[ $message == *"ERROR"* ]]; then
+    echo "macdeployqt failed."
+    echo "macdeployqt output:"
+    echo $message
     exit 1
 fi
+
+echo "macdeployqt completed successfully."
+rsync -a $INSTALL_PATH/dummybin.app/Contents/Frameworks/ $INSTALL_PATH/Frameworks/
+rsync -a $INSTALL_PATH/dummybin.app/Contents/PlugIns/ $INSTALL_PATH/PlugIns/
+mv $INSTALL_PATH/dummybin.app/Contents/pmeshlab* $INSTALL_PATH/
+rm -rf $INSTALL_PATH/dummybin.app
+
 
 
