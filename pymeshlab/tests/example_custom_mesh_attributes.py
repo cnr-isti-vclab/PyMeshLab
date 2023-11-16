@@ -1,4 +1,5 @@
 import pymeshlab
+import numpy
 
 
 def example_custom_mesh_attributes():
@@ -51,3 +52,24 @@ def example_custom_mesh_attributes():
     # - __ca_fs__: Custom Attribute Face Scalar;
     # - __ca_fp__: Custom Attribute Face Point;
     ms.save_current_mesh(output_path + 'cube_custom_attr.ply', binary=False, __ca_vs__v_attr=True)
+
+    # add a point attribute manually using numpy array
+
+    # generate numpy array
+    attrs = numpy.array([
+        [-0.5, -0.5, -0.5],
+        [0.5, -0.5, -0.5],
+        [-0.5, 0.5, -0.5],
+        [0.5, 0.5, -0.5],
+        [-0.5, -0.5, 0.5],
+        [0.5, -0.5, 0.5],
+        [-0.5, 0.5, 0.5],
+        [0.5, 0.5, 0.5]])
+    
+    # add a new custom point attribute
+    m.add_vertex_custom_point_attribute(attrs, 'numpy_attr')
+
+    # get the attribute and print it
+    ret_attr = m.vertex_custom_point_attribute_matrix('numpy_attr')
+
+    print(ret_attr)
