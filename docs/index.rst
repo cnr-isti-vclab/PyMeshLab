@@ -14,6 +14,13 @@ PyMeshLab is a Python library that interfaces to `MeshLab`_, the popular open so
 
    about
 
+Floating point precision
+========================
+
+Unlike the default version of MeshLab, PyMeshLab is built using double precision floating point numbers, that is the default precision used in Python. This allows to avoid precision loss when importing and exporting meshes, and when applying filters to them.
+Therefore, some filters can behave differently from the default MeshLab version, especially those that are sensible to precision loss. To replicate the PyMeshLab behavior in MeshLab, you can use the double precision, which is available for download in the MeshLab repository
+with a version number having the suffix "d" (e.g. MeshLab2022.02d).
+
 Filters renaming
 ================
 
