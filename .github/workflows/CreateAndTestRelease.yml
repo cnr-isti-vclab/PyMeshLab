@@ -191,11 +191,10 @@ jobs:
     
     #Create release
     - name: Create Release
-      uses: "marvinpinto/action-automatic-releases@latest"
+      uses: "ncipollo/release-action@v1"
       with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: v${{ github.event.inputs.version }}
-        prerelease: false
-        title: 'PyMeshLab v${{ github.event.inputs.version }}'
-        files: |
+        token: "${{ secrets.GITHUB_TOKEN }}"
+        tag: v${{ github.event.inputs.version }}
+        name: 'PyMeshLab v${{ github.event.inputs.version }}'
+        artifacts: |
           wheels/pymeshlab_whl_*/pymeshlab*.whl
