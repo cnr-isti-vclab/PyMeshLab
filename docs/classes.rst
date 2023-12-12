@@ -7,13 +7,13 @@ PyMeshLab Classes
 .. toctree::
    :maxdepth: 2
 
-   classes/absolute_value
    classes/boundingbox
    classes/color
    classes/image
    classes/mesh
    classes/meshset
-   classes/percentage
+   classes/percentage_value
+   classes/pure_value
 
 Module Members
 --------------

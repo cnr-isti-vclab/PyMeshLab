@@ -30,7 +30,7 @@
 #include <common/utilities/load_save.h>
 #include <common/globals.h>
 #include <common/python/python_utils.h>
-#include "percentage.h"
+#include "percentage_value.h"
 #include "exceptions.h"
 #include "helpers/common.h"
 #include "helpers/meshset_helper.h"
@@ -341,6 +341,20 @@ pybind11::dict pymeshlab::MeshSet::filterParameterValues(
 					"Filter does not exists. Take a look at MeshSet.print_filter_list function.");
 	}
 	return outputValues;
+}
+
+unsigned int pymeshlab::MeshSet::numberMeshes() const
+{
+	py::module_ warn = py::module_::import("warnings");
+	warn.attr("warn")("Deprecated Function Warning: use 'mesh_number()' instead.");
+	return meshNumber();
+}
+
+unsigned int pymeshlab::MeshSet::numberRasters() const
+{
+	py::module_ warn = py::module_::import("warnings");
+	warn.attr("warn")("Deprecated Function Warning: use 'raster_number()' instead.");
+	return rasterNumber();
 }
 
 

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-brew install coreutils cmake ninja libomp cgal xerces-c
+brew install coreutils cmake ninja llvm libomp cgal xerces-c tbb embree

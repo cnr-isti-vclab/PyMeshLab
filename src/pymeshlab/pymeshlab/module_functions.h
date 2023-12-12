@@ -35,6 +35,9 @@ void        printVersion();
 
 std::list<std::string> filterList();
 
+int pluginNumber();
+
+// todo - remove this function
 int numberPlugins();
 
 void printPluginList();

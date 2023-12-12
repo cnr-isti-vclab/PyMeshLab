@@ -1,7 +1,6 @@
 set(PYMESHLAB_MODULE_NAME "pmeshlab")
 
 set(HEADERS
-	bindings/pyabsolute_value.h
 	bindings/pycamera.h
 	bindings/pycolor.h
 	bindings/pyboundingbox.h
@@ -10,8 +9,8 @@ set(HEADERS
 	bindings/pymesh.h
 	bindings/pymeshset.h
 	bindings/pymodule_functions.h
-	bindings/pypercentage.h
-	docs/pyabsolute_value_doc.h
+	bindings/pypercentage_value.h
+	bindings/pypure_value.h
 	docs/pyboundingbox_doc.h
 	docs/pycolor_doc.h
 	docs/pyexceptions_doc.h
@@ -19,8 +18,8 @@ set(HEADERS
 	docs/pymesh_doc.h
 	docs/pymeshset_doc.h
 	docs/pymodule_functions_doc.h
-	docs/pypercentage_doc.h
-	pymeshlab/absolute_value.h
+	docs/pypercentage_value_doc.h
+	docs/pypure_value_doc.h
 	pymeshlab/bounding_box.h
 	pymeshlab/color.h
 	pymeshlab/exceptions.h
@@ -28,7 +27,8 @@ set(HEADERS
 	pymeshlab/mesh.h
 	pymeshlab/meshset.h
 	pymeshlab/module_functions.h
-	pymeshlab/percentage.h
+	pymeshlab/percentage_value.h
+	pymeshlab/pure_value.h
 	pymeshlab/helpers/common.h
 	pymeshlab/helpers/meshset_helper.h
 	pymeshlab/helpers/verbosity_manager.h
@@ -36,7 +36,6 @@ set(HEADERS
 
 set(SOURCES
 	main.cpp
-	bindings/pyabsolute_value.cpp
 	bindings/pycamera.cpp
 	bindings/pycolor.cpp
 	bindings/pyboundingbox.cpp
@@ -45,15 +44,16 @@ set(SOURCES
 	bindings/pymesh.cpp
 	bindings/pymeshset.cpp
 	bindings/pymodule_functions.cpp
-	bindings/pypercentage.cpp
-	pymeshlab/absolute_value.cpp
+	bindings/pypercentage_value.cpp
+	bindings/pypure_value.cpp
 	pymeshlab/bounding_box.cpp
 	pymeshlab/color.cpp
 	pymeshlab/image.cpp
 	pymeshlab/mesh.cpp
 	pymeshlab/meshset.cpp
 	pymeshlab/module_functions.cpp
-	pymeshlab/percentage.cpp
+	pymeshlab/percentage_value.cpp
+	pymeshlab/pure_value.cpp
 	pymeshlab/helpers/common.cpp
 	pymeshlab/helpers/meshset_helper.cpp
 	pymeshlab/helpers/verbosity_manager.cpp

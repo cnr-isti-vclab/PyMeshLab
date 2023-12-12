@@ -38,10 +38,10 @@
 #include <QApplication>
 #include <QDir>
 
-#include "../absolute_value.h"
 #include "../exceptions.h"
 #include "../meshset.h"
-#include "../percentage.h"
+#include "../percentage_value.h"
+#include "../pure_value.h"
 #include "common.h"
 
 namespace py = pybind11;
@@ -86,18 +86,18 @@ void updateRichParameterFromKwarg(
 		par.setValue(StringValue(QString::fromStdString(py::cast<std::string>(k.second))));
 	}
 	else if (meshlabType == MESHLAB_TYPE_ABSPERC) {
-		RichAbsPerc& abs = dynamic_cast<RichAbsPerc&>(par);
+		RichPercentage& per = dynamic_cast<RichPercentage&>(par);
 		float        absvalue;
 		try { // first try for percentage
-			Percentage p = py::cast<Percentage>(k.second);
-			absvalue     = (abs.max - abs.min);
+			PercentageValue p = py::cast<PercentageValue>(k.second);
+			absvalue     = (per.max - per.min);
 			absvalue *= p.value() / 100;
-			absvalue += abs.min;
+			absvalue += per.min;
 		}
 		catch (const py::cast_error& err) {
-			try { // then try with Absolute Value
-				AbsoluteValue v;
-				v        = py::cast<AbsoluteValue>(k.second);
+			try { // then try with Pure Value
+				PureValue v;
+				v        = py::cast<PureValue>(k.second);
 				absvalue = v.value();
 			}
 			catch (const py::cast_error& err) { // if not AbsoluteValue then throw
@@ -107,7 +107,7 @@ void updateRichParameterFromKwarg(
 					"pymeshlab.AbsoluteValue object. Other type values are not accepted.");
 			}
 		}
-		abs.setValue(FloatValue(absvalue));
+		per.setValue(FloatValue(absvalue));
 	}
 	else if (meshlabType == MESHLAB_TYPE_COLOR) {
 		par.setValue(ColorValue(py::cast<QColor>(k.second)));
@@ -130,7 +130,7 @@ void updateRichParameterFromKwarg(
 		}
 		else {
 			vcg::Point3f p(arr.at(0), arr.at(1), arr.at(2));
-			par.setValue(Point3fValue(p));
+			par.setValue(Point3Value(p));
 		}
 	}
 	else if (meshlabType == MESHLAB_TYPE_MATRIX44F) {
@@ -149,7 +149,7 @@ void updateRichParameterFromKwarg(
 					v[k++] = arr(i, j);
 				}
 			}
-			par.setValue(Matrix44fValue(m));
+			par.setValue(Matrix44Value(m));
 		}
 	}
 	else if (meshlabType == MESHLAB_TYPE_ENUM) {
@@ -177,11 +177,11 @@ void updateRichParameterFromKwarg(
 		en.setValue(IntValue(value));
 	}
 	else if (meshlabType == MESHLAB_TYPE_OPENFILE) {
-		RichOpenFile& of = dynamic_cast<RichOpenFile&>(par);
+		RichFileOpen& of = dynamic_cast<RichFileOpen&>(par);
 		of.setValue(StringValue(QString::fromStdString(py::cast<std::string>(k.second))));
 	}
 	else if (meshlabType == MESHLAB_TYPE_SAVEFILE) {
-		RichSaveFile& sf = dynamic_cast<RichSaveFile&>(par);
+		RichFileSave& sf = dynamic_cast<RichFileSave&>(par);
 		sf.setValue(StringValue(QString::fromStdString(py::cast<std::string>(k.second))));
 	}
 	else if (meshlabType == MESHLAB_TYPE_MESH) {
@@ -215,23 +215,23 @@ pybind11::dict pydictFromRichParameterList(const RichParameterList& rps)
 			kw[pname.c_str()] = v.getString().toStdString();
 		if (par.isOfType<RichEnum>())
 			kw[pname.c_str()] = v.getInt();
-		if (par.isOfType<RichAbsPerc>())
+		if (par.isOfType<RichPercentage>())
 			kw[pname.c_str()] = v.getFloat();
 		if (par.isOfType<RichDynamicFloat>())
 			kw[pname.c_str()] = v.getFloat();
-		if (par.isOfType<RichMatrix44f>())
-			kw[pname.c_str()] = v.getMatrix44f().ToEigenMatrix<Eigen::Matrix4d>();
+		if (par.isOfType<RichMatrix44>())
+			kw[pname.c_str()] = v.getMatrix44().ToEigenMatrix<Eigen::Matrix4d>();
 		if (par.isOfType<RichPosition>())
-			kw[pname.c_str()] = v.getPoint3f().ToEigenVector<Eigen::Vector3d>();
+			kw[pname.c_str()] = v.getPoint3().ToEigenVector<Eigen::Vector3d>();
 		if (par.isOfType<RichDirection>())
-			kw[pname.c_str()] = v.getPoint3f().ToEigenVector<Eigen::Vector3d>();
-		if (par.isOfType<RichShotf>())
+			kw[pname.c_str()] = v.getPoint3().ToEigenVector<Eigen::Vector3d>();
+		if (par.isOfType<RichShot>())
 			kw[pname.c_str()] = "still_unsupported";
 		if (par.isOfType<RichColor>())
 			kw[pname.c_str()] = v.getColor();
 		if (par.isOfType<RichMesh>())
 			kw[pname.c_str()] = v.getInt();
-		if (par.isOfType<RichOpenFile>() || par.isOfType<RichSaveFile>())
+		if (par.isOfType<RichFileOpen>() || par.isOfType<RichFileSave>())
 			kw[pname.c_str()] = v.getString().toStdString();
 	}
 	return kw;

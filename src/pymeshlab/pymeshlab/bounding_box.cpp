@@ -32,6 +32,11 @@ Eigen::Vector3d pymeshlab::BoundingBox::max(const Box3m& bbox)
 	return bbox.max.ToEigenVector<Eigen::Vector3d>();
 }
 
+Eigen::Vector3d pymeshlab::BoundingBox::center(const Box3m &bbox)
+{
+	return bbox.Center().ToEigenVector<Eigen::Vector3d>();
+}
+
 pymeshlab::BoundingBox::BoundingBox()
 {
 }

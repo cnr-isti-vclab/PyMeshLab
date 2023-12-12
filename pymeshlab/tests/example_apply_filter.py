@@ -19,7 +19,7 @@ def example_apply_filter():
     # alternatively:
     # ms.apply_filter('generate_convex_hull')
 
-    assert ms.number_meshes() == 2
+    assert ms.mesh_number() == 2
 
     # save the current selected mesh
     ms.save_current_mesh(output_path + "convex_hull.obj")

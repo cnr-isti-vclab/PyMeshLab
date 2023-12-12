@@ -94,6 +94,11 @@ public:
 			const std::string& filtername,
 			pybind11::kwargs kwargs = pybind11::kwargs());
 
+	///todo - remove these functions
+
+	unsigned int numberMeshes() const;
+	unsigned int numberRasters() const;
+
 private:
 	PluginManager& pm;
 	FunctionSet& functionSet;

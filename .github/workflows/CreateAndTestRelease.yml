@@ -32,7 +32,7 @@ jobs:
     needs: update_version
     strategy:
       matrix:
-        pyversion: ['3.8', '3.9', '3.10', '3.11']
+        pyversion: ['3.8', '3.9', '3.10', '3.11', '3.12']
         os: ['ubuntu-20.04', 'macos-latest', 'windows-latest']
     steps:
     - uses: actions/checkout@v3
@@ -70,7 +70,7 @@ jobs:
         key: ${{ runner.os }}-${{ github.ref }}
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
-        sh scripts/${{ runner.os }}/1_build.sh --ccache
+        sh scripts/${{ runner.os }}/1_build.sh --ccache --use_brew_llvm
     - name: Deploy PyMeshLab ${{ matrix.pyversion }}
       run: |
         sh scripts/${{ runner.os }}/2_deploy.sh
@@ -86,7 +86,7 @@ jobs:
     needs: build_pymeshlab
     strategy:
       matrix:
-        pyversion: ['3.8', '3.9', '3.10', '3.11']
+        pyversion: ['3.8', '3.9', '3.10', '3.11', '3.12']
         os: ['ubuntu-20.04', 'macos-latest', 'windows-latest']
     steps:
     - uses: actions/checkout@v3
@@ -118,7 +118,7 @@ jobs:
     needs: build_pymeshlab
     strategy:
       matrix:
-        pyversion: ['3.8', '3.9', '3.10', '3.11']
+        pyversion: ['3.8', '3.9', '3.10', '3.11', '3.12']
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
     steps:
     - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
@@ -152,7 +152,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        pyversion: ['3.8', '3.9', '3.10', '3.11']
+        pyversion: ['3.8', '3.9', '3.10', '3.11', '3.12']
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
     steps:
     - name: Download pymeshlab_whl_${{ runner.os }}_python${{ matrix.pyversion }}

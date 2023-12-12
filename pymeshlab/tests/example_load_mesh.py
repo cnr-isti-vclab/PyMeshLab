@@ -16,12 +16,12 @@ def example_load_mesh():
 
     print(len(ms))  # now ms contains 1 mesh
     # instead of len(ms) you can also use:
-    print(ms.number_meshes())
+    print(ms.mesh_number())
 
     # load a new mesh, and sets it as current mesh
     ms.load_new_mesh(base_path + "airplane.obj")
 
-    print(ms.number_meshes())  # now ms contains 2 meshes
+    print(ms.mesh_number())  # now ms contains 2 meshes
 
     assert len(ms) == 2
 

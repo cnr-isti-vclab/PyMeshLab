@@ -32,6 +32,7 @@ class BoundingBox
 public:
 	static Eigen::Vector3d min(const Box3m& bbox);
 	static Eigen::Vector3d max(const Box3m& bbox);
+	static Eigen::Vector3d center(const Box3m& bbox);
 
 private:
 	BoundingBox();

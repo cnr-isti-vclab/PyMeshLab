@@ -40,7 +40,9 @@ const char* PYEXC_COMPONENT =
 const char* PYMESH_INIT =
 	"Creates a mesh containing the data passed as input. If no data is passed as argument, an "
 	"empty mesh will be created. Color matrices have four columns (RGBA) and values are floats in "
-	"the range [0-1]. Values outside this range will result in undefined behaviour.";
+	"the range [0-1]. Values outside this range will result in undefined behaviour. Wedge texture "
+	"coordinates must be a matrix of NF*3 rows ant two columns (a texture coordinate for each edge "
+	"of each triangle of the mesh).";
 
 // Mesh::__init__ (poly)
 const char* PYMESH_INIT_POLY =
@@ -158,7 +160,11 @@ const char* PYMESH_TR_VERT_MAT =
 // Mesh::vertex_matrix
 const char* PYMESH_EDGE_MAT =
 	"Returns the edge matrix of the mesh as a numpy array, which is a #E*2 matrix of vertex "
-	"indices. Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact.";
+	"indices. Raises a :py:exc:`MissingCompactnessException` if the mesh is not compact. **Note**: "
+	"The Edge Matrix, in VCGLib, MeshLab and PyMeshLab is not related and has nothing to do with"
+	"the Mesh Faces. Edges are used to store polylines or simple collections of edges that are "
+	"unrelated with faces. Some filters that generate Edges in PyMeshLab are "
+	"`generate_polyline_from_planar_section` and `generate_polyline_from_selection_perimeter`.";
 
 // Mesh::face_matrix
 const char* PYMESH_FACE_MAT =

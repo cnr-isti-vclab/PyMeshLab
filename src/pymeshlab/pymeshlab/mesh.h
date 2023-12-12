@@ -44,7 +44,9 @@ public:
 		const EigenVectorXm&    vertexQuality = EigenVectorXm(),
 		const EigenVectorXm&    faceQuality   = EigenVectorXm(),
 		const EigenMatrixX4m&   vertexColor   = EigenMatrixX4m(),
-		const EigenMatrixX4m&   faceColor     = EigenMatrixX4m());
+		const EigenMatrixX4m&   faceColor     = EigenMatrixX4m(),
+		const EigenMatrixX2m&   vertexTexCoords = EigenMatrixX2m(),
+		const EigenMatrixX2m&   wedgeTexCoords  = EigenMatrixX2m());
 
 	static MeshModel polyMeshFromMatrices(
 		const EigenMatrixX3m&            vertices,
@@ -54,7 +56,8 @@ public:
 		const EigenVectorXm&             vertexQuality = EigenVectorXm(),
 		const EigenVectorXm&             faceQuality   = EigenVectorXm(),
 		const EigenMatrixX4m&            vertexColor   = EigenMatrixX4m(),
-		const EigenMatrixX4m&            faceColor     = EigenMatrixX4m());
+		const EigenMatrixX4m&            faceColor     = EigenMatrixX4m(),
+		const EigenMatrixX2m&            vertexTexCoords = EigenMatrixX2m());
 
 	static unsigned int vertexNumber(const MeshModel& m);
 	static unsigned int faceNumber(const MeshModel& m);
