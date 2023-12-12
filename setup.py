@@ -9,6 +9,7 @@ import sysconfig
 
 # read the contents of README file
 from os import path
+import sys
 this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
@@ -21,7 +22,9 @@ install_requires = ['numpy']
 # if on windows, add msvc-runtime as dependency
 osused = platform.system()
 if osused == 'Windows':
-    install_requires.append('msvc-runtime')
+    # msvc-runtime is still missing for python 3.12
+    if sys.version_info[1] < 12:
+        install_requires.append('msvc-runtime')
 
 try:
     from wheel.bdist_wheel import bdist_wheel as _bdist_wheel
