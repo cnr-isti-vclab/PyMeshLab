@@ -62,7 +62,7 @@ jobs:
     - name: Commit message
       id: commit_message
       run: |
-        echo  ::set-output name=message::"$(git log -1 --pretty=%B)"
+        echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
     - name: Commit files
       run: |
         git config --local user.email "action@github.com"
@@ -71,7 +71,7 @@ jobs:
         git add --force pymeshlab/lib/*
         git add README.md
         git commit -m "${{steps.commit_message.outputs.message}} and add libs" -a
-        git tag ${{steps.version.outputs.pyml_version}} HEAD
+        git tag ${{steps.version.outputs.pyml_version}} -lw
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
