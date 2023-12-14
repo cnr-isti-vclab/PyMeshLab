@@ -166,10 +166,10 @@ std::string pymeshlab::filterListRSTDocumentation()
 			"   * `String`: a classic ``str`` value;\n"
 			"   * `Float`: a classic ``float`` value;\n"
 			"   * `Bounded Float`: a classic ``float`` that is expected to be bounded between a ``min`` and a ``max`` value; an out-of-bounds value will be clamped in [min-max];\n"
-			"   * `Percentage`: represents a parameter that is relative to some other measure, specified in the documentation of the filter. This parameter can be of two different types:\n\n"
+			"   * `PercentageValue`: represents a parameter that is relative to some other measure, specified in the documentation of the filter. This parameter can be of two different types:\n\n"
 
-			"     * :py:class:`pmeshlab.Percentage` (recommended): the parameter will be treated as relative percentage value; see the documentation of the :py:class:`pmeshlab.Percentage` for further info;\n"
-			"     * :py:class:`pmeshlab.AbsoluteValue`: the parameter will be treated as absolute value; see the documentation of the :py:class:`pmeshlab.AbsoluteValue` for further info;\n\n"
+			"     * :py:class:`pmeshlab.PercentageValue` (recommended): the parameter will be treated as relative percentage value; see the documentation of the :py:class:`pmeshlab.PercentageValue` for further info;\n"
+			"     * :py:class:`pmeshlab.PureValue`: the parameter will be treated as a pure value; see the documentation of the :py:class:`pmeshlab.PureValue` for further info;\n\n"
 
 			"   * `Enum`: represents a parameter that can accept just one of a limited set of possible values. These values type can be ``int`` or ``str``; see the documentation of the specific filter for further info;\n"
 			"   * `Color`: represents a color, and the parameter can be of type  :py:class:`pmeshlab.Color`; see the documentation of the  :py:class:`pmeshlab.Color` for further info;\n"
