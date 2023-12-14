@@ -14,6 +14,7 @@ build:
   jobs:
     post_create_environment:
       - python -m pip install sphinx_rtd_theme
+      - python -m pip install numpy
 
 # Build documentation in the "docs/" directory with Sphinx
 sphinx:
