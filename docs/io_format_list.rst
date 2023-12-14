@@ -1228,6 +1228,12 @@ Here are listed all the file formats that can be saved usingthe function :py:met
 
          <i>Save Vertex Coord</i>: Save Vertex Coord
 
+   ``save_vertex_normal : bool = True``
+
+      .. raw:: html
+
+         <i>Save Vertex Normal</i>: Save Vertex Normal
+
    ``save_face_color : bool = True``
 
       .. raw:: html

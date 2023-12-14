@@ -11,11 +11,11 @@ Each filter accepts a list of parameters, that can be semantically classified as
    * `Integer`: a classic ``int`` value;
    * `String`: a classic ``str`` value;
    * `Float`: a classic ``float`` value;
-   * `Bounded Float`: a classic ``float`` that is expected to be bounded between a ``min`` and a ``max`` value; an out-of-bounds value will raise an exception;
-   * `Percentage`: represents a parameter that is relative to some other measure, specified in the documentation of the filter. This parameter can be of two different types:
+   * `Bounded Float`: a classic ``float`` that is expected to be bounded between a ``min`` and a ``max`` value; an out-of-bounds value will be clamped in [min-max];
+   * `PercentageValue`: represents a parameter that is relative to some other measure, specified in the documentation of the filter. This parameter can be of two different types:
 
-     * :py:class:`pmeshlab.Percentage` (recommended): the parameter will be treated as relative percentage value; see the documentation of the :py:class:`pmeshlab.Percentage` for further info;
-     * :py:class:`pmeshlab.AbsoluteValue`: the parameter will be treated as absolute value; see the documentation of the :py:class:`pmeshlab.AbsoluteValue` for further info;
+     * :py:class:`pmeshlab.PercentageValue` (recommended): the parameter will be treated as relative percentage value; see the documentation of the :py:class:`pmeshlab.PercentageValue` for further info;
+     * :py:class:`pmeshlab.PureValue`: the parameter will be treated as a pure value; see the documentation of the :py:class:`pmeshlab.PureValue` for further info;
 
    * `Enum`: represents a parameter that can accept just one of a limited set of possible values. These values type can be ``int`` or ``str``; see the documentation of the specific filter for further info;
    * `Color`: represents a color, and the parameter can be of type  :py:class:`pmeshlab.Color`; see the documentation of the  :py:class:`pmeshlab.Color` for further info;
@@ -751,6 +751,34 @@ Filter documentation
 
          <i>Save as vertex quality</i>: Saves the perturbation as vertex quality.
 
+.. data:: apply_coord_cubic_stylization
+
+   *MeshLab filter name*: 'Cubic stylization'
+
+   .. raw:: html
+
+      Turn a mesh into a cube's style maintaining its original shape.<br>For all detailed about cubic stylization see:<br><br><i> Hsueh-Ti Derek Liu and Alec Jacobson.</i><br><b>Cubic Stylization</b> (<a href='https://www.dgp.toronto.edu/projects/cubic-stylization/cubicStyle_high.pdf'>pdf</a>)<br>in ACM Transactions on Graphics, 2019<br/><br/> </p>
+
+   **Parameters:**
+
+   ``lcubeness : float = 0.2``
+
+      .. raw:: html
+
+         <i>Cubeness parameter (λ)</i>: Control the cubeness of the mesh. Generally, the higher the cubeness parameter, the more cubic the mesh is. λ ∈ [0, 1] 
+
+   ``applyef : bool = False``
+
+      .. raw:: html
+
+         <i>Apply edge flipping</i>: Apply edge flip optimization on cubic stylization.
+
+   ``applycol : bool = False``
+
+      .. raw:: html
+
+         <i>Colorize by vertex Quality</i>: Color vertices depending on their cubization energy.
+
 .. data:: apply_coord_depth_smoothing
 
    *MeshLab filter name*: 'Depth Smooth'
@@ -773,7 +801,7 @@ Filter documentation
 
          <i>Viewpoint</i>: The position of the view point that is used to get the constraint direction.
 
-   ``delta : Percentage = 100%``
+   ``delta : PercentageValue = 100%``
 
       .. raw:: html
 
@@ -784,6 +812,81 @@ Filter documentation
       .. raw:: html
 
          <i>Affect only selection</i>: If checked the filter is performed only on the selected area
+
+.. data:: apply_coord_developability_of_mesh
+
+   *MeshLab filter name*: 'Make mesh developable'
+
+   .. raw:: html
+
+      The filter improves the developability of the current two-manifold triangular mesh by applying an optimization process that encourages each vertex star to form an hinge or a flat piece. The resulting mesh is similar to the initial, but it is comprised of one or more developable pieces held toghether by highly regular seam curves, i.e. path of edges which vertex stars did not form an hinge or a flat spot.<br>Since small interior angles can have a negative impact on the outcome, an automatic remeshing that runs along the optimization can be enabled.<br>When the obtained design is satisfactory, one may want to refine the quality of the seams and the developability of the surfaces by alternating between regular midpoint subdivisions and further optimization rounds.<br>For more details see:<br><b>Oded Stein, Eitan Grinspun and Keenan Crane</b><br><a href="https://doi.org/10.1145/3197517.3201303">'Developability of triangle meshes'</a><br>ACM Transactions on Graphics, Volume 37, Issue 4</p>
+
+   **Parameters:**
+
+   ``optmethod : str = '[B] Backtracking line search' (or int = 1)``
+
+      Possible enum values:
+
+         0. ``'[F] Fixed stepsize'``
+         1. ``'[B] Backtracking line search'``
+
+      .. raw:: html
+
+         <i>Gradient method</i>: The gradient method optimization algorithm to use
+
+   ``maxfunevals : int = 400``
+
+      .. raw:: html
+
+         <i>Max function evaluations</i>: The maximum number of function evaluation. Once reached, the optimization stops
+
+   ``eps : float = 1e-05``
+
+      .. raw:: html
+
+         <i>Stop threshold</i>: Optimization stops when the squared norm of the gradient is less than or equal to the accuracy
+
+   ``stepsize : float = 0.01``
+
+      .. raw:: html
+
+         <i>Initial step size</i>: The initial step size of the opt method, fixed when using [F] optimizer
+
+   ``minstepsize : float = 1e-10``
+
+      .. raw:: html
+
+         <i>Min step size (B only)</i>: The minimum step size for the backtracking line search opt method
+
+   ``tau : float = 0.8``
+
+      .. raw:: html
+
+         <i>Tau (B only)</i>: Scaling factor of the step size for the backtracking line search opt method
+
+   ``m1 : float = 0.0001``
+
+      .. raw:: html
+
+         <i>Armijo constant (B only)</i>: The constant of the Armijo condition of the backtracking line search opt method
+
+   ``edgeflips : bool = True``
+
+      .. raw:: html
+
+         <i>Apply edge flips</i>: Whether or not to apply edge flips when necessary during optimization
+
+   ``edgecollapses : bool = True``
+
+      .. raw:: html
+
+         <i>Apply edge collapses</i>: Whether or not to apply edge collapses when necessary during optimization
+
+   ``anglethreshold : float = 18``
+
+      .. raw:: html
+
+         <i>Post-processing angle threshold (deg)</i>: The maximum angle under which an edge flip or an edge collapse must be performed during optimization
 
 .. data:: apply_coord_directional_preservation
 
@@ -817,7 +920,7 @@ Filter documentation
 
    **Parameters:**
 
-   ``maxheight : Percentage = 4%``
+   ``maxheight : PercentageValue = 4%``
 
       .. raw:: html
 
@@ -949,7 +1052,7 @@ Filter documentation
 
          <i>Smoothing steps</i>: The number of times that the whole algorithm (normal smoothing + vertex fitting) is iterated.
 
-   ``delta : Percentage = 1%``
+   ``delta : PercentageValue = 1%``
 
       .. raw:: html
 
@@ -1069,11 +1172,17 @@ Filter documentation
 
          <i>Recompute normals</i>: Toggle the recomputation of the normals after the random displacement.<br><br>If disabled the face normals will remains unchanged resulting in a visually pleasant effect.
 
-   ``displacement : Percentage = 1%``
+   ``displacement : PercentageValue = 1%``
 
       .. raw:: html
 
          <i>Max displacement</i>: The vertex are displaced of a vector whose norm is bounded by this value
+
+   ``randomseed : int = 0``
+
+      .. raw:: html
+
+         <i>Random Seed</i>: The seed used to generate random values. If seed is zero no random seed is used
 
 .. data:: apply_coord_taubin_smoothing
 
@@ -1643,7 +1752,7 @@ Filter documentation
 
    .. raw:: html
 
-      Color function using muparser lib to generate new RGBA color for every face<br>Red, Green, Blue and Alpha channels may be defined specifying a function in their respective fields.<br>It's possible to use the following per-face variables, or variables associated to the three vertex of every face:<br><b>x0,y0,z0</b> for the first vertex position, <b>x1,y1,z1</b> for the second vertex position, <b>x2,y2,z2</b> for the third vertex position, <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> for vertex normals, <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> for vertex colors, <b>vi0, vi1, vi2</b> for vertex indices, <b>q0,q1,q2</b> for vertex quality, <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> for per-wedge texture coords, <b>ti</b> for face texture index, <b>vsel0,vsel1,vsel2</b> for vertex selection (1 yes, 0 no) <b>fi</b> for face index, <b>fr,fg,fb,fa</b> for face color, <b>fq</b> for face quality, <b>fnx,fny,fnz</b> for face normal, <b>fsel</b> face selection (1 yes, 0 no).<br></p>
+      Color function using muparser lib to generate new RGBA color for every face<br>Red, Green, Blue and Alpha channels may be defined specifying a function in their respective fields.<br><ul><li>Per-face variables:<br><b>fi</b> (face index), <b>fr,fg,fb,fa</b> (face color), <b>fq</b> (face quality), <b>fnx,fny,fnz</b> (face normal), <b>fsel</b> ( 1 if face is selected, 0 if not selected).</li><li>Per-vertex variables:<br><b>x0,y0,z0</b> (first vertex position), <b>x1,y1,z1</b> (second vertex position),<b>x2,y2,z2</b> (third vertex position), <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> (vertex normals), <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> (vertex colors), <b>vi0, vi1, vi2</b> (vertex indices), <b>q0,q1,q2</b> (vertex quality), <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> (per-wedge texture coords), <b>ti</b> (face texture index), <b>vsel0,vsel1,vsel2</b> (1 if vertex is selected, 0 if not).</li><li>Bounding Box variables:<br><b>xmin,ymin,zmin</b> (min coordinates), <b>xmax,ymax,zmax</b> (max coordinates), <b>xmid,ymid,zmid</b> (midpoint coordinates), <b>xdim,ydim,zdim</b> (dimensions), <b>bbdiag</b> (diagonal length).</li><li>User-defined attributes:<br>All user defined custom <i>face scalar attributes</i> are available. Point3 attribute are available as 3 variables with _x, _y, _z appended to the attribute name.</li></ul></p>
 
    **Parameters:**
 
@@ -1683,7 +1792,7 @@ Filter documentation
 
    .. raw:: html
 
-      Color function using muparser lib to generate new RGBA color for every vertex<br>Red, Green, Blue and Alpha channels may be defined specifying a function in their respective fields.<br>It's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
+      Color function using muparser lib to generate new RGBA color for every vertex<br>Red, Green, Blue and Alpha channels may be defined specifying a function in their respective fields.<br><ul><li>Per-vertex variables:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> ( 1 if selected, 0 if not selected).</li><li>Bounding Box variables:<br><b>xmin,ymin,zmin</b> (min coordinates), <b>xmax,ymax,zmax</b> (max coordinates), <b>xmid,ymid,zmid</b> (midpoint coordinates), <b>xdim,ydim,zdim</b> (dimensions), <b>bbdiag</b> (diagonal length)</li><li>User-defined attributes:<br>All user defined custom <i>vertex attributes</i> are available. Point3 attribute are available as 3 variables with _x, _y, _z appended to the attribute name.</li></ul></p>
 
    **Parameters:**
 
@@ -1871,6 +1980,21 @@ Filter documentation
 
          <i>Zero Symmetric</i>: If true the min max range will be enlarged to be symmetric (so that green is always Zero)
 
+   ``colormap : str = 'RGB' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'RGB'``
+         1. ``'Viridis'``
+         2. ``'Plasma'``
+         3. ``'Cividis'``
+         4. ``'Turbo'``
+         5. ``'RdPu'``
+
+      .. raw:: html
+
+         <i>Color Map</i>: The color map to use. RGB is the VCGLib default, other colormaps are sampled from Matplotlib <a href="https://matplotlib.org">https://matplotlib.org</a>
+
 .. data:: compute_color_from_scalar_per_vertex
 
    *MeshLab filter name*: 'Colorize by vertex Quality'
@@ -1904,6 +2028,21 @@ Filter documentation
       .. raw:: html
 
          <i>Zero Symmetric</i>: If true the min max range will be enlarged to be symmetric (so that green is always Zero)
+
+   ``colormap : str = 'RGB' (or int = 0)``
+
+      Possible enum values:
+
+         0. ``'RGB'``
+         1. ``'Viridis'``
+         2. ``'Plasma'``
+         3. ``'Cividis'``
+         4. ``'Turbo'``
+         5. ``'RdPu'``
+
+      .. raw:: html
+
+         <i>Color Map</i>: The color map to use. RGB is the VCGLib default, other colormaps are sampled from Matplotlib <a href="https://matplotlib.org">https://matplotlib.org</a>
 
 .. data:: compute_color_from_scalar_using_transfer_function_per_vertex
 
@@ -2075,7 +2214,7 @@ Filter documentation
 
    .. raw:: html
 
-      Geometric function using muparser lib to generate new Coord<br>You can change x,y,z for every vertex according to the function specified.<br>It's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
+      Geometric function using muparser lib to generate new Coord<br>You can change x,y,z for every vertex according to the function specified.<br><ul><li>Per-vertex variables:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> ( 1 if selected, 0 if not selected).</li><li>Bounding Box variables:<br><b>xmin,ymin,zmin</b> (min coordinates), <b>xmax,ymax,zmax</b> (max coordinates), <b>xmid,ymid,zmid</b> (midpoint coordinates), <b>xdim,ydim,zdim</b> (dimensions), <b>bbdiag</b> (diagonal length)</li><li>User-defined attributes:<br>All user defined custom <i>vertex attributes</i> are available. Point3 attribute are available as 3 variables with _x, _y, _z appended to the attribute name.</li></ul></p>
 
    **Parameters:**
 
@@ -2278,7 +2417,7 @@ Filter documentation
 
          <i>Quality/Color Mapping</i>: Choose the curvature that is mapped into quality and visualized as per vertex color.
 
-   ``scale : Percentage = 10%``
+   ``scale : PercentageValue = 10%``
 
       .. raw:: html
 
@@ -3032,11 +3171,11 @@ Filter documentation
 
    .. raw:: html
 
-      Add a new Per-Face custom point attribute to current mesh.<br>You can specify custom name and a function to generate attribute's values<br>It's possible to use per-face variables in the expression:<br>It's possible to use the following per-face variables, or variables associated to the three vertex of every face:<br><b>x0,y0,z0</b> for the first vertex position, <b>x1,y1,z1</b> for the second vertex position, <b>x2,y2,z2</b> for the third vertex position, <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> for vertex normals, <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> for vertex colors, <b>vi0, vi1, vi2</b> for vertex indices, <b>q0,q1,q2</b> for vertex quality, <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> for per-wedge texture coords, <b>ti</b> for face texture index, <b>vsel0,vsel1,vsel2</b> for vertex selection (1 yes, 0 no) <b>fi</b> for face index, <b>fr,fg,fb,fa</b> for face color, <b>fq</b> for face quality, <b>fnx,fny,fnz</b> for face normal, <b>fsel</b> face selection (1 yes, 0 no).<br><font color="#FF0000">The attribute name specified below can be used in other filter function</font></p>
+      Add a new Per-Face custom point attribute to current mesh and fill it with the defined functions.<br>Attribute names must contain only letters, numbers and underscores.<br>The name specified for the attribute can be used in other filter functions.<br><ul><li>Per-face variables:<br><b>fi</b> (face index), <b>fr,fg,fb,fa</b> (face color), <b>fq</b> (face quality), <b>fnx,fny,fnz</b> (face normal), <b>fsel</b> ( 1 if face is selected, 0 if not selected).</li><li>Per-vertex variables:<br><b>x0,y0,z0</b> (first vertex position), <b>x1,y1,z1</b> (second vertex position),<b>x2,y2,z2</b> (third vertex position), <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> (vertex normals), <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> (vertex colors), <b>vi0, vi1, vi2</b> (vertex indices), <b>q0,q1,q2</b> (vertex quality), <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> (per-wedge texture coords), <b>ti</b> (face texture index), <b>vsel0,vsel1,vsel2</b> (1 if vertex is selected, 0 if not).</li><li>Bounding Box variables:<br><b>xmin,ymin,zmin</b> (min coordinates), <b>xmax,ymax,zmax</b> (max coordinates), <b>xmid,ymid,zmid</b> (midpoint coordinates), <b>xdim,ydim,zdim</b> (dimensions), <b>bbdiag</b> (diagonal length).</li><li>User-defined attributes:<br>All user defined custom <i>face scalar attributes</i> are available. Point3 attribute are available as 3 variables with _x, _y, _z appended to the attribute name.</li></ul></p>
 
    **Parameters:**
 
-   ``name : str = 'Custom Attr Name'``
+   ``name : str = 'CustomAttrName'``
 
       .. raw:: html
 
@@ -3066,11 +3205,11 @@ Filter documentation
 
    .. raw:: html
 
-      Add a new Per-Vertex custom point attribute to current mesh and fill it with the defined function.<br>The name specified below can be used in other filter functionIt's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
+      Add a new Per-Vertex custom point attribute to current mesh and fill it with the defined functions.<br>Attribute names must contain only letters, numbers and underscores.<br>The name specified for the attribute can be used in other filter functions.<br><ul><li>Per-vertex variables:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> ( 1 if selected, 0 if not selected).</li><li>Bounding Box variables:<br><b>xmin,ymin,zmin</b> (min coordinates), <b>xmax,ymax,zmax</b> (max coordinates), <b>xmid,ymid,zmid</b> (midpoint coordinates), <b>xdim,ydim,zdim</b> (dimensions), <b>bbdiag</b> (diagonal length)</li><li>User-defined attributes:<br>All user defined custom <i>vertex attributes</i> are available. Point3 attribute are available as 3 variables with _x, _y, _z appended to the attribute name.</li></ul></p>
 
    **Parameters:**
 
-   ``name : str = 'Custom Attr Name'``
+   ``name : str = 'CustomAttrName'``
 
       .. raw:: html
 
@@ -3100,11 +3239,11 @@ Filter documentation
 
    .. raw:: html
 
-      Add a new Per-Face custom scalar attribute to current mesh.<br>You can specify custom name and a function to generate attribute's values<br>It's possible to use per-face variables in the expression:<br>It's possible to use the following per-face variables, or variables associated to the three vertex of every face:<br><b>x0,y0,z0</b> for the first vertex position, <b>x1,y1,z1</b> for the second vertex position, <b>x2,y2,z2</b> for the third vertex position, <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> for vertex normals, <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> for vertex colors, <b>vi0, vi1, vi2</b> for vertex indices, <b>q0,q1,q2</b> for vertex quality, <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> for per-wedge texture coords, <b>ti</b> for face texture index, <b>vsel0,vsel1,vsel2</b> for vertex selection (1 yes, 0 no) <b>fi</b> for face index, <b>fr,fg,fb,fa</b> for face color, <b>fq</b> for face quality, <b>fnx,fny,fnz</b> for face normal, <b>fsel</b> face selection (1 yes, 0 no).<br><font color="#FF0000">The attribute name specified below can be used in other filter function</font></p>
+      Add a new Per-Face custom scalar attribute to current mesh and fill it with the defined function.<br>Attribute names must contain only letters, numbers and underscores.<br>The name specified for the attribute can be used in other filter functions.<br><ul><li>Per-face variables:<br><b>fi</b> (face index), <b>fr,fg,fb,fa</b> (face color), <b>fq</b> (face quality), <b>fnx,fny,fnz</b> (face normal), <b>fsel</b> ( 1 if face is selected, 0 if not selected).</li><li>Per-vertex variables:<br><b>x0,y0,z0</b> (first vertex position), <b>x1,y1,z1</b> (second vertex position),<b>x2,y2,z2</b> (third vertex position), <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> (vertex normals), <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> (vertex colors), <b>vi0, vi1, vi2</b> (vertex indices), <b>q0,q1,q2</b> (vertex quality), <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> (per-wedge texture coords), <b>ti</b> (face texture index), <b>vsel0,vsel1,vsel2</b> (1 if vertex is selected, 0 if not).</li><li>Bounding Box variables:<br><b>xmin,ymin,zmin</b> (min coordinates), <b>xmax,ymax,zmax</b> (max coordinates), <b>xmid,ymid,zmid</b> (midpoint coordinates), <b>xdim,ydim,zdim</b> (dimensions), <b>bbdiag</b> (diagonal length).</li><li>User-defined attributes:<br>All user defined custom <i>face scalar attributes</i> are available. Point3 attribute are available as 3 variables with _x, _y, _z appended to the attribute name.</li></ul></p>
 
    **Parameters:**
 
-   ``name : str = 'Custom Attr Name'``
+   ``name : str = 'CustomAttrName'``
 
       .. raw:: html
 
@@ -3122,11 +3261,11 @@ Filter documentation
 
    .. raw:: html
 
-      Add a new Per-Vertex custom scalar attribute to current mesh and fill it with the defined function.<br>The name specified below can be used in other filter functionIt's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
+      Add a new Per-Vertex custom scalar attribute to current mesh and fill it with the defined function.<br>Attribute names must contain only letters, numbers and underscores.<br>The name specified for the attribute can be used in other filter functions.<br><ul><li>Per-vertex variables:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> ( 1 if selected, 0 if not selected).</li><li>Bounding Box variables:<br><b>xmin,ymin,zmin</b> (min coordinates), <b>xmax,ymax,zmax</b> (max coordinates), <b>xmid,ymid,zmid</b> (midpoint coordinates), <b>xdim,ydim,zdim</b> (dimensions), <b>bbdiag</b> (diagonal length)</li><li>User-defined attributes:<br>All user defined custom <i>vertex attributes</i> are available. Point3 attribute are available as 3 variables with _x, _y, _z appended to the attribute name.</li></ul></p>
 
    **Parameters:**
 
-   ``name : str = 'Custom Attr Name'``
+   ``name : str = 'CustomAttrName'``
 
       .. raw:: html
 
@@ -3138,13 +3277,47 @@ Filter documentation
 
          <i>Scalar function =</i>: function to calculate custom scalar attribute value for each vertex
 
+.. data:: compute_normal_by_function_per_face
+
+   *MeshLab filter name*: 'Per Face Normal Function'
+
+   .. raw:: html
+
+      Normal function using muparser to generate new Normal for every face<br><ul><li>Per-face variables:<br><b>fi</b> (face index), <b>fr,fg,fb,fa</b> (face color), <b>fq</b> (face quality), <b>fnx,fny,fnz</b> (face normal), <b>fsel</b> ( 1 if face is selected, 0 if not selected).</li><li>Per-vertex variables:<br><b>x0,y0,z0</b> (first vertex position), <b>x1,y1,z1</b> (second vertex position),<b>x2,y2,z2</b> (third vertex position), <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> (vertex normals), <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> (vertex colors), <b>vi0, vi1, vi2</b> (vertex indices), <b>q0,q1,q2</b> (vertex quality), <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> (per-wedge texture coords), <b>ti</b> (face texture index), <b>vsel0,vsel1,vsel2</b> (1 if vertex is selected, 0 if not).</li><li>Bounding Box variables:<br><b>xmin,ymin,zmin</b> (min coordinates), <b>xmax,ymax,zmax</b> (max coordinates), <b>xmid,ymid,zmid</b> (midpoint coordinates), <b>xdim,ydim,zdim</b> (dimensions), <b>bbdiag</b> (diagonal length).</li><li>User-defined attributes:<br>All user defined custom <i>face scalar attributes</i> are available. Point3 attribute are available as 3 variables with _x, _y, _z appended to the attribute name.</li></ul></p>
+
+   **Parameters:**
+
+   ``x : str = '-fnx'``
+
+      .. raw:: html
+
+         <i>func nx = </i>: insert function to generate new x for the normal
+
+   ``y : str = '-fny'``
+
+      .. raw:: html
+
+         <i>func ny = </i>: insert function to generate new y for the normal
+
+   ``z : str = '-fnz'``
+
+      .. raw:: html
+
+         <i>func nz = </i>: insert function to generate new z for the normal
+
+   ``onselected : bool = False``
+
+      .. raw:: html
+
+         <i>only on selection</i>: if checked, only affects selected vertices
+
 .. data:: compute_normal_by_function_per_vertex
 
    *MeshLab filter name*: 'Per Vertex Normal Function'
 
    .. raw:: html
 
-      Normal function using muparser to generate new Normal for every vertex<br>It's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
+      Normal function using muparser to generate new Normal for every vertex<br><ul><li>Per-vertex variables:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> ( 1 if selected, 0 if not selected).</li><li>Bounding Box variables:<br><b>xmin,ymin,zmin</b> (min coordinates), <b>xmax,ymax,zmax</b> (max coordinates), <b>xmid,ymid,zmid</b> (midpoint coordinates), <b>xdim,ydim,zdim</b> (dimensions), <b>bbdiag</b> (diagonal length)</li><li>User-defined attributes:<br>All user defined custom <i>vertex attributes</i> are available. Point3 attribute are available as 3 variables with _x, _y, _z appended to the attribute name.</li></ul></p>
 
    **Parameters:**
 
@@ -3254,6 +3427,22 @@ Filter documentation
       Recompute face normals as the average of the normals of the triangles that builds a polygon. Useful for showing uniformly shaded quad or polygonal meshes represented using <a href='https://stackoverflow.com/questions/59392193'>faux edges</a>.</p>
 
 .. data:: compute_scalar_ambient_occlusion
+
+   *MeshLab filter name*: 'Compute Ambient occlusion'
+
+   .. raw:: html
+
+      Compute Ambient Occlusion.This filter is a shading technique used in computer graphics to simulate the way light interacts with surfaces in a realistic manner.The parameter for the number of rays is defined by the user; this parameter represents the number of rays that will be shot from the barycenter of each face.The higher the number of rays, the longer the time to compute, but the better the results.These results are saved into face quality and mapped into a gray shade on the mesh.This filter uses the Embree3 library by INTEL.</p>
+
+   **Parameters:**
+
+   ``rays : int = 64``
+
+      .. raw:: html
+
+         <i>Number of rays</i>: The number of rays shoot from the barycenter of the face. The higher the number the higher the definition of the ambient occlusion but at the cost of the calculation time 
+
+.. data:: compute_scalar_ambient_occlusion_gpu
 
    *MeshLab filter name*: 'Ambient Occlusion'
 
@@ -3396,7 +3585,7 @@ Filter documentation
 
          <i>Compute Signed Distance</i>: If TRUE, the distance is signed; if FALSE, it will compute the distance absolute value.
 
-   ``maxdist : Percentage = 100%``
+   ``maxdist : PercentageValue = 100%``
 
       .. raw:: html
 
@@ -3448,7 +3637,7 @@ Filter documentation
 
    .. raw:: html
 
-      Quality function using muparser to generate new Quality for every face<br>Insert three function each one for quality of the three vertex of a face<br>It's possible to use the following per-face variables, or variables associated to the three vertex of every face:<br><b>x0,y0,z0</b> for the first vertex position, <b>x1,y1,z1</b> for the second vertex position, <b>x2,y2,z2</b> for the third vertex position, <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> for vertex normals, <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> for vertex colors, <b>vi0, vi1, vi2</b> for vertex indices, <b>q0,q1,q2</b> for vertex quality, <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> for per-wedge texture coords, <b>ti</b> for face texture index, <b>vsel0,vsel1,vsel2</b> for vertex selection (1 yes, 0 no) <b>fi</b> for face index, <b>fr,fg,fb,fa</b> for face color, <b>fq</b> for face quality, <b>fnx,fny,fnz</b> for face normal, <b>fsel</b> face selection (1 yes, 0 no).<br></p>
+      Quality function using muparser to generate new Quality for every face<br>Insert three function each one for quality of the three vertex of a face<br><ul><li>Per-face variables:<br><b>fi</b> (face index), <b>fr,fg,fb,fa</b> (face color), <b>fq</b> (face quality), <b>fnx,fny,fnz</b> (face normal), <b>fsel</b> ( 1 if face is selected, 0 if not selected).</li><li>Per-vertex variables:<br><b>x0,y0,z0</b> (first vertex position), <b>x1,y1,z1</b> (second vertex position),<b>x2,y2,z2</b> (third vertex position), <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> (vertex normals), <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> (vertex colors), <b>vi0, vi1, vi2</b> (vertex indices), <b>q0,q1,q2</b> (vertex quality), <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> (per-wedge texture coords), <b>ti</b> (face texture index), <b>vsel0,vsel1,vsel2</b> (1 if vertex is selected, 0 if not).</li><li>Bounding Box variables:<br><b>xmin,ymin,zmin</b> (min coordinates), <b>xmax,ymax,zmax</b> (max coordinates), <b>xmid,ymid,zmid</b> (midpoint coordinates), <b>xdim,ydim,zdim</b> (dimensions), <b>bbdiag</b> (diagonal length).</li><li>User-defined attributes:<br>All user defined custom <i>face scalar attributes</i> are available. Point3 attribute are available as 3 variables with _x, _y, _z appended to the attribute name.</li></ul></p>
 
    **Parameters:**
 
@@ -3482,7 +3671,7 @@ Filter documentation
 
    .. raw:: html
 
-      Quality function using muparser to generate new Quality for every vertex<br>It's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
+      Quality function using muparser to generate new Quality for every vertex<br><ul><li>Per-vertex variables:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> ( 1 if selected, 0 if not selected).</li><li>Bounding Box variables:<br><b>xmin,ymin,zmin</b> (min coordinates), <b>xmax,ymax,zmax</b> (max coordinates), <b>xmid,ymid,zmid</b> (midpoint coordinates), <b>xdim,ydim,zdim</b> (dimensions), <b>bbdiag</b> (diagonal length)</li><li>User-defined attributes:<br>All user defined custom <i>vertex attributes</i> are available. Point3 attribute are available as 3 variables with _x, _y, _z appended to the attribute name.</li></ul></p>
 
    **Parameters:**
 
@@ -3526,7 +3715,7 @@ Filter documentation
 
          <i>Starting point</i>: The starting point from which geodesic distance has to be computed. If it is not a surface vertex, the closest vertex to the specified point is used as starting seed point.
 
-   ``maxdistance : Percentage = 50%``
+   ``maxdistance : PercentageValue = 50%``
 
       .. raw:: html
 
@@ -3542,11 +3731,27 @@ Filter documentation
 
    **Parameters:**
 
-   ``maxdistance : Percentage = 50%``
+   ``maxdistance : PercentageValue = 50%``
 
       .. raw:: html
 
          <i>Max Distance</i>: If not zero it indicates a cut off value to be used during geodesic distance computation.
+
+.. data:: compute_scalar_by_heat_geodesic_distance_from_selection_per_vertex
+
+   *MeshLab filter name*: 'Colorize by approximated geodesic distance from the selected points'
+
+   .. raw:: html
+
+      Store in the quality field the approximated geodesic distance, computed via heat method (Crane et al.), from the selected points on the mesh surface and color the mesh accordingly. As this implementation does not use intrinsic triangulation it is very sensitive to trinagulation. First run takes longer as factorization has to be build. </p>
+
+   **Parameters:**
+
+   ``m : float = 1``
+
+      .. raw:: html
+
+         <i>Euler Step</i>: Multiplier used in backward Euler timestep. Changing this value will reset the cache.
 
 .. data:: compute_scalar_by_scalar_harmonic_field_per_vertex
 
@@ -3590,11 +3795,33 @@ Filter documentation
 
 .. data:: compute_scalar_by_shape_diameter_function_per_vertex
 
+   *MeshLab filter name*: 'Compute Shape-Diameter Function'
+
+   .. raw:: html
+
+      Compute Shape-Diameter Function <br />The SDF defines the distance between a point in 3D space and the nearest point on the object's surface.This filter can be used to find out the thickness of the mesh <br />Given a face, a set of rays are shot inward, and an average of the distance to hit a face is saved in the face quality. The face quality is then mapped into a color ramp.This filter requires two values:<ul>	<li> the number of rays which will be shot from the barycenter of each face </li>	<li> the cone amplitude (in degrees) of the cone which we value as valid for the shooting angle </li></ul> <br /><b>For further details see the reference paper: Shapira Shamir Cohen-Or, Consistent Mesh Partitioning and Skeletonisation using the shaper diameter function, Visual Comput. J. (2008) </b> <br />This filter uses Embree3 library by INTEL.</p>
+
+   **Parameters:**
+
+   ``rays : int = 64``
+
+      .. raw:: html
+
+         <i>Number of rays</i>: The number of rays shoot from the barycenter of the face. The higher the number the higher the definition of the SDF but at the cost of the calculation time
+
+   ``cone_amplitude : float = 90``
+
+      .. raw:: html
+
+         <i>Cone amplitude </i>: The value for the angle (in degrees) of the cone for which we consider a ray shooting direction as a valid direction
+
+.. data:: compute_scalar_by_shape_diameter_function_per_vertex_gpu
+
    *MeshLab filter name*: 'Shape Diameter Function'
 
    .. raw:: html
 
-      Calculate the SDF (<b>shape diameter function</b>) on the mesh, you can visualize the result colorizing the mesh. The SDF is a scalar function on the mesh surface and represents the neighborhood diameter of the object at each point. Given a point on the mesh surface,several rays are sent inside a cone, centered around the point's inward-normal, to the other side of the mesh. The result is a weighted sum of all rays lengths. For further details, see the reference paper:<br><b>Shapira Shamir Cohen-Or,<br>Consistent Mesh Partitioning and Skeletonisation using the shaper diamter function, Visual Comput. J. (2008)</b> </p>
+      Calculate the SDF (<b>shape diameter function</b>) on the mesh, you can visualize the result colorizing the mesh. The SDF is a scalar function on the mesh surface and represents the neighborhood diameter of the object at each point. Given a point on the mesh surface,several rays are sent inside a cone, centered around the point's inward-normal, to the other side of the mesh. The result is a weighted sum of all rays lengths. For further details, see the reference paper:<br><b>Shapira Shamir Cohen-Or,<br>Consistent Mesh Partitioning and Skeletonisation using the shaper diameter function, Visual Comput. J. (2008)</b> </p>
 
    **Parameters:**
 
@@ -3652,6 +3879,28 @@ Filter documentation
          <i>Remove outliers</i>: The outliers removal is made on the fly with a supersampling of the depth buffer. For each ray that we trace, we take multiple depth values near the point of intersection and we output only the median of these values. Some mesh can benefit from this additional calculation. 
 
 .. data:: compute_scalar_by_volumetric_obscurance
+
+   *MeshLab filter name*: 'Compute Obscurance'
+
+   .. raw:: html
+
+      Compute ambient Obscurance. <br />Ambient obscurance is a computer graphics technique used to simulate the effect of global ambient light in a 3D scene, making the mesh appear more realistic. <br />This filter requires two values:<ul>	<li> the number of rays(defined by the user), which will be shot from the barycenter of each face in order to compute how many time it is visible from these directions;	<li> the tau value which represent the T spatial decay; </li></ul>The resulting values for the obscurance are saved into face quality and mapped on the mesh into a gray shade. <br /><b>For further details see the reference paper: Iones Krupkin Sbert Zhukov Fast, Realistic Lighting for Video Games IEEECG&A 2003 </b> <br />This filter uses Embree3 library by INTEL.</p>
+
+   **Parameters:**
+
+   ``rays : int = 64``
+
+      .. raw:: html
+
+         <i>Number of rays</i>: The number of rays shoot from the barycenter of the face. The higher the number the higher the definition of the ambient obscurance but at the cost of the calculation time 
+
+   ``tau : float = 0.1``
+
+      .. raw:: html
+
+         <i>Tau value</i>: The value to control spatial decay, the higher the value, the grater the influence that the distance (where the ray hits another face) has on the result 
+
+.. data:: compute_scalar_by_volumetric_obscurance_gpu
 
    *MeshLab filter name*: 'Volumetric obscurance'
 
@@ -3935,7 +4184,7 @@ Filter documentation
 
    .. raw:: html
 
-      Boolean function using muparser lib to perform faces selection over current mesh.<br><br>It's possible to use parenthesis <b>()</b>, and predefined operators:<br><b>&&</b> (logic and), <b>||</b> (logic or), <b>&lt;</b>, <b>&lt;=</b>, <b>></b>, <b>>=</b>, <b>!=</b> (not equal), <b>==</b> (equal), <b>_?_:_</b> (c/c++ ternary operator)<br><br>It's possible to use the following per-face variables, or variables associated to the three vertex of every face:<br><b>x0,y0,z0</b> for the first vertex position, <b>x1,y1,z1</b> for the second vertex position, <b>x2,y2,z2</b> for the third vertex position, <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> for vertex normals, <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> for vertex colors, <b>vi0, vi1, vi2</b> for vertex indices, <b>q0,q1,q2</b> for vertex quality, <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> for per-wedge texture coords, <b>ti</b> for face texture index, <b>vsel0,vsel1,vsel2</b> for vertex selection (1 yes, 0 no) <b>fi</b> for face index, <b>fr,fg,fb,fa</b> for face color, <b>fq</b> for face quality, <b>fnx,fny,fnz</b> for face normal, <b>fsel</b> face selection (1 yes, 0 no).<br></p>
+      Boolean function using muparser lib to perform faces selection over current mesh.<br><br>It's possible to use any of the predefined muparser built-in <a href='https://beltoforion.de/en/muparser/features.php#idDef2'>operators</a> and <a href='https://beltoforion.de/en/muparser/features.php#idDef1'>functions</a>, like: <b>&&</b> (logic and), <b>||</b> (logic or), <b>&lt;</b>, <b>&lt;=</b>, <b>></b>, <b>>=</b>, <b>!=</b> (not equal), <b>==</b> (equal), <b>_?_:_</b> (c/c++ ternary operator), and <b>rnd()</b> (random value in [0..1]), and these values:<ul><li>Per-face variables:<br><b>fi</b> (face index), <b>fr,fg,fb,fa</b> (face color), <b>fq</b> (face quality), <b>fnx,fny,fnz</b> (face normal), <b>fsel</b> ( 1 if face is selected, 0 if not selected).</li><li>Per-vertex variables:<br><b>x0,y0,z0</b> (first vertex position), <b>x1,y1,z1</b> (second vertex position),<b>x2,y2,z2</b> (third vertex position), <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> (vertex normals), <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> (vertex colors), <b>vi0, vi1, vi2</b> (vertex indices), <b>q0,q1,q2</b> (vertex quality), <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> (per-wedge texture coords), <b>ti</b> (face texture index), <b>vsel0,vsel1,vsel2</b> (1 if vertex is selected, 0 if not).</li><li>Bounding Box variables:<br><b>xmin,ymin,zmin</b> (min coordinates), <b>xmax,ymax,zmax</b> (max coordinates), <b>xmid,ymid,zmid</b> (midpoint coordinates), <b>xdim,ydim,zdim</b> (dimensions), <b>bbdiag</b> (diagonal length).</li><li>User-defined attributes:<br>All user defined custom <i>face scalar attributes</i> are available. Point3 attribute are available as 3 variables with _x, _y, _z appended to the attribute name.</li></ul></p>
 
    **Parameters:**
 
@@ -3951,7 +4200,7 @@ Filter documentation
 
    .. raw:: html
 
-      Boolean function using muparser lib to perform vertex selection over current mesh.<br><br>It's possible to use parenthesis <b>()</b>, and predefined operators:<br><b>&&</b> (logic and), <b>||</b> (logic or), <b>&lt;</b>, <b>&lt;=</b>, <b>></b>, <b>>=</b>, <b>!=</b> (not equal), <b>==</b> (equal), <b>_?_:_</b> (c/c++ ternary operator)<br><br>It's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
+      Boolean function using muparser lib to perform vertex selection over current mesh.<br><br>It's possible to use any of the predefined muparser built-in <a href='https://beltoforion.de/en/muparser/features.php#idDef2'>operators</a> and <a href='https://beltoforion.de/en/muparser/features.php#idDef1'>functions</a>, like: <b>&&</b> (logic and), <b>||</b> (logic or), <b>&lt;</b>, <b>&lt;=</b>, <b>></b>, <b>>=</b>, <b>!=</b> (not equal), <b>==</b> (equal), <b>_?_:_</b> (c/c++ ternary operator), and <b>rnd()</b> (random value in [0..1]), and these values:<ul><li>Per-vertex variables:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> ( 1 if selected, 0 if not selected).</li><li>Bounding Box variables:<br><b>xmin,ymin,zmin</b> (min coordinates), <b>xmax,ymax,zmax</b> (max coordinates), <b>xmid,ymid,zmid</b> (midpoint coordinates), <b>xdim,ydim,zdim</b> (dimensions), <b>bbdiag</b> (diagonal length)</li><li>User-defined attributes:<br>All user defined custom <i>vertex attributes</i> are available. Point3 attribute are available as 3 variables with _x, _y, _z appended to the attribute name.</li></ul></p>
 
    **Parameters:**
 
@@ -4047,7 +4296,7 @@ Filter documentation
 
       .. raw:: html
 
-         <i>Inclusive Sel.</i>: If true only the faces with <b>all</b> the vertices within the specified range are selected. Otherwise any face with at least one vertex within the range is selected.
+         <i>Inclusive Face Sel.</i>: If true only the faces with <b>all</b> the vertices within the specified range are selected. Otherwise any face with at least one vertex within the range is selected.
 
 .. data:: compute_selection_by_self_intersections_per_face
 
@@ -4223,7 +4472,7 @@ Filter documentation
 
    .. raw:: html
 
-      Texture function using muparser to generate new texture coords for every vertex<br>It's possible to use the following per-vertex variables in the expression:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>rad</b> (radius), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> (is the vertex selected? 1 yes, 0 no) and all custom <i>vertex attributes</i> already defined by user.<br></p>
+      Texture function using muparser to generate new texture coords for every vertex<br><ul><li>Per-vertex variables:<br><b>x,y,z</b> (position), <b>nx,ny,nz</b> (normal), <b>r,g,b,a</b> (color), <b>q</b> (quality), <b>vi</b> (vertex index), <b>vtu,vtv,ti</b> (texture coords and texture index), <b>vsel</b> ( 1 if selected, 0 if not selected).</li><li>Bounding Box variables:<br><b>xmin,ymin,zmin</b> (min coordinates), <b>xmax,ymax,zmax</b> (max coordinates), <b>xmid,ymid,zmid</b> (midpoint coordinates), <b>xdim,ydim,zdim</b> (dimensions), <b>bbdiag</b> (diagonal length)</li><li>User-defined attributes:<br>All user defined custom <i>vertex attributes</i> are available. Point3 attribute are available as 3 variables with _x, _y, _z appended to the attribute name.</li></ul></p>
 
    **Parameters:**
 
@@ -4251,7 +4500,7 @@ Filter documentation
 
    .. raw:: html
 
-      Texture function using muparser to generate new per wedge tex coords for every face<br>Insert six functions each u v for each one of the three vertex of a face<br>It's possible to use the following per-face variables, or variables associated to the three vertex of every face:<br><b>x0,y0,z0</b> for the first vertex position, <b>x1,y1,z1</b> for the second vertex position, <b>x2,y2,z2</b> for the third vertex position, <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> for vertex normals, <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> for vertex colors, <b>vi0, vi1, vi2</b> for vertex indices, <b>q0,q1,q2</b> for vertex quality, <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> for per-wedge texture coords, <b>ti</b> for face texture index, <b>vsel0,vsel1,vsel2</b> for vertex selection (1 yes, 0 no) <b>fi</b> for face index, <b>fr,fg,fb,fa</b> for face color, <b>fq</b> for face quality, <b>fnx,fny,fnz</b> for face normal, <b>fsel</b> face selection (1 yes, 0 no).<br></p>
+      Texture function using muparser to generate new per wedge tex coords for every face<br>Insert six functions each u v for each one of the three vertex of a face<br><ul><li>Per-face variables:<br><b>fi</b> (face index), <b>fr,fg,fb,fa</b> (face color), <b>fq</b> (face quality), <b>fnx,fny,fnz</b> (face normal), <b>fsel</b> ( 1 if face is selected, 0 if not selected).</li><li>Per-vertex variables:<br><b>x0,y0,z0</b> (first vertex position), <b>x1,y1,z1</b> (second vertex position),<b>x2,y2,z2</b> (third vertex position), <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> (vertex normals), <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> (vertex colors), <b>vi0, vi1, vi2</b> (vertex indices), <b>q0,q1,q2</b> (vertex quality), <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> (per-wedge texture coords), <b>ti</b> (face texture index), <b>vsel0,vsel1,vsel2</b> (1 if vertex is selected, 0 if not).</li><li>Bounding Box variables:<br><b>xmin,ymin,zmin</b> (min coordinates), <b>xmax,ymax,zmax</b> (max coordinates), <b>xmid,ymid,zmid</b> (midpoint coordinates), <b>xdim,ydim,zdim</b> (dimensions), <b>bbdiag</b> (diagonal length).</li><li>User-defined attributes:<br>All user defined custom <i>face scalar attributes</i> are available. Point3 attribute are available as 3 variables with _x, _y, _z appended to the attribute name.</li></ul></p>
 
    **Parameters:**
 
@@ -4446,6 +4695,30 @@ Filter documentation
       .. raw:: html
 
          <i>Texture gutter</i>: Extra boundary to add to each patch before packing in texture space (in pixels)
+
+.. data:: compute_texcoord_parametrization_harmonic
+
+   *MeshLab filter name*: 'Harmonic Parametrization'
+
+   .. raw:: html
+
+      Computes a single patch, fixed boundary harmonic parametrization of a mesh. The filter requires that the input mesh has a single fixed boundary.The resulting parametrization is saved in the per vertex texture coordinates.<br>The filter uses the original code provided in the <a href="https://libigl.github.io/">libigl library</a>.<br></p>
+
+   **Parameters:**
+
+   ``harm_function : int = 1``
+
+      .. raw:: html
+
+         <i>N-Harmonic Function</i>: 1 denotes harmonic function, 2 biharmonic, 3 triharmonic, etc.
+
+.. data:: compute_texcoord_parametrization_least_squares_conformal_maps
+
+   *MeshLab filter name*: 'Least Squares Conformal Maps Parametrization'
+
+   .. raw:: html
+
+      Compuites a least squares conformal maps parametrization of a mesh. The resulting parametrization is saved in the per vertex texture coordinates.<br>The filter uses the original code provided in the <a href="https://libigl.github.io/">libigl library</a>.<br></p>
 
 .. data:: compute_texcoord_parametrization_triangle_trivial_per_wedge
 
@@ -5086,7 +5359,7 @@ Filter documentation
 
    **Parameters:**
 
-   ``alpha : Percentage = 1%``
+   ``alpha : PercentageValue = 1%``
 
       .. raw:: html
 
@@ -5102,6 +5375,28 @@ Filter documentation
       .. raw:: html
 
          <i>Get:</i>: Select the output. The Alpha Shape is the boundary of the Alpha Complex
+
+.. data:: generate_alpha_wrap
+
+   *MeshLab filter name*: 'Alpha Wrap'
+
+   .. raw:: html
+
+      This filter extecutes an Alpha Wrap based on the input mesh. <br>The filter uses the original code provided in CGAL <a href="https://doc.cgal.org/latest/Alpha_wrap_3/index.html#Chapter_3D_Alpha_wrapping">3D Alpha Wrapping</a>.<br><br>Alpha: this is the size of the 'ball', specified as the fraction of the length of the largest diagonal of the bounding box. So, if this value is 0.02 then the size of the ball is 2% of the largest diagonal. Note that the run-time and memory consumption will increase with a smaller ball size.<br><br>Offset: the offset distance that is added to the surface, always larger than 0, as a fraction of the length of the largest diagonal. A value of 0.001 means that the surface will be offset by a thousandth of this length.<br><br>The implementation is based on the following paper:<br>Cédric Portaneri, Mael Rouxel-Labbé, Michael Hemmer, David Cohen-Steiner, Pierre Alliez, <a href="https://inria.hal.science/hal-03688637"><b>"Alpha Wrapping with an Offset"</b></a> (2022)<br><br>This plugin is contributed by Lex van der Sluijs at PTC.<br></p>
+
+   **Parameters:**
+
+   ``alpha_fraction : float = 0.02``
+
+      .. raw:: html
+
+         <i>Alpha: the size of the ball (fraction)</i>: 
+
+   ``offset_fraction : float = 0.001``
+
+      .. raw:: html
+
+         <i>Offset added to the surface (fraction)</i>: 
 
 .. data:: generate_boolean_difference
 
@@ -5575,7 +5870,7 @@ Filter documentation
 
       .. raw:: html
 
-         <i>Extent (with respect to selection)</i>: How large is the plane, with respect to the size of the selection: 1.0 means as large as the selection, 1.1 means 10% larger thena the selection
+         <i>Extent (with respect to selection)</i>: How large is the plane, with respect to the size of the selection: 1.0 means as large as the selection, 1.1 means 10% larger then the selection
 
    ``subdiv : int = 3``
 
@@ -5676,7 +5971,7 @@ Filter documentation
 
    .. raw:: html
 
-      Create a new Layer with the perimeter polyline(s) of the selection borders</p>
+      Create a new Layer with an edge mesh (polyline) composed by the selected edges of the current mesh. It can be used to convert the boundary edges of a mesh into a polyline by selecting all the faces of the mesh.</p>
 
 .. data:: generate_resampled_uniform_mesh
 
@@ -5688,13 +5983,13 @@ Filter documentation
 
    **Parameters:**
 
-   ``cellsize : Percentage = 2%``
+   ``cellsize : PercentageValue = 2%``
 
       .. raw:: html
 
          <i>Precision</i>: Size of the cell, the default is 1/50 of the box diag. Smaller cells give better precision at a higher computational cost. Remember that halving the cell size means that you build a volume 8 times larger.
 
-   ``offset : Percentage = 50%``
+   ``offset : PercentageValue = 50%``
 
       .. raw:: html
 
@@ -5734,7 +6029,7 @@ Filter documentation
 
    **Parameters:**
 
-   ``threshold : Percentage = 1%``
+   ``threshold : PercentageValue = 1%``
 
       .. raw:: html
 
@@ -5847,7 +6142,7 @@ Filter documentation
 
          <i>Number of samples</i>: The desired number of samples. The ray of the disk is calculated according to the sampling density.
 
-   ``radius : Percentage = 0%``
+   ``radius : PercentageValue = 0%``
 
       .. raw:: html
 
@@ -5905,7 +6200,13 @@ Filter documentation
 
       .. raw:: html
 
-         <i>Exact number of samples</i>: If requested it will try to do a dicotomic search for the best poisson disk radius that will generate the requested number of samples with a tolerance of the 0.5%. Obviously it takes much longer.
+         <i>Precise sample number</i>: If requested it will try to do a dicotomic search for the best poisson disk radius that will generate the requested number of samples with the below specified tolerance. Obviously it will takes much longer.
+
+   ``exactnumtolerance : float = 0.005``
+
+      .. raw:: html
+
+         <i>Precise sample number tolerance</i>: If a precise number of sample is requested, the sample number will be matched with the precision specified here. Precision is specified as a fraction of the sample number. so for example a precision of 0.005 over 1000 samples means that you can get 995 or 1005 samples.
 
    ``radiusvariance : float = 1``
 
@@ -5923,13 +6224,13 @@ Filter documentation
 
    **Parameters:**
 
-   ``cellsize : Percentage = 2%``
+   ``cellsize : PercentageValue = 2%``
 
       .. raw:: html
 
          <i>Precision</i>: Size of the cell, the default is 1/50 of the box diag. Smaller cells give better precision at a higher computational cost. Remember that halving the cell size means that you build a volume 8 times larger.
 
-   ``offset : Percentage = 50%``
+   ``offset : PercentageValue = 50%``
 
       .. raw:: html
 
@@ -6015,7 +6316,7 @@ Filter documentation
 
    **Parameters:**
 
-   ``samplesurfradius : Percentage = 0.2%``
+   ``samplesurfradius : PercentageValue = 0.2%``
 
       .. raw:: html
 
@@ -6033,7 +6334,7 @@ Filter documentation
 
          <i>Poisson Filtering</i>: If true the base montecarlo sampling of the volume is filtered to get a poisson disk volumetric distribution.
 
-   ``poissonradius : Percentage = 1%``
+   ``poissonradius : PercentageValue = 1%``
 
       .. raw:: html
 
@@ -6045,7 +6346,7 @@ Filter documentation
 
    .. raw:: html
 
-      Compute a sampling over a mesh and perform a Lloyd relaxation.</p>
+      Compute a point sampling over a mesh and perform a Lloyd relaxation. The filter selects the vertices of the starting mesh that corresponds to the sampled points. <br>Two additional layers containing a voronoi tassellation are created, one as a mesh and one as a polyline. To save the sampled vertices in a different layer just use the 'move selected vertices to a new layer' filter</p>
 
    **Parameters:**
 
@@ -6150,7 +6451,7 @@ Filter documentation
 
          <i>Number of samples</i>: The desired number of samples. The ray of the disk is calculated according to the sampling density.
 
-   ``radius : Percentage = 0%``
+   ``radius : PercentageValue = 0%``
 
       .. raw:: html
 
@@ -6172,7 +6473,13 @@ Filter documentation
 
       .. raw:: html
 
-         <i>Exact number of samples</i>: If requested it will try to do a dicotomic search for the best poisson disk radius that will generate the requested number of samples with a tolerance of the 0.5%. Obviously it takes much longer.
+         <i>Precise sample number</i>: If requested it will try to do a dicotomic search for the best poisson disk radius that will generate the requested number of samples with the below specified tolerance. Obviously it will takes much longer.
+
+   ``exactnumtolerance : float = 0.005``
+
+      .. raw:: html
+
+         <i>Precise sample number tolerance</i>: If a precise number of sample is requested, the sample number will be matched with the precision specified here. Precision is specified as a fraction of the sample number. so for example a precision of 0.005 over 1000 samples means that you can get 995 or 1005 samples.
 
 .. data:: generate_solid_wireframe
 
@@ -6190,7 +6497,7 @@ Filter documentation
 
          <i>Edge -> Cyl.</i>: If True all the edges are converted into cylinders.
 
-   ``edgecylradius : Percentage = 1%``
+   ``edgecylradius : PercentageValue = 1%``
 
       .. raw:: html
 
@@ -6202,7 +6509,7 @@ Filter documentation
 
          <i>Vertex -> Cyl.</i>: If True all the vertices are converted into cylinders.
 
-   ``vertcylradius : Percentage = 1%``
+   ``vertcylradius : PercentageValue = 1%``
 
       .. raw:: html
 
@@ -6214,7 +6521,7 @@ Filter documentation
 
          <i>Vertex -> Sph.</i>: If True all the vertices are converted into sphere.
 
-   ``vertsphradius : Percentage = 1%``
+   ``vertsphradius : PercentageValue = 1%``
 
       .. raw:: html
 
@@ -6226,13 +6533,13 @@ Filter documentation
 
          <i>Face -> Prism</i>: If True all the faces are converted into prism.
 
-   ``faceextheight : Percentage = 0.5%``
+   ``faceextheight : PercentageValue = 0.5%``
 
       .. raw:: html
 
          <i>Face Prism Height</i>: The Height of the prism that is substituted with each face.
 
-   ``faceextinset : Percentage = 0.5%``
+   ``faceextinset : PercentageValue = 0.5%``
 
       .. raw:: html
 
@@ -6276,7 +6583,7 @@ Filter documentation
 
    **Parameters:**
 
-   ``ballradius : Percentage = 0%``
+   ``ballradius : PercentageValue = 0%``
 
       .. raw:: html
 
@@ -6370,6 +6677,12 @@ Filter documentation
 
          <i>Pre-Clean</i>: Enabling this flag force a cleaning pre-pass on the data removing all unreferenced vertices or vertices with null normals.
 
+   ``threads : int = 16``
+
+      .. raw:: html
+
+         <i>Number Threads</i>: Maximum number of threads that the reconstruction algorithm can use.
+
 .. data:: generate_surface_reconstruction_vcg
 
    *MeshLab filter name*: 'Surface Reconstruction: VCG'
@@ -6380,7 +6693,7 @@ Filter documentation
 
    **Parameters:**
 
-   ``voxsize : Percentage = 1%``
+   ``voxsize : PercentageValue = 1%``
 
       .. raw:: html
 
@@ -6482,7 +6795,7 @@ Filter documentation
 
    **Parameters:**
 
-   ``samplesurfradius : Percentage = 1%``
+   ``samplesurfradius : PercentageValue = 1%``
 
       .. raw:: html
 
@@ -6655,7 +6968,7 @@ Filter documentation
 
          <i>Number of samples</i>: The desired number of samples. It can be smaller or larger than the mesh size, and according to the chosen sampling strategy it will try to adapt.
 
-   ``maxdist : Percentage = 50%``
+   ``maxdist : PercentageValue = 50%``
 
       .. raw:: html
 
@@ -6799,7 +7112,7 @@ Filter documentation
 
    .. raw:: html
 
-      Close holes smaller than a given threshold</p>
+      Close holes whose boundary is composed by a number of edges smaller than a given trheshold</p>
 
    **Parameters:**
 
@@ -6827,6 +7140,18 @@ Filter documentation
 
          <i>Prevent creation of selfIntersecting faces</i>: When closing an holes it tries to prevent the creation of faces that intersect faces adjacent to the boundary of the hole. It is an heuristic, non intersetcting hole filling can be NP-complete.
 
+   ``refinehole : bool = False``
+
+      .. raw:: html
+
+         <i>Refine Filled Hole</i>: After closing the hole it will refine the newly created triangles to make the surface more smooth and the triangulation more evenly spaced
+
+   ``refineholeedgelen : PercentageValue = 3%``
+
+      .. raw:: html
+
+         <i>Hole Refinement Edge Len</i>: The target edge lenght of the triangulation inside the filled hole.
+
 .. data:: meshing_cut_along_crease_edges
 
    *MeshLab filter name*: 'Cut mesh along crease edges'
@@ -6853,17 +7178,11 @@ Filter documentation
 
    **Parameters:**
 
-   ``threshold : Percentage = 1%``
+   ``threshold : PercentageValue = 1%``
 
       .. raw:: html
 
          <i>Cell Size</i>: The size of the cell of the clustering grid. Smaller the cell finer the resulting mesh. For obtaining a very coarse mesh use larger values.
-
-   ``selected : bool = False``
-
-      .. raw:: html
-
-         <i>Affect only selected faces</i>: If selected the filter affect only the selected faces
 
 .. data:: meshing_decimation_edge_collapse_for_marching_cube_meshes
 
@@ -6879,7 +7198,7 @@ Filter documentation
 
    .. raw:: html
 
-      Simplify a mesh using a quadric based edge-collapse strategy. A variant of the well known Garland and Heckbert simplification algorithm with different weighting schemes to better cope with aspect ration andd planar/degenerate quadrics areas.<br> See: <br><i>M. Garland and P. Heckbert.</i> <br><b>Surface Simplification Using Quadric Error Metrics</b> (<a href='http://mgarland.org/papers/quadrics.pdf'>pdf</a>)<br>In Proceedings of SIGGRAPH 97.<br/><br/></p>
+      Simplify a mesh using a quadric based edge-collapse strategy. A variant of the well known Garland and Heckbert simplification algorithm with different weighting schemes to better cope with aspect ration and planar/degenerate quadrics areas.<br> See: <br><i>M. Garland and P. Heckbert.</i> <br><b>Surface Simplification Using Quadric Error Metrics</b> (<a href='http://mgarland.org/papers/quadrics.pdf'>pdf</a>)<br>In Proceedings of SIGGRAPH 97.<br/><br/></p>
 
    **Parameters:**
 
@@ -6967,7 +7286,7 @@ Filter documentation
 
    .. raw:: html
 
-      Simplify a textured mesh using a Quadric based Edge Collapse Strategy preserving UV parametrization. Inspired in the QSLIM surface simplification algorithm by Michael Garland, which turned into the industry standar method for mesh simplification.<br> See: <br><i>M. Garland and P. Heckbert.</i> <br><b>Simplifying Surfaces with Color and Texture using Quadric Error Metrics</b> (<a href='http://mgarland.org/papers/quadric2.pdf'>pdf</a>)<br> In Proceedings of IEEE Visualization 98.<br/><br/></p>
+      Simplify a textured mesh using a Quadric based Edge Collapse Strategy preserving UV parametrization. Inspired in the QSLIM surface simplification algorithm by Michael Garland, which turned into the industry standard method for mesh simplification.<br> See: <br><i>M. Garland and P. Heckbert.</i> <br><b>Simplifying Surfaces with Color and Texture using Quadric Error Metrics</b> (<a href='http://mgarland.org/papers/quadric2.pdf'>pdf</a>)<br> In Proceedings of IEEE Visualization 98.<br/><br/></p>
 
    **Parameters:**
 
@@ -7139,7 +7458,7 @@ Filter documentation
 
    **Parameters:**
 
-   ``iterations : int = 3``
+   ``iterations : int = 10``
 
       .. raw:: html
 
@@ -7157,7 +7476,7 @@ Filter documentation
 
          <i>Remesh only selected faces</i>: If checked the remeshing operations will be applied only to the selected faces.
 
-   ``targetlen : Percentage = 1%``
+   ``targetlen : PercentageValue = 1%``
 
       .. raw:: html
 
@@ -7175,7 +7494,7 @@ Filter documentation
 
          <i>Check Surface Distance</i>: If toggled each local operation must deviate from original mesh by [Max. surface distance]
 
-   ``maxsurfdist : Percentage = 1%``
+   ``maxsurfdist : PercentageValue = 1%``
 
       .. raw:: html
 
@@ -7221,7 +7540,7 @@ Filter documentation
 
    **Parameters:**
 
-   ``threshold : Percentage = 1%``
+   ``threshold : PercentageValue = 1%``
 
       .. raw:: html
 
@@ -7235,9 +7554,31 @@ Filter documentation
 
       Convert into a tri-mesh by splitting any polygonal face.</p>
 
-.. data:: meshing_re_orient_faces_coherentely
+.. data:: meshing_re_orient_faces_by_geometry
 
-   *MeshLab filter name*: 'Re-Orient all faces coherentely'
+   *MeshLab filter name*: 'Reorient face normals by geometry'
+
+   .. raw:: html
+
+      Reorient face normals by geometry.Given the input mesh, this filter uses raytracing to determine if any faces are pointing inward and corrects their orientation. The number of rays is defined by the user; the higher the number, the higher the precision, but at the cost of computation time.This filter requires two values:<ul>	<li> the number of rays to be shot from the barycenter of each face </li>	<li> Parity Sampling: If selected, the normal analysis will be performed using the Parity Sampling algorithm. It is suggested to use this algotirhm when the standard one (visibility sampling) faild to riorient all faces because it is used to reorient faces invisible from the outside</li></ul><b> For further details, see the reference paper: Kenshi Takayama, Alec Jacobson, Ladislav Kavan, Olga Sorkine-Hornung. </b><br> <b> A Simple Method for Correcting Facet Orientations in Polygon Meshes Based on Ray Casting. Journal of Computer Graphics Techniques 3(4), 2014.</b> This filter uses the Embree3 library by Intel.</p>
+
+   **Parameters:**
+
+   ``rays : int = 64``
+
+      .. raw:: html
+
+         <i>Number of rays</i>: The number of rays shoot from the barycenter of the face. The higher the number the higher the definition of the normal analysis but at the cost of the calculation time
+
+   ``parity_sampling : bool = False``
+
+      .. raw:: html
+
+         <i>Parity Sampling</i>: If checked, the normal analysis will be performed using the parity sampling algorithm. This algorithm is slower than the visibility sampling but works better with some models
+
+.. data:: meshing_re_orient_faces_coherently
+
+   *MeshLab filter name*: 'Re-Orient all faces coherently'
 
    .. raw:: html
 
@@ -7249,7 +7590,7 @@ Filter documentation
 
    .. raw:: html
 
-      Refine current mesh with user defined parameters.<br>Specify a Boolean Function needed to select which edges will be cut for refinement purpose.<br>Each edge is identified with first and second vertex.<br>Arguments accepted are first and second vertex attributes:<br><br>It's possible to use parenthesis <b>()</b>, and predefined operators:<br><b>&&</b> (logic and), <b>||</b> (logic or), <b>&lt;</b>, <b>&lt;=</b>, <b>></b>, <b>>=</b>, <b>!=</b> (not equal), <b>==</b> (equal), <b>_?_:_</b> (c/c++ ternary operator)<br><br>It's possible to use the following per-face variables, or variables associated to the three vertex of every face:<br><b>x0,y0,z0</b> for the first vertex position, <b>x1,y1,z1</b> for the second vertex position, <b>x2,y2,z2</b> for the third vertex position, <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> for vertex normals, <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> for vertex colors, <b>vi0, vi1, vi2</b> for vertex indices, <b>q0,q1,q2</b> for vertex quality, <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> for per-wedge texture coords, <b>ti</b> for face texture index, <b>vsel0,vsel1,vsel2</b> for vertex selection (1 yes, 0 no) <b>fi</b> for face index, <b>fr,fg,fb,fa</b> for face color, <b>fq</b> for face quality, <b>fnx,fny,fnz</b> for face normal, <b>fsel</b> face selection (1 yes, 0 no).<br></p>
+      Refine current mesh with user defined parameters.<br>Specify a Boolean Function needed to select which edges will be cut for refinement purpose.<br>Each edge is identified with first and second vertex.<br>Arguments accepted are first and second vertex attributes:<br><br>It's possible to use any of the predefined muparser built-in <a href='https://beltoforion.de/en/muparser/features.php#idDef2'>operators</a> and <a href='https://beltoforion.de/en/muparser/features.php#idDef1'>functions</a>, like: <b>&&</b> (logic and), <b>||</b> (logic or), <b>&lt;</b>, <b>&lt;=</b>, <b>></b>, <b>>=</b>, <b>!=</b> (not equal), <b>==</b> (equal), <b>_?_:_</b> (c/c++ ternary operator), and <b>rnd()</b> (random value in [0..1]), and these values:<ul><li>Per-face variables:<br><b>fi</b> (face index), <b>fr,fg,fb,fa</b> (face color), <b>fq</b> (face quality), <b>fnx,fny,fnz</b> (face normal), <b>fsel</b> ( 1 if face is selected, 0 if not selected).</li><li>Per-vertex variables:<br><b>x0,y0,z0</b> (first vertex position), <b>x1,y1,z1</b> (second vertex position),<b>x2,y2,z2</b> (third vertex position), <b>nx0,ny0,nz0 nx1,ny1,nz1 nx2,ny2,nz2</b> (vertex normals), <b>r0,g0,b0,a0 r1,g1,b1,a1 r2,g2,b2,a2</b> (vertex colors), <b>vi0, vi1, vi2</b> (vertex indices), <b>q0,q1,q2</b> (vertex quality), <b>wtu0,wtv0 wtu1,wtv1 wtu2,wtv2</b> (per-wedge texture coords), <b>ti</b> (face texture index), <b>vsel0,vsel1,vsel2</b> (1 if vertex is selected, 0 if not).</li><li>Bounding Box variables:<br><b>xmin,ymin,zmin</b> (min coordinates), <b>xmax,ymax,zmax</b> (max coordinates), <b>xmid,ymid,zmid</b> (midpoint coordinates), <b>xdim,ydim,zdim</b> (dimensions), <b>bbdiag</b> (diagonal length).</li><li>User-defined attributes:<br>All user defined custom <i>face scalar attributes</i> are available. Point3 attribute are available as 3 variables with _x, _y, _z appended to the attribute name.</li></ul></p>
 
    **Parameters:**
 
@@ -7303,7 +7644,7 @@ Filter documentation
 
    **Parameters:**
 
-   ``mincomponentdiag : Percentage = 10%``
+   ``mincomponentdiag : PercentageValue = 10%``
 
       .. raw:: html
 
@@ -7412,7 +7753,7 @@ Filter documentation
 
       .. raw:: html
 
-         <i>Method</i>: Selects wether to remove t-vertices by edge collapse or edge flip.
+         <i>Method</i>: Selects whether to remove t-vertices by edge collapse or edge flip.
 
    ``threshold : float = 40``
 
@@ -7444,7 +7785,7 @@ Filter documentation
 
    **Parameters:**
 
-   ``maxqualitythr : Percentage = inf%``
+   ``maxqualitythr : PercentageValue = inf%``
 
       .. raw:: html
 
@@ -7469,7 +7810,7 @@ Filter documentation
 
       .. raw:: html
 
-         <i>Method</i>: Selects wether to remove non manifold edges by removing faces or by splitting vertices.
+         <i>Method</i>: Selects whether to remove non manifold edges by removing faces or by splitting vertices.
 
 .. data:: meshing_repair_non_manifold_vertices
 
@@ -7525,7 +7866,7 @@ Filter documentation
 
          <i>Iterations</i>: Number of time the model is subdivided.
 
-   ``threshold : Percentage = 1%``
+   ``threshold : PercentageValue = 1%``
 
       .. raw:: html
 
@@ -7544,6 +7885,22 @@ Filter documentation
    .. raw:: html
 
       Apply the Catmull-Clark Subdivision Surfaces. Note that position of the new vertices is simply linearly interpolated. If the mesh is triangle based (no <a href='https://stackoverflow.com/questions/59392193'>faux edges</a>) it generates a quad mesh, otherwise it honores it the faux-edge bits</p>
+
+.. data:: meshing_surface_subdivision_doo_sabin
+
+   *MeshLab filter name*: 'Subdivision Surfaces: Doo Sabin'
+
+   .. raw:: html
+
+      Apply the DooSabin Subdivision Surfaces. It is a Dual approximating refinement scheme that creates a new face for each vertex, edge and face. On a pure quad mesh it will add non quad face for each extraordinarhy vertex in the mesh (e.g. in a cube it will add a triangular face for each corner. On the other hand after a refinement step all the vertices will have degree 4.</p>
+
+   **Parameters:**
+
+   ``iterations : int = 2``
+
+      .. raw:: html
+
+         <i>Iterations</i>: Number of times the model is subdivided.
 
 .. data:: meshing_surface_subdivision_loop
 
@@ -7573,7 +7930,7 @@ Filter documentation
 
          <i>Iterations</i>: Number of time the model is subdivided.
 
-   ``threshold : Percentage = 1%``
+   ``threshold : PercentageValue = 1%``
 
       .. raw:: html
 
@@ -7613,7 +7970,7 @@ Filter documentation
 
          <i>Iterations</i>: Number of time the model is subdivided.
 
-   ``threshold : Percentage = 1%``
+   ``threshold : PercentageValue = 1%``
 
       .. raw:: html
 
@@ -7641,7 +7998,7 @@ Filter documentation
 
          <i>Iterations</i>: Number of time the model is subdivided.
 
-   ``threshold : Percentage = 1%``
+   ``threshold : PercentageValue = 1%``
 
       .. raw:: html
 
@@ -7745,7 +8102,7 @@ Filter documentation
 
    .. raw:: html
 
-      <a href="http://vcg.isti.cnr.it/nexus/">Nexus</a> is a collection of tools for streaming visualization of large 3D models in OpenGL.<br>This filter is the equivalent of calling <a href="http://vcg.isti.cnr.it/nexus/#nxsbuild">nxsbuild</a>: it creates a nxs file starting from a obj, ply or stl.</p>
+      <a href="http://vcg.isti.cnr.it/nexus/"> Nexus </a> is set of  c++/javascript libraries and tools for the creation and efficient visualization of multiresolution 3D models. Nexus it is tailored for the processing and the streaming visualization of very large unstructured 3d modelslike the ones coming from 3D scanning. <br>This filter is the equivalent of calling <a href="http://vcg.isti.cnr.it/nexus/#nxsbuild">nxsbuild</a>: it creates a nxs file starting from a file containing a 3D object, without the need of loading it before. It supports only the following 3D formats: obj, ply or stl.</p>
 
    **Parameters:**
 
@@ -7827,7 +8184,7 @@ Filter documentation
 
    .. raw:: html
 
-      <a href="http://vcg.isti.cnr.it/nexus/">Nexus</a> is a collection of tools for streaming visualization of large 3D models in OpenGL.<br>This filter is the equivalent of calling nxscompress, whichcreates a nxz (compressed nexus) file starting from a nxs.</p>
+      <a href="http://vcg.isti.cnr.it/nexus/"> Nexus </a> is set of  c++/javascript libraries and tools for the creation and efficient visualization of multiresolution 3D models. Nexus it is tailored for the processing and the streaming visualization of very large unstructured 3d modelslike the ones coming from 3D scanning. <br>This filter is the equivalent of calling nxscompress, which creates a .nxz (compressed nexus) file starting from a file .nxs (uncompressed nxs). It is useful for exploring different lossy compression settings without the need of recreating the whole multiresolution structure.</p>
 
    **Parameters:**
 
@@ -8270,6 +8627,12 @@ Filter documentation
 
          <i>Texture file</i>: Sets the given input image as unique texture of the mesh.
 
+   ``use_dummy_texture : bool = False``
+
+      .. raw:: html
+
+         <i>Use dummy texture</i>: If checked, the filter will set a dummy texture instead of loading an image. The 'Texture File' parameter will be ignored.
+
 .. data:: transfer_attributes_per_vertex
 
    *MeshLab filter name*: 'Vertex Attribute Transfer'
@@ -8291,6 +8654,12 @@ Filter documentation
       .. raw:: html
 
          <i>Target Mesh</i>: The mesh whose vertices will receive the data from the source.
+
+   ``vertexsampling : bool = False``
+
+      .. raw:: html
+
+         <i>Vertex Sampling</i>: if enabled for each vertex of the target mesh we search the closest vertex in the source mesh and directly copy the found attributes, otherwise we search for the closest point on the source surface that usually falls inside a face and attribute are therefore interpolated
 
    ``geomtransfer : bool = False``
 
@@ -8328,7 +8697,13 @@ Filter documentation
 
          <i>Store dist. as quality</i>: if enabled, we store the distance of the transferred value as in the vertex quality
 
-   ``upperbound : Percentage = 2%``
+   ``savebarycentric : bool = False``
+
+      .. raw:: html
+
+         <i>Save barycentric coords</i>: if enabled, we store as per vertex attributes of the target mesh, the index of the closest face and the barycentric coordinates of its position inside that face of the src mesh. If vertex sampling is enabled or if source mesh is a point cloud, only the index of the corresponding closest vertex on the src is saved.
+
+   ``upperbound : PercentageValue = 2%``
 
       .. raw:: html
 
@@ -8375,7 +8750,7 @@ Filter documentation
 
          <i>Color Data Source</i>: Choose what attribute has to be transferred onto the target texture. You can choose between Per vertex attributes (color,normal,quality) or to transfer color information from source mesh texture
 
-   ``upperbound : Percentage = 2%``
+   ``upperbound : PercentageValue = 2%``
 
       .. raw:: html
 
@@ -8455,7 +8830,7 @@ Filter documentation
 
          <i>Target Mesh</i>: The mesh whose vertex color will be filled according to source mesh texture
 
-   ``upperbound : Percentage = 2%``
+   ``upperbound : PercentageValue = 2%``
 
       .. raw:: html
 
