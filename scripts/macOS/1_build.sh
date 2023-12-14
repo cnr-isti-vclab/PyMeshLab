@@ -64,13 +64,17 @@ then
 fi
 
 if [ "$USE_BREW_LLVM" = true ] ; then
-    export PATH="$(brew --prefix llvm)/bin:$PATH";
-    export CC=/usr/local/opt/llvm/bin/clang
-    export CXX=/usr/local/opt/llvm/bin/clang++
+    BREW_PATH="$(brew --prefix)"    
+    LLVM_PATH="$(brew --prefix llvm)"
+    export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
+    export LIBRARY_PATH="$LIBRARY_PATH:$SDKROOT/usr/lib"
+    export PATH="$LLVM_PATH/bin:$PATH"
+    export CC="$LLVM_PATH/bin/clang"
+    export CXX="$LLVM_PATH/bin/clang++"
     export COMPILER=${CXX}
-    export CFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
-    export CXXFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
-    export LDFLAGS="-L /usr/local/lib -L/usr/local/opt/llvm/lib"
+    export CFLAGS="-I $BREW_PATH/include -I $LLVM_PATH/include"
+    export CXXFLAGS="-I $BREW_PATH/include -I $LLVM_PATH/include"
+    export LDFLAGS="-L $LIBRARY_PATH -L $BREW_PATH/lib -L $LLVM_PATH/lib"
 fi
 
 cd $BUILD_PATH
