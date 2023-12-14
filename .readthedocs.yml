@@ -9,9 +9,13 @@ build:
   os: "ubuntu-22.04"
   apt_packages:
     - libopengl0
+  tools:
+    python: "3.11"
+  jobs:
+    post_create_environment:
+      - python -m pip install sphinx_rtd_theme
+      - python -m pip install numpy
 
-# Optionally set the version of Python and requirements required to build your docs
-python:
-  version: "3.11"
-  install:
-    - requirements: requirements.txt
+# Build documentation in the "docs/" directory with Sphinx
+sphinx:
+  configuration: docs/conf.py

@@ -26,7 +26,7 @@ jobs:
     - name: PyMeshLab version
       id: version
       run: |
-        echo "pyml_version=$(cat PYML_VERSION)" >> $GITHUB_ENV
+        echo "pyml_version=$(cat PYML_VERSION)" >> $GITHUB_OUTPUT
     - name: Install Qt
       uses: jurplel/install-qt-action@v3
       with:
@@ -62,7 +62,7 @@ jobs:
     - name: Commit message
       id: commit_message
       run: |
-        echo  ::set-output name=message::"$(git log -1 --pretty=%B)"
+        echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
     - name: Commit files
       run: |
         git config --local user.email "action@github.com"
