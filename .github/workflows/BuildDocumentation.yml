@@ -71,7 +71,7 @@ jobs:
         git add --force pymeshlab/lib/*
         git add README.md
         git commit -m "${{steps.commit_message.outputs.message}} and add libs" -a
-        git tag ${{steps.version.outputs.pyml_version}} -lw
+        git tag -a ${{steps.version.outputs.pyml_version}} -m "Version ${{steps.version.outputs.pyml_version}} docs"
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
