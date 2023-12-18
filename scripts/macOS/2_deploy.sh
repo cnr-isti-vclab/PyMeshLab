@@ -1,10 +1,12 @@
 #!/bin/bash
 
-SCRIPTS_PATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+SCRIPTS_PATH="$(dirname "$(realpath "$0")")"
 
 INSTALL_PATH=$SCRIPTS_PATH/../../pymeshlab
-QT_DIR=""
-MAC_M1=false
+QT_DIR_OPTION=""
+SIGN=false
+CERT_ID=""
+MAC_M1_OPTION=""
 
 #checking for parameters
 for i in "$@"
@@ -15,11 +17,18 @@ case $i in
         shift # past argument=value
         ;;
     -qt=*|--qt_dir=*)
-        QT_DIR=${i#*=}/bin/
+        QT_DIR_OPTION=-qt=${i#*=}
         shift # past argument=value
         ;;
     --mac_m1)
-        MAC_M1=true
+        MAC_M1_OPTION=--mac_m1
+        shift # past argument=value
+        ;;
+    -ci=*|--cert_id=*)
+        CERT_ID="${i#*=}"
+        if [ -n "$CERT_ID" ]; then
+          SIGN=true
+        fi
         shift # past argument=value
         ;;
     *)
@@ -28,51 +37,12 @@ case $i in
 esac
 done
 
-MODULE_NAME=$(find $INSTALL_PATH/dummybin.app/Contents  -name 'pmeshlab*')
+bash $SCRIPTS_PATH/internal/2a_bundle.sh -i=$INSTALL_PATH $QT_DIR_OPTION $MAC_M1_OPTION
 
-ARGUMENTS=""
+echo "======= AppBundle Created ======="
 
-for plugin in $INSTALL_PATH/dummybin.app/Contents/PlugIns/*.so
-do
-    ARGUMENTS="${ARGUMENTS} -executable=${plugin}"
-done
+if [ "$SIGN" = true ] ; then
+    bash $SCRIPTS_PATH/internal/2b_sign_bundle.sh -i=$INSTALL_PATH -ci=$CERT_ID
 
-if [ ! -z "$QT_DIR" ]
-then
-    export Qt5_DIR=$QT_DIR
+    echo "======= Bundle Signed ======="
 fi
-
-# save in message the output of macdeployqt
-message=$(${QT_DIR}macdeployqt $INSTALL_PATH/dummybin.app \
-    -executable=$MODULE_NAME \
-    $ARGUMENTS 2>&1)
-
-# if message contains "ERROR" then macdeployqt failed
-if [[ $message == *"ERROR"* ]]; then
-    echo "macdeployqt failed."
-    echo "macdeployqt output:"
-    echo $message
-    exit 1
-fi
-
-echo "macdeployqt completed successfully."
-rsync -a $INSTALL_PATH/dummybin.app/Contents/Frameworks/ $INSTALL_PATH/Frameworks/
-rsync -a $INSTALL_PATH/dummybin.app/Contents/PlugIns/ $INSTALL_PATH/PlugIns/
-mv $INSTALL_PATH/dummybin.app/Contents/pmeshlab* $INSTALL_PATH/
-rm -rf $INSTALL_PATH/dummybin.app
-
-if [ "$MAC_M1" = true ] ; then
-    cd $INSTALL_PATH/Frameworks
-
-    # for each directory called Qt*.framework
-    for dir in Qt*.framework
-    do
-        # in $dir/Versions move the directory called Current in a new directory called 5
-        mv $dir/Versions/Current $dir/Versions/5
-        # make a symbolic link called Current to the directory called 5
-        cd $dir/Versions
-        ln -s 5 Current
-        cd ../..
-    done
-fi
-
