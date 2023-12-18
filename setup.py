@@ -41,10 +41,10 @@ try:
                 platform_tag = 'manylinux_2_31_' + arch
             elif platform.system() == 'Darwin':
                 arch = sysconfig.get_platform().split('-')[2]
-                pltf = 'macosx_10_11_'
+                pltf = 'macosx_10_11_x86_64'
                 if arch == 'arm64':
-                    pltf = 'macosx_11_0_'
-                platform_tag = pltf + arch
+                    pltf = 'macosx_11_0_arm64'
+                platform_tag = pltf
             return a, b, platform_tag
 except ImportError:
     bdist_wheel = None
