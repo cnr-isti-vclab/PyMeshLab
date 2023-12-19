@@ -23,6 +23,7 @@ case $i in
 esac
 done
 
-codesign --options "runtime" --timestamp --force --deep --sign $CERT_ID $INSTALL_PATH/*.so
-codesign --options "runtime" --timestamp --force --deep --sign $CERT_ID $INSTALL_PATH/Frameworks/*.dylib
-codesign --options "runtime" --timestamp --force --deep --sign $CERT_ID $INSTALL_PATH/PlugIns/*.so
+for file in $(find $INSTALL_PATH -type f)
+do
+    codesign --options "runtime" --timestamp --force --deep --sign $CERT_ID $file
+done
