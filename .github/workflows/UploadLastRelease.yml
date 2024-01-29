@@ -17,5 +17,5 @@ jobs:
       run: |
         sudo apt-get install -y twine
         cd wheels
-        twine upload * -u ${{ secrets.TWINE_USER }} -p ${{ secrets.TWINE_PSSW }}
+        twine upload * -u __token__ -p ${{ secrets.TWINE_TOKEN }}
     
