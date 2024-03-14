@@ -33,6 +33,10 @@ case $i in
         USE_BREW_LLVM=true
         shift # past argument=value
         ;;
+    --use_brew_qt)
+        QT_DIR=$(brew --prefix qt5)
+        shift # past argument=value
+        ;;
     --ccache)
         CCACHE="-DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache"
         shift # past argument=value
