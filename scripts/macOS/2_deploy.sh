@@ -21,7 +21,7 @@ case $i in
         shift # past argument=value
         ;;
     --use_brew_qt)
-        QT_DIR_OPTION=-qt=$(brew --prefix qt5)
+        QT_DIR_OPTION=-qt=$(brew --prefix qt@5)
         shift # past argument=value
         ;;
     --mac_m1)
