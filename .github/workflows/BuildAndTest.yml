@@ -33,8 +33,10 @@ jobs:
         echo "arch=$ARCH" >> $GITHUB_ENV
         if [ "${{matrix.os}}" != "macos-14" ]; then
           echo "build_options=--nightly --ccache --use_brew_llvm" >> $GITHUB_OUTPUT
+          echo "deploy_options=--use_brew_qt" >> $GITHUB_OUTPUT
         else
           echo "build_options=--nightly --ccache --use_brew_llvm --use_brew_qt" >> $GITHUB_OUTPUT
+          echo "deploy_options=" >> $GITHUB_OUTPUT
         fi
     - name: Setup Windows MSVC
       uses: ilammy/msvc-dev-cmd@v1
@@ -71,7 +73,7 @@ jobs:
         sh scripts/${{ runner.os }}/1_build.sh ${{ steps.envs.outputs.build_options }}
     - name: Deploy PyMeshLab ${{ matrix.pyversion }}
       run: |
-        sh scripts/${{ runner.os }}/2_deploy.sh
+        sh scripts/${{ runner.os }}/2_deploy.sh ${{ steps.envs.outputs.deploy_options }}
     - name: Upload PyMeshLab_${{ runner.os }}_${{ steps.envs.outputs.arch }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v3
       with:
