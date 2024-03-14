@@ -123,7 +123,7 @@ jobs:
         VER=$(date +%Y.%m.%d)
         echo "${VER}.dev0" | tr -d '\n'> PYML_VERSION
         pip install wheel
-        pip wheel . -v -w wheels/
+        pip wheel . -w wheels/
     - name: Upload wheel ${{ runner.os }}_${{ steps.envs.outputs.arch }} python ${{ matrix.pyversion }}
       uses: actions/upload-artifact@v4
       with:

@@ -16,7 +16,7 @@ jobs:
     name: Update Version
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Update PYML_VERSION
       run: |
         echo ${{ github.event.inputs.version }} | tr -d '\n'> PYML_VERSION
@@ -33,34 +33,60 @@ jobs:
     strategy:
       matrix:
         pyversion: ['3.8', '3.9', '3.10', '3.11', '3.12']
-        os: ['ubuntu-20.04', 'macos-latest', 'windows-latest']
+        os: ['ubuntu-20.04', 'macos-latest', 'macos-14', 'windows-latest']
+        exclude:
+          - os: macos-14
+            pyversion: '3.8'
+          - os: macos-14
+            pyversion: '3.9'
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
         ref: main
-    - name: Setup Windows env variables
-      if: runner.os == 'Windows'
+    - name: Setup env variables
+      id: envs
+      shell: bash
       run: |
         echo "name=VCINSTALLDIR::C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\VC" >> $GITHUB_ENV
+        ARCH=$(uname -m)
+        echo "arch=$ARCH" >> $GITHUB_OUTPUT
+        if [ "${{matrix.os}}" != "macos-14" ]; then
+          echo "build_options=--ccache --use_brew_llvm" >> $GITHUB_OUTPUT
+          echo "deploy_options=" >> $GITHUB_OUTPUT
+        else
+          echo "build_options=--ccache --use_brew_llvm --use_brew_qt" >> $GITHUB_OUTPUT
+          echo "deploy_options=--use_brew_qt -ci='${{ secrets.MACOS_CERT_ID }}'" >> $GITHUB_OUTPUT
+        fi
     - name: Setup Windows MSVC
       uses: ilammy/msvc-dev-cmd@v1
+    - name: Set CodeSign Certificate macOS
+      if: ${{ matrix.os  == 'macos-14'}} 
+      uses: apple-actions/import-codesign-certs@v2
+      with:
+        p12-file-base64: ${{ secrets.MACOS_CERTIFICATE }}
+        p12-password: ${{ secrets.MACOS_CERTIFICATE_PSSW }}
     - name: Install Qt
+      if: matrix.os != 'macos-14'
       uses: jurplel/install-qt-action@v3
       with:
         cache: true
         version: ${{ env.QT_VERSION }}
     - name: Install Python ${{ matrix.pyversion }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.pyversion }}
     - name: Install dependencies
       shell: bash
       run: |
         sh scripts/${{ runner.os }}/0_setup_env.sh
+    - name: Install Brew Qt
+      if: matrix.os == 'macos-14'
+      run: |
+        brew install qt@5
     - name: Cache external libraries sources
       id: cache-ext-libs
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: src/meshlab/src/external/downloads/*
         key: ${{ runner.os }}-external-libraries
@@ -70,14 +96,14 @@ jobs:
         key: ${{ runner.os }}-${{ github.ref }}
     - name: Build PyMeshLab ${{ matrix.pyversion }}
       run: |
-        sh scripts/${{ runner.os }}/1_build.sh --ccache --use_brew_llvm
+        sh scripts/${{ runner.os }}/1_build.sh ${{ steps.envs.outputs.build_options }}
     - name: Deploy PyMeshLab ${{ matrix.pyversion }}
       run: |
-        sh scripts/${{ runner.os }}/2_deploy.sh
-    - name: Upload PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+        sh scripts/${{ runner.os }}/2_deploy.sh ${{ steps.envs.outputs.deploy_options }}
+    - name: Upload PyMeshLab_${{ runner.os }}_${{ steps.envs.outputs.arch }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v3
       with:
-        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+        name: PyMeshLab_${{ runner.os }}_${{ steps.envs.outputs.arch }}_python${{ matrix.pyversion }}
         path: pymeshlab
 
   build_wheel:
@@ -87,18 +113,29 @@ jobs:
     strategy:
       matrix:
         pyversion: ['3.8', '3.9', '3.10', '3.11', '3.12']
-        os: ['ubuntu-20.04', 'macos-latest', 'windows-latest']
+        os: ['ubuntu-20.04', 'macos-latest', 'macos-14', 'windows-latest']
+        exclude:
+          - os: macos-14
+            pyversion: '3.8'
+          - os: macos-14
+            pyversion: '3.9'
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         ref: main
-    - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-      uses: actions/download-artifact@v3
+    - name: Setup env variables
+      id: envs
+      shell: bash
+      run: |
+        ARCH=$(uname -m)
+        echo "arch=$ARCH" >> $GITHUB_OUTPUT
+    - name: Download PyMeshLab_${{ runner.os }}_${{ steps.envs.outputs.arch }}_python${{ matrix.pyversion }}
+      uses: actions/download-artifact@v4
       with:
-        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+        name: PyMeshLab_${{ runner.os }}_${{ steps.envs.outputs.arch }}_python${{ matrix.pyversion }}
         path: pymeshlab/
     - name: Install Python ${{ matrix.pyversion }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.pyversion }}
     - name: Build Wheel
@@ -106,10 +143,10 @@ jobs:
       run: |
         pip install wheel
         pip wheel . -w wheels/
-    - name: Upload wheel ${{ runner.os }} python ${{ matrix.pyversion }}
+    - name: Upload wheel ${{ runner.os }}_${{ steps.envs.outputs.arch }} python ${{ matrix.pyversion }}
       uses: actions/upload-artifact@v3
       with:
-        name: pymeshlab_whl_${{ runner.os }}_python${{ matrix.pyversion }}
+        name: pymeshlab_whl_${{ runner.os }}_${{ steps.envs.outputs.arch }}_python${{ matrix.pyversion }}
         path: wheels/pymeshlab*.whl
 
   test_pymeshlab:
@@ -119,15 +156,26 @@ jobs:
     strategy:
       matrix:
         pyversion: ['3.8', '3.9', '3.10', '3.11', '3.12']
-        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        os: ['ubuntu-latest', 'macos-latest', 'macos-14', 'windows-latest']
+        exclude:
+          - os: macos-14
+            pyversion: '3.8'
+          - os: macos-14
+            pyversion: '3.9'
     steps:
-    - name: Download PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
-      uses: actions/download-artifact@v3
+    - name: Setup env variables
+      id: envs
+      shell: bash
+      run: |
+        ARCH=$(uname -m)
+        echo "arch=$ARCH" >> $GITHUB_OUTPUT
+    - name: Download PyMeshLab_${{ runner.os }}_${{ steps.envs.outputs.arch }}_python${{ matrix.pyversion }}
+      uses: actions/download-artifact@v4
       with:
-        name: PyMeshLab_${{ runner.os }}_python${{ matrix.pyversion }}
+        name: PyMeshLab_${{ runner.os }}_${{ steps.envs.outputs.arch }}_python${{ matrix.pyversion }}
         path: pymeshlab/
     - name: Install Python ${{ matrix.pyversion }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.pyversion }}
     - name: Install dependencies
@@ -143,7 +191,7 @@ jobs:
     #- name: Upload PyMeshLab results
     #  uses: actions/upload-artifact@v3
     #  with:
-    #    name: PyMeshLabResults_${{ runner.os }}_python${{ matrix.pyversion }}
+    #    name: PyMeshLabResults_${{ runner.os }}_${{ steps.envs.outputs.arch }}_python${{ matrix.pyversion }}
     #    path: pymeshlab/tests/sample_meshes/test_output
 
   test_wheel:
@@ -153,15 +201,26 @@ jobs:
     strategy:
       matrix:
         pyversion: ['3.8', '3.9', '3.10', '3.11', '3.12']
-        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        os: ['ubuntu-latest', 'macos-latest', 'macos-14', 'windows-latest']
+        exclude:
+          - os: macos-14
+            pyversion: '3.8'
+          - os: macos-14
+            pyversion: '3.9'
     steps:
-    - name: Download pymeshlab_whl_${{ runner.os }}_python${{ matrix.pyversion }}
-      uses: actions/download-artifact@v3
+    - name: Setup env variables
+      id: envs
+      shell: bash
+      run: |
+        ARCH=$(uname -m)
+        echo "arch=$ARCH" >> $GITHUB_OUTPUT
+    - name: Download pymeshlab_whl_${{ runner.os }}_${{ steps.envs.outputs.arch }}_python${{ matrix.pyversion }}
+      uses: actions/download-artifact@v4
       with:
-        name: pymeshlab_whl_${{ runner.os }}_python${{ matrix.pyversion }}
+        name: pymeshlab_whl_${{ runner.os }}_${{ steps.envs.outputs.arch }}_python${{ matrix.pyversion }}
         path: .
     - name: Install Python ${{ matrix.pyversion }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.pyversion }}
     - name: Install wheel and dependencies
@@ -185,7 +244,7 @@ jobs:
     steps:
     #download all the artifact wheels
     - name: Download Pymeshlab Wheels
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         path: wheels/
     
