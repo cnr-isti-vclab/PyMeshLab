@@ -36,10 +36,16 @@ jobs:
           echo "deploy_options=" >> $GITHUB_OUTPUT
         else
           echo "build_options=--nightly --ccache --use_brew_llvm --use_brew_qt" >> $GITHUB_OUTPUT
-          echo "deploy_options=--use_brew_qt" >> $GITHUB_OUTPUT
+          echo "deploy_options=--use_brew_qt -ci='${{ secrets.MACOS_CERT_ID }}'" >> $GITHUB_OUTPUT
         fi
     - name: Setup Windows MSVC
       uses: ilammy/msvc-dev-cmd@v1
+    - name: Set CodeSign Certificate macOS
+      if: ${{ matrix.os  == 'macos-14'}} 
+      uses: apple-actions/import-codesign-certs@v2
+      with:
+        p12-file-base64: ${{ secrets.MACOS_CERTIFICATE }}
+        p12-password: ${{ secrets.MACOS_CERTIFICATE_PSSW }}
     - name: Install Qt
       if: matrix.os != 'macos-14'
       uses: jurplel/install-qt-action@v3
