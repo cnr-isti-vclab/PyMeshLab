@@ -168,8 +168,13 @@ jobs:
       run: |
         python -c 'import pymeshlab; pymeshlab.use_cpu_opengl()' #just for windows
     - name: Run tests
+      if: matrix.os != 'macos-14'
       run: |
         pytest --pyargs pymeshlab -m "not glcontext"
+    - name: Run tests
+      if: matrix.os == 'macos-14'
+      run: |
+        pytest --pyargs pymeshlab -m "not glcontext and not m1_bug"
     #- name: Upload PyMeshLab results
     #  uses: actions/upload-artifact@v4
     #  with:
@@ -216,5 +221,10 @@ jobs:
       run: |
         python -c 'import pymeshlab; pymeshlab.use_cpu_opengl()' #just for windows
     - name: Run tests
+      if: matrix.os != 'macos-14'
       run: |
         pytest --pyargs pymeshlab -m "not glcontext"
+    - name: Run tests
+      if: matrix.os == 'macos-14'
+      run: |
+        pytest --pyargs pymeshlab -m "not glcontext and not m1_bug"

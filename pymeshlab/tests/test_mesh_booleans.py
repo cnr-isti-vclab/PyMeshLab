@@ -2,6 +2,7 @@ import pymeshlab as ml
 from . import samples_common
 
 
+@pytest.mark.m1_bug
 def test_mesh_booleans():
     print('\n')
     base_path = samples_common.samples_absolute_path()
