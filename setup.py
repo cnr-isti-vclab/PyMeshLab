@@ -19,6 +19,9 @@ pymeshlabversion = f.read()
 
 install_requires = ['numpy']
 
+arch = sysconfig.get_platform().split('-')[2]
+print('Architecture: ' + arch)
+
 # if on windows, add msvc-runtime as dependency
 osused = platform.system()
 if osused == 'Windows':
@@ -41,12 +44,10 @@ try:
                 platform_tag = 'manylinux_2_31_' + arch
             elif platform.system() == 'Darwin':
                 arch = sysconfig.get_platform().split('-')[2]
-                print('Architecture: ' + arch)
                 pltf = 'macosx_11_0_x86_64'
                 if arch == 'arm64':
                     pltf = 'macosx_11_0_arm64'
                 platform_tag = pltf
-                print('Platform tag: ' + platform_tag)
             return a, b, platform_tag
 except ImportError:
     bdist_wheel = None
