@@ -20,6 +20,10 @@ case $i in
         QT_DIR_OPTION=-qt=${i#*=}
         shift # past argument=value
         ;;
+    --use_brew_qt)
+        QT_DIR_OPTION=-qt=$(brew --prefix qt@5)
+        shift # past argument=value
+        ;;
     --mac_m1)
         MAC_M1_OPTION=--mac_m1
         shift # past argument=value
