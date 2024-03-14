@@ -4,7 +4,7 @@
 #include "pymeshlab/module_functions.h"
 #include <pybind11/embed.h>
 #include <pymeshlab/mesh.h>
-#include <pymeshlab/percentage.h>
+#include <pymeshlab/percentage_value.h>
 
 int main(int , char *[])
 {
