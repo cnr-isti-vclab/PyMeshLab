@@ -19,9 +19,6 @@ pymeshlabversion = f.read()
 
 install_requires = ['numpy']
 
-arch = sysconfig.get_platform().split('-')[2]
-print('Architecture: ' + arch)
-
 # if on windows, add msvc-runtime as dependency
 osused = platform.system()
 if osused == 'Windows':
@@ -45,7 +42,7 @@ try:
             elif platform.system() == 'Darwin':
                 arch = sysconfig.get_platform().split('-')[2]
                 pltf = 'macosx_11_0_x86_64'
-                if arch == 'arm64':
+                if arch == 'arm64' or arch == 'universal2':
                     pltf = 'macosx_11_0_arm64'
                 platform_tag = pltf
             return a, b, platform_tag
