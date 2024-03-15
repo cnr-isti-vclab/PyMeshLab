@@ -40,9 +40,9 @@ try:
                 arch = sysconfig.get_platform().split('-')[1]
                 platform_tag = 'manylinux_2_31_' + arch
             elif platform.system() == 'Darwin':
-                arch = sysconfig.get_platform().split('-')[2]
+                arch = platform.machine()
                 pltf = 'macosx_11_0_x86_64'
-                if arch == 'arm64' or arch == 'universal2':
+                if arch == 'arm64':
                     pltf = 'macosx_11_0_arm64'
                 platform_tag = pltf
             return a, b, platform_tag
