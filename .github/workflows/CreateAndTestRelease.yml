@@ -101,7 +101,7 @@ jobs:
       run: |
         sh scripts/${{ runner.os }}/2_deploy.sh ${{ steps.envs.outputs.deploy_options }}
     - name: Upload PyMeshLab_${{ runner.os }}_${{ steps.envs.outputs.arch }}_python${{ matrix.pyversion }}
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: PyMeshLab_${{ runner.os }}_${{ steps.envs.outputs.arch }}_python${{ matrix.pyversion }}
         path: pymeshlab
@@ -144,7 +144,7 @@ jobs:
         pip install wheel
         pip wheel . -w wheels/
     - name: Upload wheel ${{ runner.os }}_${{ steps.envs.outputs.arch }} python ${{ matrix.pyversion }}
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: pymeshlab_whl_${{ runner.os }}_${{ steps.envs.outputs.arch }}_python${{ matrix.pyversion }}
         path: wheels/pymeshlab*.whl
@@ -189,7 +189,7 @@ jobs:
       run: |
         pytest --pyargs pymeshlab -m "not glcontext"
     #- name: Upload PyMeshLab results
-    #  uses: actions/upload-artifact@v3
+    #  uses: actions/upload-artifact@v4
     #  with:
     #    name: PyMeshLabResults_${{ runner.os }}_${{ steps.envs.outputs.arch }}_python${{ matrix.pyversion }}
     #    path: pymeshlab/tests/sample_meshes/test_output
