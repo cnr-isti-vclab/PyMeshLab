@@ -1,8 +1,9 @@
+import sys
+import platform
+import pytest
+
 import pymeshlab as ml
 from . import samples_common
-
-import pytest
-from sys import platform
 
 
 @pytest.mark.skipif(sys.platform == 'darwin' and platform.machine() == 'arm64', reason="U3D still does not work on Mac ARM")
