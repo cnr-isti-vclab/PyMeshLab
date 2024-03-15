@@ -5,6 +5,7 @@ import pytest
 from sys import platform
 
 
+@pytest.mark.skipif(sys.platform == 'darwin' and platform.machine() == 'arm64', reason="U3D still does not work on Mac ARM")
 def test_u3d_exporter():
     print('\n')
     base_path = samples_common.samples_absolute_path()
