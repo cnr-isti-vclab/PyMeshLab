@@ -52,10 +52,10 @@ jobs:
         ARCH=$(uname -m)
         echo "arch=$ARCH" >> $GITHUB_OUTPUT
         if [ "${{matrix.os}}" != "macos-14" ]; then
-          echo "build_options=--ccache --use_brew_llvm" >> $GITHUB_OUTPUT
+          echo "build_options=--ccache" >> $GITHUB_OUTPUT
           echo "deploy_options=" >> $GITHUB_OUTPUT
         else
-          echo "build_options=--ccache --use_brew_llvm --use_brew_qt" >> $GITHUB_OUTPUT
+          echo "build_options=--ccache --use_brew_qt" >> $GITHUB_OUTPUT
           echo "deploy_options=--use_brew_qt -ci='${{ secrets.MACOS_CERT_ID }}'" >> $GITHUB_OUTPUT
         fi
     - name: Setup Windows MSVC

@@ -61,6 +61,7 @@ fi
 
 BUILD_PATH=$(realpath $BUILD_PATH)
 INSTALL_PATH=$(realpath $INSTALL_PATH)
+OPENMP_PATH=$(brew --prefix libomp)
 
 if [ ! -z "$QT_DIR" ]
 then
@@ -83,6 +84,15 @@ fi
 
 cd $BUILD_PATH
 export NINJA_STATUS="[%p (%f/%t) ] "
-cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DPYMESHLAB_BUILD_DUMMY_BIN_MAC_DEPLOY=ON -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $CCACHE $NIGHTLY_OPTION $SOURCE_PATH
+cmake \
+    -GNinja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DOpenMP_ROOT=$OPENMP_PATH \
+    -DPYMESHLAB_BUILD_DUMMY_BIN_MAC_DEPLOY=ON \
+    -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH \
+    $CCACHE \
+    $NIGHTLY_OPTION \
+    $SOURCE_PATH
+
 ninja
 ninja install
