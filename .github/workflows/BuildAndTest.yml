@@ -14,11 +14,11 @@ jobs:
       fail-fast: false
       matrix:
         pyversion: ['3.8', '3.9', '3.10', '3.11', '3.12']
-        os: ['ubuntu-20.04', 'macos-latest', 'macos-14', 'windows-latest']
+        os: ['ubuntu-20.04', 'macos-13', 'macos-latest', 'windows-latest']
         exclude:
-          - os: macos-14
+          - os: macos-latest
             pyversion: '3.8'
-          - os: macos-14
+          - os: macos-latest
             pyversion: '3.9'
     steps:
     - uses: actions/checkout@v4
@@ -31,7 +31,7 @@ jobs:
         echo "name=VCINSTALLDIR::C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\VC" >> $GITHUB_ENV
         ARCH=$(uname -m)
         echo "arch=$ARCH" >> $GITHUB_OUTPUT
-        if [ "${{matrix.os}}" != "macos-14" ]; then
+        if [ "${{matrix.os}}" != "macos-latest" ]; then
           echo "build_options=--nightly --ccache" >> $GITHUB_OUTPUT
           echo "deploy_options=" >> $GITHUB_OUTPUT
         else
@@ -41,13 +41,13 @@ jobs:
     - name: Setup Windows MSVC
       uses: ilammy/msvc-dev-cmd@v1
     - name: Set CodeSign Certificate macOS
-      if: ${{ matrix.os  == 'macos-14'}} 
+      if: ${{ matrix.os  == 'macos-latest'}} 
       uses: apple-actions/import-codesign-certs@v2
       with:
         p12-file-base64: ${{ secrets.MACOS_CERTIFICATE }}
         p12-password: ${{ secrets.MACOS_CERTIFICATE_PSSW }}
     - name: Install Qt
-      if: matrix.os != 'macos-14'
+      if: matrix.os != 'macos-latest'
       uses: jurplel/install-qt-action@v3
       with:
         cache: true
@@ -61,7 +61,7 @@ jobs:
       run: |
         sh scripts/${{ runner.os }}/0_setup_env.sh
     - name: Install Brew Qt
-      if: matrix.os == 'macos-14'
+      if: matrix.os == 'macos-latest'
       run: |
         brew install qt@5
     - name: Cache external libraries sources
@@ -94,11 +94,11 @@ jobs:
       fail-fast: false
       matrix:
         pyversion: ['3.8', '3.9', '3.10', '3.11', '3.12']
-        os: ['ubuntu-20.04', 'macos-latest', 'macos-14', 'windows-latest']
+        os: ['ubuntu-20.04', 'macos-13', 'macos-latest', 'windows-latest']
         exclude:
-          - os: macos-14
+          - os: macos-latest
             pyversion: '3.8'
-          - os: macos-14
+          - os: macos-latest
             pyversion: '3.9'
     steps:
     - uses: actions/checkout@v4
@@ -138,11 +138,11 @@ jobs:
       fail-fast: false
       matrix:
         pyversion: ['3.8', '3.9', '3.10', '3.11', '3.12']
-        os: ['ubuntu-latest', 'macos-latest', 'macos-14', 'windows-latest']
+        os: ['ubuntu-latest', 'macos-13', 'macos-latest', 'windows-latest']
         exclude:
-          - os: macos-14
+          - os: macos-latest
             pyversion: '3.8'
-          - os: macos-14
+          - os: macos-latest
             pyversion: '3.9'
     steps:
     - name: Setup env variables
@@ -184,11 +184,11 @@ jobs:
       fail-fast: false
       matrix:
         pyversion: ['3.8', '3.9', '3.10', '3.11', '3.12']
-        os: ['ubuntu-latest', 'macos-latest', 'macos-14', 'windows-latest']
+        os: ['ubuntu-latest', 'macos-13', 'macos-latest', 'windows-latest']
         exclude:
-          - os: macos-14
+          - os: macos-latest
             pyversion: '3.8'
-          - os: macos-14
+          - os: macos-latest
             pyversion: '3.9'
     steps:
     - name: Setup env variables
