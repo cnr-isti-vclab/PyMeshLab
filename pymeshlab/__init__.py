@@ -8,7 +8,7 @@ if platform == 'win32':
     os.environ['QT_PLUGIN_PATH'] = this_path
     os.environ['PATH'] = this_path + os.pathsep + os.environ['PATH']
 
-from .pmeshlab import *
+from .pymeshlab import *
 from .replacer import replace_pymeshlab_filter_names
 from .polyscope_functions import show_polyscope
 
