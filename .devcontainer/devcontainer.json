@@ -14,9 +14,6 @@
             ],
             "settings": {
                 "cmake.buildDirectory": "${workspaceFolder}/build",
-                "cmake.buildEnvironment": {
-                    "CMAKE_BUILD_TYPE": "Release"
-                }
             }
         }
     }
