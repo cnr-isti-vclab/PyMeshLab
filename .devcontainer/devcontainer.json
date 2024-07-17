@@ -1,0 +1,23 @@
+{
+    "name": "PyMeshLab",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "devcontainer",
+    "workspaceFolder": "/workspaces/pymeshlab",
+
+    // vscode extensions
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-vscode.cpptools-extension-pack",
+                "ms-vscode.cmake-tools"
+            ],
+            "settings": {
+                "cmake.buildDirectory": "${workspaceFolder}/build",
+                "cmake.buildEnvironment": {
+                    "CMAKE_BUILD_TYPE": "Release"
+                }
+            }
+        }
+    }
+}
