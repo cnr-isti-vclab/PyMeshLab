@@ -1,5 +1,14 @@
 FROM ubuntu:20.04
 
+ARG QT_VERSION=5.15.2
+ARG PYTHON_VERSION=3.11
+
+ENV PATH=/opt/qt/${QT_VERSION}/gcc_64/bin:$PATH
+ENV LD_LIBRARY_PATH=/opt/qt/${QT_VERSION}/gcc_64/lib/:/workspaces/pymeshlab/pymeshlab/lib/
+ENV QT_PLUGIN_PATH=/opt/qt/${QT_VERSION}/gcc_64/plugins/
+ENV QML_IMPORT_PATH=/opt/qt/${QT_VERSION}/gcc_64/qml/
+ENV QML2_IMPORT_PATH=/opt/qt/${QT_VERSION}/gcc_64/qml/
+
 RUN apt-get -y update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
     build-essential \
     fontconfig \
@@ -24,24 +33,28 @@ RUN apt-get -y update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
     libxerces-c-dev \
     ninja-build \
     patchelf \
+    # to be removed
     python3 \
     python3-pip \
-    && pip3 install aqtinstall numpy
+    wget && \
+    pip3 install aqtinstall
 
-ARG QT=5.15.2
-ARG QT_HOST=linux
-ARG QT_TARGET=desktop
-RUN aqt install-qt -O /opt/qt ${QT_HOST} ${QT_TARGET} ${QT} 
+RUN aqt install-qt -O /opt/qt linux desktop ${QT_VERSION} && \
+    pip3 uninstall -y aqtinstall && \
+    apt-get -y remove python3-pip python3
 
-ENV PATH=/opt/qt/${QT}/gcc_64/bin:$PATH
-ENV LD_LIBRARY_PATH=/opt/qt/${QT}/gcc_64/lib/:/workspaces/pymeshlab/pymeshlab/lib/
-ENV QT_PLUGIN_PATH=/opt/qt/${QT}/gcc_64/plugins/
-ENV QML_IMPORT_PATH=/opt/qt/${QT}/gcc_64/qml/
-ENV QML2_IMPORT_PATH=/opt/qt/${QT}/gcc_64/qml/
+# install python
+RUN apt-get -y install software-properties-common && \
+    add-apt-repository ppa:deadsnakes/ppa -y && apt-get -y update && \
+    apt-get -y install python${PYTHON_VERSION} python${PYTHON_VERSION}-dev && \
+    update-alternatives --install /usr/bin/python3 python3 /usr/bin/python${PYTHON_VERSION} 1 && \
+    wget https://bootstrap.pypa.io/get-pip.py && \
+    python${PYTHON_VERSION} get-pip.py && \
+    rm get-pip.py && \
+    pip install numpy
 
 # install latest cmake and embree
-RUN apt purge --auto-remove cmake && \
-    apt-get -y install wget && \
+RUN apt-get -y purge --auto-remove cmake && \
     wget -qO- "https://cmake.org/files/v3.19/cmake-3.19.2-Linux-x86_64.tar.gz" \
     | tar --strip-components=1 -xz -C /usr/local &&\
     wget -qO- "https://github.com/embree/embree/releases/download/v4.3.2/embree-4.3.2.x86_64.linux.tar.gz" \
@@ -50,8 +63,7 @@ RUN apt purge --auto-remove cmake && \
     apt-get -y remove wget && \
     apt-get -y autoremove && \
     apt-get -y clean && \
-    rm -rf /var/lib/apt/lists/*  && \
-    pip3 uninstall -y aqtinstall
+    rm -rf /var/lib/apt/lists/*
 
 # Generating a universally unique ID for the Container
 RUN  dbus-uuidgen > /etc/machine-id

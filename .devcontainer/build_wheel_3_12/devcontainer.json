@@ -1,0 +1,7 @@
+{
+    "name": "PyMeshLab wheel for Python 3.12",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "devcontainer",
+    "workspaceFolder": "/workspaces/pymeshlab",
+    // TODO
+}

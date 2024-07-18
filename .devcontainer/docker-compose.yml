@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - PYTHON_VERSION=3.12
     stdin_open: true # docker run -i
     tty: true        # docker run -t
     volumes:
