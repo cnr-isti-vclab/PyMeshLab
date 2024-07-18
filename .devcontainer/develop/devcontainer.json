@@ -1,6 +1,6 @@
 {
-    "name": "PyMeshLab",
-    "dockerComposeFile": "docker-compose.yml",
+    "name": "Develop PyMeshLab",
+    "dockerComposeFile": "../docker-compose.yml",
     "service": "devcontainer",
     "workspaceFolder": "/workspaces/pymeshlab",
 
