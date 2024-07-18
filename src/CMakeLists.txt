@@ -24,7 +24,7 @@ find_package(
 message(STATUS "Searching for required components with bundled fallback")
 
 find_package(GLEW)
-find_package(Eigen3)
+find_package(Eigen3 QUIET)
 find_package(OpenMP)
 
 ### Build settings
