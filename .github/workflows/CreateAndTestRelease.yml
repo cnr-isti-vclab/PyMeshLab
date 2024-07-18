@@ -62,7 +62,7 @@ jobs:
       uses: ilammy/msvc-dev-cmd@v1
     - name: Set CodeSign Certificate macOS
       if: ${{ matrix.os  == 'macos-latest'}} 
-      uses: apple-actions/import-codesign-certs@v2
+      uses: apple-actions/import-codesign-certs@v3
       with:
         p12-file-base64: ${{ secrets.MACOS_CERTIFICATE }}
         p12-password: ${{ secrets.MACOS_CERTIFICATE_PSSW }}
