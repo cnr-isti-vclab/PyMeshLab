@@ -17,6 +17,7 @@ RUN apt-get -y update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
     build-essential \
     fontconfig \
     fuse \
+    gdb \
     git \
     kmod \
     libboost-dev \
