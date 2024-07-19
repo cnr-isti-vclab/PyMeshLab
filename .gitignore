@@ -55,6 +55,9 @@ compile_commands.json
 
 *_qmlcache.qrc
 
+# VSCode
+.vscode/
+
 #linuxdeploy out files
 pymeshlab/apprun*
 pymeshlab/usr/bin/qt.conf
