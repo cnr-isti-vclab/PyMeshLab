@@ -1,8 +1,21 @@
 {
     "name": "Develop PyMeshLab",
-    "dockerComposeFile": "../docker-compose.yml",
-    "service": "devcontainer",
+
+    "build": {
+        "dockerfile": "../Dockerfile",
+        "args": {
+            "PYTHON_VERSION": "3.12"
+        }
+    },
+    "runArgs": [
+        "-ti", 
+        "-v", "/lib/modules:/lib/modules",
+        "--device", "/dev/fuse",
+        "--cap-add", "SYS_ADMIN",
+        "--security-opt", "apparmor=unconfined",
+    ],
     "workspaceFolder": "/workspaces/pymeshlab",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/pymeshlab,type=bind",
 
     // vscode extensions
     "customizations": {

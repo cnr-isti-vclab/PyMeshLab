@@ -1,10 +1,10 @@
 {
-    "name": "PyMeshLab wheel for Python 3.12",
+    "name": "PyMeshLab wheel for Python 3.9",
     
     "build": {
         "dockerfile": "../Dockerfile",
         "args": {
-            "PYTHON_VERSION": "3.12"
+            "PYTHON_VERSION": "3.9"
         }
     },
     "runArgs": [
