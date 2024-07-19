@@ -38,12 +38,12 @@ RUN apt-get -y update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
     libxcb-xkb-dev \
     libxkbcommon-x11-dev \
     libxerces-c-dev \
-    ninja-build \
     patchelf \
     rsync \
     # to be removed
     python3 \
     python3-pip \
+    unzip \
     wget && \
     pip3 install aqtinstall
 
@@ -68,7 +68,11 @@ RUN apt-get -y purge --auto-remove cmake && \
     wget -qO- "https://github.com/embree/embree/releases/download/v4.3.2/embree-4.3.2.x86_64.linux.tar.gz" \
     | tar -xz -C /usr/local && \
     bash /usr/local/embree-vars.sh  && \
-    apt-get -y remove wget && \
+    wget -q "https://github.com/ninja-build/ninja/releases/download/v1.12.1/ninja-linux.zip" && \
+    unzip -o ninja-linux.zip  -d /usr/bin/ && \
+    rm ninja-linux.zip && \
+    chmod +x /usr/bin/ninja && \
+    apt-get -y remove wget unzip && \
     apt-get -y autoremove && \
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/*
