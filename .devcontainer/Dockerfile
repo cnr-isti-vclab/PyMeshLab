@@ -1,5 +1,9 @@
 FROM ubuntu:20.04
 
+ARG USERNAME=pymeshlab
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
 ARG QT_VERSION=5.15.2
 ARG PYTHON_VERSION=3.11
 
@@ -30,9 +34,12 @@ RUN apt-get -y update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
     libxcb-render-util0-dev \
     libxcb-shape0 \
     libxcb-xinerama0-dev \
+    libxcb-xkb-dev \
+    libxkbcommon-x11-dev \
     libxerces-c-dev \
     ninja-build \
     patchelf \
+    rsync \
     # to be removed
     python3 \
     python3-pip \
@@ -46,7 +53,7 @@ RUN aqt install-qt -O /opt/qt linux desktop ${QT_VERSION} && \
 # install python
 RUN apt-get -y install software-properties-common && \
     add-apt-repository ppa:deadsnakes/ppa -y && apt-get -y update && \
-    apt-get -y install python${PYTHON_VERSION} python${PYTHON_VERSION}-dev && \
+    apt-get -y install python${PYTHON_VERSION} python${PYTHON_VERSION}-dev python${PYTHON_VERSION}-distutils && \
     update-alternatives --install /usr/bin/python3 python3 /usr/bin/python${PYTHON_VERSION} 1 && \
     wget https://bootstrap.pypa.io/get-pip.py && \
     python${PYTHON_VERSION} get-pip.py && \
@@ -67,3 +74,14 @@ RUN apt-get -y purge --auto-remove cmake && \
 
 # Generating a universally unique ID for the Container
 RUN  dbus-uuidgen > /etc/machine-id
+
+# Create the user
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    # [Optional] Add sudo support.
+    && apt-get update \
+    && apt-get install -y sudo \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
+
+USER $USERNAME
