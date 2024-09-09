@@ -79,6 +79,7 @@ endif()
 set(MESHLAB_PLUGINS
 	# IO plugins
 	meshlabplugins/io_3ds
+    meshlabplugins/io_3mf
 	meshlabplugins/io_base
 	meshlabplugins/io_bre
 	meshlabplugins/io_collada
