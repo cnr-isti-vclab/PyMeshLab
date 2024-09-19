@@ -38,7 +38,9 @@ try:
                 platform_tag = 'win_amd64'
             elif platform.system() == 'Linux':
                 arch = sysconfig.get_platform().split('-')[1]
-                platform_tag = 'manylinux_2_31_' + arch
+                glibc_version = os.popen('ldd --version').read().split('\n')[0].split()[-1]
+                glibc_version = glibc_version.replace('.', '_')
+                platform_tag = 'manylinux_' + glibc_version + '_' + arch
             elif platform.system() == 'Darwin':
                 arch = platform.machine()
                 pltf = 'macosx_11_0_x86_64'
