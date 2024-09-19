@@ -1,0 +1,33 @@
+{
+    "name": "Develop PyMeshLab x86_64",
+
+    "build": {
+        "dockerfile": "../Dockerfile_x86_64",
+        "args": {
+            "PYTHON_VERSION": "3.12"
+        }
+    },
+    "runArgs": [
+        "-ti", 
+        "-v", "/lib/modules:/lib/modules",
+        "--device", "/dev/fuse",
+        "--cap-add", "SYS_ADMIN",
+        "--security-opt", "apparmor=unconfined",
+    ],
+    "workspaceFolder": "/workspaces/pymeshlab",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/pymeshlab,type=bind",
+
+    // vscode extensions
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-vscode.cpptools-extension-pack",
+                "ms-vscode.cmake-tools"
+            ],
+            "settings": {
+                "cmake.buildDirectory": "${workspaceFolder}/build",
+            }
+        }
+    }
+}
