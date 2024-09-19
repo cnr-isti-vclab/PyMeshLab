@@ -8,7 +8,8 @@
 # You can give as argument the path where you installed PyMeshLab.
 
 SCRIPTS_PATH="$(dirname "$(realpath "$0")")"
-LINUXDEPLOY_PATH=$SCRIPTS_PATH/../../src/meshlab/resources/linux
+ARCH=$(uname -m)
+LINUXDEPLOY_PATH=$SCRIPTS_PATH/../../src/meshlab/resources/linux/$ARCH
 QT_DIR=""
 INSTALL_PATH=$SCRIPTS_PATH/../../pymeshlab
 
