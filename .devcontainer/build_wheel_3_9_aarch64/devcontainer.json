@@ -1,0 +1,20 @@
+{
+    "name": "PyMeshLab aarch64 wheel for Python 3.9",
+    
+    "build": {
+        "dockerfile": "../Dockerfile_aarch64",
+        "args": {
+            "PYTHON_VERSION": "3.9"
+        }
+    },
+    "runArgs": [
+        "-v", "/lib/modules:/lib/modules",
+        "--device", "/dev/fuse",
+        "--cap-add", "SYS_ADMIN",
+        "--security-opt", "apparmor=unconfined"
+    ],
+    "workspaceFolder": "/workspaces/pymeshlab",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/pymeshlab,type=bind",
+
+    "postStartCommand": "bash scripts/Linux/make_wheel.sh"
+}

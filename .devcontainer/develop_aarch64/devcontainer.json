@@ -1,8 +1,8 @@
 {
-    "name": "Develop PyMeshLab",
+    "name": "Develop PyMeshLab aarch64",
 
     "build": {
-        "dockerfile": "../Dockerfile",
+        "dockerfile": "../Dockerfile_aarch64",
         "args": {
             "PYTHON_VERSION": "3.12"
         }

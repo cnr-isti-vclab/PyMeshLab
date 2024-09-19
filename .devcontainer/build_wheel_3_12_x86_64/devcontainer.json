@@ -1,0 +1,20 @@
+{
+    "name": "PyMeshLab x86_64 wheel for Python 3.12",
+    
+    "build": {
+        "dockerfile": "../Dockerfile_x86_64",
+        "args": {
+            "PYTHON_VERSION": "3.12"
+        }
+    },
+    "runArgs": [
+        "-v", "/lib/modules:/lib/modules",
+        "--device", "/dev/fuse",
+        "--cap-add", "SYS_ADMIN",
+        "--security-opt", "apparmor=unconfined"
+    ],
+    "workspaceFolder": "/workspaces/pymeshlab",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/pymeshlab,type=bind",
+
+    "postStartCommand": "bash scripts/Linux/make_wheel.sh"
+}
