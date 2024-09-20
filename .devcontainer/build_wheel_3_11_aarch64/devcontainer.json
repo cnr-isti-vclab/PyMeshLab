@@ -2,7 +2,7 @@
     "name": "PyMeshLab aarch64 wheel for Python 3.11",
     
     "build": {
-        "dockerfile": "../Dockerfile_x86_64",
+        "dockerfile": "../Dockerfile_aarch64",
         "args": {
             "PYTHON_VERSION": "3.11"
         }
