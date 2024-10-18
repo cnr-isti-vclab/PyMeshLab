@@ -39,7 +39,7 @@ jobs:
     - name: Setup Windows MSVC
       uses: ilammy/msvc-dev-cmd@v1
     - name: Set CodeSign Certificate macOS
-      if: ${{ matrix.os  == 'macos-latest'}} 
+      if: ${{ matrix.os  == 'macos-latest' && github.repository == 'cnr-isti-vclab/vclib'}}
       uses: apple-actions/import-codesign-certs@v3
       with:
         p12-file-base64: ${{ secrets.MACOS_CERTIFICATE }}
