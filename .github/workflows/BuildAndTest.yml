@@ -161,6 +161,10 @@ jobs:
     - name: Install dependencies
       run: |
         pip install pytest numpy
+    - name: Install linux dependencies
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get install libopengl0
     - name: Set CPU opengl
       if: runner.os == 'Windows'
       run: |
@@ -207,6 +211,10 @@ jobs:
       run: |
         pip install pytest numpy
         pip install pymeshlab*.whl
+    - name: Install linux dependencies
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get install libopengl0
     - name: Set CPU opengl
       if: runner.os == 'Windows'
       run: |
