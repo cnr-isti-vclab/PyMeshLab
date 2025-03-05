@@ -33,7 +33,7 @@ jobs:
     strategy:
       matrix:
         pyversion: ['3.9', '3.10', '3.11', '3.12', '3.13']
-        os: ['ubuntu-20.04', 'macos-13', 'macos-latest', 'windows-latest']
+        os: ['ubuntu-22.04', 'macos-13', 'macos-latest', 'windows-latest']
         exclude:
           - os: macos-latest
             pyversion: '3.9'
@@ -111,7 +111,7 @@ jobs:
     strategy:
       matrix:
         pyversion: ['3.9', '3.10', '3.11', '3.12', '3.13']
-        os: ['ubuntu-20.04', 'macos-13', 'macos-latest', 'windows-latest']
+        os: ['ubuntu-22.04', 'macos-13', 'macos-latest', 'windows-latest']
         exclude:
           - os: macos-latest
             pyversion: '3.9'
