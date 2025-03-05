@@ -33,7 +33,7 @@ jobs:
     strategy:
       matrix:
         pyversion: ['3.9', '3.10', '3.11', '3.12', '3.13']
-        os: ['ubuntu-22.04', 'macos-13', 'macos-latest', 'windows-latest']
+        os: ['ubuntu-22.04', 'ubuntu-22.04-arm', 'macos-13', 'macos-latest', 'windows-latest']
         exclude:
           - os: macos-latest
             pyversion: '3.9'
@@ -65,11 +65,15 @@ jobs:
         p12-file-base64: ${{ secrets.MACOS_CERTIFICATE }}
         p12-password: ${{ secrets.MACOS_CERTIFICATE_PSSW }}
     - name: Install Qt
-      if: matrix.os != 'macos-latest'
+      if: ${{ matrix.os != 'macos-latest' && matrix.os != 'ubuntu-22.04-arm' }}
       uses: jurplel/install-qt-action@v3
       with:
         cache: true
         version: ${{ env.QT_VERSION }}
+    - name: Install apt qt
+      if: matrix.os == 'ubuntu-22.04-arm'
+      run: |
+        sudo apt-get install qtbase5-dev qt5-qmake
     - name: Install Python ${{ matrix.pyversion }}
       uses: actions/setup-python@v5
       with:
@@ -111,7 +115,7 @@ jobs:
     strategy:
       matrix:
         pyversion: ['3.9', '3.10', '3.11', '3.12', '3.13']
-        os: ['ubuntu-22.04', 'macos-13', 'macos-latest', 'windows-latest']
+        os: ['ubuntu-22.04', 'ubuntu-22.04-arm', 'macos-13', 'macos-latest', 'windows-latest']
         exclude:
           - os: macos-latest
             pyversion: '3.9'
@@ -152,7 +156,7 @@ jobs:
     strategy:
       matrix:
         pyversion: ['3.9', '3.10', '3.11', '3.12', '3.13']
-        os: ['ubuntu-latest', 'macos-13', 'macos-latest', 'windows-latest']
+        os: ['ubuntu-latest', 'ubuntu-22.04-arm', 'macos-13', 'macos-latest', 'windows-latest']
         exclude:
           - os: macos-latest
             pyversion: '3.9'
@@ -175,6 +179,10 @@ jobs:
     - name: Install dependencies
       run: |
         pip install pytest numpy
+    - name: Install linux dependencies
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get install libopengl0
     - name: Set CPU opengl
       if: runner.os == 'Windows'
       run: |
@@ -195,7 +203,7 @@ jobs:
     strategy:
       matrix:
         pyversion: ['3.9', '3.10', '3.11', '3.12', '3.13']
-        os: ['ubuntu-latest', 'macos-13', 'macos-latest', 'windows-latest']
+        os: ['ubuntu-latest', 'ubuntu-22.04-arm', 'macos-13', 'macos-latest', 'windows-latest']
         exclude:
           - os: macos-latest
             pyversion: '3.9'
@@ -220,6 +228,10 @@ jobs:
       run: |
         pip install pytest numpy
         pip install pymeshlab*.whl
+    - name: Install linux dependencies
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get install libopengl0
     - name: Set CPU opengl
       if: runner.os == 'Windows'
       run: |
