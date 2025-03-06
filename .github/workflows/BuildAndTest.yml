@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         pyversion: ['3.9', '3.10', '3.11', '3.12', '3.13']
-        os: ['ubuntu-22.04', 'ubuntu22.04-arm', 'macos-13', 'macos-latest', 'windows-latest']
+        os: ['ubuntu-22.04', 'ubuntu-22.04-arm', 'macos-13', 'macos-latest', 'windows-latest']
         exclude:
           - os: macos-latest
             pyversion: '3.9'
@@ -92,7 +92,7 @@ jobs:
       fail-fast: false
       matrix:
         pyversion: ['3.9', '3.10', '3.11', '3.12', '3.13']
-        os: ['ubuntu-20.04', 'ubuntu22.04-arm', 'macos-13', 'macos-latest', 'windows-latest']
+        os: ['ubuntu-20.04', 'ubuntu-22.04-arm', 'macos-13', 'macos-latest', 'windows-latest']
         exclude:
           - os: macos-latest
             pyversion: '3.9'
@@ -134,7 +134,7 @@ jobs:
       fail-fast: false
       matrix:
         pyversion: ['3.9', '3.10', '3.11', '3.12', '3.13']
-        os: ['ubuntu-latest', 'ubuntu24.04-arm', 'macos-13', 'macos-latest', 'windows-latest']
+        os: ['ubuntu-latest', 'ubuntu-24.04-arm', 'macos-13', 'macos-latest', 'windows-latest']
         exclude:
           - os: macos-latest
             pyversion: '3.9'
@@ -178,7 +178,7 @@ jobs:
       fail-fast: false
       matrix:
         pyversion: ['3.9', '3.10', '3.11', '3.12', '3.13']
-        os: ['ubuntu-latest', 'ubuntu24.04-arm', 'macos-13', 'macos-latest', 'windows-latest']
+        os: ['ubuntu-latest', 'ubuntu-24.04-arm', 'macos-13', 'macos-latest', 'windows-latest']
         exclude:
           - os: macos-latest
             pyversion: '3.9'
