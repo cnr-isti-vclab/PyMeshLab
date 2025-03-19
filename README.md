@@ -81,7 +81,7 @@ See the [`src`](src/README.md) folder that contains the instructions to build Py
 Please, when using this tool, cite:
 ```
 @software{pymeshlab,
-  author       = {Alessandro Muntoni and Paolo Cignoni},
+  author       = {Muntoni, Alessandro and Cignoni, Paolo},
   title        = {{PyMeshLab}},
   month        = jan,
   year         = 2021,
