@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt-get install -y mesa-common-dev libglu1-mesa-dev
+sudo apt-get install -y mesa-common-dev libglu1-mesa-dev libfuse2
 sudo apt-get install -y make ninja-build patchelf libgmp-dev libmpfr-dev libxerces-c-dev
 sudo apt-get install -y libtbb-dev
 
