@@ -54,16 +54,10 @@ jobs:
           echo "deploy_options=" >> $GITHUB_OUTPUT
         else
           echo "build_options=--ccache --use_brew_qt" >> $GITHUB_OUTPUT
-          echo "deploy_options=--use_brew_qt -ci='${{ secrets.MACOS_CERT_ID }}'" >> $GITHUB_OUTPUT
+          echo "deploy_options=--use_brew_qt" >> $GITHUB_OUTPUT
         fi
     - name: Setup Windows MSVC
       uses: ilammy/msvc-dev-cmd@v1
-    - name: Set CodeSign Certificate macOS
-      if: ${{ matrix.os  == 'macos-latest'}} 
-      uses: apple-actions/import-codesign-certs@v3
-      with:
-        p12-file-base64: ${{ secrets.MACOS_CERTIFICATE }}
-        p12-password: ${{ secrets.MACOS_CERTIFICATE_PSSW }}
     - name: Install Qt
       if: ${{ matrix.os != 'macos-latest' && matrix.os != 'ubuntu-22.04-arm' }}
       uses: jurplel/install-qt-action@v3
@@ -102,6 +96,13 @@ jobs:
     - name: Deploy PyMeshLab ${{ matrix.pyversion }}
       run: |
         sh scripts/${{ runner.os }}/2_deploy.sh ${{ steps.envs.outputs.deploy_options }}
+    - name: Sign PyMeshLab ${{ matrix.pyversion }}
+      uses: cnr-isti-vclab/sign-and-notarize@v1
+      with:
+        input-path: 'pymeshlab/*'
+        macos-certificate: '${{ secrets.MACOS_CERTIFICATE }}'
+        macos-certificate-id: '${{ secrets.MACOS_CERT_ID }}'
+        macos-certificate-password: '${{ secrets.MACOS_CERTIFICATE_PSSW }}'
     - name: Upload PyMeshLab_${{ runner.os }}_${{ steps.envs.outputs.arch }}_python${{ matrix.pyversion }}
       uses: actions/upload-artifact@v4
       with:
