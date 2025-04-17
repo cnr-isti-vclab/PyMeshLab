@@ -22,9 +22,7 @@ install_requires = ['numpy']
 # if on windows, add msvc-runtime as dependency
 osused = platform.system()
 if osused == 'Windows':
-    # msvc-runtime is still missing for python 3.12
-    if sys.version_info[1] < 12:
-        install_requires.append('msvc-runtime')
+    install_requires.append('msvc-runtime')
 
 try:
     from wheel.bdist_wheel import bdist_wheel as _bdist_wheel
