@@ -22,8 +22,15 @@ pip3 install pymeshlab
 
 ### Note about Conda
 
-PyMeshLab has not been tested in a Conda environment, so we cannot provide support for it. If possible, please install PyMeshLab using `pip` outside of Conda.
-If you are a Conda developer and would like to contribute to making PyMeshLab compatible with Conda, pull requests are always appreciated :)
+PyMeshLab is now available on [Conda-Forge](https://anaconda.org/conda-forge/pymeshlab).
+
+If you are in a Conda environment, we recommend installing PyMeshLab from Conda-Forge:
+
+```
+conda install -c conda-forge pymeshlab
+```
+
+See [this discussion](https://github.com/cnr-isti-vclab/PyMeshLab/discussions/434) for more information.
 
 ## Run PyMeshLab
 
