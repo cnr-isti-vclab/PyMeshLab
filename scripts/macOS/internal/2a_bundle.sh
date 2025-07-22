@@ -61,10 +61,16 @@ rsync -a $INSTALL_PATH/dummybin.app/Contents/PlugIns/ $INSTALL_PATH/PlugIns/
 mv $INSTALL_PATH/dummybin.app/Contents/pmeshlab* $INSTALL_PATH/
 rm -rf $INSTALL_PATH/dummybin.app
 
-if [ "$MAC_M1" = true ] ; then
-    # save current dir
-    current_dir=$(pwd)
+# save current dir
+current_dir=$(pwd)
 
+cd $INSTALL_PATH/PlugIns
+
+# for libio_3mf.so, we need to change '@rpath/lib3mf.2.dylib' to '@loader_path/../Frameworks/lib3mf.2.dylib'
+# TODO: try to understand why this is needed (only for arm64, and only in pymeshlab... the meshlab app works fine without this)
+install_name_tool -change @rpath/lib3mf.2.dylib @loader_path/../Frameworks/lib3mf.2.dylib libio_3mf.so
+
+if [ "$MAC_M1" = true ] ; then
     cd $INSTALL_PATH/Frameworks
 
     # for each directory called Qt*.framework
@@ -73,6 +79,6 @@ if [ "$MAC_M1" = true ] ; then
         rm -rf $dir/Versions/Current
         cp -r $dir/Versions/5 $dir/Versions/Current
     done
-
-    cd $current_dir
 fi
+
+cd $current_dir
