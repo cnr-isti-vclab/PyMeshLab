@@ -84,7 +84,10 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${MESHLAB_SRC_DIR})
 
 #pybind11
-add_subdirectory(pybind11)
+find_package(pybind11 CONFIG)
+if(NOT TARGET pybind11::module)
+	add_subdirectory(pybind11)
+endif()
 if ((NOT PYMESHLAB_BUILD_DEBUG) AND (NOT PYMESHLAB_UPDATE_DOC))
 	pybind11_add_module(${PYMESHLAB_MODULE_NAME} ${HEADERS} ${SOURCES})
 endif()
@@ -126,10 +129,17 @@ if (NOT WIN32 AND NOT APPLE)
 endif()
 
 #Qt
-target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE Qt5::OpenGL Qt5::Xml external-glew)
-target_link_libraries(
-	${PYMESHLAB_MODULE_NAME}
-	PUBLIC meshlab-common)
+target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE Qt5::OpenGL Qt5::Xml)
+if(TARGET GLEW::GLEW)
+	target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE GLEW::GLEW)
+else()
+	target_link_libraries(${PYMESHLAB_MODULE_NAME} PRIVATE external-glew)
+endif()
+if(TARGET meshlab::meshlab-common)
+	target_link_libraries(${PYMESHLAB_MODULE_NAME} PUBLIC meshlab::meshlab-common)
+else()
+	target_link_libraries(${PYMESHLAB_MODULE_NAME} PUBLIC meshlab-common)
+endif()
 
 ### Build directories
 if (NOT PYMESHLAB_BUILD_DUMMY_BIN_MAC_DEPLOY)
