@@ -6,10 +6,10 @@ set(PYMESHLAB_BUILD_DISTRIB_DIR ${CMAKE_CURRENT_BINARY_DIR}/distrib/pymeshlab)
 # MeshLab directory
 find_package(meshlab CONFIG)
 if(TARGET meshlab::meshlab-common)
-  message(STATUS "- meshlab - using system-provided library")
-  # Historically, meshlab was float and PyMeshLab double.
-  # Here, we have no choice and use whatever meshlab was compiled with.
-  message(WARNING "meshlab system library might be using single precision floats")
+	message(STATUS "- meshlab - using system-provided library")
+	# Historically, meshlab was float and PyMeshLab double.
+	# Here, we have no choice and use whatever meshlab was compiled with.
+	message(WARNING "meshlab system library might be using single precision floats")
 else()
 	set(MESHLAB_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/meshlab/src")
 
@@ -19,7 +19,7 @@ else()
 	## Required libraries:
 	# - OpenGL (ToDo: remove this)
 	# - Qt5 - OpenGL, Xml
-	# - Glew  (with fallback) (ToDo: remove this)
+	# - Glew (with fallback) (ToDo: remove this)
 	# - Eigen3 (with fallback)
 	# - OpenMP (not required)
 	# - Python
@@ -86,7 +86,7 @@ else()
 	set(MESHLAB_PLUGINS
 		# IO plugins
 		meshlabplugins/io_3ds
-	    meshlabplugins/io_3mf
+		meshlabplugins/io_3mf
 		meshlabplugins/io_base
 		meshlabplugins/io_bre
 		meshlabplugins/io_collada
