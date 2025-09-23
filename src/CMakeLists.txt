@@ -5,7 +5,12 @@ set(PYMESHLAB_BUILD_DISTRIB_DIR ${CMAKE_CURRENT_BINARY_DIR}/distrib/pymeshlab)
 
 # MeshLab directory
 find_package(meshlab CONFIG)
-if(NOT TARGET meshlab::meshlab-common)
+if(TARGET meshlab::meshlab-common)
+  message(STATUS "- meshlab - using system-provided library")
+  # Historically, meshlab was float and PyMeshLab double.
+  # Here, we have no choice and use whatever meshlab was compiled with.
+  message(WARNING "meshlab system library might be using single precision floats")
+else()
 	set(MESHLAB_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/meshlab/src")
 
 	# general meshlab build settings that apply also in pymeshlab:
