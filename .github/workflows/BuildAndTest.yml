@@ -13,11 +13,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        pyversion: ['3.9', '3.10', '3.11', '3.12', '3.13']
+        pyversion: ['3.10', '3.11', '3.12', '3.13', '3.14']
         os: ['ubuntu-22.04', 'ubuntu-22.04-arm', 'macos-13', 'macos-latest', 'windows-latest']
-        exclude:
-          - os: macos-latest
-            pyversion: '3.9'
     steps:
     - uses: actions/checkout@v4
       with:
@@ -96,11 +93,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        pyversion: ['3.9', '3.10', '3.11', '3.12', '3.13']
+        pyversion: ['3.10', '3.11', '3.12', '3.13', '3.14']
         os: ['ubuntu-22.04', 'ubuntu-22.04-arm', 'macos-13', 'macos-latest', 'windows-latest']
-        exclude:
-          - os: macos-latest
-            pyversion: '3.9'
     steps:
     - uses: actions/checkout@v4
     - name: Setup env variables
@@ -138,11 +132,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        pyversion: ['3.9', '3.10', '3.11', '3.12', '3.13']
+        pyversion: ['3.10', '3.11', '3.12', '3.13', '3.14']
         os: ['ubuntu-latest', 'ubuntu-22.04-arm', 'macos-13', 'macos-latest', 'windows-latest']
-        exclude:
-          - os: macos-latest
-            pyversion: '3.9'
     steps:
     - name: Setup env variables
       id: envs
@@ -186,11 +177,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        pyversion: ['3.9', '3.10', '3.11', '3.12', '3.13']
+        pyversion: ['3.10', '3.11', '3.12', '3.13', '3.14']
         os: ['ubuntu-latest', 'ubuntu-22.04-arm', 'macos-13', 'macos-latest', 'windows-latest']
-        exclude:
-          - os: macos-latest
-            pyversion: '3.9'
     steps:
     - name: Setup env variables
       id: envs
