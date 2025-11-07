@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         pyversion: ['3.10', '3.11', '3.12', '3.13', '3.14']
-        os: ['ubuntu-22.04', 'ubuntu-22.04-arm', 'macos-13', 'macos-latest', 'windows-latest']
+        os: ['ubuntu-22.04', 'ubuntu-22.04-arm', 'macos-15-intel', 'macos-latest', 'windows-latest']
     steps:
     - uses: actions/checkout@v4
       with:
@@ -94,7 +94,7 @@ jobs:
       fail-fast: false
       matrix:
         pyversion: ['3.10', '3.11', '3.12', '3.13', '3.14']
-        os: ['ubuntu-22.04', 'ubuntu-22.04-arm', 'macos-13', 'macos-latest', 'windows-latest']
+        os: ['ubuntu-22.04', 'ubuntu-22.04-arm', 'macos-15-intel', 'macos-latest', 'windows-latest']
     steps:
     - uses: actions/checkout@v4
     - name: Setup env variables
@@ -133,7 +133,7 @@ jobs:
       fail-fast: false
       matrix:
         pyversion: ['3.10', '3.11', '3.12', '3.13', '3.14']
-        os: ['ubuntu-latest', 'ubuntu-22.04-arm', 'macos-13', 'macos-latest', 'windows-latest']
+        os: ['ubuntu-latest', 'ubuntu-22.04-arm', 'macos-15-intel', 'macos-latest', 'windows-latest']
     steps:
     - name: Setup env variables
       id: envs
@@ -178,7 +178,7 @@ jobs:
       fail-fast: false
       matrix:
         pyversion: ['3.10', '3.11', '3.12', '3.13', '3.14']
-        os: ['ubuntu-latest', 'ubuntu-22.04-arm', 'macos-13', 'macos-latest', 'windows-latest']
+        os: ['ubuntu-latest', 'ubuntu-22.04-arm', 'macos-15-intel', 'macos-latest', 'windows-latest']
     steps:
     - name: Setup env variables
       id: envs
