@@ -9,7 +9,7 @@ on:
         default: 'YYYY.MM'
 
 env:
-  QT_VERSION: 5.15.2
+  QT_VERSION: 5.15.*
 
 jobs:
   update_version:
@@ -56,27 +56,27 @@ jobs:
     - name: Setup Windows MSVC
       uses: ilammy/msvc-dev-cmd@v1
     - name: Install Qt
-      if: ${{ matrix.os != 'macos-latest' && matrix.os != 'ubuntu-22.04-arm' }}
-      uses: jurplel/install-qt-action@v3
+      if: ${{ matrix.os != 'macos-latest' && runner.os != 'Linux' }}
+      uses: jurplel/install-qt-action@v4
       with:
         cache: true
         version: ${{ env.QT_VERSION }}
     - name: Install apt qt
-      if: matrix.os == 'ubuntu-22.04-arm'
+      if: runner.os == 'Linux'
       run: |
         sudo apt-get install qtbase5-dev qt5-qmake
     - name: Install Python ${{ matrix.pyversion }}
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.pyversion }}
-    - name: Install dependencies
-      shell: bash
-      run: |
-        sh scripts/${{ runner.os }}/0_setup_env.sh
     - name: Install Brew Qt
       if: matrix.os == 'macos-latest'
       run: |
         brew install qt@5
+    - name: Install dependencies
+      shell: bash
+      run: |
+        sh scripts/${{ runner.os }}/0_setup_env.sh
     - name: Cache external libraries sources
       id: cache-ext-libs
       uses: actions/cache@v4
