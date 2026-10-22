@@ -53,6 +53,11 @@ if $LINUXDEPLOY_PATH/linuxdeploy --executable=$PMESHLAB_MODULE_PATH --appdir=$IN
     rm -rf $INSTALL_PATH/usr/
     rm -rf $INSTALL_PATH/apprun-hooks/
 
+    # The bundled libGLU can link libOpenGL.so.0, which is not bundled and is
+    # often not installed. Link it to libGL.so.1 instead, as in previous
+    # releases; libGL.so.1 is already required and provides what libGLU uses.
+    patchelf --replace-needed libOpenGL.so.0 libGL.so.1 $INSTALL_PATH/lib/libGLU.so.1 || exit 1
+
     # pymeshlab module looks for libs inside lib directory 
     patchelf --set-rpath '$ORIGIN/lib/' $PMESHLAB_MODULE_PATH
 
